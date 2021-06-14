@@ -2,6 +2,9 @@ const path = require('path');
 
 const express = require('express');
 const bodyPaser = require('body-parser');
+const mysql = require('mysql');
+const session = require('express-session');
+const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -14,7 +17,7 @@ app.use(bodyPaser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/admin',adminRoutes.routes);
-// 
+//
 // app.get('/', (req, res) => {
 //   console.log("hello");
 //   res.send('<h1>hello</h1>')

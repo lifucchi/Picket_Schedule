@@ -6,10 +6,9 @@ const rootDir = require('../util/path');
 
 const router = express.Router();
 
-router.get('/' , (req,res) => {
-  // res.send('<h1>hello admin</h1>')
-  res.render('admin');
-});
+const adminController = require('../controllers/admin');
+
+router.get('/' , adminController.getAdminDashboard );
 
 
 

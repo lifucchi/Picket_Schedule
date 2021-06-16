@@ -37,19 +37,57 @@
 
         <h3 class="heading_b uk-margin-bottom"> <%= pageTitle%> </h3>
         <% if (path === '/pengguna') {%>
-            <% users.forEach((user) => { %>
 
-        <div class="md-card">
-            <div class="md-card-content">
-                <div class="uk-grid" data-uk-grid-margin>
 
-                  <div class="uk-width-1-1"> <%= user.NIK %> </div>
-                </div>
-            </div>
-        </div>
+              <h3 class="heading_b uk-margin-bottom">Datatables</h3>
+              <div class="md-card uk-margin-medium-bottom">
+                  <div class="md-card-content">
+                      <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
+                          <thead>
+                              <tr>
+                                  <th rowspan="2">NIK</th>
+                                  <!-- <th colspan="5">HR Information</th> -->
+                              </tr>
+                              <tr>
+                                  <th>Username</th>
+                                  <th>Nama</th>
+                                  <th>Peran</th>
+                                  <th>Password</th>
+                                  <th>Poin Meja</th>
+                              </tr>
+                          </thead>
+                          <!-- <tfoot>
 
-            <% }) %>
-        <% } %>
+                          <tr>
+                              <th>Name</th>
+                              <th>Position</th>
+                              <th>Office</th>
+                              <th>Age</th>
+                              <th>Start date</th>
+                              <th>Salary</th>
+                          </tr>
+                          </tfoot> -->
+
+                          <tbody>
+                            <% users.forEach((user) => { %>
+                          <tr>
+                              <td><%= user.NIK%></td>
+                              <td><%= user.USERNAME%></td>
+                              <td><%= user.NAMA%></td>
+                              <td><%= user.PERAN%></td>
+                              <td><%= user.PASSWORD%></td>
+                              <td><%= user.POIN_MEJA%></td>
+                          </tr>
+                            <% }) %>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+
+
+                      <% } %>
+
+
     </div>
 </div>
     <!-- google web fonts -->
@@ -80,6 +118,7 @@
     <!-- altair common functions/helpers -->
     <script src="/assets/js/altair_admin_common.min.js"></script>
 
+    <%- include('include/datatables'); %>
 
     <script>
         $(function() {
@@ -91,6 +130,8 @@
             }
         });
     </script>
+
+
 
 
     <!-- <div id="style_switcher">

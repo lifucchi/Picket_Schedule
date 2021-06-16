@@ -15,6 +15,7 @@ exports.getDataPengguna = (req,res, next) => {
     console.log(rows);
     res.render('admin', {
       users: rows,
+      coloms: fieldData,
       pageTitle: 'Pengguna',
       path: '/pengguna'
     });

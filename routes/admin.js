@@ -10,7 +10,7 @@ const adminController = require('../controllers/admin');
 
 router.get('/' , adminController.getAdminDashboard );
 router.get('/pengguna' , adminController.getDataPengguna );
-
+router.post('/pengguna' , adminController.postAddDataPengguna );
 
 exports.routes = router;
 // exports.products = products;

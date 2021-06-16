@@ -22,20 +22,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/admin',adminRoutes.routes);
 
-
-// db.execute('SELECT * FROM PENGGUNA')
-//   .then(result => {
-//     console.log(result);
-//   }).catch(err => {
-//     console.log(err);
-//   });
-
-//
-// app.get('/', (req, res) => {
-//   console.log("hello");
-//   res.send('<h1>hello</h1>')
-// });
-
 app.get('/', (req, res) => {
   res.render('login.ejs');
 });

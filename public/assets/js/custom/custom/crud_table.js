@@ -83,10 +83,11 @@ altair_crud_table = {
                 altair_md.inputs();
             },
             actions: {
-                listAction: 'data/crud_table/studentsActions.php?action=list',
-                createAction: 'data/crud_table/studentsActions.php?action=create',
-                updateAction: 'data/crud_table/studentsActions.php?action=update',
-                deleteAction: 'data/crud_table/studentsActions.php?action=delete'
+                listAction: '/data/crud_table/studentsActions.php?action=list',
+                // listAction: '/data/crud_table/studentsActions.php?action=list',
+                // createAction: '/data/crud_table/studentsActions.php?action=create',
+                // updateAction: '/data/crud_table/studentsActions.php?action=update',
+                // deleteAction: '/data/crud_table/studentsActions.php?action=delete'
             },
             fields: {
                 StudentId: {

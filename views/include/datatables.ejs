@@ -10,3 +10,15 @@
 
 <!--  datatables functions -->
 <script src="/assets/js/pages/plugins_datatables.min.js"></script>
+<script type="text/javascript">
+
+  $(document).ready(function() {
+    var table = $('#dt_default').DataTable();
+
+    $('#dt_default tbody').on( 'click', 'tr', function () {
+        $(this).toggleClass('selected');
+    } );
+
+
+} );
+</script>

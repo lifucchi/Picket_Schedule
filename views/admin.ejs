@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" href="/assets/img/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="/assets/img/favicon-32x32.png" sizes="32x32">
 
-    <title>Admin</title>
+    <title><%= pageTitle%></title>
 
 
     <!-- uikit -->
@@ -22,12 +22,6 @@
 
     <!-- altair admin -->
     <link rel="stylesheet" href="/assets/css/main.min.css" media="all">
-
-    <!-- matchMedia polyfill for testing media queries in JS -->
-    <!--[if lte IE 9]>
-        <script type="text/javascript" src="bower_components/matchMedia/matchMedia.js"></script>
-        <script type="text/javascript" src="bower_components/matchMedia/matchMedia.addListener.js"></script>
-    <![endif]-->
 
 </head>
 <body class=" sidebar_main_open sidebar_main_swipe">
@@ -41,17 +35,21 @@
 <div id="page_content">
     <div id="page_content_inner">
 
-        <h3 class="heading_b uk-margin-bottom">Blank Page</h3>
+        <h3 class="heading_b uk-margin-bottom"> <%= pageTitle%> </h3>
+        <% if (path === '/pengguna') {%>
+            <% users.forEach((user) => { %>
 
         <div class="md-card">
             <div class="md-card-content">
                 <div class="uk-grid" data-uk-grid-margin>
-                    <div class="uk-width-1-1">
-                        Amet et unde autem voluptas rerum voluptatem laboriosam qui asperiores aut atque voluptatibus nam inventore autem et autem praesentium laudantium nihil quidem sed provident nam eum molestiae accusamus deleniti sed ullam fugit quis a aut voluptatem cum quam ipsum facere velit iure voluptas natus repudiandae perferendis et nulla iste labore quaerat officiis molestiae ut ea in temporibus dolor eaque iure quis ad reiciendis minus blanditiis consequuntur ut recusandae eum earum qui et harum quo numquam voluptatem quas sed in porro hic iure ad doloremque officia deserunt sint ea praesentium enim quia error dolor sunt molestias molestiae laboriosam nobis quidem aut rerum consequuntur eum illo id commodi doloribus ut nam consequatur voluptatem doloremque ex aut enim quo ut eaque nemo quod voluptatem quo ut labore soluta rerum iste suscipit vitae accusantium a et et praesentium quaerat mollitia animi consequatur autem eum nesciunt quia facilis sit placeat aliquid saepe vel aut ab laudantium occaecati sint doloremque facilis vel consequatur laborum veniam rerum rerum voluptates aspernatur tempora ullam necessitatibus est repellat sunt dolores modi ipsa et dolor et tempore quod aut sunt non aperiam quidem a voluptate ratione repellat voluptas hic sit nam ea illo architecto rerum voluptas non quasi deserunt omnis officia eaque consequuntur ea cum amet deserunt est ad et quaerat animi assumenda qui et suscipit delectus dicta quod aut consectetur labore sed soluta quia nihil qui minus esse provident voluptates est sequi praesentium eos fugit atque animi quia facere provident dolor necessitatibus non non repellat debitis distinctio doloribus rerum earum asperiores.                    </div>
+
+                  <div class="uk-width-1-1"> <%= user.NIK %> </div>
                 </div>
             </div>
         </div>
 
+            <% }) %>
+        <% } %>
     </div>
 </div>
     <!-- google web fonts -->

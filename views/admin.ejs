@@ -60,15 +60,15 @@
                           <tbody>
                             <% users.forEach((user) => { %>
                           <tr>
-                              <td><%= user.NIK%></td>
-                              <td><%= user.USERNAME%></td>
-                              <td><%= user.NAMA%></td>
-                              <td><%= user.PERAN%></td>
-                              <td><%= user.PASSWORD%></td>
-                              <td><%= user.POIN_MEJA%></td>
+                              <td><%= user.nik%></td>
+                              <td><%= user.username%></td>
+                              <td><%= user.nama%></td>
+                              <td><%= user.peran%></td>
+                              <td><%= user.password%></td>
+                              <td><%= user.poin_meja%></td>
                               <td>
                                   <!-- <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>" >Edit</a> -->
-                                  <a href="/admin/pengguna/<%= user.NIK %>" class="btn " data-id="<%= user.NIK %>" >Edit</a>
+                                  <a href="/admin/pengguna/<%= user.NIK %>" class="btn " data-id="<%= user.nik %>" >Edit</a>
                                   <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>">Delete</a>
                               </td>
                           </tr>

@@ -11,8 +11,6 @@ module.exports = class Pengguna {
   }
 
 save(){
-  console.log("kedua");
-  console.log(this.nik, this.username, this.name, this.peran, this.password, this.poin_meja);
 
   return db.execute('INSERT INTO PENGGUNA ( NIK, USERNAME, NAMA, PERAN, PASSWORD, POIN_MEJA) VALUES (? , ? , ?, ?, ? , ?)',
     [this.nik, this.username, this.name, this.peran, this.password, this.poin_meja]
@@ -22,5 +20,9 @@ save(){
 
   static fetchAll(){
     return db.execute('SELECT * FROM PENGGUNA');
+  }
+
+  static findById(id){
+    return db.execute('SELECT * FROM PENGGUNA WHERE PENGGUNA.NIK = ?', [id]);
   }
 };

@@ -37,57 +37,7 @@
 
         <h3 class="heading_b uk-margin-bottom"> <%= pageTitle%> </h3>
 
-        <% %>
-          <h3><%= users.USERNAME %></h3>
-         <%  %>
-
-
-        <% if (path === '/pengguna') {%>
-              <div class="md-card uk-margin-medium-bottom">
-                  <div class="md-card-content">
-                      <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
-                          <thead>
-                              <tr>
-                                  <th rowspan="2">NIK</th>
-                                  <!-- <th colspan="5">HR Information</th> -->
-                              </tr>
-                              <tr>
-                                  <th>Username</th>
-                                  <th>Nama</th>
-                                  <th>Peran</th>
-                                  <th>Password</th>
-                                  <th>Poin Meja</th>
-                                  <th>Aksi</th>
-                              </tr>
-                          </thead>
-
-                          <tbody>
-                            <% users.forEach((user) => { %>
-                          <tr>
-                              <td><%= user.NIK%></td>
-                              <td><%= user.USERNAME%></td>
-                              <td><%= user.NAMA%></td>
-                              <td><%= user.PERAN%></td>
-                              <td><%= user.PASSWORD%></td>
-                              <td><%= user.POIN_MEJA%></td>
-                              <td>
-                                  <!-- <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>" >Edit</a> -->
-                                  <a href="/admin/pengguna/<%= user.NIK %>" class="btn " data-id="<%= user.NIK %>" >Edit</a>
-                                  <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>">Delete</a>
-                              </td>
-                          </tr>
-                            <% }) %>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-
-
-                      <% } %>
-
-                      <!-- <%- include('form'); %> -->
-
-
+        
 
     </div>
 </div>

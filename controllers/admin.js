@@ -1,4 +1,4 @@
-const Pengguna = require('../models/admin');
+const Pengguna = require('../models/pengguna');
 
 
 exports.getAdminDashboard = (req,res) => {

@@ -36,7 +36,7 @@ app.use('/admin',adminRoutes.routes);
 
 
 app.get('/', (req, res) => {
-  res.render('login.ejs');
+  res.render('./login/login.ejs');
 });
 
 app.use(errorController.get404);

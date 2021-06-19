@@ -3,7 +3,7 @@ const Pengguna = require('../models/pengguna');
 
 exports.getAdminDashboard = (req,res) => {
   // res.send('<h1>hello admin</h1>')
-  res.render('admin', {
+  res.render('./admin/admin', {
     pageTitle: 'Dashboard',
     path: '/'
   });
@@ -12,7 +12,7 @@ exports.getAdminDashboard = (req,res) => {
 exports.getDataPengguna = (req,res, next) => {
   Pengguna.findAll()
   .then(pengguna => {
-    res.render('admin', {
+    res.render('./admin/pengguna', {
       users: pengguna,
       pageTitle: 'Pengguna',
       path: '/pengguna'
@@ -38,6 +38,7 @@ exports.postAddDataPengguna = ( req,res, next) => {
   })
   .then(result => {
     console.log(result);
+    res.redirect('/admin/pengguna');
   })
   .catch(err => console.log(err));
 };

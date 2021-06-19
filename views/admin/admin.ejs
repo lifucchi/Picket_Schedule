@@ -13,7 +13,6 @@
 
     <title><%= pageTitle%></title>
 
-
     <!-- uikit -->
     <link rel="stylesheet" href="/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
 
@@ -26,64 +25,15 @@
 </head>
 <body class=" sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
-    <%- include('include/header'); %>
+    <%- include('../include_Admin/header'); %>
     <!-- main header end -->
     <!-- main sidebar -->
-    <%- include('include/sidebar_switch'); %>
+    <%- include('../include_admin/sidebar_switch'); %>
     <!-- main sidebar end -->
 
 <div id="page_content">
     <div id="page_content_inner">
-
         <h3 class="heading_b uk-margin-bottom"> <%= pageTitle%> </h3>
-
-
-        <% if (path === '/pengguna') {%>
-              <div class="md-card uk-margin-medium-bottom">
-                  <div class="md-card-content">
-                      <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
-                          <thead>
-                              <tr>
-                                  <th rowspan="2">NIK</th>
-                                  <!-- <th colspan="5">HR Information</th> -->
-                              </tr>
-                              <tr>
-                                  <th>Username</th>
-                                  <th>Nama</th>
-                                  <th>Peran</th>
-                                  <th>Password</th>
-                                  <th>Poin Meja</th>
-                                  <th>Aksi</th>
-                              </tr>
-                          </thead>
-
-                          <tbody>
-                            <% users.forEach((user) => { %>
-                          <tr>
-                              <td><%= user.nik%></td>
-                              <td><%= user.username%></td>
-                              <td><%= user.nama%></td>
-                              <td><%= user.peran%></td>
-                              <td><%= user.password%></td>
-                              <td><%= user.poin_meja%></td>
-                              <td>
-                                  <!-- <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>" >Edit</a> -->
-                                  <a href="/admin/pengguna/<%= user.NIK %>" class="btn " data-id="<%= user.nik %>" >Edit</a>
-                                  <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>">Delete</a>
-                              </td>
-                          </tr>
-                            <% }) %>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-
-
-                      <% } %>
-
-                      <%- include('form'); %>
-
-
 
     </div>
 </div>
@@ -115,7 +65,7 @@
     <!-- altair common functions/helpers -->
     <script src="/assets/js/altair_admin_common.min.js"></script>
 
-    <%- include('include/datatables'); %>
+
     <script>
         $(function() {
             // enable hires images

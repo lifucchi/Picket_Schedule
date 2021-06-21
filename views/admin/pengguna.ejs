@@ -2,28 +2,9 @@
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Remove Tap Highlight on Windows Phone IE -->
-    <meta name="msapplication-tap-highlight" content="no"/>
-
-    <link rel="icon" type="image/png" href="/assets/img/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="/assets/img/favicon-32x32.png" sizes="32x32">
-
-    <title><%= pageTitle%></title>
-
-
-    <!-- uikit -->
-    <link rel="stylesheet" href="/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
-
-    <!-- flag icons -->
-    <link rel="stylesheet" href="/assets/icons/flags/flags.min.css" media="all">
-
-    <!-- altair admin -->
-    <link rel="stylesheet" href="/assets/css/main.min.css" media="all">
-
+    <%- include('../include/head'); %>
 </head>
+
 <body class=" sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
     <%- include('../include_Admin/header'); %>
@@ -34,13 +15,12 @@
 
 <div id="page_content">
     <div id="page_content_inner">
-
         <div class="uk-grid" data-uk-grid-margin="">
                 <div class="uk-width-medium-8-10 uk-row-first">
                       <h3 class="heading_b uk-margin-bottom"> <%= pageTitle%> </h3>
                 </div>
                 <div class="uk-width-medium-2-10">
-                      <button class="md-btn" data-uk-modal="{target:'#modal_header_footer'}">Tambah Pengguna</button>
+                      <button class="md-btn" data-uk-modal="{target:'#modal_header_footer'}">Tambah <%= pageTitle%></button>
                 </div>
             </div>
         <% if (path === '/pengguna') {%>
@@ -85,16 +65,11 @@
 
                       <% } %>
 
-
-
-
-
                       <!-- modal tambah -->
-
                       <div class="uk-modal" id="modal_header_footer">
                           <div class="uk-modal-dialog">
                               <div class="uk-modal-header">
-                                  <h3 class="uk-modal-title">Tambah Pengguna</h3>
+                                  <h3 class="uk-modal-title">Tambah <%= pageTitle%></h3>
                               </div>
                               <form action="/admin/pengguna" method="post">
                                   <div class="md-card-content">
@@ -112,8 +87,6 @@
                                                           <input id='nama' name='nama' type="text" class="md-input" />
                                                       </div>
                                                   </div>
-
-
                                               </div>
                                               <div class="uk-form-row">
                                                 <div class="uk-grid">
@@ -132,7 +105,15 @@
                                                 <div class="uk-grid">
                                                   <div class="uk-width-medium-1-2">
                                                       <label>Peran</label>
-                                                      <input id='peran' name='peran' type="text" class="md-input"  />
+                                                      <!-- <input id='peran' name='peran' type="text" class="md-input" class="data-md-selectize"  /> -->
+                                                      <div class="" style="index-z:10;">
+                                                        <select name='peran' id='peran' class="md-input" >
+                                                            <option value="">Select... </option>
+                                                            <option value="Admin">Admin</option>
+                                                            <option value="Pengguna">Pengguna</option>
+                                                            <option value="Fasilitator">Fasilitator</option>
+                                                        </select>
+                                                      </div>
                                                   </div>
 
                                                   <div class="uk-width-medium-1-2">
@@ -142,14 +123,10 @@
                                                 </div>
                                               </div>
                                           </div>
-
                                       </div>
                                       <div class="uk-grid" data-uk-grid-margin>
                                           <div class="uk-width-medium-1">
                                               <div class="uk-input-group">
-                                                  <!-- <span class="uk-input-group-addon"><a class="md-btn" type="submit" >Save</a></span> -->
-                                                  <!-- <button type="submit" name="button">Save</button> -->
-                                                      <!-- <button type="submit" name="button">Save</button> -->
                                               </div>
                                           </div>
                                       </div>
@@ -160,10 +137,6 @@
                           </form>
                           </div>
                       </div>
-
-
-
-
 
     </div>
 </div>

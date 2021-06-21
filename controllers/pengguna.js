@@ -20,14 +20,24 @@ exports.postAddDataPengguna = ( req,res, next) => {
   const peran = req.body.peran;
   const password = req.body.password;
   const poin_meja = req.body.poin_meja;
-  hashedPassword = bcrypt.hashSync(password,12);
-  Pengguna.create({
-    nik: nik,
-    username: username,
-    nama: nama,
-    peran: peran,
-    password: hashedPassword,
-    poin_meja:poin_meja
+
+  Pengguna.findByPk(nik)
+  .then( pengguna =>{
+    if (pengguna) {
+      console.log("pengguna ada");
+      return res.redirect('/admin/pengguna');
+    }
+    return bcrypt.hashSync(password,12)
+    .then(hashedPassword => {
+      const pengguna = Pengguna.create({
+        nik: nik,
+        username: username,
+        nama: nama,
+        peran: peran,
+        password: hashedPassword,
+        poin_meja:poin_meja}
+      )
+      });
   })
   .then(result => {
     console.log(result);

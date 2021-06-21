@@ -35,8 +35,14 @@
 <div id="page_content">
     <div id="page_content_inner">
 
-        <h3 class="heading_b uk-margin-bottom"> <%= pageTitle%> </h3>
-
+        <div class="uk-grid" data-uk-grid-margin="">
+                <div class="uk-width-medium-8-10 uk-row-first">
+                      <h3 class="heading_b uk-margin-bottom"> <%= pageTitle%> </h3>
+                </div>
+                <div class="uk-width-medium-2-10">
+                      <button class="md-btn" data-uk-modal="{target:'#modal_header_footer'}">Tambah Pengguna</button>
+                </div>
+            </div>
         <% if (path === '/pengguna') {%>
               <div class="md-card uk-margin-medium-bottom">
                   <div class="md-card-content">
@@ -67,8 +73,8 @@
                               <td><%= user.poin_meja%></td>
                               <td>
                                   <!-- <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>" >Edit</a> -->
-                                  <a href="/admin/pengguna/<%= user.NIK %>" class="btn " data-id="<%= user.nik %>" >Edit</a>
-                                  <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>">Delete</a>
+                                  <a data-uk-modal="{target:'#modal_header_footer'}" class="btn " data-id="<%= user.nik %>" ><i class="material-icons md-24"></i></a>
+                                  <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>"> <i class="material-icons md-24"></i>  </a>
                               </td>
                           </tr>
                             <% }) %>
@@ -77,10 +83,85 @@
                   </div>
               </div>
 
-
                       <% } %>
 
-                      <%- include('../form'); %>
+
+
+
+
+                      <!-- modal tambah -->
+
+                      <div class="uk-modal" id="modal_header_footer">
+                          <div class="uk-modal-dialog">
+                              <div class="uk-modal-header">
+                                  <h3 class="uk-modal-title">Tambah Pengguna</h3>
+                              </div>
+                              <form action="/admin/pengguna" method="post">
+                                  <div class="md-card-content">
+                                      <div class="uk-grid" data-uk-grid-margin>
+                                          <div class="uk-width-medium">
+                                              <div class="uk-form-row">
+                                                  <div class="uk-grid">
+                                                      <div class="uk-width-medium-1-2">
+                                                          <label>NIK</label>
+                                                          <input id='nik' name='nik' type="text" class="md-input" />
+                                                      </div>
+
+                                                      <div class="uk-width-medium-1-2">
+                                                          <label>Nama</label>
+                                                          <input id='nama' name='nama' type="text" class="md-input" />
+                                                      </div>
+                                                  </div>
+
+
+                                              </div>
+                                              <div class="uk-form-row">
+                                                <div class="uk-grid">
+                                                    <div class="uk-width-medium-1-2">
+                                                        <label>Username</label>
+                                                        <input id='username' name= 'username' type="text" class="md-input"  />
+                                                    </div>
+                                                    <div class="uk-width-medium-1-2">
+                                                        <label>Password</label>
+                                                        <input id='password' name= 'password' type="password" class="md-input"  />
+                                                    </div>
+                                                </div>
+                                              </div>
+
+                                              <div class="uk-form-row">
+                                                <div class="uk-grid">
+                                                  <div class="uk-width-medium-1-2">
+                                                      <label>Peran</label>
+                                                      <input id='peran' name='peran' type="text" class="md-input"  />
+                                                  </div>
+
+                                                  <div class="uk-width-medium-1-2">
+                                                      <label>Poin Meja</label>
+                                                      <input id='poin_meja' name='poin_meja' type="number" class="md-input"  />
+                                                  </div>
+                                                </div>
+                                              </div>
+                                          </div>
+
+                                      </div>
+                                      <div class="uk-grid" data-uk-grid-margin>
+                                          <div class="uk-width-medium-1">
+                                              <div class="uk-input-group">
+                                                  <!-- <span class="uk-input-group-addon"><a class="md-btn" type="submit" >Save</a></span> -->
+                                                  <!-- <button type="submit" name="button">Save</button> -->
+                                                      <!-- <button type="submit" name="button">Save</button> -->
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              <div class="uk-modal-footer uk-text-right">
+                                  <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button><button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                              </div>
+                          </form>
+                          </div>
+                      </div>
+
+
 
 
 

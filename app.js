@@ -4,7 +4,7 @@ const express = require('express');
 const bodyPaser = require('body-parser');
 
 const session = require('express-session');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 

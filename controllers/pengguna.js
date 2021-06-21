@@ -1,4 +1,5 @@
 const Pengguna = require('../models/pengguna');
+const bcrypt = require('bcryptjs');
 
 exports.getDataPengguna = (req,res, next) => {
   Pengguna.findAll()
@@ -19,12 +20,13 @@ exports.postAddDataPengguna = ( req,res, next) => {
   const peran = req.body.peran;
   const password = req.body.password;
   const poin_meja = req.body.poin_meja;
+  hashedPassword = bcrypt.hashSync(password,12);
   Pengguna.create({
     nik: nik,
     username: username,
     nama: nama,
     peran: peran,
-    password: password,
+    password: hashedPassword,
     poin_meja:poin_meja
   })
   .then(result => {

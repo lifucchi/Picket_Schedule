@@ -18,7 +18,7 @@ router.get('/pengguna' , penggunaController.getDataPengguna );
 router.post('/pengguna' , penggunaController.postAddDataPengguna );
 router.post('/pengguna/edit' , penggunaController.postEditPengguna );
 router.post('/pengguna/delete-pengguna' , penggunaController.postDeletePengguna );
-
+router.post('/pengguna/reset-password' , penggunaController.postResetPassword );
 // Jadwal piket
 router.get('/jadwalpiket' , jadwalPiketController.getDataJadwalPiket );
 

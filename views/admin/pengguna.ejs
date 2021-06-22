@@ -54,11 +54,14 @@
                                   <!-- <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>" >Edit</a> -->
                                   <button  href="javascript:void(0);" class="btn edit" data-nik="<%= user.nik %>" data-username= "<%= user.username%>" data-nama="<%= user.nama%>" data-peran="<%= user.peran%>" data-password="<%= user.password%>" data-poinmeja="<%= user.poin_meja%>"><i class="material-icons md-24"></i></button>
                                   <!-- <a  href="javascript:void(0);" class="btn delete" data-nik="<%= user.nik %>"> <i class="material-icons md-24"></i>  </a> -->
-                                  <a  class="md-btn md-btn-primary md-btn-small md-btn-wave-light waves-effect waves-button waves-light" href="#">Reset Password</a>
                                   <!-- <a class="md-btn md-btn-primary md-btn-wave-light waves-effect waves-button waves-light" href="#">Reset Password</a> -->
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/delete-pengguna" method="POST">
                                       <input type="hidden" value="<%= user.nik %>" name="penggunaId">
                                       <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                  </form>
+                                  <form  onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/reset-password" method="POST">
+                                    <input type="hidden" value="<%= user.nik %>" name="penggunaId">
+                                    <button type="submit" class="md-btn md-btn-primary md-btn-small md-btn-wave-light waves-effect waves-button waves-light" >Reset Password</button>
                                   </form>
                               </td>
                           </tr>

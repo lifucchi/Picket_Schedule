@@ -77,8 +77,25 @@ exports.postEditPengguna = ( req,res, next) => {
       return pengguna.save();
     })
     .then(result => {
-      console.log('UPDATED PRODUCT!');
+      console.log('UPDATED PENGGUNA!');
       res.redirect('/admin/pengguna');
     })
     .catch(err => console.log(err));
+};
+
+exports.postResetPassword = (req,res,next) => {
+const nikUp = req.body.penggunaId;
+  Pengguna.findByPk(nikUp)
+    .then( pengguna => {
+        return bcrypt.hash(nikUp,12)
+        .then(hashedPassword => {
+          pengguna.password = hashedPassword;
+          return pengguna.save();
+      })
+    }).then(result => {
+      console.log('UPDATED PASSWORD!');
+      res.redirect('/admin/pengguna');
+    })
+    .catch(err => console.log(err));
+
 };

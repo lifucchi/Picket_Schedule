@@ -16,7 +16,8 @@ router.get('/' , adminController.getAdminDashboard );
 // pengguna
 router.get('/pengguna' , penggunaController.getDataPengguna );
 router.post('/pengguna' , penggunaController.postAddDataPengguna );
-// router.get('/pengguna/:penggunaId' , adminController.getDetailDataPengguna );
+// router.post('/pengguna/edit' , penggunaController.postEditPengguna );
+// router.post('/pengguna/delete-pengguna' , penggunaController.postDeletePengguna );
 
 // Jadwal piket
 router.get('/jadwalpiket' , jadwalPiketController.getDataJadwalPiket );

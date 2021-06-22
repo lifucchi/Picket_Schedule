@@ -41,6 +41,7 @@
                                   <th>Aksi</th>
                               </tr>
                           </thead>
+
                           <tbody>
                             <% users.forEach((user) => { %>
                           <tr>
@@ -52,8 +53,12 @@
                               <td><%= user.poin_meja%></td>
                               <td>
                                   <!-- <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>" >Edit</a> -->
-                                  <a  href="javascript:void(0);" class="btn edit" data-nik="<%= user.nik %>" data-username= "<%= user.username%>" data-nama="<%= user.nama%>" data-peran="<%= user.peran%>" data-password="<%= user.password%>" data-poinmeja="<%= user.poin_meja%>"><i id="edit2" class="material-icons md-24"></i></a>
-                                  <a  href="javascript:void(0);" class="btn delete" data-nik="<%= user.nik %>"> <i class="material-icons md-24"></i>  </a>
+                                  <button  href="javascript:void(0);" class="btn edit" data-nik="<%= user.nik %>" data-username= "<%= user.username%>" data-nama="<%= user.nama%>" data-peran="<%= user.peran%>" data-password="<%= user.password%>" data-poinmeja="<%= user.poin_meja%>"><i id="edit2" class="material-icons md-24"></i></button>
+                                  <form action="/admin/pengguna/delete-pengguna" method="POST">
+                                      <input type="hidden" value="<%= user.nik %>" name="penggunaId">
+                                      <button onclick="UIkit.modal.confirm('Are you sure?', function(){ UIkit.modal.alert('Confirmed!'); });" href="javascript:void(0);" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                  </form>
+
                                   <a  class="md-btn md-btn-primary md-btn-small md-btn-wave-light waves-effect waves-button waves-light" href="#">Reset Password</a>
                                   <!-- <a class="md-btn md-btn-primary md-btn-wave-light waves-effect waves-button waves-light" href="#">Reset Password</a> -->
                               </td>
@@ -63,6 +68,7 @@
                       </table>
                   </div>
               </div>
+
                       <% } %>
 
               <!-- modal tambah -->
@@ -144,7 +150,7 @@
                       <div class="uk-modal-header">
                           <h3 class="uk-modal-title">Edit <%= pageTitle%></h3>
                       </div>
-                      <form action="/admin/pengguna" method="post">
+                      <form action="/admin/pengguna/edit" method="post">
                           <div class="md-card-content">
                               <div class="uk-grid" data-uk-grid-margin>
                                   <div class="uk-width-medium">
@@ -152,12 +158,12 @@
                                           <div class="uk-grid">
                                               <div class="uk-width-medium-1-2">
                                                   <label>NIK</label>
-                                                  <input id='nik_edit' name='nik' type="text" class="md-input label-fixed" disabled />
+                                                  <input id="nik_edit" name='nik' type="text" class="md-input label-fixed nik_edit" disabled />
                                               </div>
 
                                               <div class="uk-width-medium-1-2">
                                                   <label>Nama</label>
-                                                  <input id='nama_edit' name='nama' type="text" class="md-input label-fixed" required/>
+                                                  <input id='nama_edit' name='nama' type="text" class="md-input label-fixed nama_edit" required/>
                                               </div>
                                           </div>
                                       </div>
@@ -165,7 +171,7 @@
                                         <div class="uk-grid">
                                             <div class="uk-width-medium-1-2">
                                                 <label>Username</label>
-                                                <input id='username_edit' name= 'username' type="text" class="md-input label-fixed" required />
+                                                <input id='username_edit' name= 'username' type="text" class="md-input label-fixed username_edit" required />
                                             </div>
                                             <!-- <div class="uk-width-medium-1-2">
                                                 <label>Password</label>
@@ -180,7 +186,7 @@
                                               <!-- <label>Peran</label> -->
                                               <!-- <input id='peran' name='peran' type="text" class="md-input" class="data-md-selectize"  /> -->
                                               <div class="" style="index-z:10;">
-                                                <select name='peran' id='peran_edit' class="md-input label-fixed" required >
+                                                <select name='peran' id='peran_edit' class="md-input label-fixed peran_edit" required >
                                                     <option value="">Peran... </option>
                                                     <option value="Admin">Admin</option>
                                                     <option value="Pengguna">Anggota</option>
@@ -191,7 +197,7 @@
 
                                           <div class="uk-width-medium-1-2">
                                               <label>Poin Meja</label>
-                                              <input id='poin_meja_edit' name='poin_meja' type="number" class="md-input label-fixed" required />
+                                              <input id='poin_meja_edit' name='poin_meja' type="number" class="md-input label-fixed poin_meja_edit" required />
                                           </div>
                                         </div>
                                       </div>
@@ -205,11 +211,15 @@
                               </div>
                           </div>
                       <div class="uk-modal-footer uk-text-right">
-                          <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button><button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                          <input id='nik_id' name='nik' type="text" class="md-input label-fixed nik_edit" hidden />
+                          <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
+                          <button id='simpan' class="md-btn md-btn-flat md-btn-flat-primary simpan">Edit</button>
                       </div>
                   </form>
                   </div>
               </div>
+
+
 
     </div>
 </div>
@@ -250,6 +260,7 @@
             if(Modernizr.touch) {
                 FastClick.attach(document.body);
             }
+
             $('#dt_default').on( 'click', '.edit', function () {
                 var pengguna_nik = $(this).data('nik');
                 var pengguna_username = $(this).data('username');
@@ -264,7 +275,16 @@
                 // $('#password_edit').val(pengguna_password);
                 $('#peran_edit').val(pengguna_peran);
                 $('#poin_meja_edit').val(pengguna_poinmeja);
-            } );
+                // $('#simpan').click(function(){
+                //     $('#simpan').removeAttr("type").attr("type", "submit");
+                // });
+              });
+
+              $('#dt_default').on( 'click', '.delete', function () {
+
+
+                });
+
         });
     </script>
 

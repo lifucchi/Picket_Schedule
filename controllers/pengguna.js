@@ -45,3 +45,18 @@ exports.postAddDataPengguna = ( req,res, next) => {
   })
   .catch(err => console.log(err));
 };
+
+
+exports.postDeletePengguna = ( req,res, next) => {
+  const nik = req.body.penggunaId;
+  Pengguna.findByPk(nik)
+    .then(pengguna => {
+      return pengguna.destroy();
+    })
+    .then(result => {
+      console.log('DESTROYED PRODUCT');
+      res.redirect('/admin/pengguna');
+    })
+    .catch(err => console.log(err));
+
+};

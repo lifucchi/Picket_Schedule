@@ -60,3 +60,25 @@ exports.postDeletePengguna = ( req,res, next) => {
     .catch(err => console.log(err));
 
 };
+
+exports.postEditPengguna = ( req,res, next) => {
+  const nikUp = req.body.nik_edit2;
+  const usernameUp = req.body.username_edit;
+  const namaUp = req.body.nama_edit;
+  const peranUp = req.body.peran_edit;
+  // const passwordUp = req.body.password_edit;
+  const poin_mejaUp = req.body.poin_meja_edit;
+  Pengguna.findByPk(nikUp)
+    .then(pengguna => {
+      pengguna.username = usernameUp;
+      pengguna.nama = namaUp;
+      pengguna.peran = peranUp;
+      pengguna.poin_meja = poin_mejaUp;
+      return pengguna.save();
+    })
+    .then(result => {
+      console.log('UPDATED PRODUCT!');
+      res.redirect('/admin/pengguna');
+    })
+    .catch(err => console.log(err));
+};

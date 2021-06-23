@@ -10,7 +10,7 @@ const Artikel = sequelize.define('artikel', {
     primaryKey: true,
   },
   judul: {
-    type:Sequelize.STRING(50),
+    type:Sequelize.STRING,
     allowNull: false
   },
   konten: {

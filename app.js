@@ -50,7 +50,8 @@ Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE'});
 
 
 sequelize
-  .sync()
+  // .sync()
+  .sync({alter: true})
   // .sync({force: true})
   .then(result => {
     app.listen(3001);

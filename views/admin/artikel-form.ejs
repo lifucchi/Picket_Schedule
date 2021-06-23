@@ -1,0 +1,143 @@
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <%- include('../include/head'); %>
+</head>
+
+<body class=" sidebar_main_open sidebar_main_swipe">
+    <!-- main header -->
+    <%- include('../include_Admin/header'); %>
+    <!-- main header end -->
+    <!-- main sidebar -->
+    <%- include('../include_admin/sidebar_switch'); %>
+    <!-- main sidebar end -->
+
+<div id="page_content">
+    <div id="page_content_inner">
+        <div class="uk-grid" data-uk-grid-margin="">
+                <div class="uk-width-medium-8-10 uk-row-first">
+                      <h3 class="heading_b uk-margin-bottom"> Tambah <%= pageTitle%> </h3>
+                </div>
+        </div>
+
+        <div class="md-card">
+        <form action="/admin/pengguna" method="post">
+            <div class="md-card-content">
+                <h3 class="heading_a"><%= pageTitle%></h3>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium">
+                        <div class="uk-form-row">
+                            <div class="uk-grid">
+                                <div class="uk-width-medium-1-2">
+                                    <label>NIK</label>
+                                    <input id='nik' name='nik' type="text" class="md-input" />
+                                </div>
+
+                                <div class="uk-width-medium-1-2">
+                                    <label>Nama</label>
+                                    <input id='nama' name='nama' type="text" class="md-input" />
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="uk-form-row">
+                          <div class="uk-grid">
+                              <div class="uk-width-medium-1-2">
+                                  <label>Username</label>
+                                  <input id='username' name= 'username' type="text" class="md-input"  />
+                              </div>
+                              <div class="uk-width-medium-1-2">
+                                  <label>Password</label>
+                                  <input id='password' name= 'password' type="password" class="md-input"  />
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="uk-form-row">
+                          <div class="uk-grid">
+                            <div class="uk-width-medium-1-2">
+                                <label>Peran</label>
+                                <!-- <input id='peran' name='peran' type="text" class="md-input" class="data-md-selectize"  /> -->
+                                <div class="" style="index-z:10;">
+                                  <select name='peran' id='peran' class="md-input" >
+                                      <option value="">Select... </option>
+                                      <option value="Admin">Admin</option>
+                                      <option value="Pengguna">Pengguna</option>
+                                      <option value="Fasilitator">Fasilitator</option>
+                                  </select>
+                                </div>
+                            </div>
+
+                            <div class="uk-width-medium-1-2">
+                                <label>Poin Meja</label>
+                                <input id='poin_meja' name='poin_meja' type="number" class="md-input"  />
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1">
+                        <div class="uk-input-group">
+                            <!-- <span class="uk-input-group-addon"><a class="md-btn" type="submit" >Save</a></span> -->
+                            <!-- <button type="submit" name="button">Save</button> -->
+                                <button type="submit" name="button">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+
+
+    </div>
+</div>
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <!-- common functions -->
+    <script src="/assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="/assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="/assets/js/altair_admin_common.min.js"></script>
+
+    <%- include('../include_admin/datatables'); %>
+    <script>
+        $(function() {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if(Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+
+        });
+    </script>
+
+
+</body>
+</html>

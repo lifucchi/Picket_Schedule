@@ -1,0 +1,117 @@
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <%- include('../include/head'); %>
+</head>
+
+<body class=" sidebar_main_open sidebar_main_swipe">
+    <!-- main header -->
+    <%- include('../include_Admin/header'); %>
+    <!-- main header end -->
+    <!-- main sidebar -->
+    <%- include('../include_admin/sidebar_switch'); %>
+    <!-- main sidebar end -->
+
+<div id="page_content">
+    <div id="page_content_inner">
+        <div class="uk-grid" data-uk-grid-margin="">
+                <div class="uk-width-medium-8-10 uk-row-first">
+                      <h3 class="heading_b uk-margin-bottom"> <%= pageTitle%> </h3>
+                </div>
+                <div class="uk-width-medium-2-10">
+                      <button class="md-btn" data-uk-modal="{target:'#modal_header_footer'}">Tambah <%= pageTitle%></button>
+                </div>
+            </div>
+        <% if (path === '/artikel') {%>
+              <div class="md-card uk-margin-medium-bottom">
+                  <div class="md-card-content">
+                      <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
+                          <thead>
+                              <tr>
+                                  <th rowspan="2">ID</th>
+                                  <!-- <th colspan="5">HR Information</th> -->
+                              </tr>
+                              <tr>
+                                  <th>Judul</th>
+                                  <th>Konten</th>
+                                  <th>Pembuat</th>
+                                  <th>Foto Artikel</th>
+                                  <th>Aksi</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            <% articles.forEach((article) => { %>
+                          <tr>
+                            <td><%= article.id%></td>
+                              <td><%= article.judul%></td>
+                              <td><%= article.konten%></td>
+                              <td><%= article.pembuat%></td>
+                              <td><%= article.foto_artikel%></td>
+                              <td>
+                                  <!-- <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>" >Edit</a> -->
+                                  <button  href="javascript:void(0);" class="btn edit" data-nik="<%= article.id %>" ><i class="material-icons md-24"></i></button>
+                                  <!-- <a  href="javascript:void(0);" class="btn delete" data-nik="<%= user.nik %>"> <i class="material-icons md-24"></i>  </a> -->
+                                  <!-- <a class="md-btn md-btn-primary md-btn-wave-light waves-effect waves-button waves-light" href="#">Reset Password</a> -->
+                                  <form onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/delete-artikel" method="POST">
+                                      <input type="hidden" value="<%= user.nik %>" name="penggunaId">
+                                      <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                  </form>
+                              </td>
+                          </tr>
+                            <% }) %>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+                      <% } %>
+
+
+
+
+    </div>
+</div>
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <!-- common functions -->
+    <script src="/assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="/assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="/assets/js/altair_admin_common.min.js"></script>
+
+    <%- include('../include_admin/datatables'); %>
+    <script>
+        $(function() {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if(Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+
+        });
+    </script>
+
+
+</body>
+</html>

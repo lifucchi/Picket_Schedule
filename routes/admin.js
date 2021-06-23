@@ -9,7 +9,7 @@ const router = express.Router();
 const adminController = require('../controllers/admin');
 const penggunaController = require('../controllers/pengguna');
 const jadwalPiketController = require('../controllers/jadwalpiket');
-
+const artikelController = require('../controllers/artikel');
 // dashboard
 router.get('/' , adminController.getAdminDashboard );
 
@@ -22,5 +22,7 @@ router.post('/pengguna/reset-password' , penggunaController.postResetPassword );
 // Jadwal piket
 router.get('/jadwalpiket' , jadwalPiketController.getDataJadwalPiket );
 
+// artikel
+router.get('/artikel' , artikelController.getDataArtikel );
 exports.routes = router;
 // exports.products = products;

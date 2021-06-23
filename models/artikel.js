@@ -5,8 +5,9 @@ const sequelize = require('../util/database');
 const Artikel = sequelize.define('artikel', {
   id: {
     type: Sequelize.INTEGER,
+    autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   judul: {
     type:Sequelize.STRING(50),
@@ -21,8 +22,8 @@ const Artikel = sequelize.define('artikel', {
     allowNull: false
   },
   foto_Artikel: {
-    type: Sequelize.BLOB('long'),
-    allowNull: false
+    type: Sequelize.BLOB('long')
+    // allowNull: false
   }
 });
 

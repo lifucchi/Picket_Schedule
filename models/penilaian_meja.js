@@ -4,9 +4,10 @@ const sequelize = require('../util/database');
 
 const Penilaian_meja = sequelize.define('penilaian_meja', {
   id: {
+    autoIncrement: true,
     type: Sequelize.INTEGER,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   bobotmeja: {
     type:Sequelize.INTEGER,

@@ -5,8 +5,9 @@ const sequelize = require('../util/database');
 const Ruang = sequelize.define('ruang', {
   id: {
     type: Sequelize.INTEGER,
+    autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   nama_ruang: {
     type:Sequelize.STRING,

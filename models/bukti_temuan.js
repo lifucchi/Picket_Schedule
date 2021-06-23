@@ -5,8 +5,9 @@ const sequelize = require('../util/database');
 const Bukti_temuan = sequelize.define('bukti_temuan', {
   id: {
     type: Sequelize.INTEGER,
+    autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   fotosebelum: {
     type: Sequelize.BLOB('long'),

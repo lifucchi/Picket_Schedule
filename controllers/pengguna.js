@@ -27,7 +27,6 @@ exports.postAddDataPengguna = ( req,res, next) => {
       console.log("pengguna ada");
       return res.redirect('/admin/pengguna');
     }
-
     return bcrypt.hash(password,12)
     .then(hashedPassword => {
       const pengguna = Pengguna.create({
@@ -97,5 +96,4 @@ const nikUp = req.body.penggunaId;
       res.redirect('/admin/pengguna');
     })
     .catch(err => console.log(err));
-
 };

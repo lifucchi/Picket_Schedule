@@ -53,12 +53,9 @@
                               <td><%= article.pembuat%></td>
                               <td><%= article.foto_artikel%></td>
                               <td>
-                                  <!-- <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>" >Edit</a> -->
                                   <button  href="javascript:void(0);" class="btn edit" data-nik="<%= article.id %>" ><i class="material-icons md-24"></i></button>
-                                  <!-- <a  href="javascript:void(0);" class="btn delete" data-nik="<%= user.nik %>"> <i class="material-icons md-24"></i>  </a> -->
-                                  <!-- <a class="md-btn md-btn-primary md-btn-wave-light waves-effect waves-button waves-light" href="#">Reset Password</a> -->
-                                  <form onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/delete-artikel" method="POST">
-                                      <input type="hidden" value="<%= user.nik %>" name="penggunaId">
+                                  <form onsubmit="return confirm('Are you sure?');" action="/admin/artikel/delete-artikel" method="POST">
+                                      <input type="hidden" value="<%= article.id %>" name="artikelId">
                                       <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
                                   </form>
                               </td>

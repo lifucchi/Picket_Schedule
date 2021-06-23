@@ -17,26 +17,30 @@
     <div id="page_content_inner">
         <div class="uk-grid" data-uk-grid-margin="">
                 <div class="uk-width-medium-8-10 uk-row-first">
-                      <h3 class="heading_b uk-margin-bottom"> Tambah <%= pageTitle%> </h3>
+                      <h3 class="heading_b uk-margin-bottom"> <%= jenis %> <%= pageTitle%> </h3>
                 </div>
         </div>
 
         <div class="md-card">
-        <form action="/admin/pengguna" method="post">
+        <form action="/admin/artikel/add" method="post">
             <div class="md-card-content">
-                <h3 class="heading_a"><%= pageTitle%></h3>
+                <!-- <h3 class="heading_a"><%= pageTitle%></h3> -->
                 <div class="uk-grid" data-uk-grid-margin>
                     <div class="uk-width-medium">
                         <div class="uk-form-row">
                             <div class="uk-grid">
-                                <div class="uk-width-medium-1-2">
+                                <!-- <div class="uk-width-medium-1-2">
                                     <label>NIK</label>
                                     <input id='nik' name='nik' type="text" class="md-input" />
-                                </div>
+                                </div> -->
 
                                 <div class="uk-width-medium-1-2">
-                                    <label>Nama</label>
-                                    <input id='nama' name='nama' type="text" class="md-input" />
+                                    <label>Judul</label>
+                                    <input id='judul' name='judul' type="text" class="md-input" />
+                                </div>
+                                <div class="uk-width-medium-1-2">
+                                    <label>Pembuat</label>
+                                    <input id='pembuat' name= 'pembuat' type="text" class="md-input"  />
                                 </div>
                             </div>
 
@@ -44,38 +48,26 @@
                         </div>
                         <div class="uk-form-row">
                           <div class="uk-grid">
-                              <div class="uk-width-medium-1-2">
-                                  <label>Username</label>
-                                  <input id='username' name= 'username' type="text" class="md-input"  />
+                              <div class="uk-width-medium-1">
+                                  <label>Konten</label>
+                                  <!-- <input id='konten' name= 'konten' type="text" class="md-input"  /> -->
+                                  <textarea name="konten" id="wysiwyg_ckeditor" cols="30" rows="20">
+                                        test
+                                  </textarea>
+
                               </div>
-                              <div class="uk-width-medium-1-2">
-                                  <label>Password</label>
-                                  <input id='password' name= 'password' type="password" class="md-input"  />
-                              </div>
+
                           </div>
                         </div>
 
-                        <div class="uk-form-row">
+                        <!-- <div class="uk-form-row">
                           <div class="uk-grid">
                             <div class="uk-width-medium-1-2">
-                                <label>Peran</label>
-                                <!-- <input id='peran' name='peran' type="text" class="md-input" class="data-md-selectize"  /> -->
-                                <div class="" style="index-z:10;">
-                                  <select name='peran' id='peran' class="md-input" >
-                                      <option value="">Select... </option>
-                                      <option value="Admin">Admin</option>
-                                      <option value="Pengguna">Pengguna</option>
-                                      <option value="Fasilitator">Fasilitator</option>
-                                  </select>
-                                </div>
-                            </div>
-
-                            <div class="uk-width-medium-1-2">
-                                <label>Poin Meja</label>
-                                <input id='poin_meja' name='poin_meja' type="number" class="md-input"  />
+                                <label>Foto Artikel</label>
+                                <input id='foto_artikel' name='foto_artikel' type="text" class="md-input"  />
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                     </div>
 
                 </div>
@@ -84,11 +76,12 @@
                         <div class="uk-input-group">
                             <!-- <span class="uk-input-group-addon"><a class="md-btn" type="submit" >Save</a></span> -->
                             <!-- <button type="submit" name="button">Save</button> -->
-                                <button type="submit" name="button">Save</button>
+                                <button class="md-btn" type="submit" name="button">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
+
         </form>
 
 
@@ -124,6 +117,15 @@
     <script src="/assets/js/uikit_custom.min.js"></script>
     <!-- altair common functions/helpers -->
     <script src="/assets/js/altair_admin_common.min.js"></script>
+
+    <!-- page specific plugins -->
+    <!-- ckeditor -->
+    <script src="/bower_components/ckeditor/ckeditor.js"></script>
+    <script src="/bower_components/ckeditor/adapters/jquery.js"></script>
+
+    <!--  wysiwyg editors functions -->
+    <script src="/assets/js/pages/forms_wysiwyg.min.js"></script>
+
 
     <%- include('../include_admin/datatables'); %>
     <script>

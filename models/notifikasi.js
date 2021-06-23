@@ -5,8 +5,9 @@ const sequelize = require('../util/database');
 const Notifikasi = sequelize.define('notifikasi', {
   id: {
     type: Sequelize.INTEGER,
+    autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   pesan: {
     type:Sequelize.STRING(50),

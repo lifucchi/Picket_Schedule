@@ -7,7 +7,7 @@ const Jadwal_Piket = sequelize.define('jadwal_piket', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   tanggal: {
     type: Sequelize.DATEONLY,

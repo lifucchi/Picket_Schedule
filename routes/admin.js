@@ -25,7 +25,8 @@ router.get('/jadwalpiket' , jadwalPiketController.getDataJadwalPiket );
 // artikel
 router.get('/artikel' , artikelController.getDataArtikel );
 router.get('/artikel/add' , artikelController.getFormArtikel );
-
+router.post('/artikel/add' , artikelController.postAddDataArtikel );
+router.post('/artikel/delete-artikel', artikelController.postDeleteArtikel);
 
 exports.routes = router;
 // exports.products = products;

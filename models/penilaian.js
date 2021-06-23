@@ -5,8 +5,9 @@ const sequelize = require('../util/database');
 const Penilaian = sequelize.define('penilaian', {
   id: {
     type: Sequelize.INTEGER,
+    autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   nama_penilaian: {
     type:Sequelize.STRING,

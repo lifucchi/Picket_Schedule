@@ -49,7 +49,7 @@
                               <td><%= room.standar%></td>
                               <td><%= room.poin_ruang%></td>
                               <td>
-                                  <button  href="javascript:void(0);" class="btn edit" data-nik="<%= room.id %>" ><i class="material-icons md-24"></i></button>
+                                  <button  href="javascript:void(0);" class="btn edit" data-id="<%= room.id %>" data-namaruang="<%= room.nama_ruang%>" data-level="<%= room.level%>" data-standar="<%= room.standar%>" data-poinruang="<%= room.poin_ruang%>" ><i class="material-icons md-24"></i></button>
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/delete-pengguna" method="POST">
                                       <input type="hidden" value="<%= room.id %>" name="ruangId">
                                       <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
@@ -120,58 +120,35 @@
                       <div class="uk-modal-header">
                           <h3 class="uk-modal-title">Edit <%= pageTitle%></h3>
                       </div>
-                      <form action="/admin/pengguna/edit" method="post">
+                      <form action="/admin/checklistruang" method="post">
                           <div class="md-card-content">
                               <div class="uk-grid" data-uk-grid-margin>
                                   <div class="uk-width-medium">
                                       <div class="uk-form-row">
                                           <div class="uk-grid">
-                                              <div class="uk-width-medium-1-2">
-                                                  <label>NIK</label>
-                                                  <input name='nik_edit2' id='nik_edit2' readonly class="md-input label-fixed nik_edit"/>
-
+                                              <div class="uk-width-medium-1-3">
+                                                  <label>Nama Ruang</label>
+                                                  <input id='nama_ruang_edit' name='nama_ruang_edit' type="text" class="md-input label-fixed" required/>
                                               </div>
-
-                                              <div class="uk-width-medium-1-2">
-                                                  <label>Nama</label>
-                                                  <input name='nama_edit' id= "nama_edit" type="text" class="md-input label-fixed nama_edit" required/>
+                                              <div class="uk-width-medium-1-3">
+                                                  <label>Level</label>
+                                                  <input id='level_edit' name= 'level_edit' type="number" class="md-input label-fixed" required />
+                                              </div>
+                                              <div class="uk-width-medium-1-3">
+                                                  <label>Poin Ruang</label>
+                                                  <input id='poin_ruang_edit' name='poin_ruang_edit' type="number" class="md-input label-fixed" required />
                                               </div>
                                           </div>
                                       </div>
                                       <div class="uk-form-row">
                                         <div class="uk-grid">
-                                            <div class="uk-width-medium-1-2">
-                                                <label>Username</label>
-                                                <input name='username_edit' id='username_edit' type="text" class="md-input label-fixed username_edit" required />
+                                            <div class="uk-width-medium-1-1">
+                                                <label>Standar</label>
+                                                <input id='standar_edit' name= 'standar_edit' type="text" class="md-input label-fixed" required />
                                             </div>
-                                            <!-- <div class="uk-width-medium-1-2">
-                                                <label>Password</label>
-                                                <input id='password_edit' name= 'password' type="password" class="md-input label-fixed" required />
-                                            </div> -->
                                         </div>
                                       </div>
 
-                                      <div class="uk-form-row">
-                                        <div class="uk-grid">
-                                          <div class="uk-width-medium-1-2">
-                                              <!-- <label>Peran</label> -->
-                                              <!-- <input id='peran' name='peran' type="text" class="md-input" class="data-md-selectize"  /> -->
-                                              <div class="" style="index-z:10;">
-                                                <select id='peran_edit'  name='peran_edit' class="md-input label-fixed peran_edit" required >
-                                                    <option value="">Peran... </option>
-                                                    <option value="Admin">Admin</option>
-                                                    <option value="Pengguna">Anggota</option>
-                                                    <option value="Fasilitator">Fasilitator</option>
-                                                </select>
-                                              </div>
-                                          </div>
-
-                                          <div class="uk-width-medium-1-2">
-                                              <label>Poin Meja</label>
-                                              <input name='poin_meja_edit' id='poin_meja_edit' type="number" class="md-input label-fixed poin_meja_edit" required />
-                                          </div>
-                                        </div>
-                                      </div>
                                   </div>
                               </div>
                               <div class="uk-grid" data-uk-grid-margin>
@@ -182,13 +159,12 @@
                               </div>
                           </div>
                       <div class="uk-modal-footer uk-text-right">
-                          <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
-                          <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                          <input id='id' name='id' type="hidden" class="md-input label-fixed" />
+                          <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button><button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
                       </div>
                   </form>
                   </div>
               </div>
-
     </div>
 </div>
     <!-- google web fonts -->
@@ -229,20 +205,17 @@
                 FastClick.attach(document.body);
             }
             $('#dt_default').on( 'click', '.edit', function () {
-                var pengguna_nik = $(this).data('nik');
-                var pengguna_username = $(this).data('username');
-                var pengguna_nama = $(this).data('nama');
-                // var pengguna_password = $(this).data('password');
-                var pengguna_peran = $(this).data('peran');
-                var pengguna_poinmeja = $(this).data('poinmeja');
+                var id = $(this).data('id');
+                var nama_ruang = $(this).data('namaruang');
+                var level = $(this).data('level');
+                var standar = $(this).data('standar');
+                var poinruang = $(this).data('poinruang');
                 $('.edit').attr('data-uk-modal', "{target:'#modal_header_footeredit'}");
-                $('.nik_edit').val(pengguna_nik);
-                $('.nik_edit2').val(pengguna_nik);
-                $('.username_edit').val(pengguna_username);
-                $('.nama_edit').val(pengguna_nama);
-                // $('#password_edit').val(pengguna_password);
-                $('.peran_edit').val(pengguna_peran);
-                $('.poin_meja_edit').val(pengguna_poinmeja);
+                $('#id').val(id);
+                $('#nama_ruang_edit').val(nama_ruang);
+                $('#level_edit').val(level);
+                $('#standar_edit').val(standar);
+                $('#poin_ruang_edit').val(poinruang);
             } );
         });
     </script>

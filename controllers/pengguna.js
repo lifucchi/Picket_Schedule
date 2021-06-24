@@ -19,7 +19,7 @@ exports.postAddDataPengguna = ( req,res, next) => {
   const nama = req.body.nama;
   const peran = req.body.peran;
   const password = req.body.password;
-  const poin_meja = req.body.poin_meja;
+  const level = req.body.level;
 
   Pengguna.findByPk(nik)
   .then( pengguna =>{
@@ -35,7 +35,7 @@ exports.postAddDataPengguna = ( req,res, next) => {
         nama: nama,
         peran: peran,
         password: hashedPassword,
-        poin_meja:poin_meja}
+        level:level}
       )
       })
       .then(result => {
@@ -66,13 +66,13 @@ exports.postEditPengguna = ( req,res, next) => {
   const namaUp = req.body.nama_edit;
   const peranUp = req.body.peran_edit;
   // const passwordUp = req.body.password_edit;
-  const poin_mejaUp = req.body.poin_meja_edit;
+  const levelUp = req.body.level_edit;
   Pengguna.findByPk(nikUp)
     .then(pengguna => {
       pengguna.username = usernameUp;
       pengguna.nama = namaUp;
       pengguna.peran = peranUp;
-      pengguna.poin_meja = poin_mejaUp;
+      pengguna.level =levelUp;
       return pengguna.save();
     })
     .then(result => {

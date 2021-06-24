@@ -20,6 +20,7 @@ const Penilaian_meja = require('./models/penilaian_meja');
 const Penilaian_ruang = require('./models/penilaian_ruang');
 const Penilaian = require('./models/penilaian');
 const Ruang = require('./models/ruang');
+const Meja = require('./models/meja');
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -43,10 +44,12 @@ app.use(errorController.get404);
 
 // sync database
 // Pengguna punya banyak jadwal_piket
-Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nik_pic_fasil' });
-Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE'});
+// Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nik_pic_fasil' });
+// Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE'});
 
-
+// pengguna punya banyak standar Meja
+Pengguna.hasMany(Meja);
+Meja.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE'});
 
 
 sequelize

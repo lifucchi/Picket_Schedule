@@ -1,0 +1,225 @@
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <%- include('../include/head'); %>
+</head>
+
+<body class=" sidebar_main_open sidebar_main_swipe">
+    <!-- main header -->
+    <%- include('../include_Admin/header'); %>
+    <!-- main header end -->
+    <!-- main sidebar -->
+    <%- include('../include_admin/sidebar_switch'); %>
+    <!-- main sidebar end -->
+
+<div id="page_content">
+    <div id="page_content_inner">
+            <div class="uk-grid" data-uk-grid-margin="">
+                <div class="uk-width-medium-8-10 uk-row-first">
+                      <h3 class="heading_b uk-margin-bottom"> <%= pageTitle%> </h3>
+                </div>
+                <div class="uk-width-medium-2-10">
+                      <button class="md-btn" data-uk-modal="{target:'#modal_header_footer'}">Tambah <%= pageTitle%></button>
+                </div>
+            </div>
+        <% if (path === '/checklistmeja') {%>
+              <div class="md-card uk-margin-medium-bottom">
+                  <div class="md-card-content">
+                      <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
+                          <thead>
+                              <tr>
+                                  <th rowspan="2">id</th>
+                                  <!-- <th colspan="5">HR Information</th> -->
+                              </tr>
+                              <tr>
+                                  <th>Pemilik Meja</th>
+                                  <th>Level</th>
+                                  <th>Standar</th>
+                                  <th>Poin Meja</th>
+                                  <th>Aksi</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            <% tables.forEach((table) => { %>
+                          <tr>
+                              <td><%= table.id%></td>
+                              <td><%= table.pengguna.nama%></td>
+                              <td><%= table.pengguna.level%></td>
+                              <td><%= table.standar%></td>
+                              <td><%= table.poin_meja%></td>
+                              <td>
+                                  <button  href="javascript:void(0);" class="btn edit" data-id="<%= table.id %>" data-nama="<%= table.penggunaNik %>" data-level="<%= table.level%>" data-standar="<%= table.standar%>" data-poinmeja="<%= table.poin_meja%>" ><i class="material-icons md-24"></i></button>
+                                  <form onsubmit="return confirm('Are you sure?');" action="/admin//checklistruang/delete-checklistruang" method="POST">
+                                      <input type="hidden" value="<%= table.id %>" name="mejaId">
+                                      <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                  </form>
+                              </td>
+                          </tr>
+                            <% }) %>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+                      <% } %>
+
+              <!-- modal tambah -->
+              <div class="uk-modal" id="modal_header_footer">
+                  <div class="uk-modal-dialog">
+                      <div class="uk-modal-header">
+                          <h3 class="uk-modal-title">Tambah <%= pageTitle%></h3>
+                      </div>
+                      <form action="/admin/checklistruang" method="post">
+                          <div class="md-card-content">
+                              <div class="uk-grid" data-uk-grid-margin>
+                                  <div class="uk-width-medium">
+                                      <div class="uk-form-row">
+                                          <div class="uk-grid">
+                                              <div class="uk-width-medium-1-3">
+                                                  <label>Nama Ruang</label>
+                                                  <input id='nama_ruang' name='nama_ruang' type="text" class="md-input" required/>
+                                              </div>
+                                              <div class="uk-width-medium-1-3">
+                                                  <label>Level</label>
+                                                  <input id='level' name= 'level' type="number" class="md-input" required />
+                                              </div>
+                                              <div class="uk-width-medium-1-3">
+                                                  <label>Poin Ruang</label>
+                                                  <input id='poin_ruang' name='poin_ruang' type="number" class="md-input" required />
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="uk-form-row">
+                                        <div class="uk-grid">
+                                            <div class="uk-width-medium-1-1">
+                                                <label>Standar</label>
+                                                <input id='standar' name= 'standar' type="text" class="md-input" required />
+                                            </div>
+                                        </div>
+                                      </div>
+
+                                  </div>
+                              </div>
+                              <div class="uk-grid" data-uk-grid-margin>
+                                  <div class="uk-width-medium-1">
+                                      <div class="uk-input-group">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      <div class="uk-modal-footer uk-text-right">
+                          <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button><button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                      </div>
+                  </form>
+                  </div>
+              </div>
+
+              <!-- modal edit -->
+              <div class="uk-modal" id="modal_header_footeredit">
+                  <div class="uk-modal-dialog">
+                      <div class="uk-modal-header">
+                          <h3 class="uk-modal-title">Edit <%= pageTitle%></h3>
+                      </div>
+                      <form action="/admin/checklistruang/edit" method="post">
+                          <div class="md-card-content">
+                              <div class="uk-grid" data-uk-grid-margin>
+                                  <div class="uk-width-medium">
+                                      <div class="uk-form-row">
+                                          <div class="uk-grid">
+                                              <div class="uk-width-medium-1-3">
+                                                  <label>Nama Ruang</label>
+                                                  <input id='nama_ruang_edit' name='nama_ruang_edit' type="text" class="md-input label-fixed" required/>
+                                              </div>
+                                              <div class="uk-width-medium-1-3">
+                                                  <label>Level</label>
+                                                  <input id='level_edit' name= 'level_edit' type="number" class="md-input label-fixed" required />
+                                              </div>
+                                              <div class="uk-width-medium-1-3">
+                                                  <label>Poin Ruang</label>
+                                                  <input id='poin_ruang_edit' name='poin_ruang_edit' type="number" class="md-input label-fixed" required />
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="uk-form-row">
+                                        <div class="uk-grid">
+                                            <div class="uk-width-medium-1-1">
+                                                <label>Standar</label>
+                                                <input id='standar_edit' name= 'standar_edit' type="text" class="md-input label-fixed" required />
+                                            </div>
+                                        </div>
+                                      </div>
+
+                                  </div>
+                              </div>
+                              <div class="uk-grid" data-uk-grid-margin>
+                                  <div class="uk-width-medium-1">
+                                      <div class="uk-input-group">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      <div class="uk-modal-footer uk-text-right">
+                          <input id='id' name='id' type="hidden" class="md-input label-fixed" />
+                          <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button><button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                      </div>
+                  </form>
+                  </div>
+              </div>
+    </div>
+</div>
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <!-- common functions -->
+    <script src="/assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="/assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="/assets/js/altair_admin_common.min.js"></script>
+
+    <%- include('../include_admin/datatables'); %>
+    <script>
+        $(function() {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if(Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+            $('#dt_default').on( 'click', '.edit', function () {
+                var id = $(this).data('id');
+                var nama_ruang = $(this).data('namaruang');
+                var level = $(this).data('level');
+                var standar = $(this).data('standar');
+                var poinruang = $(this).data('poinruang');
+                $('.edit').attr('data-uk-modal', "{target:'#modal_header_footeredit'}");
+                $('#id').val(id);
+                $('#nama_ruang_edit').val(nama_ruang);
+                $('#level_edit').val(level);
+                $('#standar_edit').val(standar);
+                $('#poin_ruang_edit').val(poinruang);
+            } );
+        });
+    </script>
+
+
+</body>
+</html>

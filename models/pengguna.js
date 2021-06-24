@@ -21,7 +21,7 @@ const Pengguna = sequelize.define('pengguna', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  poin_meja: {
+  level: {
     type: Sequelize.INTEGER
   }
 });

@@ -11,6 +11,8 @@ const penggunaController = require('../controllers/pengguna');
 const jadwalPiketController = require('../controllers/jadwalpiket');
 const artikelController = require('../controllers/artikel');
 const ruangController = require('../controllers/ruang');
+const mejaController = require('../controllers/meja');
+
 // dashboard
 router.get('/' , adminController.getAdminDashboard );
 
@@ -35,6 +37,8 @@ router.post('/checklistruang',ruangController.postAddDataRuang);
 router.post('/checklistruang/edit',ruangController.postEditRuang);
 router.post('/checklistruang/delete-checklistruang', ruangController.postDeleteRuang );
 
+// checklistmeja
+router.get('/checklistmeja',mejaController.getDataMeja);
 
 
 

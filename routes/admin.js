@@ -10,6 +10,7 @@ const adminController = require('../controllers/admin');
 const penggunaController = require('../controllers/pengguna');
 const jadwalPiketController = require('../controllers/jadwalpiket');
 const artikelController = require('../controllers/artikel');
+const ruangController = require('../controllers/ruang');
 // dashboard
 router.get('/' , adminController.getAdminDashboard );
 
@@ -27,6 +28,9 @@ router.get('/artikel' , artikelController.getDataArtikel );
 router.get('/artikel/add' , artikelController.getFormArtikel );
 router.post('/artikel/add' , artikelController.postAddDataArtikel );
 router.post('/artikel/delete-artikel', artikelController.postDeleteArtikel);
+
+// checklistruang
+router.get('/checklistruang',ruangController.getDataRuang);
 
 exports.routes = router;
 // exports.products = products;

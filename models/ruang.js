@@ -17,6 +17,10 @@ const Ruang = sequelize.define('ruang', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
+  standar: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   poin_ruang: {
     type: Sequelize.INTEGER,
     allowNull: false

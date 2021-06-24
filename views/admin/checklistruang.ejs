@@ -34,7 +34,8 @@
                               </tr>
                               <tr>
                                   <th>Nama Ruang</th>
-                                  <th>level</th>
+                                  <th>Level</th>
+                                  <th>Standar</th>
                                   <th>Poin Ruang</th>
                                   <th>Aksi</th>
                               </tr>
@@ -45,16 +46,13 @@
                               <td><%= room.id%></td>
                               <td><%= room.nama_ruang%></td>
                               <td><%= room.level%></td>
+                              <td><%= room.standar%></td>
                               <td><%= room.poin_ruang%></td>
                               <td>
                                   <button  href="javascript:void(0);" class="btn edit" data-nik="<%= room.id %>" ><i class="material-icons md-24"></i></button>
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/delete-pengguna" method="POST">
                                       <input type="hidden" value="<%= room.id %>" name="ruangId">
                                       <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
-                                  </form>
-                                  <form  onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/reset-password" method="POST">
-                                    <input type="hidden" value="<%= room.id %>" name="ruangId">
-                                    <button type="submit" class="md-btn md-btn-primary md-btn-small md-btn-wave-light waves-effect waves-button waves-light" >Reset Password</button>
                                   </form>
                               </td>
                           </tr>
@@ -95,6 +93,10 @@
 
                                       <div class="uk-form-row">
                                         <div class="uk-grid">
+                                          <div class="uk-width-medium-1-2">
+                                              <label>Standar</label>
+                                              <input id='standar' name='standar' type="text" class="md-input" required />
+                                          </div>
 
                                           <div class="uk-width-medium-1-2">
                                               <label>Poin Ruang</label>

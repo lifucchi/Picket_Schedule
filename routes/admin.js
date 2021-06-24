@@ -39,8 +39,7 @@ router.post('/checklistruang/delete-checklistruang', ruangController.postDeleteR
 
 // checklistmeja
 router.get('/checklistmeja',mejaController.getDataMeja);
-
-
+router.post('/checklistmeja',mejaController.postAddDataMeja);
 
 exports.routes = router;
 // exports.products = products;

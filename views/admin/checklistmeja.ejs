@@ -63,34 +63,32 @@
               </div>
                       <% } %>
 
-<% users.forEach((user) => { %>
-   <%= user.nama %>
-    <% }) %>
-
-
               <!-- modal tambah -->
               <div class="uk-modal" id="modal_header_footer">
                   <div class="uk-modal-dialog">
                       <div class="uk-modal-header">
                           <h3 class="uk-modal-title">Tambah <%= pageTitle%></h3>
                       </div>
-                      <form action="/admin/checklistruang" method="post">
+                      <form action="/admin/checklistmeja" method="post">
                           <div class="md-card-content">
                               <div class="uk-grid" data-uk-grid-margin>
                                   <div class="uk-width-medium">
                                       <div class="uk-form-row">
                                           <div class="uk-grid">
-                                              <div class="uk-width-medium-1-3">
-                                                  <label>Nama Ruang</label>
-                                                  <input id='nama_ruang' name='nama_ruang' type="text" class="md-input" required/>
+                                              <div class="uk-width-medium-1-2">
+                                                  <div class="" style="index-z:10;">
+                                                    <select name='pemilik_meja' id='pemilik_meja' class="md-input" required >
+                                                        <option value="">Pemilik meja... </option>
+                                                        <% users.forEach((user) => { %>
+                                                           <option value="<%= user.nik %>"><%= user.nik %> - <%= user.nama %></option>
+                                                            <% }) %>
+
+                                                    </select>
+                                                  </div>
                                               </div>
-                                              <div class="uk-width-medium-1-3">
-                                                  <label>Level</label>
-                                                  <input id='level' name= 'level' type="number" class="md-input" required />
-                                              </div>
-                                              <div class="uk-width-medium-1-3">
-                                                  <label>Poin Ruang</label>
-                                                  <input id='poin_ruang' name='poin_ruang' type="number" class="md-input" required />
+                                              <div class="uk-width-medium-1-2">
+                                                  <label>Poin Meja</label>
+                                                  <input id='poin_meja' name='poin_meja' type="number" class="md-input" required />
                                               </div>
                                           </div>
                                       </div>
@@ -211,16 +209,16 @@
             }
             $('#dt_default').on( 'click', '.edit', function () {
                 var id = $(this).data('id');
-                var nama_ruang = $(this).data('namaruang');
+                var pemilik_meja = $(this).data('pemilik_meja');
                 var level = $(this).data('level');
                 var standar = $(this).data('standar');
-                var poinruang = $(this).data('poinruang');
+                var poinmeja = $(this).data('poinmeja');
                 $('.edit').attr('data-uk-modal', "{target:'#modal_header_footeredit'}");
                 $('#id').val(id);
-                $('#nama_ruang_edit').val(nama_ruang);
+                $('#pemilik_meja_edit').val(pemilik_meja);
                 $('#level_edit').val(level);
                 $('#standar_edit').val(standar);
-                $('#poin_ruang_edit').val(poinruang);
+                $('#poin_meja_edit').val(poinmeja);
             } );
         });
     </script>

@@ -33,6 +33,8 @@ router.post('/artikel/delete-artikel', artikelController.postDeleteArtikel);
 router.get('/checklistruang',ruangController.getDataRuang);
 router.post('/checklistruang',ruangController.postAddDataRuang);
 router.post('/checklistruang/edit',ruangController.postEditRuang);
+router.post('/checklistruang/delete-checklistruang', ruangController.postDeleteRuang );
+
 
 
 

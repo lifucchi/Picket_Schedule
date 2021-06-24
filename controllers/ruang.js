@@ -49,3 +49,19 @@ exports.postEditRuang = ( req,res, next) => {
     })
     .catch(err => console.log(err));
 };
+
+
+
+exports.postDeleteRuang = ( req,res, next) => {
+  const id = req.body.ruangId;
+  Ruang.findByPk(id)
+    .then(ruang => {
+      return ruang.destroy();
+    })
+    .then(result => {
+      console.log('DESTROYED RUANG');
+      res.redirect('/admin/checklistruang');
+    })
+    .catch(err => console.log(err));
+
+};

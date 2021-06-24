@@ -31,6 +31,7 @@ router.post('/artikel/delete-artikel', artikelController.postDeleteArtikel);
 
 // checklistruang
 router.get('/checklistruang',ruangController.getDataRuang);
+router.post('/checklistruang',ruangController.postAddDataRuang);
 
 exports.routes = router;
 // exports.products = products;

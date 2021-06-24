@@ -47,14 +47,13 @@
                               <td><%= room.level%></td>
                               <td><%= room.poin_ruang%></td>
                               <td>
-                                  <!-- <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>" >Edit</a> -->
                                   <button  href="javascript:void(0);" class="btn edit" data-nik="<%= room.id %>" ><i class="material-icons md-24"></i></button>
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/delete-pengguna" method="POST">
                                       <input type="hidden" value="<%= room.id %>" name="ruangId">
                                       <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
                                   </form>
                                   <form  onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/reset-password" method="POST">
-                                    <input type="hidden" value="<%= room.nik %>" name="ruangId">
+                                    <input type="hidden" value="<%= room.id %>" name="ruangId">
                                     <button type="submit" class="md-btn md-btn-primary md-btn-small md-btn-wave-light waves-effect waves-button waves-light" >Reset Password</button>
                                   </form>
                               </td>
@@ -72,54 +71,34 @@
                       <div class="uk-modal-header">
                           <h3 class="uk-modal-title">Tambah <%= pageTitle%></h3>
                       </div>
-                      <form action="/admin/pengguna" method="post">
+                      <form action="/admin/checklistruang" method="post">
                           <div class="md-card-content">
                               <div class="uk-grid" data-uk-grid-margin>
                                   <div class="uk-width-medium">
                                       <div class="uk-form-row">
                                           <div class="uk-grid">
-                                              <div class="uk-width-medium-1-2">
-                                                  <label>NIK</label>
-                                                  <input id='nik' name='nik' type="text" class="md-input" required />
-                                              </div>
 
                                               <div class="uk-width-medium-1-2">
-                                                  <label>Nama</label>
-                                                  <input id='nama' name='nama' type="text" class="md-input" required/>
+                                                  <label>Nama Ruang</label>
+                                                  <input id='nama_ruang' name='nama_ruang' type="text" class="md-input" required/>
                                               </div>
                                           </div>
                                       </div>
                                       <div class="uk-form-row">
                                         <div class="uk-grid">
                                             <div class="uk-width-medium-1-2">
-                                                <label>Username</label>
-                                                <input id='username' name= 'username' type="text" class="md-input" required />
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <label>Password</label>
-                                                <input id='password' name= 'password' type="password" class="md-input" required />
+                                                <label>level</label>
+                                                <input id='level' name= 'level' type="text" class="md-input" required />
                                             </div>
                                         </div>
                                       </div>
 
                                       <div class="uk-form-row">
                                         <div class="uk-grid">
-                                          <div class="uk-width-medium-1-2">
-                                              <!-- <label>Peran</label> -->
-                                              <!-- <input id='peran' name='peran' type="text" class="md-input" class="data-md-selectize"  /> -->
-                                              <div class="" style="index-z:10;">
-                                                <select name='peran' id='peran' class="md-input" required >
-                                                    <option value="">Peran... </option>
-                                                    <option value="Admin">Admin</option>
-                                                    <option value="Pengguna">Anggota</option>
-                                                    <option value="Fasilitator">Fasilitator</option>
-                                                </select>
-                                              </div>
-                                          </div>
 
                                           <div class="uk-width-medium-1-2">
-                                              <label>Poin Meja</label>
-                                              <input id='poin_meja' name='poin_meja' type="number" class="md-input" required />
+                                              <label>Poin Ruang</label>
+                                              <input id='poin_ruang' name='poin_ruang' type="number" class="md-input" required />
                                           </div>
                                         </div>
                                       </div>

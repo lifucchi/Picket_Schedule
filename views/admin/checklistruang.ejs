@@ -51,7 +51,7 @@
                               <td><%= room.poin_ruang%></td>
                               <td><%= room.pengguna.nama%></td>
                               <td>
-                                  <button  href="javascript:void(0);" class="btn edit" data-id="<%= room.id %>" data-namaruang="<%= room.nama_ruang%>" data-level="<%= room.level%>" data-standar="<%= room.standar%>" data-poinruang="<%= room.poin_ruang%>" data-picruang="<%= room.pic_ruang%>" ><i class="material-icons md-24"></i></button>
+                                  <button  href="javascript:void(0);" class="btn edit" data-id="<%= room.id %>" data-namaruang="<%= room.nama_ruang%>" data-level="<%= room.level%>" data-standar="<%= room.standar%>" data-poinruang="<%= room.poin_ruang%>" data-picruang="<%= room.pengguna.nik%>" ><i class="material-icons md-24"></i></button>
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin//checklistruang/delete-checklistruang" method="POST">
                                       <input type="hidden" value="<%= room.id %>" name="ruangId">
                                       <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>

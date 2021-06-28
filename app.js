@@ -44,10 +44,12 @@ app.use(errorController.get404);
 
 // sync database
 // Pengguna punya banyak jadwal_piket
-Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nik_pic_fasil_1' });
-Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nik_pic_fasil_2' });
-Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nik_pic_piket_2' });
-Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE'});
+// Pengguna.hasMany(Jadwal_piket);
+Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', as: 'nik_pic_piket'});
+Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', as: 'nik_pic_fasil'});
+
+// Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nik_pic_fasil_2' });
+// Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nik_pic_piket_2' });
 
 // pengguna punya banyak standar Meja
 Pengguna.hasMany(Meja);
@@ -59,9 +61,9 @@ Ruang.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE'});
 
 
 sequelize
-  // .sync()
+  .sync()
   // .sync({alter: true})
-  .sync({force: true})
+  // .sync({force: true})
   .then(result => {
     app.listen(3001);
   })

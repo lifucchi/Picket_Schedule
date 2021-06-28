@@ -13,14 +13,11 @@ const Jadwal_Piket = sequelize.define('jadwal_piket', {
     type: Sequelize.DATEONLY,
     allowNull: false,
   },
-  persetujuan_fasil_1: {
+  persetujuan_fasil: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: false,
+    defaultValue: 0
   },
-  persetujuan_fasil_2: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  }
 });
 
 module.exports = Jadwal_Piket;

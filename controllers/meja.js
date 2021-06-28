@@ -14,9 +14,9 @@ exports.getDataMeja = (req,res, next) => {
         path: '/checklistmeja'
       });
     })
-
   })
   .catch(err => console.log(err));
+  
 };
 
 exports.postAddDataMeja = (req,res,next) => {
@@ -38,7 +38,7 @@ exports.postEditMeja = ( req,res, next) => {
   const pemilik = req.body.pemilik_meja_edit;
   const standar = req.body.standar_edit;
   const poin_meja = req.body.poin_meja_edit;
-  console.log(pemilik);
+  // console.log(pemilik);
   Meja.findByPk(id)
     .then(meja => {
       meja.penggunaNik = pemilik;

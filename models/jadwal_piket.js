@@ -13,7 +13,11 @@ const Jadwal_Piket = sequelize.define('jadwal_piket', {
     type: Sequelize.DATEONLY,
     allowNull: false,
   },
-  persetujuan_fasil: {
+  persetujuan_fasil_1: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  persetujuan_fasil_2: {
     type: Sequelize.INTEGER,
     allowNull: false
   }

@@ -43,21 +43,32 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
   const pic_fasil_1 = req.body.pic_fasil_1;
   const pic_piket_2 = req.body.pic_piket_2;
   const pic_fasil_2 = req.body.pic_fasil_2;
+
+  let ts = Date.now();
+  let date_ob = new Date(ts);
+  let date = date_ob.getDate();
+  let month = date_ob.getMonth() + 1;
+  let year = date_ob.getFullYear();
+
+  const nowTangga= year + "-" + month + "-" + date;
+
+  console.log(nowTangga);
+
   JadwalPiket.findAll({
     where:{
       tanggal: tanggal
    }}).then( ada => {
-     console.log(ada);
+     // console.log(ada);
      if(ada.length === 0){
-       console.log("tanggal Tidak ada");
-         JadwalPiket.bulkCreate([
+         return JadwalPiket.bulkCreate([
             {tanggal:tanggal,nikPicFasilNik:pic_fasil_1, nikPicPiketNik:pic_piket_1},
             {tanggal:tanggal,nikPicFasilNik:pic_fasil_2, nikPicPiketNik:pic_piket_2}
-          ]).then(
+          ]).then( result => {
             res.redirect('/admin/jadwalpiket')
+            
+          }
           )
      }
-
      console.log("tanggal ada");
      return res.redirect('/admin/jadwalpiket/add')
 

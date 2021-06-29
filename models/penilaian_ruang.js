@@ -13,7 +13,7 @@ const Penilaian_ruang = sequelize.define('penilaian_ruang', {
     type:Sequelize.INTEGER,
     allowNull: false
   },
-  standarmeja: {
+  standarruang: {
     type: Sequelize.STRING,
     allowNull: false
   }

@@ -5,7 +5,7 @@ const bodyPaser = require('body-parser');
 
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
-
+const flash = require('connect-flash');
 const app = express();
 
 // database
@@ -48,8 +48,6 @@ app.use(errorController.get404);
 Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', as: 'nik_pic_piket'});
 Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', as: 'nik_pic_fasil'});
 
-// Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nik_pic_fasil_2' });
-// Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nik_pic_piket_2' });
 
 // pengguna punya banyak standar Meja
 Pengguna.hasMany(Meja);
@@ -58,6 +56,14 @@ Meja.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE'});
 // ruang punya PIC ruang
 Pengguna.hasMany(Ruang);
 Ruang.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE'});
+
+// ruang --> penilaian ruang <-- jadwal piket
+Ruang.belongsToMany(Product, { through: Penilaian_ruang });
+Jadwal_piket.belongsToMany(Cart, { through: Penilaian_ruang });
+
+// meja --> penilaian meja <-- jadwal piket
+Ruang.belongsToMany(Product, { through: Penilaian_meja });
+Jadwal_piket.belongsToMany(Cart, { through: Penilaian_meja });
 
 
 sequelize

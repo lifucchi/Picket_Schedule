@@ -53,9 +53,18 @@
                         <a href="#" class="user_action_image"><img class="md-user-image" src="/assets/img/avatars/avatar_11_tn.png" alt=""/></a>
                         <div class="uk-dropdown uk-dropdown-small">
                             <ul class="uk-nav js-uk-prevent">
-                                <li><a href="">Nama Profil</a></li>
+
+                              <% if (isAuthenticated) {%>
+                                <li><a href=""> <%= session.user.nama %> </a></li>
+                              <% } else{%>
+                                <li><a href=""> GAADA </a></li>
+                              <% }%>
+
                                 <!-- <li><a href="page_settings.html">Settings</a></li> -->
-                                <li><a href="login.html">Logout</a></li>
+                                <!-- <li><a href="/logout">Logout</a></li> -->
+                              <li>
+                                <a id="logout" href="/logout">Logout</a>
+                              </li>
                             </ul>
                         </div>
                     </li>

@@ -7,7 +7,8 @@ const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
 const app = express();
-
+// controller
+const errorController = require('./controllers/error');
 // database
 const sequelize = require('./util/database');
 // model
@@ -26,20 +27,44 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
+const authRoutes = require('./routes/auth');
 
-const errorController = require('./controllers/error');
+
 
 app.use(bodyPaser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    // store: store
+  })
+);
+app.use(flash());
+
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+  Pengguna.findByPk(req.session.user._id)
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
+
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.session = req.session;
+  // res.locals.csrfToken = req.csrfToken();
+  next();
+});
 
 // routes
 app.use('/admin',adminRoutes.routes);
-
-
-app.get('/', (req, res) => {
-  res.render('./login/login.ejs');
-});
-
+app.use(authRoutes);
 app.use(errorController.get404);
 
 // sync database
@@ -58,12 +83,12 @@ Pengguna.hasMany(Ruang);
 Ruang.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE'});
 
 // ruang --> penilaian ruang <-- jadwal piket
-Ruang.belongsToMany(Product, { through: Penilaian_ruang });
-Jadwal_piket.belongsToMany(Cart, { through: Penilaian_ruang });
+Ruang.belongsToMany(Jadwal_piket, { through: Penilaian_ruang });
+Jadwal_piket.belongsToMany(Ruang, { through: Penilaian_ruang });
 
 // meja --> penilaian meja <-- jadwal piket
-Ruang.belongsToMany(Product, { through: Penilaian_meja });
-Jadwal_piket.belongsToMany(Cart, { through: Penilaian_meja });
+Meja.belongsToMany(Jadwal_piket, { through: Penilaian_meja });
+Jadwal_piket.belongsToMany(Meja, { through: Penilaian_meja });
 
 
 sequelize

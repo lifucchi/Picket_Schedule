@@ -28,7 +28,8 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
-
+const anggotaRoutes = require('./routes/anggota');
+const fasilitatorRoutes = require('./routes/fasilitator');
 
 
 app.use(bodyPaser.urlencoded({extended: true}));
@@ -65,6 +66,10 @@ app.use((req, res, next) => {
 // routes
 app.use('/admin',adminRoutes.routes);
 app.use(authRoutes);
+app.use('/anggota',anggotaRoutes);
+app.use('/fasilitator',fasilitatorRoutes);
+
+
 app.use(errorController.get404);
 
 // sync database

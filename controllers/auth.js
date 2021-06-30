@@ -19,11 +19,11 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
   const username = req.body.login_username;
   const password = req.body.login_password;
-  Pengguna.findOne({ username: username })
+  Pengguna.findOne({ where: { username: username } })
     .then(user => {
       if (!user) {
-        req.flash('error', 'Invalid email or password.');
-        return res.redirect('/login');
+        req.flash('error', 'user gaada');
+        return res.redirect('/');
       }
       bcrypt
         .compare(password, user.password)
@@ -33,25 +33,18 @@ exports.postLogin = (req, res, next) => {
             req.session.user = user;
             return req.session.save(err => {
               console.log(err);
-              res.redirect('/admin/pengguna');
+              res.redirect('/admin');
             });
           }
-          req.flash('error', 'Invalid email or password.');
+          req.flash('error', 'Password salah');
           res.redirect('/');
         })
         .catch(err => {
           console.log(err);
-          res.redirect('/login');
+          res.redirect('/');
         });
     })
     .catch(err => console.log(err));
-};
-
-exports.postLogout = (req, res, next) => {
-  req.session.destroy(err => {
-    console.log(err);
-    res.redirect('/');
-  });
 };
 
 exports.getLogout = (req, res, next) => {

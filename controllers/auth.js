@@ -22,7 +22,7 @@ exports.postLogin = (req, res, next) => {
   Pengguna.findOne({ where: { username: username } })
     .then(user => {
       if (!user) {
-        req.flash('error', 'user gaada');
+        req.flash('error', 'User gaada');
         return res.redirect('/');
       }
       bcrypt
@@ -33,7 +33,19 @@ exports.postLogin = (req, res, next) => {
             req.session.user = user;
             return req.session.save(err => {
               console.log(err);
-              res.redirect('/admin');
+              if (req.session.user.peran === 'Admin'){
+                res.redirect('/admin');
+
+              }else if(req.session.user.peran === 'Anggota') {
+                res.redirect('/anggota');
+
+
+              }else if(req.session.user.peran === 'Fasilitator'){
+                res.redirect('/fasilitator');
+
+
+              }
+              console.log("role tidak terbaca");
             });
           }
           req.flash('error', 'Password salah');

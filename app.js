@@ -98,8 +98,8 @@ Jadwal_piket.belongsToMany(Meja, { through: Penilaian_meja });
 
 
 sequelize
-  // .sync()
-  .sync({alter: true})
+  .sync()
+  // .sync({alter: true})
   // .sync({force: true})
   .then(result => {
     app.listen(3001);

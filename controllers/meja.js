@@ -16,7 +16,7 @@ exports.getDataMeja = (req,res, next) => {
     })
   })
   .catch(err => console.log(err));
-  
+
 };
 
 exports.postAddDataMeja = (req,res,next) => {
@@ -65,5 +65,28 @@ exports.postDeleteMeja = ( req,res, next) => {
       res.redirect('/admin/checklistmeja');
     })
     .catch(err => console.log(err));
+
+};
+
+exports.getDataMejaAnggota = (req,res, next) => {
+
+  Pengguna.findAll()
+  .then(pengguna => {
+    Meja.findAll({
+      include: {
+        model: Pengguna,
+        where: { level: req.user.level }
+      }
+    })
+    .then( table => {
+      res.render('./anggota/checklistmeja', {
+        tables: table,
+        users: pengguna,
+        pageTitle: 'Checklist Meja',
+        path: '/checklistmeja'
+      });
+    })
+  })
+  .catch(err => console.log(err));
 
 };

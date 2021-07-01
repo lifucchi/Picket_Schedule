@@ -85,8 +85,8 @@ Pengguna.hasMany(Meja , {  foreignKey: 'penggunaNik', as: 'PemilikMeja' });
 Meja.belongsTo(Pengguna, { foreignKey: 'penggunaNik', constraints:true, onDelete:'CASCADE'});
 
 // ruang punya PIC ruang
-Pengguna.hasMany(Ruang);
-Ruang.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE'});
+Pengguna.hasMany(Ruang,  {  foreignKey: 'penggunaNik', as: 'PicRuang' });
+Ruang.belongsTo(Pengguna, {foreignKey: 'penggunaNik', constraints:true, onDelete:'CASCADE'});
 
 // ruang --> penilaian ruang <-- jadwal piket
 Ruang.belongsToMany(Jadwal_piket, { through: Penilaian_ruang });

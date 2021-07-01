@@ -72,3 +72,22 @@ exports.postDeleteRuang = ( req,res, next) => {
     .catch(err => console.log(err));
 
 };
+
+exports.getDataRuangAnggota = (req,res, next) => {
+
+    Ruang.findAll({
+      include: {
+        model: Pengguna,
+        where: { level: req.user.level }
+      }
+    })
+    .then( ruang => {
+      res.render('./anggota/checklistRuang', {
+        rooms: ruang,
+        pageTitle: 'Checklist Ruang',
+        path: '/checklistruang'
+      });
+    })
+    .catch(err => console.log(err));
+
+};

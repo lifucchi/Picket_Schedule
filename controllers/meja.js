@@ -70,8 +70,6 @@ exports.postDeleteMeja = ( req,res, next) => {
 
 exports.getDataMejaAnggota = (req,res, next) => {
 
-  Pengguna.findAll()
-  .then(pengguna => {
     Meja.findAll({
       include: {
         model: Pengguna,
@@ -81,12 +79,10 @@ exports.getDataMejaAnggota = (req,res, next) => {
     .then( table => {
       res.render('./anggota/checklistmeja', {
         tables: table,
-        users: pengguna,
         pageTitle: 'Checklist Meja',
         path: '/checklistmeja'
       });
     })
-  })
-  .catch(err => console.log(err));
+    .catch(err => console.log(err));
 
 };

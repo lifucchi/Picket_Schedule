@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" href="/assets/img/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="/assets/img/favicon-32x32.png" sizes="32x32">
 
-    <title>Checklist Ruang</title>
+    <title> <%=pageTitle%></title>
 
 
     <!-- uikit -->
@@ -30,52 +30,100 @@
     <![endif]-->
 
 </head>
-<body class="top_menu">
+<body class=" top_menu">
     <!-- main header -->
     <header id="header_main">
-        <%- include('header'); %>
-    </header>
+      <%- include('header'); %>
+    </header><!-- main header end -->
 
-<div id="top_bar">
-    <%- include('top_bar'); %>
-</div>
+    <!-- main sidebar -->
 
-<div id="page_content">
+    <div id="top_bar">
+        <%- include('top_bar'); %>
+    </div>
 
-  <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
-      <div class="heading_actions">
-          <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Archive"><i class="md-icon material-icons">&#xE149;</i></a>
-          <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Print"><i class="md-icon material-icons">&#xE8AD;</i></a>
-          <div data-uk-dropdown>
-              <i class="md-icon material-icons">&#xE5D4;</i>
-              <div class="uk-dropdown uk-dropdown-small">
-                  <ul class="uk-nav">
-                      <li><a href="#">Action</a></li>
-                      <li><a href="#">Other Action</a></li>
-                      <li><a href="#">Other Action</a></li>
-                  </ul>
-              </div>
-          </div>
-      </div>
-      <h1>Issue Tracker</h1>
-      <span class="uk-text-upper uk-text-small"><a href="#">Project Name</a></span>
-  </div>
-  
-    <div id="page_content_inner">
+    <div id="page_content">
 
-        <h3 class="heading_b uk-margin-bottom">Top menu Example</h3>
+        <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
+            <!-- <div class="heading_actions">
+                <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Archive"><i class="md-icon material-icons">&#xE149;</i></a>
+                <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Print"><i class="md-icon material-icons">&#xE8AD;</i></a>
+                <div data-uk-dropdown>
+                    <i class="md-icon material-icons">&#xE5D4;</i>
+                    <div class="uk-dropdown uk-dropdown-small">
+                        <ul class="uk-nav">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Other Action</a></li>
+                            <li><a href="#">Other Action</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div> -->
+            <h1> <%=pageTitle%> </h1>
+            <!-- <span class="uk-text-upper uk-text-small"><a href="#">Meja</a></span> -->
+        </div>
 
-        <div class="md-card">
-            <div class="md-card-content">
-                <div class="uk-grid" data-uk-grid-margin>
-                    <div class="uk-width-1-1">
-                      INI BERANDA ANGGOTA                    </div>
+        <div id="page_content_inner">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-overflow-container uk-margin-bottom">
+                        <table class="uk-table uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair" id="ts_issues">
+                            <thead>
+                                <tr>
+                                    <!-- <th class="uk-text-center">Key</th> -->
+                                    <th>Nama Ruang</th>
+                                    <th>Standar</th>
+                                    <!-- <th>Level</th> -->
+                                    <!-- <th>Priority</th>
+                                    <th>Created</th>
+                                    <th>Updated</th>
+                                    <th>Status</th> -->
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Nama Pegawai</th>
+                                    <th>Standar</th>
+                                    <!-- <th>Level</th> -->
+                                </tr>
+                            </tfoot>
+                            <tbody>
+
+                              <% rooms.forEach((room) => { %>
+                            <tr>
+
+                                <td><%= room.nama_ruang%></td>
+                                <td><%= room.standar%></td>
+
+                              <% }) %>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <ul class="uk-pagination ts_pager">
+                        <li data-uk-tooltip title="Select Page">
+                            <select class="ts_gotoPage ts_selectize"></select>
+                        </li>
+                        <li class="first"><a href="javascript:void(0)"><i class="uk-icon-angle-double-left"></i></a></li>
+                        <li class="prev"><a href="javascript:void(0)"><i class="uk-icon-angle-left"></i></a></li>
+                        <li><span class="pagedisplay"></span></li>
+                        <li class="next"><a href="javascript:void(0)"><i class="uk-icon-angle-right"></i></a></li>
+                        <li class="last"><a href="javascript:void(0)"><i class="uk-icon-angle-double-right"></i></a></li>
+                        <li data-uk-tooltip title="Page Size">
+                            <select class="pagesize ts_selectize">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
 
     </div>
-</div>
+
 
     <!-- google web fonts -->
     <script>
@@ -105,6 +153,15 @@
     <!-- altair common functions/helpers -->
     <script src="/assets/js/altair_admin_common.min.js"></script>
 
+    <!-- page specific plugins -->
+    <!-- tablesorter -->
+    <script src="/bower_components/tablesorter/dist/js/jquery.tablesorter.min.js"></script>
+    <script src="/bower_components/tablesorter/dist/js/jquery.tablesorter.widgets.min.js"></script>
+    <script src="/bower_components/tablesorter/dist/js/widgets/widget-alignChar.min.js"></script>
+    <script src="/bower_components/tablesorter/dist/js/extras/jquery.tablesorter.pager.min.js"></script>
+
+    <!--  issues list functions -->
+    <script src="/assets/js/pages/pages_issues.min.js"></script>
 
     <script>
         $(function() {
@@ -116,7 +173,6 @@
             }
         });
     </script>
-
 
 
 </body>

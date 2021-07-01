@@ -1,5 +1,7 @@
 const Pengguna = require('../models/pengguna');
 const JadwalPiket = require('../models/jadwal_piket');
+const Meja = require('../models/meja');
+
 
 exports.getDataJadwalPiket = (req,res, next) => {
   JadwalPiket.findAll({
@@ -61,11 +63,11 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
      // console.log(ada);
      if(ada.length === 0){
          return JadwalPiket.bulkCreate([
-            {tanggal:tanggal,nikPicFasilNik:pic_fasil_1, nikPicPiketNik:pic_piket_1},
-            {tanggal:tanggal,nikPicFasilNik:pic_fasil_2, nikPicPiketNik:pic_piket_2}
+            {tanggal:tanggal,nikpicfasil:pic_fasil_1, nikpicpiket:pic_piket_1},
+            {tanggal:tanggal,nikpicfasil:pic_fasil_2, nikpicpiket:pic_piket_2}
           ]).then( result => {
             res.redirect('/admin/jadwalpiket')
-            
+
           }
           )
      }
@@ -76,4 +78,49 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
   .catch(err => console.log(err));
 
 
+};
+
+exports.getJadwalPiketAnggota = (req,res, next) => {
+
+  req.user
+  .getPemilikJadwal({
+    include: [{
+      model: Pengguna,
+      as: 'nik_pic_piket',
+    },
+    {
+      model: Pengguna,
+      as: 'nik_pic_fasil',
+    }
+  ]
+  })
+  .then(jadwalpiket => {
+    res.render('./anggota/jadwalpiket', {
+      schedules: jadwalpiket,
+      pageTitle: 'Jadwal Piket',
+      path: '/jadwalpiket'
+    });
+  })
+  .catch(err => console.log(err));
+
+
+  // JadwalPiket.findAll({
+  //   include: [{
+  //     model: Pengguna,
+  //     as: 'nik_pic_piket',
+  //   },
+  //   {
+  //     model: Pengguna,
+  //     as: 'nik_pic_fasil',
+  //   }
+  // ]
+  // })
+  // .then(jadwalpiket => {
+  //   res.render('./anggota/jadwalpiket', {
+  //     schedules: jadwalpiket,
+  //     pageTitle: 'Jadwal Piket',
+  //     path: '/jadwalpiket'
+  //   });
+  // })
+  // .catch(err => console.log(err));
 };

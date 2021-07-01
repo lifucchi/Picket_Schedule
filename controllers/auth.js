@@ -43,9 +43,8 @@ exports.postLogin = (req, res, next) => {
               }else if(req.session.user.peran === 'Fasilitator'){
                 res.redirect('/fasilitator');
 
-
               }
-              console.log("role tidak terbaca");
+
             });
           }
           req.flash('error', 'Password salah');

@@ -48,9 +48,10 @@ app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
   }
-  Pengguna.findByPk(req.session.user._id)
+  Pengguna.findByPk(req.session.user.nik)
     .then(user => {
       req.user = user;
+      console.log(user);
       next();
     })
     .catch(err => console.log(err));
@@ -74,14 +75,14 @@ app.use(errorController.get404);
 
 // sync database
 // Pengguna punya banyak jadwal_piket
-// Pengguna.hasMany(Jadwal_piket);
-Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', as: 'nik_pic_piket'});
-Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', as: 'nik_pic_fasil'});
+Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', foreignKey: 'nikpicpiket', as: 'nik_pic_piket'});
+Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', foreignKey: 'nikpicfasil', as: 'nik_pic_fasil'});
+Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nikpicpiket', as: 'PemilikJadwal'});
 
 
 // pengguna punya banyak standar Meja
-Pengguna.hasMany(Meja);
-Meja.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE'});
+Pengguna.hasMany(Meja , {  foreignKey: 'penggunaNik', as: 'PemilikMeja' });
+Meja.belongsTo(Pengguna, { foreignKey: 'penggunaNik', constraints:true, onDelete:'CASCADE'});
 
 // ruang punya PIC ruang
 Pengguna.hasMany(Ruang);
@@ -97,8 +98,8 @@ Jadwal_piket.belongsToMany(Meja, { through: Penilaian_meja });
 
 
 sequelize
-  .sync()
-  // .sync({alter: true})
+  // .sync()
+  .sync({alter: true})
   // .sync({force: true})
   .then(result => {
     app.listen(3001);

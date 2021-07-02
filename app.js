@@ -1,11 +1,10 @@
 const path = require('path');
-
 const express = require('express');
 const bodyPaser = require('body-parser');
-
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
+var CronJob = require('cron').CronJob;
 const app = express();
 // controller
 const errorController = require('./controllers/error');
@@ -43,6 +42,8 @@ app.use(
   })
 );
 app.use(flash());
+
+
 
 app.use((req, res, next) => {
   if (!req.session.user) {
@@ -95,6 +96,15 @@ Jadwal_piket.belongsToMany(Ruang, { through: Penilaian_ruang });
 // meja --> penilaian meja <-- jadwal piket
 Meja.belongsToMany(Jadwal_piket, { through: Penilaian_meja });
 Jadwal_piket.belongsToMany(Meja, { through: Penilaian_meja });
+
+// var job = new CronJob('0 0 0 * * *', function() {
+//  //will run every day at 12:00 AM
+// });
+
+// var job = new CronJob('* 5 * * * *', function() {
+//   console.log('halo');
+// }, null, true, 'Asia/Jakarta');
+// job.start();
 
 
 sequelize

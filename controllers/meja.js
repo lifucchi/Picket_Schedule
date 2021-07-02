@@ -1,5 +1,7 @@
 const Meja = require('../models/meja');
 const Pengguna = require('../models/pengguna');
+const moment = require('moment');
+
 
 exports.getDataMeja = (req,res, next) => {
 
@@ -70,19 +72,44 @@ exports.postDeleteMeja = ( req,res, next) => {
 
 exports.getDataMejaAnggota = (req,res, next) => {
 
-    Meja.findAll({
-      include: {
-        model: Pengguna,
-        where: { level: req.user.level }
+  // let ts = Date.now();
+  // let date_ob = new Date(ts);
+  // let date = date_ob.getDate();
+  // let month = date_ob.getMonth() + 1;
+  // let year = date_ob.getFullYear();
+  //
+  // const nowTanggal= year + "-" + month + "-" + date;
+  // console.log("ini tanggal sekarang");
+  // console.log(nowTanggal);
+  const nowTanggal = moment().format('YYYY-MM-DD');
+  console.log(nowTanggal);
+
+  req.user
+  .getPemilikJadwal({
+    where: {tanggal: nowTanggal}
+  })
+  .then( result => {
+    // console.log(result);
+    if (result.length === 0){
+        res.render('./anggota/checklistmeja', {
+          pageTitle: 'Checklist Meja',
+          path: '/checklistmeja'
+        })
       }
-    })
-    .then( table => {
-      res.render('./anggota/checklistmeja', {
-        tables: table,
-        pageTitle: 'Checklist Meja',
-        path: '/checklistmeja'
-      });
-    })
+      Meja.findAll({
+        include: {
+          model: Pengguna,
+          where: { level: req.user.level }
+        }
+      })
+      .then( table => {
+        res.render('./anggota/checklistmeja', {
+          tables: table,
+          pageTitle: 'Checklist Meja',
+          path: '/checklistmejaada'
+        });
+      })
+  })
     .catch(err => console.log(err));
 
 };

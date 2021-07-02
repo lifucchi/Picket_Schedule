@@ -72,15 +72,6 @@ exports.postDeleteMeja = ( req,res, next) => {
 
 exports.getDataMejaAnggota = (req,res, next) => {
 
-  // let ts = Date.now();
-  // let date_ob = new Date(ts);
-  // let date = date_ob.getDate();
-  // let month = date_ob.getMonth() + 1;
-  // let year = date_ob.getFullYear();
-  //
-  // const nowTanggal= year + "-" + month + "-" + date;
-  // console.log("ini tanggal sekarang");
-  // console.log(nowTanggal);
   const nowTanggal = moment().format('YYYY-MM-DD');
   console.log(nowTanggal);
 
@@ -91,11 +82,12 @@ exports.getDataMejaAnggota = (req,res, next) => {
   .then( result => {
     // console.log(result);
     if (result.length === 0){
-        res.render('./anggota/checklistmeja', {
+        return res.render('./anggota/checklistmeja', {
           pageTitle: 'Checklist Meja',
           path: '/checklistmeja'
         })
       }
+
       Meja.findAll({
         include: {
           model: Pengguna,

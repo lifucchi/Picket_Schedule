@@ -1,5 +1,7 @@
 const Ruang = require('../models/ruang');
 const Pengguna = require('../models/pengguna');
+const moment = require('moment');
+
 
 exports.getDataRuang = (req,res, next) => {
     Pengguna.findAll()
@@ -75,19 +77,35 @@ exports.postDeleteRuang = ( req,res, next) => {
 
 exports.getDataRuangAnggota = (req,res, next) => {
 
-    Ruang.findAll({
-      include: {
-        model: Pengguna,
-        where: { level: req.user.level }
+  const nowTanggal = moment().format('YYYY-MM-DD');
+  console.log(nowTanggal);
+
+  req.user
+  .getPemilikJadwal({
+    where: {tanggal: nowTanggal}
+  })
+  .then( result => {
+    if (result.length === 0){
+        return res.render('./anggota/checklistruang', {
+          pageTitle: 'Checklist Ruang',
+          path: '/checklistruang'
+        })
       }
-    })
-    .then( ruang => {
-      res.render('./anggota/checklistRuang', {
-        rooms: ruang,
-        pageTitle: 'Checklist Ruang',
-        path: '/checklistruang'
-      });
-    })
+      Ruang.findAll({
+        include: {
+          model: Pengguna,
+          where: { level: req.user.level }
+        }
+      })
+      .then( ruang => {
+        res.render('./anggota/checklistRuang', {
+          rooms: ruang,
+          pageTitle: 'Checklist Ruang',
+          path: '/checklistruangada'
+        });
+      })
+
+  })
     .catch(err => console.log(err));
 
 };

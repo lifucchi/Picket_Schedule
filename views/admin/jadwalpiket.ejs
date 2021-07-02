@@ -73,8 +73,13 @@
                               <td><%= schedule.nik_pic_piket.level%></td>
                               <td><%= schedule.persetujuan_fasil%></td>
                               <td>
-                                  <a href="/admin/jadwalpiket/<%= schedule.id %>" class="btn " data-id="<%= schedule.id %>" > <i class="material-icons md-24"></i></a>
-                                  <a href="javascript:void(0);" class="btn " data-id="<%= schedule.id %>"><i class="material-icons md-24"></i></a>
+                                  <!-- <a href="/admin/jadwalpiket/<%= schedule.id %>" class="btn " data-id="<%= schedule.id %>" > <i class="material-icons md-24"></i></a> -->
+                                  <!-- <a href="/admin/jadwalpiket/delete-jadwalpiket" class="btn " data-id="<%= schedule.id %>"><i class="material-icons md-24"></i></a> -->
+                                  <button  href="javascript:void(0);" class="btn edit" data-id="<%= schedule.id %>" data-tanggal="<%=  schedule.tanggal %>" data-level="<%=  schedule.nik_pic_piket.nik%>" data-standar="<%= schedule.nik_pic_fasil.nik%>" data-poinruang="<%= schedule.nik_pic_piket.level %>" data-picruang="<%= schedule.persetujuan_fasil %>" ><i class="material-icons md-24"></i></button>
+                                  <form onsubmit="return confirm('Are you sure?');" action="/admin/jadwalpiket/delete-jadwalpiket" method="POST">
+                                      <input type="hidden" value="<%= schedule.id %>" name="penggunaId">
+                                      <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                  </form>
                               </td>
                           </tr>
                             <% }) %>

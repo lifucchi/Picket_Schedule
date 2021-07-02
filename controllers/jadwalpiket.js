@@ -18,11 +18,16 @@ exports.getDataJadwalPiket = (req,res, next) => {
   ]
   })
   .then(jadwalpiket => {
-    res.render('./admin/jadwalpiket', {
-      schedules: jadwalpiket,
-      pageTitle: 'Jadwal Piket',
-      path: '/jadwalpiket'
-    });
+
+    Pengguna.findAll()
+    .then(user => {
+      return res.render('./admin/jadwalpiket', {
+        schedules: jadwalpiket,
+        users:user,
+        pageTitle: 'Jadwal Piket',
+        path: '/jadwalpiket'
+      });
+    })
   })
   .catch(err => console.log(err));
 };
@@ -83,6 +88,28 @@ exports.postDeleteJadwalPiket = ( req,res, next) => {
     .catch(err => console.log(err));
 
 };
+
+exports.postEditJadwal = ( req,res, next) => {
+  const id = req.body.id;
+  const fasil_edit = req.body.fasil_edit;
+  const pic_edit = req.body.pic_edit;
+  const tanggal_edit = req.body.tanggal_edit;
+
+  // console.log(pemilik);
+  JadwalPiket.findByPk(id)
+    .then(jadwal => {
+      jadwal.tanggal = tanggal_edit;
+      jadwal.nikpicfasil = fasil_edit;
+      jadwal.nikpicpiket = pic_edit;
+      return jadwal.save();
+    })
+    .then(result => {
+      console.log('UPDATED Jadlwal!');
+      res.redirect('/admin/jadwalpiket');
+    })
+    .catch(err => console.log(err));
+};
+
 
 
 

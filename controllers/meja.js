@@ -105,3 +105,21 @@ exports.getDataMejaAnggota = (req,res, next) => {
     .catch(err => console.log(err));
 
 };
+
+exports.getDataMejaDetail = (req,res, next) => {
+const id = req.params.mejaId;
+  Meja.findByPk(id, {
+    include: {
+      model: Pengguna,
+    }
+  })
+  .then( table => {
+    res.render('./anggota/checklistmejadetail', {
+      tables: table,
+      pageTitle: 'Checklist Meja',
+      path: '/checklistmejaada'
+    });
+  })
+  .catch(err => console.log(err));
+
+};

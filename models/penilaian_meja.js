@@ -13,9 +13,10 @@ const Penilaian_meja = sequelize.define('penilaian_meja', {
     type:Sequelize.INTEGER,
     allowNull: false
   },
-  standarmeja: {
+  persetujuanpicpiket: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    defaultValue: '0'
   }
 });
 

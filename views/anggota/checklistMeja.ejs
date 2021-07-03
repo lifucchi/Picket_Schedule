@@ -49,64 +49,79 @@
         </div>
       <% if (path === '/checklistmejaada') {%>
         <div id="page_content_inner">
-            <div class="md-card">
+
+            <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
-                    <div class="uk-overflow-container uk-margin-bottom">
-                        <table class="uk-table uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair" id="ts_issues">
-                            <thead>
-                                <tr>
-                                    <!-- <th class="uk-text-center">Key</th> -->
-                                    <th>Nama Pegawai</th>
-                                    <th>Standar</th>
-                                    <th>Level</th>
-                                    <!-- <th>Priority</th>
-                                    <th>Created</th>
-                                    <th>Updated</th>
-                                    <th>Status</th> -->
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Nama Pegawai</th>
-                                    <th>Standar</th>
-                                    <th>Level</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-
-                              <% tables.forEach((table) => { %>
-                            <tr>
-
-                                <td><%= table.pengguna.nama%></td>
-                                <td><%= table.standar%></td>
-                                <td><%= table.pengguna.level%></td>
-                                <!-- <td><%= table.poin_meja%></td> -->
-                            </tr>
-                              <% }) %>
-
-                            </tbody>
-                        </table>
+                    <div class="uk-grid" data-uk-grid-margin>
+                        <div class="uk-width-medium-1-2">
+                            <div class="uk-vertical-align">
+                                <div class="uk-vertical-align-middle">
+                                    <ul id="contact_list_filter" class="uk-subnav uk-subnav-pill uk-margin-remove">
+                                        <li class="uk-active" data-uk-filter=""><a href="#">All</a></li>
+                                        <li data-uk-filter="sudah-check"><a href="#">Sudah Check</a></li>
+                                        <li data-uk-filter="belum-check"><a href="#">Belum Check</a></li>
+                                        <!-- <li data-uk-filter="schaberger plc"><a href="#">Schamberger PLC </a></li> -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="uk-width-medium-1-2">
+                            <label for="contact_list_search">Cari pemilik meja</label>
+                            <input class="md-input" type="text" id="contact_list_search"/>
+                        </div> -->
                     </div>
-                    <ul class="uk-pagination ts_pager">
-                        <li data-uk-tooltip title="Select Page">
-                            <select class="ts_gotoPage ts_selectize"></select>
-                        </li>
-                        <li class="first"><a href="javascript:void(0)"><i class="uk-icon-angle-double-left"></i></a></li>
-                        <li class="prev"><a href="javascript:void(0)"><i class="uk-icon-angle-left"></i></a></li>
-                        <li><span class="pagedisplay"></span></li>
-                        <li class="next"><a href="javascript:void(0)"><i class="uk-icon-angle-right"></i></a></li>
-                        <li class="last"><a href="javascript:void(0)"><i class="uk-icon-angle-double-right"></i></a></li>
-                        <li data-uk-tooltip title="Page Size">
-                            <select class="pagesize ts_selectize">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                            </select>
-                        </li>
-                    </ul>
                 </div>
             </div>
+
+            <div class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-5 hierarchical_show" id="contact_list">
+              <% tables.forEach((table) => { %>
+
+                <div data-uk-filter="belum-check">
+                    <div class="md-card md-card-hover">
+                        <div class="md-card-head md-bg-grey-500">
+                          <br>
+                          <br>
+                            <h3 class="md-card-head-text uk-text-center">
+                                <%= table.pengguna.nama%>
+                                <span class="uk-text-truncate">Level <%= table.pengguna.level%></span>
+                            </h3>
+                        </div>
+                        <div class="md-card-content">
+                            <ul class="md-list">
+                                <li>
+                                    <div class="md-list-content">
+                                        <span class="md-list-heading">Standar</span>
+                                        <span class="uk-text-small uk-text-muted"><%= table.standar%></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="md-list-content">
+                                        <span class="md-list-heading">Check</span>
+                                        <h3 class="uk-text-center">
+                                          <i href="#" class="uk-icon-large uk-icon-check-circle uk-text-success"></i>
+                                          <i href="#" class="uk-icon-large uk-icon-times-circle uk-text-danger"></i>
+                                        </h3>
+                                    </div>
+                                </li>
+                                <li>
+                                  <div class="md-list-content">
+                                    <span class="md-list-heading">Lakukan Check</span>
+                                    <div class="uk-text-center">
+                                      <br>
+                                        <a class="md-btn md-btn-success md-btn-wave-light waves-effect waves-button waves-light" href="#">CHECK</a>
+                                    </div>
+                                  </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <% }) %>
+
+        </div>
+
+
         </div>
       <% }%>
     </div>
@@ -149,6 +164,8 @@
 
     <!--  issues list functions -->
     <script src="/assets/js/pages/pages_issues.min.js"></script>
+    <script src="/assets/js/pages/page_contact_list.min.js"></script>
+
 
     <script>
         $(function() {

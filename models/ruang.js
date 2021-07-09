@@ -13,10 +13,6 @@ const Ruang = sequelize.define('ruang', {
     type:Sequelize.STRING,
     allowNull: false
   },
-  level: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
   standar: {
     type: Sequelize.STRING,
     allowNull: false

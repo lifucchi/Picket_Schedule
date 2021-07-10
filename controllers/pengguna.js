@@ -1,6 +1,8 @@
 const Pengguna = require('../models/pengguna');
 const bcrypt = require('bcryptjs');
 
+
+
 exports.getDataPengguna = (req,res, next) => {
   Pengguna.findAll()
   .then(pengguna => {

@@ -1,6 +1,7 @@
 const Pengguna = require('../models/pengguna');
 const JadwalPiket = require('../models/jadwal_piket');
 const Meja = require('../models/meja');
+const Penilaian_meja = require('../models/penilaian_meja');
 const moment = require('moment');
 
 
@@ -63,10 +64,39 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
             {tanggal:tanggal,nikpicfasil:pic_fasil_1, nikpicpiket:pic_piket_1},
             {tanggal:tanggal,nikpicfasil:pic_fasil_2, nikpicpiket:pic_piket_2}
           ]).then( result => {
-            res.redirect('/admin/jadwalpiket')
 
-          }
-          )
+            var penilaian = [];
+            var meja = Meja.findAll().then(meja => {
+
+              for (var i = 0; i < result.length; i++){
+                for (var j = 0; j < meja.length; j++){
+                  var penObj = {
+                    bobotmeja: 0,
+                    persetujuanpicpiket: 2,
+                    mejaId: meja[j].dataValues.id,
+                    jadwalPiketId: result[i].dataValues.id
+                  };
+                  penilaian.push(penObj);
+                }
+              }
+
+              Penilaian_meja
+              .bulkCreate(penilaian)
+              .then( res.redirect('/admin/jadwalpiket') );
+
+            });
+
+
+
+            // result.addpenilaian_meja( { through: { selfGranted: false } });
+            // console.log(result);
+            // Meja.findAll().then(meja => {
+            //   console.log("ini meja");
+            //   console.log(meja);
+            //
+            //   Penilaian_meja.bulkCreate(meja, { through: { bobotmeja: '0', persetujuanpicpiket: '0' }});
+            // })
+          })
      }
      console.log("tanggal ada");
      return res.redirect('/admin/jadwalpiket/add')

@@ -23,11 +23,4 @@ router.get('/checklistruang', isAuth,  ruangController.getDataRuangAnggota);
 
 
 
-
-
-
-
-
-
-
 module.exports = router;

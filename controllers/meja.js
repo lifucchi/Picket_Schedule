@@ -1,6 +1,8 @@
 const Meja = require('../models/meja');
 const Pengguna = require('../models/pengguna');
 const moment = require('moment');
+const Penilaian_meja = require('../models/penilaian_meja');
+const JadwalPiket = require('../models/jadwal_piket');
 
 
 exports.getDataMeja = (req,res, next) => {
@@ -77,9 +79,10 @@ exports.getDataMejaAnggota = (req,res, next) => {
 
   req.user
   .getPemilikJadwal({
-    where: {tanggal: nowTanggal}
+    where: {tanggal: nowTanggal},
   })
   .then( result => {
+    // console.log("ini result");
     // console.log(result);
     if (result.length === 0){
         return res.render('./anggota/checklistmeja', {
@@ -88,19 +91,48 @@ exports.getDataMejaAnggota = (req,res, next) => {
         })
       }
 
-      Meja.findAll({
-        include: {
-          model: Pengguna,
-          where: { level: req.user.level }
+    // console.log("ini id");
+    // console.log(result[0].dataValues.id);
+
+    Penilaian_meja
+    .findAll({
+      where: {jadwalPiketId: result[0].dataValues.id},
+        include: [
+          {
+          model: JadwalPiket,
+        },
+        {
+          model: Meja,
+          include : {
+            model: Pengguna
+          }
         }
-      })
-      .then( table => {
-        res.render('./anggota/checklistmeja', {
-          tables: table,
-          pageTitle: 'Checklist Meja',
-          path: '/checklistmejaada'
-        });
-      })
+      ]
+    })
+    .then( penilaianmeja => {
+      console.log("penilaian meja");
+      console.log(penilaianmeja);
+      return res.render('./anggota/checklistmeja', {
+        tables: penilaianmeja,
+        pageTitle: 'Checklist Meja',
+        path: '/checklistmejaada'
+      });
+    })
+
+
+      // Meja.findAll({
+      //   include: {
+      //     model: Pengguna,
+      //     where: { level: req.user.level }
+      //   }
+      // })
+      // .then( table => {
+      //   res.render('./anggota/checklistmeja', {
+      //     tables: table,
+      //     pageTitle: 'Checklist Meja',
+      //     path: '/checklistmejaada'
+      //   });
+      // })
   })
     .catch(err => console.log(err));
 
@@ -108,7 +140,7 @@ exports.getDataMejaAnggota = (req,res, next) => {
 
 exports.getDataMejaDetail = (req,res, next) => {
 const id = req.params.mejaId;
-  Meja.findByPk(id, {
+  Penilaian_meja.findByPk(id, {
     include: {
       model: Pengguna,
     }

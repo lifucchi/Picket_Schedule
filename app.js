@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
 var CronJob = require('cron').CronJob;
 const app = express();
+const moment = require('moment');
+
 // controller
 const errorController = require('./controllers/error');
 // database
@@ -52,7 +54,7 @@ app.use((req, res, next) => {
   Pengguna.findByPk(req.session.user.nik)
     .then(user => {
       req.user = user;
-      console.log(user);
+      // console.log(user);
       next();
     })
     .catch(err => console.log(err));
@@ -90,19 +92,55 @@ Pengguna.hasMany(Ruang,  {  foreignKey: 'penggunaNik', as: 'PicRuang' });
 Ruang.belongsTo(Pengguna, {foreignKey: 'penggunaNik', constraints:true, onDelete:'CASCADE'});
 
 // ruang --> penilaian ruang <-- jadwal piket
-Ruang.belongsToMany(Jadwal_piket, { through: Penilaian_ruang });
-Jadwal_piket.belongsToMany(Ruang, { through: Penilaian_ruang });
+Ruang.belongsToMany(Jadwal_piket, {
+  through: Penilaian_ruang,
+  as: 'JadwalPiket'
+});
+Jadwal_piket.belongsToMany(Ruang, {
+  through: Penilaian_ruang,
+  as: 'Ruang'
+});
 
 // meja --> penilaian meja <-- jadwal piket
-Meja.belongsToMany(Jadwal_piket, { through: Penilaian_meja });
-Jadwal_piket.belongsToMany(Meja, { through: Penilaian_meja });
+Meja.belongsToMany(Jadwal_piket, {
+  through: Penilaian_meja,
+  as: 'JadwalPiketMeja'
+});
+
+Jadwal_piket.belongsToMany(Meja, {
+  through: Penilaian_meja,
+  as: 'Meja'
+ });
+
+Meja.hasMany(Penilaian_meja);
+Penilaian_meja.belongsTo(Meja);
+Jadwal_piket.hasMany(Penilaian_meja);
+Penilaian_meja.belongsTo(Jadwal_piket);
 
 // var job = new CronJob('0 0 0 * * *', function() {
 //  //will run every day at 12:00 AM
 // });
 
+// var job = new CronJob('0 0 0 * * *', function() {
+//   console.log('Ini jam 12 malam');
+//
+// }, null, true, 'Asia/Jakarta');
+// job.start();
+
 // var job = new CronJob('* 5 * * * *', function() {
 //   console.log('halo');
+//   const nowTanggal = moment().format('YYYY-MM-DD');
+//
+//   JadwalPiket
+//   .findAll({
+//     where: {tanggal: nowTanggal}
+//   })
+//   .then(jadwal=>{
+//     jadwal.setPenilaian_ruang([1,2])
+//     .then(sc=>{
+//         console.log(sc);
+//     });
+// });
 // }, null, true, 'Asia/Jakarta');
 // job.start();
 

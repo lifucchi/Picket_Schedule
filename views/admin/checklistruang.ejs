@@ -34,9 +34,9 @@
                               </tr>
                               <tr>
                                   <th>Nama Ruang</th>
-                                  <th>Level</th>
                                   <th>Standar</th>
                                   <th>Poin Ruang</th>
+                                  <th>Level</th>
                                   <th>PIC Ruang</th>
                                   <th>Aksi</th>
                               </tr>
@@ -48,6 +48,7 @@
                               <td><%= room.nama_ruang%></td>
                               <td><%= room.standar%></td>
                               <td><%= room.poin_ruang%></td>
+                              <td><%= room.pengguna.level%></td>
                               <td><%= room.pengguna.nama%></td>
                               <td>
                                   <button  href="javascript:void(0);" class="btn edit" data-id="<%= room.id %>" data-namaruang="<%= room.nama_ruang%>" data-standar="<%= room.standar%>" data-poinruang="<%= room.poin_ruang%>" data-picruang="<%= room.pengguna.nik%>" ><i class="material-icons md-24"></i></button>

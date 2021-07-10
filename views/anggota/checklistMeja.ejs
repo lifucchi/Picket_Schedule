@@ -42,88 +42,111 @@
         <%- include('top_bar'); %>
     </div>
 
+
     <div id="page_content">
 
         <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
+            <!-- <div class="heading_actions">
+                <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Archive"><i class="md-icon material-icons">&#xE149;</i></a>
+                <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Print"><i class="md-icon material-icons">&#xE8AD;</i></a>
+                <div data-uk-dropdown>
+                    <i class="md-icon material-icons">&#xE5D4;</i>
+                    <div class="uk-dropdown uk-dropdown-small">
+                        <ul class="uk-nav">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Other Action</a></li>
+                            <li><a href="#">Other Action</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div> -->
             <h1> <%=pageTitle%> </h1>
+            <!-- <span class="uk-text-upper uk-text-small"><a href="#">Meja</a></span> -->
         </div>
-      <% if (path === '/checklistmejaada') {%>
+
+        <% if (path === '/checklistmejaada') {%>
         <div id="page_content_inner">
+            <div class="md-card">
 
-            <div class="md-card uk-margin-medium-bottom">
-                <div class="md-card-content">
-                    <div class="uk-grid" data-uk-grid-margin>
-                        <div class="uk-width-medium-1-2">
-                            <div class="uk-vertical-align">
-                                <div class="uk-vertical-align-middle">
-                                    <ul id="contact_list_filter" class="uk-subnav uk-subnav-pill uk-margin-remove">
-                                        <li class="uk-active" data-uk-filter=""><a href="#">All</a></li>
-                                        <li data-uk-filter="sudah-check"><a href="#">Sudah Check</a></li>
-                                        <li data-uk-filter="belum-check"><a href="#">Belum Check</a></li>
-                                        <!-- <li data-uk-filter="schaberger plc"><a href="#">Schamberger PLC </a></li> -->
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="uk-width-medium-1-2">
-                            <label for="contact_list_search">Cari pemilik meja</label>
-                            <input class="md-input" type="text" id="contact_list_search"/>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-5 hierarchical_show" id="contact_list">
-              <% tables.forEach((table) => { %>
-
-                <div data-uk-filter="belum-check">
-                    <div class="md-card md-card-hover">
-                        <div class="md-card-head md-bg-grey-500">
-                          <br>
-                          <br>
-                            <h3 class="md-card-head-text uk-text-center">
-                                <%= table.pengguna.nama%>
-                                <span class="uk-text-truncate">Level <%= table.pengguna.level%></span>
-                            </h3>
-                        </div>
-                        <div class="md-card-content">
-                            <ul class="md-list">
-                                <li>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Standar</span>
-                                        <span class="uk-text-small uk-text-muted"><%= table.standar%></span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Check</span>
-                                        <h3 class="uk-text-center">
-                                          <i href="#" class="uk-icon-large uk-icon-check-circle uk-text-success"></i>
-                                          <i href="#" class="uk-icon-large uk-icon-times-circle uk-text-danger"></i>
-                                        </h3>
-                                    </div>
-                                </li>
-                                <li>
-                                  <div class="md-list-content">
-                                    <span class="md-list-heading">Lakukan Check</span>
-                                    <div class="uk-text-center">
-                                      <br>
-                                        <a class="md-btn md-btn-success md-btn-wave-light waves-effect waves-button waves-light" href="/anggota/checklistmeja/detail/<%= table.id%>">CHECK</a>
-                                    </div>
+                  <div class="md-card uk-margin-medium-bottom">
+                      <div class="md-card-content">
+                          <div class="uk-grid" data-uk-grid-margin>
+                              <div class="uk-width-medium-1-2">
+                                  <div class="uk-vertical-align">
+                                      <div class="uk-vertical-align-middle">
+                                          <ul id="contact_list_filter" class="uk-subnav uk-subnav-pill uk-margin-remove">
+                                              <li class="uk-active" data-uk-filter=""><a href="#">All</a></li>
+                                              <li data-uk-filter="1"><a href="#">Sudah Check  </a></li>
+                                              <li data-uk-filter="2"><a href="#">Belum Check </a></li>
+                                          </ul>
+                                      </div>
                                   </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
 
-                <% }) %>
+                  <div class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-5 hierarchical_show" id="contact_list">
+                    <% tables.forEach((table) => { %>
+                      <div data-uk-filter="<%= table.persetujuanpicpiket %>">
+                          <div class="md-card md-card-hover">
+                              <div class="md-card-head">
+                                  <div class="uk-text-center">
+                                      <img class="md-card-head-avatar" src="/assets/img/avatars/avatar_02.png" alt=""/>
+                                  </div>
+                                  <h3 class="md-card-head-text uk-text-center">
+                                      <%= table.meja.pengguna.nama %>
+                                      <span class="uk-text-truncate">Level <%= table.meja.pengguna.level %></span>
+                                  </h3>
+                              </div>
+                              <div class="md-card-content">
+                                  <ul class="md-list">
+                                      <li>
+                                          <div class="md-list-content">
+                                              <span class="md-list-heading">Standar</span>
+                                              <span class="uk-text-small uk-text-muted"><%= table.meja.standar%></span>
+                                          </div>
+                                      </li>
+                                      <li>
+                                          <div class="md-list-content">
+                                              <span class="md-list-heading">Check</span>
+                                              <h3 class="uk-text-center">
+                                                <% if (table.persetujuanpicpiket === '1') { %>
+                                                <i href="#" class="uk-icon-large uk-icon-check-circle uk-text-success"></i>
+                                                <% } else { %>
+                                                <i href="#" class="uk-icon-large uk-icon-times-circle uk-text-danger"></i>
+                                                <% } %>
 
+                                              </h3>
+                                          </div>
+                                      </li>
+                                      <li>
+                                        <div class="md-list-content">
+                                          <span class="md-list-heading">Lakukan Check</span>
+                                          <div class="uk-text-center">
+                                            <br>
+                                              <a class="md-btn md-btn-success md-btn-wave-light waves-effect waves-button waves-light" href="/anggota/checklistmeja/detail/<%= table.id%>">CHECK</a>
+                                          </div>
+                                        </div>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+
+                      <% }) %>
+
+
+
+
+
+
+              </div>
+
+            </div>
         </div>
+        <% } %>
 
-
-        </div>
-      <% }%>
     </div>
 
 

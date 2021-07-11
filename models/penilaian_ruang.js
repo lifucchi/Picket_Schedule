@@ -13,9 +13,10 @@ const Penilaian_ruang = sequelize.define('penilaian_ruang', {
     type:Sequelize.INTEGER,
     allowNull: false
   },
-  standarruang: {
+  persetujuanpicpiket: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    defaultValue: '2'
   }
 });
 

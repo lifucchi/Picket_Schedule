@@ -141,9 +141,26 @@ exports.getDataMejaAnggota = (req,res, next) => {
 exports.getDataMejaDetail = (req,res, next) => {
 const id = req.params.mejaId;
   Penilaian_meja.findByPk(id, {
-    include: {
-      model: Pengguna,
+    include: [
+      {
+      model: JadwalPiket,
+      include : [{
+        model: Pengguna,
+        as: 'nik_pic_piket',
+      },
+      {
+        model: Pengguna,
+        as: 'nik_pic_fasil',
+      }
+    ]
+    },
+    {
+      model: Meja,
+      include : {
+        model: Pengguna
+      }
     }
+  ]
   })
   .then( table => {
     res.render('./anggota/checklistmejadetail', {

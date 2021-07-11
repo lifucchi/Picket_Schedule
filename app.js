@@ -100,6 +100,14 @@ Jadwal_piket.belongsToMany(Ruang, {
   through: Penilaian_ruang,
   as: 'Ruang'
 });
+Ruang.hasMany(Penilaian_ruang);
+Penilaian_ruang.belongsTo(Ruang);
+Jadwal_piket.hasMany(Penilaian_ruang);
+Penilaian_ruang.belongsTo(Jadwal_piket);
+
+// penilaian ruang -> bukti Temuan
+Bukti_temuan.belongsTo(Penilaian_ruang);
+Penilaian_ruang.hasMany(Bukti_temuan);
 
 // meja --> penilaian meja <-- jadwal piket
 Meja.belongsToMany(Jadwal_piket, {
@@ -111,12 +119,14 @@ Jadwal_piket.belongsToMany(Meja, {
   through: Penilaian_meja,
   as: 'Meja'
  });
-
 Meja.hasMany(Penilaian_meja);
 Penilaian_meja.belongsTo(Meja);
 Jadwal_piket.hasMany(Penilaian_meja);
 Penilaian_meja.belongsTo(Jadwal_piket);
 
+// penilaian meja -> bukti Temuan
+Bukti_temuan.belongsTo(Penilaian_meja);
+Penilaian_meja.hasMany(Bukti_temuan);
 // var job = new CronJob('0 0 0 * * *', function() {
 //  //will run every day at 12:00 AM
 // });

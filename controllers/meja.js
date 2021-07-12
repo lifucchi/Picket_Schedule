@@ -6,7 +6,6 @@ const JadwalPiket = require('../models/jadwal_piket');
 
 
 exports.getDataMeja = (req,res, next) => {
-
   Pengguna.findAll()
   .then(pengguna => {
     Meja.findAll( {include: Pengguna} )
@@ -20,7 +19,6 @@ exports.getDataMeja = (req,res, next) => {
     })
   })
   .catch(err => console.log(err));
-
 };
 
 exports.postAddDataMeja = (req,res,next) => {
@@ -69,7 +67,6 @@ exports.postDeleteMeja = ( req,res, next) => {
       res.redirect('/admin/checklistmeja');
     })
     .catch(err => console.log(err));
-
 };
 
 exports.getDataMejaAnggota = (req,res, next) => {
@@ -90,9 +87,6 @@ exports.getDataMejaAnggota = (req,res, next) => {
           path: '/checklistmeja'
         })
       }
-
-    // console.log("ini id");
-    // console.log(result[0].dataValues.id);
 
     Penilaian_meja
     .findAll({
@@ -118,21 +112,6 @@ exports.getDataMejaAnggota = (req,res, next) => {
         path: '/checklistmejaada'
       });
     })
-
-
-      // Meja.findAll({
-      //   include: {
-      //     model: Pengguna,
-      //     where: { level: req.user.level }
-      //   }
-      // })
-      // .then( table => {
-      //   res.render('./anggota/checklistmeja', {
-      //     tables: table,
-      //     pageTitle: 'Checklist Meja',
-      //     path: '/checklistmejaada'
-      //   });
-      // })
   })
     .catch(err => console.log(err));
 
@@ -170,5 +149,29 @@ const id = req.params.mejaId;
     });
   })
   .catch(err => console.log(err));
+
+};
+
+exports.postNilaiMeja = (req,res, next) => {
+  const id = req.body.mejaId;
+  const nilai = req.body.nilai;
+
+  console.log("ini nilai");
+  console.log(nilai);
+  console.log("ini meja");
+  console.log(id);
+
+  Penilaian_meja
+  .findByPk(id)
+  .then(penilaian => {
+    penilaian.bobotmeja = nilai;
+    return penilaian.save();
+  })
+  .then(result => {
+    console.log('UPDATED NILAI!');
+    res.redirect('/anggota/checklistmeja/detail/'+id);
+  })
+  .catch(err => console.log(err));
+
 
 };

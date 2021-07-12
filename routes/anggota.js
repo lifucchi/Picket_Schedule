@@ -18,6 +18,8 @@ router.get('/jadwalpiket', isAuth,  jadwalPiketController.getJadwalPiketAnggota)
 
 router.get('/checklistmeja', isAuth,  mejaController.getDataMejaAnggota);
 router.get('/checklistmeja/detail/:mejaId', isAuth,  mejaController.getDataMejaDetail);
+router.post('/checklistmeja/nilai', isAuth,  mejaController.postNilaiMeja);
+
 
 router.get('/checklistruang', isAuth,  ruangController.getDataRuangAnggota);
 

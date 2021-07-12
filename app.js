@@ -7,6 +7,7 @@ const flash = require('connect-flash');
 var CronJob = require('cron').CronJob;
 const app = express();
 const moment = require('moment');
+const multer = require('multer');
 
 // controller
 const errorController = require('./controllers/error');
@@ -33,8 +34,31 @@ const anggotaRoutes = require('./routes/anggota');
 const fasilitatorRoutes = require('./routes/fasilitator');
 
 
+
+
 app.use(bodyPaser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+const imageFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/png' ||
+      file.mimetype === 'image/jpg' ||
+      file.mimetype === 'image/jpeg'
+    ) {
+    cb(null, true);
+  } else {
+    cb("Please upload only images.", false);
+  }
+};
+
+var fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/bukti_temuan");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-bukti_temuan-${file.originalname}`);
+  },
+});
+app.use(multer({storage : fileStorage, fileFilter: imageFilter}).single('image'));
 app.use(
   session({
     secret: 'my secret',

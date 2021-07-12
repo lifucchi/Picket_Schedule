@@ -3,6 +3,8 @@ const Pengguna = require('../models/pengguna');
 const moment = require('moment');
 const Penilaian_meja = require('../models/penilaian_meja');
 const JadwalPiket = require('../models/jadwal_piket');
+const Bukti_temuan = require('../models/bukti_temuan');
+
 
 
 exports.getDataMeja = (req,res, next) => {
@@ -172,6 +174,39 @@ exports.postNilaiMeja = (req,res, next) => {
     res.redirect('/anggota/checklistmeja/detail/'+id);
   })
   .catch(err => console.log(err));
+
+
+};
+
+exports.postBuktiTemuan = (req,res, next) => {
+  const id = req.body.mejaId;
+  const tanggal = req.body.tanggal;
+  const deskripsi = req.body.deskripsi;
+  const image = req.file;
+
+  console.log(image);
+
+  const imgUrl = image.path;
+
+  console.log(imgUrl);
+  console.log("tanggal " + tanggal);
+  console.log("deskripsi " +deskripsi);
+  console.log("id " + id);
+
+  Bukti_temuan.create(
+    { fotosebelum:imgUrl,
+      deskripsi_sebelum:deskripsi,
+      deadline:tanggal,
+      penilaianMejaId: id
+    }
+  )
+  .then(result => {
+      console.log('UPDATED BUKTI!');
+      res.redirect('/anggota/checklistmeja/detail/'+id);
+    })
+  .catch(err => console.log(err));
+
+
 
 
 };

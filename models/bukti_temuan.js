@@ -14,7 +14,7 @@ const Bukti_temuan = sequelize.define('bukti_temuan', {
     allowNull: false
   },
   deskripsi_sebelum: {
-    type:Sequelize.STRING(50),
+    type:Sequelize.STRING,
     allowNull: false
   },
   deadline: {
@@ -23,10 +23,11 @@ const Bukti_temuan = sequelize.define('bukti_temuan', {
   },
   tinjak_lanjut: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    defaultValue: '2'
+    // allowNull: false
   },
   fotosesudah: {
-    type: Sequelize.BLOB('long'),
+    type: Sequelize.STRING,
   },
   deskripsi_sesudah: {
     type: Sequelize.STRING(50),

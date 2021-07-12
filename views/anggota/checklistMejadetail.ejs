@@ -70,15 +70,12 @@
                                     <div class="uk-width-1-1">
                                         <ul class="uk-tab" data-uk-tab="{connect:'#tabs_1'}">
                                             <li class="uk-active"><a href="#">Nilai</a></li>
-                                            <li><a href="#">Barang Temuan</a></li>
-                                            <div class="md-btn-group">
-                                              <a href="#" class="md-btn md-btn-warning">Check !!</a>
-                                            </div>
+                                            <li class="uk-disabled"><a href="#">Barang Temuan</a></li>
 
                                         </ul>
                                         <ul id="tabs_1" class="uk-switcher uk-margin">
                                             <li>
-                                              <form class="" action="" method="post">
+                                              <form class="" action="" method="post" enctype="multipart/form-data">
                                                 <div class="uk-form-row">
                                                     <div class="uk-grid">
                                                         <div class="uk-width-medium-1-2">
@@ -86,7 +83,15 @@
                                                           <div class="uk-input-group" >
                                                             <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
                                                               <label>Nilai</label>
-                                                              <input id='nilai' name='nilai' type="number" min="0" max="5" class="md-input label-fixed" required />
+                                                              <!-- <input id='nilai' name='range' type="number" min="0" max="5" class="md-input label-fixed" required /> -->
+                                                              <select name='nilai' id='nilai' class="md-input label-fixed" required >
+                                                                 <option value="">Nilai</option>
+                                                                 <option value="5"> A - sangat sesuai  </option>
+                                                                 <option value="4"> B - sesuai </option>
+                                                                 <option value="3"> C - agak sesuai </option>
+                                                                 <option value="2"> D - tidak sesuai </option>
+                                                                 <option value="1"> E - sangat tidak sesuai </option>
+                                                              </select>
                                                           </div>
                                                         </div>
                                                     </div>
@@ -112,9 +117,6 @@
                                                         <div class="uk-width-medium-1-2">
                                                             <div class="md-card">
                                                                 <div class="md-card-content">
-                                                                    <!-- <h3 class="heading_a uk-margin-small-bottom">
-                                                                        Barang Temuan
-                                                                    </h3> -->
                                                                     <input type="file" name="image" id="input-file-a" class="dropify" />
                                                                 </div>
                                                             </div>
@@ -168,7 +170,6 @@
                             <div class="uk-margin-large-bottom">
                                 <h2 class="heading_c uk-margin-small-bottom">Standar</h2>
                                 <%= tables.meja.standar%>
-
                             </div>
 
                         </div>
@@ -209,7 +210,7 @@
                                     </div>
                                     <div class="md-list-content">
                                         <span class="md-list-heading"><%= tables.jadwal_piket.tanggal%></span>
-                                        <span class="uk-text-small uk-text-muted">Created</span>
+                                        <span class="uk-text-small uk-text-muted">Jadwal Piket</span>
                                     </div>
                                 </li>
                                 <!-- <li>
@@ -223,6 +224,14 @@
                                 </li> -->
                             </ul>
                         </div>
+                        <div class="uk-width-medium-1-4">
+                        </div>
+                        <div class="uk-width-medium-1-4">
+                          <div class="md-btn-group">
+                            <a href="#" class="md-btn md-btn-warning">Check !!</a>
+                          </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

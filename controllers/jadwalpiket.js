@@ -63,30 +63,64 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
          return JadwalPiket.bulkCreate([
             {tanggal:tanggal,nikpicfasil:pic_fasil_1, nikpicpiket:pic_piket_1},
             {tanggal:tanggal,nikpicfasil:pic_fasil_2, nikpicpiket:pic_piket_2}
-          ]).then( result => {
+          ],
+          // {
+          //   include: [{
+          //     model: Pengguna,
+          //     as: 'nik_pic_piket',
+          //   }
+          // ]
+          // }
+        ).then( result => {
 
             var penilaian = [];
+            var penilaianruang = []
 
             Meja
             .findAll({
               include: [{
                     model: Pengguna,
-                    where: {level: 1}
+                    // where: {level: 1}
                 }]
               })
             .then(meja => {
 
-            for (var i = 0; i < result.length; i++){
+            // const jadwal = JadwalPiket.findAll({
+            //   include: [{
+            //     model: Pengguna,
+            //     as: 'nik_pic_piket',
+            //   }
+            // ]
+            // })
+
+            // console.log(result);
+
+            // for (var i = 0; i < result.length; i++){
+              // console.log("ini result");
+              // console.log(result[i].dataValues.id);
               for (var j = 0; j < meja.length; j++){
-                var penObj = {
-                  bobotmeja: 0,
-                  persetujuanpicpiket: 2,
-                  mejaId: meja[j].dataValues.id,
-                  jadwalPiketId: result[i].dataValues.id
-                };
-                penilaian.push(penObj);
+                if ( meja[j].dataValues.pengguna.level === 1){
+                  var penObj = {
+                    bobotmeja: 0,
+                    persetujuanpicpiket: 2,
+                    mejaId: meja[j].dataValues.id,
+                    jadwalPiketId: result[0].dataValues.id
+                  };
+                  penilaian.push(penObj);
+                }
+                else if ( meja[j].dataValues.pengguna.level === 2){
+                  var penObj = {
+                    bobotmeja: 0,
+                    persetujuanpicpiket: 2,
+                    mejaId: meja[j].dataValues.id,
+                    jadwalPiketId: result[1].dataValues.id
+                  };
+                  penilaian.push(penObj);
+
+                }
+
               }
-            }
+            // }
 
               Penilaian_meja
               .bulkCreate(penilaian)

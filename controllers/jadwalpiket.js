@@ -68,17 +68,17 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
             var penilaian = [];
             var meja = Meja.findAll().then(meja => {
 
-              for (var i = 0; i < result.length; i++){
-                for (var j = 0; j < meja.length; j++){
-                  var penObj = {
-                    bobotmeja: 0,
-                    persetujuanpicpiket: 2,
-                    mejaId: meja[j].dataValues.id,
-                    jadwalPiketId: result[i].dataValues.id
-                  };
-                  penilaian.push(penObj);
-                }
+            for (var i = 0; i < result.length; i++){
+              for (var j = 0; j < meja.length; j++){
+                var penObj = {
+                  bobotmeja: 0,
+                  persetujuanpicpiket: 2,
+                  mejaId: meja[j].dataValues.id,
+                  jadwalPiketId: result[i].dataValues.id
+                };
+                penilaian.push(penObj);
               }
+            }
 
               Penilaian_meja
               .bulkCreate(penilaian)

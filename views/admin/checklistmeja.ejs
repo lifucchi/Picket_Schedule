@@ -16,11 +16,23 @@
 <div id="page_content">
     <div id="page_content_inner">
             <div class="uk-grid" data-uk-grid-margin="">
-                <div class="uk-width-medium-8-10 uk-row-first">
+                <div class="uk-width-medium-7-10 uk-row-first">
                       <h3 class="heading_b uk-margin-bottom"> <%= pageTitle%> </h3>
                 </div>
-                <div class="uk-width-medium-2-10">
+                <!-- <div class="uk-width-medium-2-10">
                       <button class="md-btn" data-uk-modal="{target:'#modal_header_footer'}">Tambah <%= pageTitle%></button>
+                </div> -->
+                <div class="uk-width-medium-3-10">
+                    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
+                        <button class="md-btn">Tambah <%= pageTitle%> <i class="material-icons">&#xE313;</i></button>
+                        <div class="uk-dropdown">
+                            <ul class="uk-nav uk-nav-dropdown">
+                                <li><a href="#" data-uk-modal="{target:'#modal_header_footer'}">Tambah 1 meja</a></li>
+                                <li class="uk-nav-divider"></li>
+                                <li><a href="#" data-uk-modal="{target:'#modal_header_footerstandar'}">Tambah 1 standar ke seluruh meja</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         <% if (path === '/checklistmeja') {%>
@@ -116,6 +128,46 @@
                   </form>
                   </div>
               </div>
+
+              <!-- modal tambah seluruh standar -->
+
+              <div class="uk-modal" id="modal_header_footerstandar">
+                  <div class="uk-modal-dialog">
+                      <div class="uk-modal-header">
+                          <h3 class="uk-modal-title">Tambah <%= pageTitle%></h3>
+                      </div>
+                      <form action="/admin/checklistmejastandar" method="post">
+                          <div class="md-card-content">
+                              <div class="uk-grid" data-uk-grid-margin>
+                                  <div class="uk-width-medium">
+                                      <div class="uk-form-row">
+                                          <div class="uk-grid">
+                                              <div class="uk-width-medium-1-2">
+                                                  <label>Poin Meja</label>
+                                                  <input id='poin_meja' name='poin_meja' type="number" class="md-input" required />
+                                              </div>
+                                              <div class="uk-width-medium-1-2">
+                                                  <label>Standar</label>
+                                                  <input id='standar' name= 'standar' type="text" class="md-input" required />
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="uk-grid" data-uk-grid-margin>
+                                  <div class="uk-width-medium-1">
+                                      <div class="uk-input-group">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      <div class="uk-modal-footer uk-text-right">
+                          <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button><button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                      </div>
+                  </form>
+                  </div>
+              </div>
+
 
               <!-- modal edit -->
               <div class="uk-modal" id="modal_header_footeredit">

@@ -4,7 +4,7 @@ const moment = require('moment');
 const Penilaian_meja = require('../models/penilaian_meja');
 const JadwalPiket = require('../models/jadwal_piket');
 const Bukti_temuan = require('../models/bukti_temuan');
-
+const { Op } = require("sequelize");
 
 
 exports.getDataMeja = (req,res, next) => {
@@ -36,6 +36,34 @@ exports.postAddDataMeja = (req,res,next) => {
     res.redirect('/admin/checklistmeja')
   ).catch(err => console.log(err));
 };
+
+exports.postAddDataAllMeja = (req,res,next) => {
+  const standar = req.body.standar;
+  const poin_meja = req.body.poin_meja;
+
+
+  Pengguna
+  .findAll({ where: {peran: { [Op.not] : 'Admin'}}})
+  .then( pemilik => {
+
+    var pemilikmeja = [];
+    for (var i = 0; i < pemilik.length; i++){
+      var penObj = {
+        penggunaNik: pemilik[i].dataValues.nik,
+        standar:standar,
+        poin_meja: poin_meja
+      };
+      pemilikmeja.push(penObj);
+    }
+    Meja
+    .bulkCreate(pemilikmeja)
+    .then( res.redirect('/admin/checklistmeja') );
+  })
+  .catch(err => console.log(err));
+
+
+};
+
 
 exports.postEditMeja = ( req,res, next) => {
   const id = req.body.id;

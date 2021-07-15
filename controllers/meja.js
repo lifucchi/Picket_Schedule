@@ -109,8 +109,9 @@ exports.getDataMejaAnggota = (req,res, next) => {
     where: {tanggal: nowTanggal},
   })
   .then( result => {
-    // console.log("ini result");
-    // console.log(result);
+    console.log("ini getpemilikjadwal");
+    console.log(result);
+
     if (result.length === 0){
         return res.render('./anggota/checklistmeja', {
           pageTitle: 'Checklist Meja',

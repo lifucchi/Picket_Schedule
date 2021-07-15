@@ -66,7 +66,15 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
           ]).then( result => {
 
             var penilaian = [];
-            var meja = Meja.findAll().then(meja => {
+
+            Meja
+            .findAll({
+              include: [{
+                    model: Pengguna,
+                    where: {level: 1}
+                }]
+              })
+            .then(meja => {
 
             for (var i = 0; i < result.length; i++){
               for (var j = 0; j < meja.length; j++){

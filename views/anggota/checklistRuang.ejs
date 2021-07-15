@@ -75,6 +75,7 @@
                                     <!-- <th class="uk-text-center">Key</th> -->
                                     <th>Nama Ruang</th>
                                     <th>Standar</th>
+                                    <th>status Check</th>
                                     <!-- <th>Level</th> -->
                                     <!-- <th>Priority</th>
                                     <th>Created</th>
@@ -84,8 +85,9 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>Nama Pegawai</th>
+                                    <th>Nama Ruang</th>
                                     <th>Standar</th>
+                                    <th>Status Check</th>
                                     <!-- <th>Level</th> -->
                                 </tr>
                             </tfoot>
@@ -94,8 +96,13 @@
                               <% rooms.forEach((room) => { %>
                             <tr>
 
-                                <td><%= room.nama_ruang%></td>
-                                <td><%= room.standar%></td>
+                                <td> <a href="/anggota/checklistruang/detail/<%= room.id%>"><%= room.ruang.nama_ruang%></a>  </td>
+                                <td><%= room.ruang.standar%></td>
+                                <% if (room.persetujuanpicpiket === '1') { %>
+                                  <td> <i href="#" class="uk-icon-large uk-icon-check-circle uk-text-success"></i></td>
+                                <% } else { %>
+                                  <td> <i href="#" class="uk-icon-large uk-icon-times-circle uk-text-danger"></i></td>
+                                <% } %>
 
                               <% }) %>
 

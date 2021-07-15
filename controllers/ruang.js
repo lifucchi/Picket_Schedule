@@ -1,7 +1,10 @@
 const Ruang = require('../models/ruang');
 const Pengguna = require('../models/pengguna');
 const moment = require('moment');
-
+const Penilaian_ruang = require('../models/penilaian_ruang');
+const JadwalPiket = require('../models/jadwal_piket');
+const Bukti_temuan = require('../models/bukti_temuan');
+const { Op } = require("sequelize");
 
 exports.getDataRuang = (req,res, next) => {
     Pengguna.findAll()
@@ -87,11 +90,20 @@ exports.getDataRuangAnggota = (req,res, next) => {
           path: '/checklistruang'
         })
       }
-      Ruang.findAll({
-        include: {
-          model: Pengguna,
-          where: { level: req.user.level }
-        }
+      Penilaian_ruang
+      .findAll({
+        where: {jadwalPiketId: result[0].dataValues.id},
+          include: [
+            {
+            model: JadwalPiket,
+          },
+          {
+            model: Ruang,
+            include : {
+              model: Pengguna
+            }
+          }
+        ]
       })
       .then( ruang => {
         res.render('./anggota/checklistRuang', {
@@ -103,5 +115,40 @@ exports.getDataRuangAnggota = (req,res, next) => {
 
   })
     .catch(err => console.log(err));
+
+};
+
+exports.getDataRuangDetail = (req,res, next) => {
+const id = req.params.ruangId;
+  Penilaian_ruang.findByPk(id, {
+    include: [
+      {
+      model: JadwalPiket,
+      include : [{
+        model: Pengguna,
+        as: 'nik_pic_piket',
+      },
+      {
+        model: Pengguna,
+        as: 'nik_pic_fasil',
+      }
+    ]
+    },
+    {
+      model: Ruang,
+      include : {
+        model: Pengguna
+      }
+    }
+  ]
+  })
+  .then( room => {
+    res.render('./anggota/checklistruangdetail', {
+      room: room,
+      pageTitle: 'Checklist Ruang',
+      path: '/checklistruangada'
+    });
+  })
+  .catch(err => console.log(err));
 
 };

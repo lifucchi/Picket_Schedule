@@ -2,7 +2,10 @@ const Pengguna = require('../models/pengguna');
 const JadwalPiket = require('../models/jadwal_piket');
 const Meja = require('../models/meja');
 const Penilaian_meja = require('../models/penilaian_meja');
+const Penilaian_ruang = require('../models/penilaian_ruang');
+
 const moment = require('moment');
+const Ruang = require('../models/ruang');
 
 
 
@@ -64,40 +67,18 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
             {tanggal:tanggal,nikpicfasil:pic_fasil_1, nikpicpiket:pic_piket_1},
             {tanggal:tanggal,nikpicfasil:pic_fasil_2, nikpicpiket:pic_piket_2}
           ],
-          // {
-          //   include: [{
-          //     model: Pengguna,
-          //     as: 'nik_pic_piket',
-          //   }
-          // ]
-          // }
         ).then( result => {
 
             var penilaian = [];
-            var penilaianruang = []
 
             Meja
             .findAll({
               include: [{
                     model: Pengguna,
-                    // where: {level: 1}
                 }]
               })
             .then(meja => {
 
-            // const jadwal = JadwalPiket.findAll({
-            //   include: [{
-            //     model: Pengguna,
-            //     as: 'nik_pic_piket',
-            //   }
-            // ]
-            // })
-
-            // console.log(result);
-
-            // for (var i = 0; i < result.length; i++){
-              // console.log("ini result");
-              // console.log(result[i].dataValues.id);
               for (var j = 0; j < meja.length; j++){
                 if ( meja[j].dataValues.pengguna.level === 1){
                   var penObj = {
@@ -116,29 +97,48 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
                     jadwalPiketId: result[1].dataValues.id
                   };
                   penilaian.push(penObj);
-
                 }
-
               }
-            // }
 
               Penilaian_meja
               .bulkCreate(penilaian)
-              .then( res.redirect('/admin/jadwalpiket') );
 
+              Ruang.findAll({
+                include: [{
+                      model: Pengguna,
+                  }]
+                }).then( ruang => {
+                var penilaianruang = [];
+
+                for (var j = 0; j < ruang.length; j++){
+                  if ( ruang[j].dataValues.pengguna.level === 1){
+                    var penObj = {
+                      bobotruang: 0,
+                      persetujuanpicpiket: 2,
+                      ruangId: ruang[j].dataValues.id,
+                      jadwalPiketId: result[0].dataValues.id
+                    };
+                    penilaianruang.push(penObj);
+                  }
+                  else if ( ruang[j].dataValues.pengguna.level === 2){
+                    var penObj = {
+                      bobotruang: 0,
+                      persetujuanpicpiket: 2,
+                      ruangId: ruang[j].dataValues.id,
+                      jadwalPiketId: result[1].dataValues.id
+                    };
+                    penilaianruang.push(penObj);
+                  }
+                }
+
+                Penilaian_ruang
+                .bulkCreate(penilaianruang)
+
+              })
             });
 
-
-
-            // result.addpenilaian_meja( { through: { selfGranted: false } });
-            // console.log(result);
-            // Meja.findAll().then(meja => {
-            //   console.log("ini meja");
-            //   console.log(meja);
-            //
-            //   Penilaian_meja.bulkCreate(meja, { through: { bobotmeja: '0', persetujuanpicpiket: '0' }});
-            // })
           })
+          .then( res.redirect('/admin/jadwalpiket') );
      }
      console.log("tanggal ada");
      return res.redirect('/admin/jadwalpiket/add')

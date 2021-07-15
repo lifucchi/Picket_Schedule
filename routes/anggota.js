@@ -25,7 +25,6 @@ router.post('/checklistmeja/bukti', isAuth,  mejaController.postBuktiTemuan);
 
 
 router.get('/checklistruang', isAuth,  ruangController.getDataRuangAnggota);
-
-
+router.get('/checklistruang/detail/:ruangId', isAuth,  ruangController.getDataRuangDetail);
 
 module.exports = router;

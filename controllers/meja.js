@@ -235,7 +235,21 @@ exports.postBuktiTemuan = (req,res, next) => {
     })
   .catch(err => console.log(err));
 
+};
 
+exports.postCheckPic = (req,res, next) => {
+  const id = req.body.check;
+  Penilaian_meja
+  .findByPk(id)
+  .then( penilaian => {
+    penilaian.persetujuanpicpiket = 1;
+    return penilaian.save();
+  })
+  .then(result => {
+    console.log('UPDATED NILAI!');
+    res.redirect('/anggota/checklistmeja/detail/'+id);
+  })
+  .catch(err => console.log(err));
 
 
 };

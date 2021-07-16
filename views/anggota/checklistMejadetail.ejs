@@ -69,6 +69,7 @@
                             <div class="uk-width-medium-1">
                                 <!-- <div class="md-card"> -->
                                     <div class="md-card-content">
+                                      <% if ( tables.persetujuanpicpiket === 2 ) {%>
                                         <div class="uk-accordion" data-uk-accordion>
                                             <h3 class="uk-accordion-title">Nilai </h3>
                                             <div class="uk-accordion-content">
@@ -159,6 +160,7 @@
 
 
                                         </div>
+                                      <% } %>
                                     </div>
                                 <!-- </div> -->
                             </div>
@@ -284,7 +286,15 @@
                                 </p> -->
                                 <p>
                                     Status:
+                                    <% if ( tables.persetujuanpicpiket === 2 ) {%>
+
                                     <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Check</span>
+                                    <% } else {  %>
+                                      <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Check</span>
+
+                                    <% }  %>
+
+
                                 </p>
                             </div>
                             <h2 class="heading_c uk-margin-small-bottom">Details</h2>
@@ -329,13 +339,20 @@
                         </div>
                         <div class="uk-width-medium-1-4">
                         </div>
+                        <% if ( tables.persetujuanpicpiket === 2 ) {%>
+
                         <div class="uk-width-medium-1-4">
-                          <div class="md-btn-group">
-                            <a href="#" class="md-btn md-btn-warning">Check !!</a>
-                          </div>
+                          <form class="" action="/anggota/checklistmeja/postCheckPic" method="post">
+                            <div class="md-btn-group">
+                              <input type="hidden" name="check" value="<%= tables.id%>">
+                              <button class="md-btn md-btn-warning" type="submit" name="button">Check !!</button>
+                            </div>
+                          </form>
+
                           <br>
                           <span class="uk-text-small uk-text-muted">Mohon klik check jika sudah menilai atau menemukan barang temuan </span>
                         </div>
+                        <% } %>
 
                     </div>
                 </div>

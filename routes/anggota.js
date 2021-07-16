@@ -20,6 +20,7 @@ router.get('/checklistmeja', isAuth,  mejaController.getDataMejaAnggota);
 router.get('/checklistmeja/detail/:mejaId', isAuth,  mejaController.getDataMejaDetail);
 router.post('/checklistmeja/nilai', isAuth,  mejaController.postNilaiMeja);
 router.post('/checklistmeja/bukti', isAuth,  mejaController.postBuktiTemuan);
+router.post('/checklistmeja/postCheckPic', isAuth,  mejaController.postCheckPic);
 
 
 

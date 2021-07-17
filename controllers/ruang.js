@@ -152,3 +152,74 @@ const id = req.params.ruangId;
   .catch(err => console.log(err));
 
 };
+
+exports.postNilaiRuang = (req,res, next) => {
+  const id = req.body.ruangId;
+  const nilai = req.body.nilai;
+
+  console.log("ini nilai");
+  console.log(nilai);
+  console.log("ini ruang");
+  console.log(id);
+
+  Penilaian_ruang
+  .findByPk(id)
+  .then(penilaian => {
+    penilaian.bobotruang = nilai;
+    return penilaian.save();
+  })
+  .then(result => {
+    console.log('UPDATED NILAI!');
+    res.redirect('/anggota/checklistruang/detail/'+id);
+  })
+  .catch(err => console.log(err));
+
+
+};
+
+exports.postBuktiTemuan = (req,res, next) => {
+  const id = req.body.ruangId;
+  const tanggal = req.body.tanggal;
+  const deskripsi = req.body.deskripsi;
+  const image = req.file;
+
+  console.log(image);
+
+  const imgUrl = image.path;
+
+  console.log(imgUrl);
+  console.log("tanggal " + tanggal);
+  console.log("deskripsi " +deskripsi);
+  console.log("id " + id);
+
+  Bukti_temuan.create(
+    { fotosebelum:imgUrl,
+      deskripsi_sebelum:deskripsi,
+      deadline:tanggal,
+      penilaianRuangId: id
+    }
+  )
+  .then(result => {
+      console.log('UPDATED BUKTI!');
+      res.redirect('/anggota/checklistruang/detail/'+id);
+    })
+  .catch(err => console.log(err));
+
+};
+
+exports.postCheckPic = (req,res, next) => {
+  const id = req.body.check;
+  Penilaian_ruang
+  .findByPk(id)
+  .then( penilaian => {
+    penilaian.persetujuanpicpiket = 1;
+    return penilaian.save();
+  })
+  .then(result => {
+    console.log('UPDATED NILAI!');
+    res.redirect('/anggota/checklistruang/detail/'+id);
+  })
+  .catch(err => console.log(err));
+
+
+};

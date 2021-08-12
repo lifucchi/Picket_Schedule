@@ -233,3 +233,58 @@ exports.getJadwalPiketAnggota = (req,res, next) => {
   })
   .catch(err => console.log(err));
 };
+
+
+exports.getChecklistPiket = (req,res, next) => {
+
+  req.user
+  .getPemilikJadwal({
+    include: [{
+      model: Pengguna,
+      as: 'nik_pic_piket',
+    },
+    {
+      model: Pengguna,
+      as: 'nik_pic_fasil',
+    }
+  ]
+  })
+  .then(jadwalpiket => {
+    res.render('./anggota/checklistpiket', {
+      schedules: jadwalpiket,
+      pageTitle: 'Jadwal Piket',
+      path: '/jadwalpiket'
+    });
+  })
+  .catch(err => console.log(err));
+
+
+
+
+
+  // JadwalPiket.findAll({
+  //   include: [{
+  //     model: Pengguna,
+  //     as: 'nik_pic_piket',
+  //   },
+  //   {
+  //     model: Pengguna,
+  //     as: 'nik_pic_fasil',
+  //   }
+  // ]
+  // })
+  // .then(jadwalpiket => {
+  //
+  //   Pengguna.findAll()
+  //   .then(user => {
+  //     return res.render('./anggota/checklistpiket', {
+  //       schedules: jadwalpiket,
+  //       users:user,
+  //       pageTitle: 'Jadwal Piket',
+  //       path: '/jadwalpiket'
+  //     });
+  //   })
+  // })
+  // .catch(err => console.log(err));
+
+};

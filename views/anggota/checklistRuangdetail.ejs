@@ -36,10 +36,7 @@
 
       <%- include('header'); %>
     <!-- main header end -->
-
     <!-- main sidebar -->
-
-
         <%- include('top_bar'); %>
 
 
@@ -47,7 +44,10 @@
 
         <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
             <h1> <%=pageTitle%> </h1>
+            <span class="uk-text-upper uk-text-small"><a href="/anggota/checklistruang">Checklist Ruang</a> / <a href="#"> <%= room.ruang.nama_ruang %></a></span>
         </div>
+
+
 
 
 
@@ -56,12 +56,11 @@
 
             <div class="md-card">
                 <div class="md-card-content">
-
                     <div class="uk-margin-bottom" data-uk-margin>
                             <div class="uk-width-medium-1">
+                              <h3> <%=room.ruang.nama_ruang%> </h3>
                                     <div class="md-card-content">
                                       <% if ( room.persetujuanpicpiket === '2' ) {%>
-
                                         <div class="uk-accordion" data-uk-accordion>
                                             <h3 class="uk-accordion-title">Nilai </h3>
                                             <div class="uk-accordion-content">
@@ -69,6 +68,7 @@
                                                 <div class="uk-form-row">
                                                     <div class="uk-grid">
                                                         <div class="uk-width-medium-1-4">
+
                                                           <br>
                                                           <div class="uk-input-group" >
                                                             <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>

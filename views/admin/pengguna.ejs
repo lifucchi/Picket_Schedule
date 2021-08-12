@@ -5,7 +5,7 @@
     <%- include('../include/head'); %>
 </head>
 
-<body class=" sidebar_main_open sidebar_main_swipe">
+<body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-500">
     <!-- main header -->
     <%- include('../include_Admin/header'); %>
     <!-- main header end -->
@@ -61,7 +61,7 @@
                                   </form>
                                   <form  onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/reset-password" method="POST">
                                     <input type="hidden" value="<%= user.nik %>" name="penggunaId">
-                                    <button type="submit" class="md-btn md-btn-primary md-btn-small md-btn-wave-light waves-effect waves-button waves-light" >Reset Password</button>
+                                    <button type="submit" class=" md-bg-light-green-600 md-btn md-btn-primary md-btn-small md-btn-wave-light waves-effect waves-button waves-light" >Reset Password</button>
                                   </form>
                               </td>
                           </tr>

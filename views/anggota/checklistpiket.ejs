@@ -67,9 +67,7 @@
                             <thead>
                                 <tr>
                                   <th>Tanggal Piket</th>
-                                  <th>Nama PIC</th>
                                   <th>Nama Fasil</th>
-                                  <th>Level</th>
                                   <th>Persetujuan Fasil</th>
                                   <th>Status Piket</th>
                                 </tr>
@@ -77,9 +75,7 @@
                             <tfoot>
                                 <tr>
                                   <th>Tanggal Piket</th>
-                                  <th>Nama PIC</th>
                                   <th>Nama Fasil</th>
-                                  <th>Level</th>
                                   <th>Persetujuan Fasil</th>
                                   ,<th>Status Piket</th>
                                 </tr>
@@ -89,10 +85,9 @@
                               <% schedules.forEach((schedule) => { %>
                                 <tr>
                                   <td> <a href="/anggota/checklistpiket/detail/<%= schedule.id%>"><%= schedule.tanggal%></a>  </td>
-      
-                                    <td><%= schedule.nik_pic_piket.nama%></td>
+                                  \
                                     <td><%= schedule.nik_pic_fasil.nama%></td>
-                                    <td><%= schedule.nik_pic_piket.level%></td>
+
 
                                     <% if (schedule.persetujuan_fasil === '0') { %>
                                       <td> <i href="#" class="uk-icon-large uk-icon-check-circle uk-text-success"></i></td>

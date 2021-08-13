@@ -300,3 +300,26 @@ const id = req.params.piketId;
   .catch(err => console.log(err));
 
 };
+
+exports.postCheckPic = (req,res, next) => {
+  const id = req.body.check;
+  JadwalPiket
+  .findByPk(id)
+  .then( penilaian => {
+    const nowTanggal = moment().format('YYYY-MM-DD');
+
+    if ( nowTanggal === penilaian.tanggal ){
+      penilaian.status_piket = 1;
+    }else {
+      penilaian.status_piket = 2;
+    }
+    return penilaian.save();
+  })
+  .then(result => {
+    console.log('UPDATED NILAI!');
+    res.redirect('/anggota/checklistpiket/detail/'+id);
+  })
+  .catch(err => console.log(err));
+
+
+};

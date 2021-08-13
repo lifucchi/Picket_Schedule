@@ -44,7 +44,7 @@
 
         <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
             <h1> <%=pageTitle%> </h1>
-            <span class="uk-text-upper uk-text-small"><a href="/anggota/checklistruang">Checklist Ruang</a> / <a href="#"> back kesebelumnya</a></span>
+            <span class="uk-text-upper uk-text-small"><a href="/anggota/checklistpiket">Checklist Piket</a>
         </div>
 
 
@@ -58,7 +58,17 @@
                 <div class="md-card-content">
                     <div class="uk-margin-bottom" data-uk-margin>
                             <div class="uk-width-medium-1">
-                              <h3> Kaish Nama  </h3>
+                              <h3> Tanggal <%= piket.tanggal  %>  </h3>
+                              <p>
+                                  Status:
+
+                                  <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Check</span>
+
+                                  <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Check</span>
+
+
+
+                              </p>
                                 <!-- </div> -->
                             </div>
 
@@ -66,89 +76,79 @@
                     </div>
                     <hr/>
                     <div class="uk-grid uk-grid-divider" data-uk-grid-margin>
-                        <div class="uk-width-medium-2-3">
-                            <div class="uk-margin-large-bottom">
+                        <div class="uk-width-medium-1-2">
+                            <!-- <div class="uk-margin-large-bottom">
                                 <h2 class="heading_c uk-margin-small-bottom">Standar</h2>
                                 nNRI
                             </div>
                             <div class="uk-margin-large-bottom">
                                 <h2 class="heading_c uk-margin-small-bottom">Nilai</h2>
                                 nanti
+                            </div> -->
+                            <div class="pricing_table pricing_table_a " data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
+                            <div>
+                                <div class="md-card">
+                                    <div class="md-card-content padding-reset">
+                                        <div class="pricing_table_plan md-bg-light-green-200 ">Checklist Meja</div>
+                                        <!-- <div class="pricing_table_price">
+                                            <span class="currency">$</span>40
+                                            <span class="period">monthly</span>
+                                        </div>
+                                        <ul class="pricing_table_features">
+                                            <li><strong>4 GB</strong> Memory</li>
+                                            <li><strong>2 Core</strong> Processor</li>
+                                            <li><strong>60GB</strong> SSD Disk</li>
+                                            <li><strong>4TB</strong> Transfer</li>
+                                        </ul> -->
+                                        <div class="pricing_table_select">
+                                            <a href="#" class="md-btn md-btn-large md-bg-light-green-200">Open</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                          </div>
 
                         </div>
-                        <div class="uk-width-medium-1-4">
-                            <div class="uk-margin-medium-bottom">
-                                <!-- <p>
-                                    Priority:
-                                    <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Major</span>
-                                </p> -->
-                                <p>
-                                    Status:
+                        <div class="uk-width-medium-1-2">
 
-
-                                    <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Check</span>
-
-                                      <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Check</span>
-
-
-
-                                </p>
+                            <div class="pricing_table pricing_table_a " data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
+                            <div>
+                                <div class="md-card">
+                                    <div class="md-card-content padding-reset">
+                                        <div class="pricing_table_plan md-bg-light-green-200 ">Checklist Ruang</div>
+                                        <!-- <div class="pricing_table_price">
+                                            <span class="currency">$</span>40
+                                            <span class="period">monthly</span>
+                                        </div>
+                                        <ul class="pricing_table_features">
+                                            <li><strong>4 GB</strong> Memory</li>
+                                            <li><strong>2 Core</strong> Processor</li>
+                                            <li><strong>60GB</strong> SSD Disk</li>
+                                            <li><strong>4TB</strong> Transfer</li>
+                                        </ul> -->
+                                        <div class="pricing_table_select">
+                                            <a href="#" class="md-btn md-btn-large md-bg-light-green-200">Open</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <h2 class="heading_c uk-margin-small-bottom">Details</h2>
-                            <ul class="md-list md-list-addon">
-                                <li>
-                                    <div class="md-list-addon-element">
-                                        <img class="md-user-image md-list-addon-avatar" src="/assets/img/avatars/avatar_02_tn.png" alt=""/>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Nanti</span>
-                                        <span class="uk-text-small uk-text-muted">PIC Ruang</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="md-list-addon-element">
-                                        <img class="md-user-image md-list-addon-avatar" src="/assets/img/avatars/avatar_02_tn.png" alt=""/>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Nanti</span>
-                                        <span class="uk-text-small uk-text-muted">Fasilitator</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="md-list-addon-element">
-                                        <i class="md-list-addon-icon material-icons">&#xE8DF;</i>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Nanti</span>
-                                        <span class="uk-text-small uk-text-muted">Jadwal Piket</span>
-                                    </div>
-                                </li>
-                                <!-- <li>
-                                    <div class="md-list-addon-element">
-                                        <i class="md-list-addon-icon material-icons">&#xE8B5;</i>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">18 Jun 2015</span>
-                                        <span class="uk-text-small uk-text-muted">Updated</span>
-                                    </div>
-                                </li> -->
-                            </ul>
+                          </div>
+
                         </div>
-                        <div class="uk-width-medium-1-4">
+                        <div class="uk-width-medium-1-3">
                         </div>
                         <!--  room.persetujuanpicpiket === '2'  -->
 
-                        <div class="uk-width-medium-1-4">
-                            <form class="" action="/anggota/checklistruang/postCheckPic" method="post">
+                        <div class="uk-width-medium-1-3">
+                            <form class="" action="/anggota/checklistPiket/postCheckPic" method="post">
                               <div class="md-btn-group">
-                                <input type="hidden" name="check" value="">
+                                <input type="hidden" name="check" value="<%= piket.id %>">
                                 <button class="md-btn md-btn-warning" type="submit" name="button">Check !!</button>
                               </div>
                             </form>
 
                           <br>
-                          <span class="uk-text-small uk-text-muted">Mohon klik check jika sudah menilai atau menemukan barang temuan </span>
+                          <span class="uk-text-small uk-text-muted">Mohon klik check jika sudah menilai Ruang dan Meja </span>
                         </div>
                         <!-- }  -->
 

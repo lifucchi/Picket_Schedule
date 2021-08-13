@@ -16,6 +16,8 @@ const router = express.Router();
 router.get('/', isAuth, anggotaController.getDashboard);
 router.get('/jadwalpiket', isAuth,  jadwalPiketController.getJadwalPiketAnggota);
 router.get('/checklistpiket', isAuth,  jadwalPiketController.getChecklistPiket);
+router.get('/checklistpiket/detail/:piketId', isAuth,  jadwalPiketController.getDataChecklistPiketDetail);
+
 
 router.get('/checklistmeja', isAuth,  mejaController.getDataMejaAnggota);
 router.get('/checklistmeja/detail/:mejaId', isAuth,  mejaController.getDataMejaDetail);

@@ -284,3 +284,19 @@ exports.getChecklistPiket = (req,res, next) => {
   // .catch(err => console.log(err));
 
 };
+
+
+exports.getDataChecklistPiketDetail = (req,res, next) => {
+const id = req.params.piketId;
+
+  JadwalPiket.findByPk(id)
+  .then( piket => {
+    res.render('./anggota/checklistpiketdetail', {
+      piket: piket,
+      pageTitle: 'Checklist Piket',
+      path: '/checklistpiketada'
+    });
+  })
+  .catch(err => console.log(err));
+
+};

@@ -88,7 +88,8 @@
 
                               <% schedules.forEach((schedule) => { %>
                                 <tr>
-                                    <td><%= schedule.tanggal%></td>
+                                  <td> <a href="/anggota/checklistpiket/detail/<%= schedule.id%>"><%= schedule.tanggal%></a>  </td>
+      
                                     <td><%= schedule.nik_pic_piket.nama%></td>
                                     <td><%= schedule.nik_pic_fasil.nama%></td>
                                     <td><%= schedule.nik_pic_piket.level%></td>

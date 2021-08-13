@@ -253,14 +253,10 @@ exports.getChecklistPiket = (req,res, next) => {
     res.render('./anggota/checklistpiket', {
       schedules: jadwalpiket,
       pageTitle: 'Jadwal Piket',
-      path: '/jadwalpiket'
+      path: '/checklistpiket'
     });
   })
   .catch(err => console.log(err));
-
-
-
-
 
   // JadwalPiket.findAll({
   //   include: [{

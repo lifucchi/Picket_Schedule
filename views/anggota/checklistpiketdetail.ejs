@@ -62,11 +62,11 @@
                               <p>
                                   Status:
 
+                                  <% if (piket.status_piket === 0) {%>
                                   <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Check</span>
-
+                                  <% } else {%>
                                   <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Check</span>
-
-
+                                  <% } %>
 
                               </p>
                                 <!-- </div> -->

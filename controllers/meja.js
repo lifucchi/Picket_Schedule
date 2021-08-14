@@ -253,3 +253,34 @@ exports.postCheckPic = (req,res, next) => {
 
 
 };
+
+exports.getDataMeja = (req,res, next) => {
+  const id = req.params.mejaId;
+
+    Penilaian_meja
+    .findAll({
+      where: {jadwalPiketId: id},
+        include: [
+          {
+          model: JadwalPiket,
+        },
+        {
+          model: Meja,
+          include : {
+            model: Pengguna
+          }
+        }
+      ]
+    })
+    .then( penilaianmeja => {
+      console.log("penilaian meja");
+      console.log(penilaianmeja);
+      return res.render('./anggota/checklistmeja', {
+        tables: penilaianmeja,
+        pageTitle: 'Checklist Meja',
+        path: '/checklistmejaada'
+      });
+    })
+    .catch(err => console.log(err));
+
+};

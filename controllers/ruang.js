@@ -223,3 +223,33 @@ exports.postCheckPic = (req,res, next) => {
 
 
 };
+
+exports.getDataRuang = (req,res, next) => {
+  const id = req.params.ruangId;
+
+      Penilaian_ruang
+      .findAll({
+        where: {jadwalPiketId: id},
+          include: [
+            {
+            model: JadwalPiket,
+          },
+          {
+            model: Ruang,
+            include : {
+              model: Pengguna
+            }
+          }
+        ]
+      })
+      .then( ruang => {
+        res.render('./anggota/checklistRuang', {
+          rooms: ruang,
+          pageTitle: 'Checklist Ruang',
+          path: '/checklistruangada'
+        });
+
+  })
+    .catch(err => console.log(err));
+
+};

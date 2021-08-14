@@ -19,6 +19,12 @@ router.get('/checklistpiket', isAuth,  jadwalPiketController.getChecklistPiket);
 router.get('/checklistpiket/detail/:piketId', isAuth,  jadwalPiketController.getDataChecklistPiketDetail);
 router.post('/checklistPiket/postCheckPic', isAuth,  jadwalPiketController.postCheckPic);
 
+router.get('/checklistmeja/:mejaId', isAuth,  mejaController.getDataMeja);
+router.get('/checklistruang/:ruangId', isAuth,  ruangController.getDataRuang);
+
+
+
+
 
 
 router.get('/checklistmeja', isAuth,  mejaController.getDataMejaAnggota);

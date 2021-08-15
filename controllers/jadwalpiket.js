@@ -327,8 +327,36 @@ exports.postCheckPic = (req,res, next) => {
 
 exports.getLaporan = (req,res) => {
   // res.send('<h1>hello admin</h1>')
+  console.log("pegawai nik ADALAH");
+
+
+  JadwalPiket.findAll({
+    where: {nikpicfasil: req.user.nik},
+    include: [{
+      model: Pengguna,
+      as: 'nik_pic_piket',
+    },
+    {
+      model: Pengguna,
+      as: 'nik_pic_fasil',
+
+    }
+  ]
+})
+
+
+.then( fasilitator => {
+
+  // console.log(fasilitator);
+  console.log("pegawai nik");
+  console.log(req.user);
+
   res.render('./fasilitator/laporan', {
+    schedules: fasilitator,
     pageTitle: 'Laporan',
     path: '/'
   });
+})
+.catch(err => console.log(err));
+
 };

@@ -39,7 +39,6 @@ exports.postLogin = (req, res, next) => {
               }else if(req.session.user.peran === 'Anggota') {
                 res.redirect('/anggota');
 
-
               }else if(req.session.user.peran === 'Fasilitator'){
                 res.redirect('/fasilitator');
 

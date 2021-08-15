@@ -33,9 +33,6 @@ const authRoutes = require('./routes/auth');
 const anggotaRoutes = require('./routes/anggota');
 const fasilitatorRoutes = require('./routes/fasilitator');
 
-
-
-
 app.use(bodyPaser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -69,16 +66,14 @@ app.use(
 );
 app.use(flash());
 
-
-
 app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
   }
+
   Pengguna.findByPk(req.session.user.nik)
     .then(user => {
       req.user = user;
-      // console.log(user);
       next();
     })
     .catch(err => console.log(err));

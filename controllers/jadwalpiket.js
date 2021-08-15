@@ -383,3 +383,27 @@ const id = req.params.piketId;
   .catch(err => console.log(err));
 
 };
+
+exports.postCheckFasil = (req,res, next) => {
+  const id = req.body.check;
+  JadwalPiket
+  .findByPk(id)
+  .then( penilaian => {
+    const nowTanggal = moment().format('YYYY-MM-DD');
+
+    if ( nowTanggal === penilaian.tanggal ){
+      penilaian.persetujuan_fasil = 1;
+    }else {
+      penilaian.persetujuan_fasil = 2;
+    }
+    // penilaian.rekam_check =  moment();
+    return penilaian.save();
+  })
+  .then(result => {
+    console.log('UPDATED NILAI!');
+    res.redirect('/fasilitator/laporan/'+id);
+  })
+  .catch(err => console.log(err));
+
+
+};

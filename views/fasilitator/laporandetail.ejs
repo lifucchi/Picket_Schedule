@@ -67,6 +67,16 @@
                                   <% } %>
 
                               </p>
+                              <p>
+                                Status Laporan:
+                                <% if (piket.persetujuan_fasil === 0) {%>
+                                <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Approved</span>
+                                <% } else {%>
+                                <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Approved</span>
+                                <% } %>
+
+
+                              </p>
                                 <!-- </div> -->
                             </div>
                           <div class="uk-width-medium-1-2">
@@ -114,7 +124,7 @@
                                             <li><strong>4TB</strong> Transfer</li>
                                         </ul> -->
                                         <div class="pricing_table_select">
-                                            <a href="/anggota/checklistmeja/<%= piket.id%>" class="md-btn md-btn-large md-bg-light-green-200">Open</a>
+                                            <!-- <a href="/anggota/checklistmeja/<%= piket.id%>" class="md-btn md-btn-large md-bg-light-green-200">Open</a> -->
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +150,7 @@
                                             <li><strong>4TB</strong> Transfer</li>
                                         </ul> -->
                                         <div class="pricing_table_select">
-                                            <a href="/anggota/checklistruang/<%= piket.id%>"  class="md-btn md-btn-large md-bg-light-green-200">Open</a>
+                                            <!-- <a href="/anggota/checklistruang/<%= piket.id%>"  class="md-btn md-btn-large md-bg-light-green-200">Open</a> -->
                                         </div>
                                     </div>
                                 </div>
@@ -150,10 +160,11 @@
                         </div>
                         <div class="uk-width-medium-1-3">
                         </div>
-                        <!--  room.persetujuanpicpiket === '2'  -->
+
+                        <% if(piket.persetujuan_fasil === 0) {%>
 
                         <div class="uk-width-medium-1-3">
-                            <form class="" action="/anggota/checklistPiket/postCheckPic" method="post">
+                            <form class="" action="/fasilitator/laporan/postCheckFasil" method="post">
                               <div class="md-btn-group">
                                 <input type="hidden" name="check" value="<%= piket.id %>">
                                 <button class="md-btn md-btn-warning" type="submit" name="button">approved </button>
@@ -163,8 +174,7 @@
                           <br>
                           <!-- <span class="uk-text-small uk-text-muted"> </span> -->
                         </div>
-                        <!-- }  -->
-
+                        <% } %>
                     </div>
                 </div>
             </div>

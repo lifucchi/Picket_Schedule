@@ -57,10 +57,10 @@
                             <tbody>
                               <% schedules.forEach((schedule) => { %>
                                 <tr>
-                                  <% if (schedule.status_piket == 1) {%>
-                                  <td> <a href="/anggota/checklistpiket/detail/<%= schedule.id%>"><%= schedule.tanggal%></a>  </td>
-                                  <% } else { %>
+                                  <% if (schedule.status_piket == 0) {%>
                                     <td> <%= schedule.tanggal%>  </td>
+                                  <% } else { %>
+                                    <td> <a href="/anggota/checklistpiket/detail/<%= schedule.id%>"><%= schedule.tanggal%></a>  </td>
 
                                   <% } %>
                                   <td><%= schedule.nik_pic_fasil.nama%></td>

@@ -53,7 +53,9 @@
             <div class="md-card">
                 <div class="md-card-content">
                     <div class="uk-margin-bottom" data-uk-margin>
-                            <div class="uk-width-medium-1">
+                      <div class="uk-grid uk-grid-divider" data-uk-grid-margin>
+
+                            <div class="uk-width-medium-1-2">
                               <h3> Tanggal <%= piket.tanggal  %>  </h3>
                               <p>
                                   Status Piket:
@@ -67,8 +69,23 @@
                               </p>
                                 <!-- </div> -->
                             </div>
+                          <div class="uk-width-medium-1-2">
+                            <!-- <h2 class="heading_c uk-margin-small-bottom">Details</h2> -->
+                            <ul class="md-list md-list-addon">
 
+                                <li>
+                                    <div class="md-list-addon-element">
+                                        <img class="md-user-image md-list-addon-avatar" src="/assets/img/avatars/avatar_02_tn.png" alt=""/>
+                                    </div>
+                                    <div class="md-list-content">
+                                        <span class="md-list-heading"><%= piket.nik_pic_piket.nama %></span>
+                                        <span class="uk-text-small uk-text-muted">PIC Piket</span>
+                                    </div>
+                                </li>
+                            </ul>
+                          </div>
 
+                        </div>
                     </div>
                     <hr/>
                     <div class="uk-grid uk-grid-divider" data-uk-grid-margin>

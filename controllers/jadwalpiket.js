@@ -347,9 +347,6 @@ exports.getLaporan = (req,res) => {
 
 .then( fasilitator => {
 
-  // console.log(fasilitator);
-  console.log("pegawai nik");
-  console.log(req.user);
 
   res.render('./fasilitator/laporan', {
     schedules: fasilitator,
@@ -364,7 +361,18 @@ exports.getLaporan = (req,res) => {
 exports.getDataLaporanDetail = (req,res, next) => {
 const id = req.params.piketId;
 
-  JadwalPiket.findByPk(id)
+  JadwalPiket.findByPk(id, {
+    include: [{
+      model: Pengguna,
+      as: 'nik_pic_piket',
+    },
+    {
+      model: Pengguna,
+      as: 'nik_pic_fasil',
+    }
+  ]
+  })
+
   .then( piket => {
     res.render('./fasilitator/laporandetail', {
       piket: piket,

@@ -10,8 +10,9 @@ const Bukti_temuan = sequelize.define('bukti_temuan', {
     primaryKey: true,
   },
   fotosebelum: {
-    type: Sequelize.BLOB('long'),
-    allowNull: false
+    type: Sequelize.STRING,
+    // type: Sequelize.BLOB('long'),
+    // allowNull: false
   },
   deskripsi_sebelum: {
     type:Sequelize.STRING,

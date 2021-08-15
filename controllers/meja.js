@@ -213,27 +213,42 @@ exports.postBuktiTemuan = (req,res, next) => {
   const deskripsi = req.body.deskripsi;
   const image = req.file;
 
-  console.log(image);
-
-  const imgUrl = image.path;
-
-  console.log(imgUrl);
-  console.log("tanggal " + tanggal);
-  console.log("deskripsi " +deskripsi);
-  console.log("id " + id);
-
-  Bukti_temuan.create(
-    { fotosebelum:imgUrl,
-      deskripsi_sebelum:deskripsi,
-      deadline:tanggal,
-      penilaianMejaId: id
+  if (image != null ){
+    const imgUrl = image.path;
+    Bukti_temuan.create(
+      { fotosebelum:imgUrl,
+        deskripsi_sebelum:deskripsi,
+        deadline:tanggal,
+        penilaianMejaId: id
+      }
+    )
+    .then(result => {
+          console.log('UPDATED BUKTI!');
+          res.redirect('/anggota/checklistmeja/detail/'+id);
+        })
+      .catch(err => console.log(err));
+  }else{
+    Bukti_temuan.create(
+      {
+        deskripsi_sebelum:deskripsi,
+        deadline:tanggal,
+        penilaianMejaId: id
     }
   )
   .then(result => {
-      console.log('UPDATED BUKTI!');
-      res.redirect('/anggota/checklistmeja/detail/'+id);
-    })
-  .catch(err => console.log(err));
+        console.log('UPDATED BUKTI!');
+        res.redirect('/anggota/checklistmeja/detail/'+id);
+      })
+    .catch(err => console.log(err));
+}
+
+  // console.log(imgUrl);
+  // console.log("tanggal " + tanggal);
+  // console.log("deskripsi " +deskripsi);
+  // console.log("id " + id);
+
+
+
 
 };
 
@@ -246,7 +261,7 @@ exports.postCheckPic = (req,res, next) => {
     return penilaian.save();
   })
   .then(result => {
-    console.log('UPDATED NILAI!');
+    console.log('UPDATED!');
     res.redirect('/anggota/checklistmeja/detail/'+id);
   })
   .catch(err => console.log(err));

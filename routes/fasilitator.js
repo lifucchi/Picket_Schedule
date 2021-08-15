@@ -10,6 +10,8 @@ const router = express.Router();
 
 router.get('/', isAuth,fasilitatorController.getDashboard);
 router.get('/laporan', isAuth,jadwalPiketController.getLaporan);
+router.get('/laporan/:piketId', isAuth,jadwalPiketController.getDataLaporanDetail);
+
 
 
 // router.get('/signup', authController.getSignup);

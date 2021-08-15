@@ -23,10 +23,6 @@ router.get('/checklistmeja/:mejaId', isAuth,  mejaController.getDataMeja);
 router.get('/checklistruang/:ruangId', isAuth,  ruangController.getDataRuang);
 
 
-
-
-
-
 router.get('/checklistmeja', isAuth,  mejaController.getDataMejaAnggota);
 router.get('/checklistmeja/detail/:mejaId', isAuth,  mejaController.getDataMejaDetail);
 router.post('/checklistmeja/nilai', isAuth,  mejaController.postNilaiMeja);

@@ -60,7 +60,7 @@
                                   <% if (schedule.status_piket == 0) {%>
                                     <td> <%= schedule.tanggal%>  </td>
                                   <% } else { %>
-                                    <td> <a href="/anggota/checklistpiket/detail/<%= schedule.id%>"><%= schedule.tanggal%></a>  </td>
+                                    <td> <a href="/fasilitator/laporan/<%= schedule.id%>"><%= schedule.tanggal%></a>  </td>
 
                                   <% } %>
                                   <td><%= schedule.nik_pic_fasil.nama%></td>

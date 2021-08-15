@@ -360,3 +360,18 @@ exports.getLaporan = (req,res) => {
 .catch(err => console.log(err));
 
 };
+
+exports.getDataLaporanDetail = (req,res, next) => {
+const id = req.params.piketId;
+
+  JadwalPiket.findByPk(id)
+  .then( piket => {
+    res.render('./fasilitator/laporandetail', {
+      piket: piket,
+      pageTitle: 'Laporan',
+      path: '/laporanada'
+    });
+  })
+  .catch(err => console.log(err));
+
+};

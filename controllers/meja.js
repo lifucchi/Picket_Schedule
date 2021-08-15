@@ -7,7 +7,7 @@ const Bukti_temuan = require('../models/bukti_temuan');
 const { Op } = require("sequelize");
 
 
-exports.getDataMeja = (req,res, next) => {
+exports.getDataMejaAdmin = (req,res, next) => {
   Pengguna.findAll()
   .then(pengguna => {
     Meja.findAll( {include: Pengguna} )

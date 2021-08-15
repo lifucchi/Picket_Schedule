@@ -36,13 +36,13 @@ router.post('/artikel/add' , artikelController.postAddDataArtikel );
 router.post('/artikel/delete-artikel', artikelController.postDeleteArtikel);
 
 // checklistruang
-router.get('/checklistruang',ruangController.getDataRuang);
+router.get('/checklistruang',ruangController.getDataRuangAdmin);
 router.post('/checklistruang',ruangController.postAddDataRuang);
 router.post('/checklistruang/edit',ruangController.postEditRuang);
 router.post('/checklistruang/delete-checklistruang', ruangController.postDeleteRuang );
 
 // checklistmeja
-router.get('/checklistmeja',mejaController.getDataMeja);
+router.get('/checklistmeja',mejaController.getDataMejaAdmin);
 router.post('/checklistmeja',mejaController.postAddDataMeja);
 router.post('/checklistmejastandar',mejaController.postAddDataAllMeja );
 

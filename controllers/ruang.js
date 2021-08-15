@@ -6,7 +6,7 @@ const JadwalPiket = require('../models/jadwal_piket');
 const Bukti_temuan = require('../models/bukti_temuan');
 const { Op } = require("sequelize");
 
-exports.getDataRuang = (req,res, next) => {
+exports.getDataRuangAdmin= (req,res, next) => {
     Pengguna.findAll()
     .then(pengguna => {
       Ruang.findAll( {include: Pengguna} )

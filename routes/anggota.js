@@ -29,10 +29,6 @@ router.post('/checklistmeja/nilai', isAuth,  mejaController.postNilaiMeja);
 router.post('/checklistmeja/bukti', isAuth,  mejaController.postBuktiTemuan);
 router.post('/checklistmeja/postCheckPic', isAuth,  mejaController.postCheckPic);
 
-
-
-
-
 router.get('/checklistruang', isAuth,  ruangController.getDataRuangAnggota);
 router.get('/checklistruang/detail/:ruangId', isAuth,  ruangController.getDataRuangDetail);
 router.post('/checklistruang/nilai', isAuth,  ruangController.postNilaiRuang);

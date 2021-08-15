@@ -23,6 +23,9 @@ const Jadwal_Piket = sequelize.define('jadwal_piket', {
     allowNull: false,
     defaultValue: 0
   },
+  rekam_check: {
+    type: Sequelize.DATE    
+  }
 });
 
 module.exports = Jadwal_Piket;

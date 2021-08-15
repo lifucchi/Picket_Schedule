@@ -313,6 +313,7 @@ exports.postCheckPic = (req,res, next) => {
     }else {
       penilaian.status_piket = 2;
     }
+    penilaian.rekam_check =  moment();
     return penilaian.save();
   })
   .then(result => {

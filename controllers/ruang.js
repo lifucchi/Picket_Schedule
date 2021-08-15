@@ -183,27 +183,45 @@ exports.postBuktiTemuan = (req,res, next) => {
   const deskripsi = req.body.deskripsi;
   const image = req.file;
 
-  console.log(image);
+  if (image != null ){
+    const imgUrl = image.path;
 
-  const imgUrl = image.path;
+    console.log(imgUrl);
+    console.log("tanggal " + tanggal);
+    console.log("deskripsi " +deskripsi);
+    console.log("id " + id);
 
-  console.log(imgUrl);
-  console.log("tanggal " + tanggal);
-  console.log("deskripsi " +deskripsi);
-  console.log("id " + id);
+    Bukti_temuan.create(
+      { fotosebelum:imgUrl,
+        deskripsi_sebelum:deskripsi,
+        deadline:tanggal,
+        penilaianRuangId: id
+      }
+    )
+    .then(result => {
+        console.log('UPDATED BUKTI!');
+        res.redirect('/anggota/checklistruang/detail/'+id);
+      })
+    .catch(err => console.log(err));
 
-  Bukti_temuan.create(
-    { fotosebelum:imgUrl,
-      deskripsi_sebelum:deskripsi,
-      deadline:tanggal,
-      penilaianRuangId: id
-    }
-  )
-  .then(result => {
-      console.log('UPDATED BUKTI!');
-      res.redirect('/anggota/checklistruang/detail/'+id);
-    })
-  .catch(err => console.log(err));
+  }else {
+
+    Bukti_temuan.create(
+      {
+        deskripsi_sebelum:deskripsi,
+        deadline:tanggal,
+        penilaianRuangId: id
+      }
+    )
+    .then(result => {
+        console.log('UPDATED BUKTI!');
+        res.redirect('/anggota/checklistruang/detail/'+id);
+      })
+    .catch(err => console.log(err));
+
+  }
+
+
 
 };
 

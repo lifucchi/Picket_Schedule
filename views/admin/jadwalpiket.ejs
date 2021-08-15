@@ -38,6 +38,8 @@
                                       <th>Nama Fasil</th>
                                       <th>Level</th>
                                       <th>Persetujuan Fasil</th>
+                                      <th>Status Piket</th>
+
                                       <th>Aksi</th>
                                   </tr>
                               </thead>
@@ -49,11 +51,24 @@
                                   <td><%= schedule.nik_pic_piket.nama%></td>
                                   <td><%= schedule.nik_pic_fasil.nama%></td>
                                   <td><%= schedule.nik_pic_piket.level%></td>
-                                  <td><%= schedule.persetujuan_fasil%></td>
+
+                                <% if (schedule.persetujuan_fasil === 0) { %>
+                                  <td> <i href="#" class="uk-icon-large uk-icon-times-circle uk-text-danger"></i></td>
+                                <% } else { %>
+                                  <td> <i href="#" class="uk-icon-large uk-icon-check-circle uk-text-success"></i></td>
+                                <% } %>
+
+                                <% if (schedule.status_piket === 0) { %>
+                                  <td><span class="uk-badge uk-badge-danger">Belum Piket</span></td>
+                                  <% } else if (schedule.status_piket === 1) { %>
+                                    <td><span class="uk-badge uk-badge-success">Sudah Piket</span></td>
+                                <% } else { %>
+                                  <td><span class="uk-badge uk-badge-info">Sudah Piket tapi Melewati Jadwal</span></td>
+
+                                <% } %>
+
+
                                   <td>
-                                      <!-- <a href="/admin/jadwalpiket/<%= schedule.id %>" class="btn " data-id="<%= schedule.id %>" > <i class="material-icons md-24"></i></a> -->
-                                      <!-- <a href="/admin/jadwalpiket/delete-jadwalpiket" class="btn " data-id="<%= schedule.id %>"><i class="material-icons md-24"></i></a> -->
-                                      <!-- <button  href="javascript:void(0);" class="btn edit"  ><i class="material-icons md-24"></i></button> -->
                                       <button  href="javascript:void(0);" class="btn edit" data-id="<%= schedule.id %>" data-tanggal="<%=  schedule.tanggal %>" data-pic="<%=  schedule.nik_pic_piket.nik%>" data-fasil="<%= schedule.nik_pic_fasil.nik%>" data-level="<%= schedule.nik_pic_piket.level %>" data-persetujuan="<%= schedule.persetujuan_fasil %>" ><i class="material-icons md-24"></i></button>
                                       <form onsubmit="return confirm('Are you sure?');" action="/admin/jadwalpiket/delete-jadwalpiket" method="POST">
                                           <input type="hidden" value="<%= schedule.id %>" name="penggunaId">

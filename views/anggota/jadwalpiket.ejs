@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" href="/assets/img/logo5rsmart.png" sizes="16x16">
     <link rel="icon" type="image/png" href="/assets/img/logo5rsmart.png" sizes="32x32">
 
-    <title>Dashboard</title>
+    <title><%= pageTitle%></title>
 
 
     <!-- uikit -->
@@ -60,7 +60,7 @@
                           <th>Nama PIC</th>
                           <th>Nama Fasil</th>
                           <th>Level</th>
-                          <th>Persetujuan Fasil</th>
+                          <!-- <th>Persetujuan Fasil</th> -->
                       </tr>
                   </thead>
 
@@ -71,7 +71,7 @@
                       <td><%= schedule.nik_pic_piket.nama%></td>
                       <td><%= schedule.nik_pic_fasil.nama%></td>
                       <td><%= schedule.nik_pic_piket.level%></td>
-                      <td><%= schedule.persetujuan_fasil%></td>
+                      <!-- <td><%= schedule.persetujuan_fasil%></td> -->
                   </tr>
                     <% }) %>
                   </tbody>

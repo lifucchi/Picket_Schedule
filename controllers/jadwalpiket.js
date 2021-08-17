@@ -8,7 +8,7 @@ const moment = require('moment');
 const Ruang = require('../models/ruang');
 
 
-
+// admin
 exports.getDataJadwalPiket = (req,res, next) => {
   JadwalPiket.findAll({
     include: [{
@@ -361,7 +361,7 @@ exports.getLaporan = (req,res) => {
 exports.getDataLaporanDetail = (req,res, next) => {
 const id = req.params.piketId;
 
-  JadwalPiket.findByPk(id, {
+  const jadwalPiket = JadwalPiket.findByPk(id, {
     include: [{
       model: Pengguna,
       as: 'nik_pic_piket',
@@ -369,18 +369,34 @@ const id = req.params.piketId;
     {
       model: Pengguna,
       as: 'nik_pic_fasil',
-    }
+    },
   ]
-  })
+});
 
-  .then( piket => {
-    res.render('./fasilitator/laporandetail', {
-      piket: piket,
-      pageTitle: 'Laporan',
-      path: '/laporanada'
+const penilaianmeja = Penilaian_meja.findByPk(id)
+const penilaianruang = Penilaian_ruang.findByPk(id)
+
+
+Promise
+    .all([jadwalPiket, penilaianmeja, penilaianruang])
+    .then(piket => {
+        console.log('**********COMPLETE RESULTS****************');
+        console.log(piket[0]); // user profile
+        console.log(piket[1]); // all reports
+        console.log(piket[2]); // report details
+        res.render('./fasilitator/laporandetail', {
+          piket: piket,
+          pageTitle: 'Laporan',
+          path: '/laporanada'
+        });
+
+    })
+    .catch(err => {
+        console.log('**********ERROR RESULT****************');
+        console.log(err);
     });
-  })
-  .catch(err => console.log(err));
+
+
 
 };
 

@@ -17,9 +17,9 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  const username = req.body.login_username;
+  const nik = req.body.login_username;
   const password = req.body.login_password;
-  Pengguna.findOne({ where: { username: username } })
+  Pengguna.findOne({ where: { nik: nik } })
     .then(user => {
       if (!user) {
         req.flash('error', 'User gaada');

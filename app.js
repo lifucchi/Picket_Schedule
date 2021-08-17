@@ -103,7 +103,7 @@ Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nikpicpiket', as: 'PemilikJadwal'})
 
 
 // pengguna punya banyak standar Meja
-Pengguna.hasMany(Meja , {  foreignKey: 'penggunaNik', as: 'PemilikMeja' });
+Pengguna.hasOne(Meja , {  foreignKey: 'penggunaNik', as: 'PemilikMeja' });
 Meja.belongsTo(Pengguna, { foreignKey: 'penggunaNik', constraints:true, onDelete:'CASCADE'});
 
 // ruang punya PIC ruang
@@ -119,6 +119,7 @@ Jadwal_piket.belongsToMany(Ruang, {
   through: Penilaian_ruang,
   as: 'Ruang'
 });
+
 Ruang.hasMany(Penilaian_ruang);
 Penilaian_ruang.belongsTo(Ruang);
 Jadwal_piket.hasMany(Penilaian_ruang);

@@ -12,10 +12,6 @@ const Meja = sequelize.define('meja', {
   standar: {
     type: Sequelize.STRING,
     allowNull: false
-  },
-  poin_meja: {
-    type: Sequelize.INTEGER,
-    allowNull: false
   }
 });
 

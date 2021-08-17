@@ -6,6 +6,7 @@ const JadwalPiket = require('../models/jadwal_piket');
 const Bukti_temuan = require('../models/bukti_temuan');
 const { Op } = require("sequelize");
 
+// ADMIN
 
 exports.getDataMejaAdmin = (req,res, next) => {
   Pengguna.findAll()
@@ -26,12 +27,11 @@ exports.getDataMejaAdmin = (req,res, next) => {
 exports.postAddDataMeja = (req,res,next) => {
   const pemilik_meja = req.body.pemilik_meja;
   const standar = req.body.standar;
-  const poin_meja = req.body.poin_meja;
 
   Meja.create({
     penggunaNik: pemilik_meja,
     standar:standar,
-    poin_meja: poin_meja
+
   }).then(
     res.redirect('/admin/checklistmeja')
   ).catch(err => console.log(err));
@@ -39,7 +39,6 @@ exports.postAddDataMeja = (req,res,next) => {
 
 exports.postAddDataAllMeja = (req,res,next) => {
   const standar = req.body.standar;
-  const poin_meja = req.body.poin_meja;
 
 
   Pengguna
@@ -50,8 +49,7 @@ exports.postAddDataAllMeja = (req,res,next) => {
     for (var i = 0; i < pemilik.length; i++){
       var penObj = {
         penggunaNik: pemilik[i].dataValues.nik,
-        standar:standar,
-        poin_meja: poin_meja
+        standar:standar
       };
       pemilikmeja.push(penObj);
     }
@@ -69,13 +67,12 @@ exports.postEditMeja = ( req,res, next) => {
   const id = req.body.id;
   const pemilik = req.body.pemilik_meja_edit;
   const standar = req.body.standar_edit;
-  const poin_meja = req.body.poin_meja_edit;
   // console.log(pemilik);
   Meja.findByPk(id)
     .then(meja => {
       meja.penggunaNik = pemilik;
       meja.standar = standar;
-      meja.poin_meja = poin_meja;
+
       return meja.save();
     })
     .then(result => {
@@ -98,6 +95,9 @@ exports.postDeleteMeja = ( req,res, next) => {
     })
     .catch(err => console.log(err));
 };
+
+
+// ANGGOTA
 
 exports.getDataMejaAnggota = (req,res, next) => {
 

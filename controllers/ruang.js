@@ -221,8 +221,6 @@ exports.postBuktiTemuan = (req,res, next) => {
 
   }
 
-
-
 };
 
 exports.postCheckPic = (req,res, next) => {

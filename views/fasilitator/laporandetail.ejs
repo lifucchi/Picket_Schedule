@@ -90,13 +90,14 @@
                                             <span class="period">monthly</span>
                                         </div> -->
                                         <ul class="pricing_table_features">
-                                            <li><strong></strong> piket[1].penilaian_ruang.bobot</li>
-                                            <li><strong>2 Core</strong> Processor</li>
-                                            <li><strong>60GB</strong> SSD Disk</li>
-                                            <li><strong>4TB</strong> Transfer</li>
+
+                                          <% piket[1].forEach((piket) => { %>
+                                            <li><strong><%= piket.meja.pengguna.nama %>&nbsp;=</strong> <%= piket.bobotmeja %></li>
+                                            <% }) %>
+
                                         </ul>
                                         <div class="pricing_table_select">
-                                            <!-- <a href="/anggota/checklistmeja/<%= piket.id%>" class="md-btn md-btn-large md-bg-light-green-200">Open</a> -->
+                                            <a href="#" class="md-btn md-btn-large md-bg-light-green-200">Total Skor : <%= piket[3] %></a>
                                         </div>
                                     </div>
                                 </div>
@@ -116,13 +117,14 @@
                                             <span class="period">monthly</span>
                                         </div> -->
                                         <ul class="pricing_table_features">
+                                          <% piket[2].forEach((piket) => { %>
 
-                                            <li><strong><%= piket[2].bobotruang%></strong> <%= piket[2].bobotruang%></li>
-                                            <li><strong>60GB</strong> SSD Disk</li>
-                                            <li><strong>4TB</strong> Transfer</li>
+                                            <li><strong><%= piket.ruang.nama_ruang%>&nbsp;=</strong> <%= piket.bobotruang%></li>
+                                        <% }) %>
+
                                         </ul>
                                         <div class="pricing_table_select">
-                                            <!-- <a href="/anggota/checklistruang/<%= piket.id%>"  class="md-btn md-btn-large md-bg-light-green-200">Open</a> -->
+                                            <a href="#"  class="md-btn md-btn-large md-bg-light-green-200">Total Skor : <%= piket[4][0].bobotruang%></a>
                                         </div>
                                     </div>
                                 </div>

@@ -6,6 +6,7 @@ const Penilaian_ruang = require('../models/penilaian_ruang');
 
 const moment = require('moment');
 const Ruang = require('../models/ruang');
+const sequelize = require('../util/database');
 
 
 // admin
@@ -434,17 +435,63 @@ const id = req.params.piketId;
   ]
 });
 
-const penilaianmeja = Penilaian_meja.findByPk(id)
-const penilaianruang = Penilaian_ruang.findByPk(id)
+const penilaianmeja = Penilaian_meja.findAll({
+ where: { JadwalPiketId: id,}
+  ,
+  include: [
+  {
+    model: Meja,
+    include : {
+      model: Pengguna
+    }
+  }
+]
+}
 
+)
+const penilaianruang = Penilaian_ruang.findAll(
+  {
+    where: { JadwalPiketId: id},
+    include: [
+    {
+      model: Ruang,
+      include : {
+        model: Pengguna
+      }
+    }
+  ]
+}
+)
+
+// const totalskorruang = Penilaian_ruang.sum('bobotruang',{where: { JadwalPiketId: id,}})
+const totalskormoja = Penilaian_meja.sum('bobotmeja', {where: { JadwalPiketId: id,}})
+const totalskorruang = Penilaian_ruang.findAll(
+  {
+    where: { JadwalPiketId: id},
+      include: [
+      {
+        model: Ruang,
+      }
+    ],
+    attributes: [
+      'bobotruang',
+      'JadwalPiketId',
+      [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
+    ],
+    group : ['JadwalPiketId'],
+    // raw: true,
+  }
+)
 
 Promise
-    .all([jadwalPiket, penilaianmeja, penilaianruang])
+    .all([jadwalPiket, penilaianmeja, penilaianruang, totalskormoja, totalskorruang])
     .then(piket => {
         console.log('**********COMPLETE RESULTS****************');
-        console.log(piket[0]); // user profile
-        console.log(piket[1]); // all reports
-        console.log(piket[2]); // report details
+        console.log(piket[4]);
+        console.log(piket[4][0].bobotruang);
+
+
+
         res.render('./fasilitator/laporandetail', {
           piket: piket,
           pageTitle: 'Laporan',

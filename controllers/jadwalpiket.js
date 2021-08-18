@@ -312,7 +312,7 @@ const id = req.params.piketId;
     })
     const belummeja = Penilaian_meja.count(
       { where: { JadwalPiketId: id ,
-      persetujuanpicpiket: 0},
+      persetujuanpicpiket: 2},
       include: [{
         model: JadwalPiket,
       },
@@ -321,7 +321,7 @@ const id = req.params.piketId;
 
     const belumruang = Penilaian_ruang.count(
       { where: { JadwalPiketId: id,
-        persetujuanpicpiket: 0},
+        persetujuanpicpiket: 2},
       include: [{
         model: JadwalPiket,
       },

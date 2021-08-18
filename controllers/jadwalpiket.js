@@ -289,13 +289,70 @@ exports.getChecklistPiket = (req,res, next) => {
 exports.getDataChecklistPiketDetail = (req,res, next) => {
 const id = req.params.piketId;
 
+
   JadwalPiket.findByPk(id)
   .then( piket => {
-    res.render('./anggota/checklistpiketdetail', {
-      piket: piket,
-      pageTitle: 'Checklist Piket',
-      path: '/checklistpiketada'
-    });
+    const pikets = piket;
+    const sudahhmeja = Penilaian_meja.count(
+      { where: { JadwalPiketId: id,
+      persetujuanpicpiket: 1 },
+      include: [{
+        model: JadwalPiket,
+      },
+    ]
+    })
+
+    const sudahruang = Penilaian_ruang.count(
+      { where: { JadwalPiketId: id,
+      persetujuanpicpiket: 1 },
+      include: [{
+        model: JadwalPiket,
+      },
+    ]
+    })
+    const belummeja = Penilaian_meja.count(
+      { where: { JadwalPiketId: id ,
+      persetujuanpicpiket: 0},
+      include: [{
+        model: JadwalPiket,
+      },
+    ]
+    })
+
+    const belumruang = Penilaian_ruang.count(
+      { where: { JadwalPiketId: id,
+        persetujuanpicpiket: 0},
+      include: [{
+        model: JadwalPiket,
+      },
+    ]
+    })
+
+
+    Promise
+        .all([sudahhmeja, sudahruang, belummeja, belumruang ])
+        .then(count => {
+            console.log('**********COMPLETE RESULTS****************');
+            console.log(count[0]); // user profile
+            console.log(count[1]); // all reports
+            console.log(count[2]); // report details
+            console.log(count[3]); // report details
+
+            res.render('./anggota/checklistpiketdetail', {
+              piket: piket,
+              pageTitle: 'Checklist Piket',
+              path: '/checklistpiketada',
+              count:count
+            });
+
+        })
+        .catch(err => {
+            console.log('**********ERROR RESULT****************');
+            console.log(err);
+        });
+
+
+
   })
   .catch(err => console.log(err));
 
@@ -324,6 +381,10 @@ exports.postCheckPic = (req,res, next) => {
 
 
 };
+
+
+
+// Fasilitator
 
 exports.getLaporan = (req,res) => {
   // res.send('<h1>hello admin</h1>')

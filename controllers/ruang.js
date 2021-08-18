@@ -264,7 +264,8 @@ exports.getDataRuang = (req,res, next) => {
         res.render('./anggota/checklistRuang', {
           rooms: ruang,
           pageTitle: 'Checklist Ruang',
-          path: '/checklistruangada'
+          path: '/checklistruangada',
+          piketId: id
         });
 
   })

@@ -293,7 +293,8 @@ exports.getDataMeja = (req,res, next) => {
       return res.render('./anggota/checklistmeja', {
         tables: penilaianmeja,
         pageTitle: 'Checklist Meja',
-        path: '/checklistmejaada'
+        path: '/checklistmejaada',
+        piketId: id,
       });
     })
     .catch(err => console.log(err));

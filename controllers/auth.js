@@ -3,6 +3,9 @@ const bcrypt = require('bcryptjs');
 const Pengguna = require('../models/pengguna');
 
 exports.getLogin = (req, res, next) => {
+
+  if (!req.session.isLoggedIn) {
+
   let message = req.flash('error');
   if (message.length > 0) {
     message = message[0];
@@ -14,6 +17,21 @@ exports.getLogin = (req, res, next) => {
     pageTitle: 'Login',
     errorMessage: message
   });
+  }
+    else{
+        if (req.session.user.peran === 'Admin'){
+        res.redirect('/admin');
+
+        }else if(req.session.user.peran === 'Anggota') {
+        res.redirect('/anggota');
+
+        }else if(req.session.user.peran === 'Fasilitator'){
+        res.redirect('/fasilitator');
+
+        }
+    }
+
+
 };
 
 exports.postLogin = (req, res, next) => {
@@ -62,4 +80,46 @@ exports.getLogout = (req, res, next) => {
     console.log(err);
     res.redirect('/');
   });
+};
+
+
+exports.changePassword = (req, res, next) => {
+  let message = req.flash('error');
+  res.render('login/changePassword', {
+    path: '/',
+    pageTitle: 'ganti Password',
+    errorMessage: message
+  });
+};
+
+exports.changePasswordPengguna = (req, res, next) => {
+  let message = req.flash('error');
+
+  const nikUp = req.body.penggunaId;
+  const password = req.body.changePassword;
+
+    Pengguna.findByPk(nikUp)
+      .then( pengguna => {
+          return bcrypt.hash(password,12)
+          .then(hashedPassword => {
+            pengguna.password = hashedPassword;
+            return pengguna.save();
+        })
+      }).then(result => {
+
+        console.log('UPDATED PASSWORD!');
+        res.redirect('/');
+
+      })
+      .catch(err => console.log(err));
+
+
+
+  res.render('login/changePassword', {
+    path: '/',
+    pageTitle: 'Fanti Password',
+    errorMessage: message
+  });
+
+
 };

@@ -95,10 +95,9 @@ exports.changePassword = (req, res, next) => {
 exports.changePasswordPengguna = (req, res, next) => {
   let message = req.flash('error');
 
-  const nikUp = req.body.penggunaId;
   const password = req.body.changePassword;
 
-    Pengguna.findByPk(nikUp)
+    Pengguna.findByPk(req.session.user.nik)
       .then( pengguna => {
           return bcrypt.hash(password,12)
           .then(hashedPassword => {
@@ -106,20 +105,11 @@ exports.changePasswordPengguna = (req, res, next) => {
             return pengguna.save();
         })
       }).then(result => {
-
         console.log('UPDATED PASSWORD!');
         res.redirect('/');
 
       })
       .catch(err => console.log(err));
-
-
-
-  res.render('login/changePassword', {
-    path: '/',
-    pageTitle: 'Fanti Password',
-    errorMessage: message
-  });
 
 
 };

@@ -50,23 +50,24 @@
                               <div class="uk-width-medium-1">
                                   <label>Konten</label>
                                   <!-- <input id='konten' name= 'konten' type="text" class="md-input"  /> -->
-                                  <textarea name="konten" id="wysiwyg_ckeditor" cols="30" rows="20">
-                                        test
-                                  </textarea>
-
+                                  <textarea val="" name="konten" id="konten" class="md-input "></textarea>
                               </div>
 
                           </div>
                         </div>
 
-                        <!-- <div class="uk-form-row">
+                        <div class="uk-form-row">
                           <div class="uk-grid">
                             <div class="uk-width-medium-1-2">
-                                <label>Foto Artikel</label>
-                                <input id='foto_artikel' name='foto_artikel' type="text" class="md-input"  />
+                              <label>Foto artikel</label>
+                              <div class="md-card">
+                                  <div class="md-card-content">
+                                      <input type="file" name="image" id="input-file-a" class="dropify" />
+                                  </div>
+                              </div>
                             </div>
                           </div>
-                        </div> -->
+                        </div>
                     </div>
 
                 </div>
@@ -124,6 +125,8 @@
 
     <!--  wysiwyg editors functions -->
     <script src="/assets/js/pages/forms_wysiwyg.min.js"></script>
+    <script src="/assets/js/pages/forms_file_input.min.js"></script>
+    <script src="/assets/js/custom/dropify/dist/js/dropify.min.js"></script>
 
 
     <%- include('../include_admin/datatables'); %>

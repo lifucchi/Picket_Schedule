@@ -21,7 +21,7 @@
         </div>
 
         <div class="md-card">
-        <form action="/admin/artikel/add" method="post">
+        <form action="/admin/artikel/add" method="post" enctype="multipart/form-data">
             <div class="md-card-content">
                 <!-- <h3 class="heading_a"><%= pageTitle%></h3> -->
                 <div class="uk-grid" data-uk-grid-margin>
@@ -60,11 +60,12 @@
                           <div class="uk-grid">
                             <div class="uk-width-medium-1-2">
                               <label>Foto artikel</label>
-                              <div class="md-card">
-                                  <div class="md-card-content">
-                                      <input type="file" name="image" id="input-file-a" class="dropify" />
+                                <br>
+                                  <div class="md-card">
+                                      <div class="md-card-content">
+                                          <input type="file" name="image" id="input-file-a" class="dropify" />
+                                      </div>
                                   </div>
-                              </div>
                             </div>
                           </div>
                         </div>
@@ -120,11 +121,8 @@
 
     <!-- page specific plugins -->
     <!-- ckeditor -->
-    <script src="/bower_components/ckeditor/ckeditor.js"></script>
-    <script src="/bower_components/ckeditor/adapters/jquery.js"></script>
 
     <!--  wysiwyg editors functions -->
-    <script src="/assets/js/pages/forms_wysiwyg.min.js"></script>
     <script src="/assets/js/pages/forms_file_input.min.js"></script>
     <script src="/assets/js/custom/dropify/dist/js/dropify.min.js"></script>
 

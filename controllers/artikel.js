@@ -3,6 +3,7 @@ const Artikel = require('../models/artikel');
 exports.getDataArtikel = (req,res,next) => {
   Artikel.findAll()
   .then(artikel => {
+    console.log(artikel);
     res.render('./admin/artikel', {
       articles: artikel,
       pageTitle: 'Artikel',
@@ -27,11 +28,18 @@ exports.postAddDataArtikel = (req,res,next) => {
   const judul = req.body.judul;
   const konten = req.body.konten;
   const pembuat = req.body.pembuat;
+  const image = req.file;
+  console.log(image);
+  const imgUrl = image.path;
+
+  console.log(imgUrl);
+
 
   Artikel.create({
     judul: judul,
     konten: konten,
-    pembuat: pembuat
+    pembuat: pembuat,
+    foto_Artikel:imgUrl,
   }).then(
     res.redirect('/admin/artikel')
   ).catch(err => console.log(err));

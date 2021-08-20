@@ -22,7 +22,7 @@ const Artikel = sequelize.define('artikel', {
     allowNull: false
   },
   foto_Artikel: {
-    type: Sequelize.BLOB('long')
+    type: Sequelize.STRING(50),
     // allowNull: false
   }
 });

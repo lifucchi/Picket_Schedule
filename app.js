@@ -35,6 +35,8 @@ const fasilitatorRoutes = require('./routes/fasilitator');
 
 app.use(bodyPaser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/images",express.static(path.join(__dirname, 'images')));
+
 
 const imageFilter = (req, file, cb) => {
   if (file.mimetype === 'image/png' ||
@@ -49,10 +51,10 @@ const imageFilter = (req, file, cb) => {
 
 var fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/images/bukti_temuan");
+    cb(null, "images/");
   },
   filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-bukti_temuan-${file.originalname}`);
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 app.use(multer({storage : fileStorage, fileFilter: imageFilter}).single('image'));

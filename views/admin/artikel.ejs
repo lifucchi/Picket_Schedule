@@ -40,7 +40,7 @@
                                   <th>Judul</th>
                                   <th>Konten</th>
                                   <th>Pembuat</th>
-                                  <th>Foto Artikel</th>
+                                  <th style="width: 30%;" >Foto Artikel</th>
                                   <th>Aksi</th>
                               </tr>
                           </thead>
@@ -51,7 +51,7 @@
                               <td><%= article.judul%></td>
                               <td><%= article.konten%></td>
                               <td><%= article.pembuat%></td>
-                              <td><%= article.foto_artikel%></td>
+                              <td> <img src="/<%= article.foto_Artikel%>" alt=""> </td>
                               <td>
                                   <button  href="javascript:void(0);" class="btn edit" data-nik="<%= article.id %>" ><i class="material-icons md-24"></i></button>
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/artikel/delete-artikel" method="POST">

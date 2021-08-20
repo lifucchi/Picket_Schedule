@@ -1,4 +1,6 @@
 const Artikel = require('../models/artikel');
+const path = require('path');
+fs = require('fs');
 
 exports.getDataArtikel = (req,res,next) => {
   Artikel.findAll()
@@ -29,10 +31,7 @@ exports.postAddDataArtikel = (req,res,next) => {
   const konten = req.body.konten;
   const pembuat = req.body.pembuat;
   const image = req.file;
-  console.log(image);
   const imgUrl = image.path;
-
-  console.log(imgUrl);
 
 
   Artikel.create({
@@ -53,6 +52,24 @@ exports.postDeleteArtikel = ( req,res, next) => {
   const id = req.body.artikelId;
   Artikel.findByPk(id)
     .then(artikel => {
+      const oldPhoto = artikel.foto_Artikel;
+      console.log("INI FOTO LAMA");
+      console.log(oldPhoto);
+
+
+      if (oldPhoto) {
+        const oldPath = path.join(__dirname, "..", oldPhoto);
+        console.log("INI PATH LAMA");
+        console.log(oldPath);
+        if (fs.existsSync(oldPath)) {
+          fs.unlink(oldPath, (err) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
+          });
+        }
+      }
       return artikel.destroy();
     })
     .then(result => {

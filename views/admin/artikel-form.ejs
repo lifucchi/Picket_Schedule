@@ -35,11 +35,11 @@
 
                                 <div class="uk-width-medium-1-2">
                                     <label>Judul</label>
-                                    <input id='judul' name='judul' type="text" class="md-input" />
+                                    <input id='judul' name='judul' type="text" class="md-input" value="<% if (editing === 'edit') { %><%= article.judul %><% } %>" />
                                 </div>
                                 <div class="uk-width-medium-1-2">
                                     <label>Pembuat</label>
-                                    <input id='pembuat' name= 'pembuat' type="text" class="md-input"  />
+                                    <input id='pembuat' name= 'pembuat' type="text" class="md-input" value="<% if (editing === 'edit') { %><%= article.pembuat %><% } %>"  />
                                 </div>
                             </div>
 
@@ -49,8 +49,8 @@
                           <div class="uk-grid">
                               <div class="uk-width-medium-1">
                                   <label>Konten</label>
-                                  <!-- <input id='konten' name= 'konten' type="text" class="md-input"  /> -->
-                                  <textarea val="" name="konten" id="konten" class="md-input "></textarea>
+                                  <input id='konten' name= 'konten' type="text" class="md-input" value="<% if (editing === 'edit') { %><%= article.konten %><% } %>"  />
+                                  <!-- <textarea value="<% if (editing === 'edit') { %><%= article.judul %><% } %>" name="konten" id="konten" class="md-input "></textarea> -->
                               </div>
 
                           </div>
@@ -63,7 +63,7 @@
                                 <br>
                                   <div class="md-card">
                                       <div class="md-card-content">
-                                          <input type="file" name="image" id="input-file-a" class="dropify" />
+                                          <input value= type="file" name="image" id="input-file-a" class="dropify" />
                                       </div>
                                   </div>
                             </div>

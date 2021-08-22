@@ -53,7 +53,11 @@
                               <td><%= article.pembuat%></td>
                               <td> <img src="/<%= article.foto_Artikel%>" alt=""> </td>
                               <td>
-                                  <button  href="javascript:void(0);" class="btn edit" data-nik="<%= article.id %>" ><i class="material-icons md-24"></i></button>
+                                <form class="" action="/admin/artikel/edit %>" method="get">
+                                  <input type="hidden" value="<%= article.id %>" name="update">
+                                  <button id="edit" type="submit" class="btn edit" ><i class="material-icons md-24"></i></button>
+                                </form>
+
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/artikel/delete-artikel" method="POST">
                                       <input type="hidden" value="<%= article.id %>" name="artikelId">
                                       <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>

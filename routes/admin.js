@@ -37,6 +37,8 @@ router.get('/artikel' , artikelController.getDataArtikel );
 router.get('/artikel/add' , artikelController.getFormArtikel );
 router.post('/artikel/add' , artikelController.postAddDataArtikel );
 router.post('/artikel/delete-artikel', artikelController.postDeleteArtikel);
+router.get('/artikel/edit' , artikelController.getFormUpdateArtikel );
+
 
 // checklistruang
 router.get('/checklistruang',ruangController.getDataRuangAdmin);

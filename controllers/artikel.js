@@ -9,7 +9,8 @@ exports.getDataArtikel = (req,res,next) => {
     res.render('./admin/artikel', {
       articles: artikel,
       pageTitle: 'Artikel',
-      path: '/artikel'
+      path: '/artikel',
+
     });
   })
   .catch(err => console.log(err));
@@ -21,15 +22,38 @@ exports.getFormArtikel = (req,res,next) =>{
     // articles: artikel,
     pageTitle: 'Artikel',
     jenis: 'Tambah',
+    editing: 'no',
     // path: '/artikel'
   });
 
 };
 
+exports.getFormUpdateArtikel = (req,res,next) =>{
+  // const id = req.body.update;
+  // var keyword = q.query.keyword;
+  const id = req.query.update;
+
+
+  Artikel.findByPk(id)
+  .then(artikel => {
+
+    res.render("./admin/artikel-form", {
+      // articles: artikel,
+      pageTitle: 'Artikel',
+      article: artikel,
+      jenis: 'Update',
+      path: '/artikel',
+      editing: 'edit',
+    });
+  })
+};
+
+
 exports.postAddDataArtikel = (req,res,next) => {
   const judul = req.body.judul;
   const konten = req.body.konten;
   const pembuat = req.body.pembuat;
+
   const image = req.file;
   const imgUrl = image.path;
 
@@ -48,14 +72,13 @@ exports.postAddDataArtikel = (req,res,next) => {
 
 
 
+
+
 exports.postDeleteArtikel = ( req,res, next) => {
   const id = req.body.artikelId;
   Artikel.findByPk(id)
     .then(artikel => {
       const oldPhoto = artikel.foto_Artikel;
-      console.log("INI FOTO LAMA");
-      console.log(oldPhoto);
-
 
       if (oldPhoto) {
         const oldPath = path.join(__dirname, "..", oldPhoto);

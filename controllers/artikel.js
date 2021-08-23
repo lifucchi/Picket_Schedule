@@ -52,10 +52,46 @@ exports.getFormUpdateArtikel = (req,res,next) =>{
 exports.postUpdateDataArtikel = (req,res,next) =>{
   // const id = req.body.update;
   // var keyword = q.query.keyword;
-  const id = req.query.update;
-console.log(id);
+  const id = req.body.update;
+  const judul = req.body.judul;
+  const konten = req.body.konten;
+  const pembuat = req.body.pembuat;
+
+  const image = req.file;
+
 
   Artikel.findByPk(id)
+    .then(artikel => {
+      if (image != null ){
+        const oldPhoto = artikel.foto_Artikel;
+          if (oldPhoto) {
+            const oldPath = path.join(__dirname, "..", oldPhoto);
+            console.log("INI PATH LAMA");
+            console.log(oldPath);
+            if (fs.existsSync(oldPath)) {
+              fs.unlink(oldPath, (err) => {
+                if (err) {
+                  console.error(err);
+                  return;
+                }
+              });
+              const imgUrl = image.path;
+              artikel.judul = judul;
+              artikel.konten = konten;
+              artikel.pembuat = pembuat;
+              artikel.foto_Artikel = imgUrl;
+              return artikel.save();
+              }
+            }
+          } else {
+            artikel.judul = judul;
+            artikel.konten = konten;
+            artikel.pembuat = pembuat;
+            return artikel.save();
+          }
+      next()
+    })
+
   .then(artikel => {
 
     res.redirect('/admin/artikel')
@@ -70,18 +106,27 @@ exports.postAddDataArtikel = (req,res,next) => {
   const pembuat = req.body.pembuat;
 
   const image = req.file;
+
+  if (image != null ){
   const imgUrl = image.path;
-
-
   Artikel.create({
     judul: judul,
     konten: konten,
     pembuat: pembuat,
     foto_Artikel:imgUrl,
-  }).then(
-    res.redirect('/admin/artikel')
-  ).catch(err => console.log(err));
+    }).then(
+      res.redirect('/admin/artikel')
+    ).catch(err => console.log(err));
+  } else{
+    Artikel.create({
+      judul: judul,
+      konten: konten,
+      pembuat: pembuat,
+      }).then(
+        res.redirect('/admin/artikel')
+      ).catch(err => console.log(err));
 
+  }
 
 };
 

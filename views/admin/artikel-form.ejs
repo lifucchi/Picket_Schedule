@@ -35,11 +35,11 @@
 
                                 <div class="uk-width-medium-1-2">
                                     <label>Judul</label>
-                                    <input id='judul' name='judul' type="text" class="md-input" value="<% if (editing === 'edit') { %><%= article.judul %><% } %>" />
+                                    <input required id='judul' name='judul' type="text" class="md-input" value="<% if (editing === 'edit') { %><%= article.judul %><% } %>" />
                                 </div>
                                 <div class="uk-width-medium-1-2">
                                     <label>Pembuat</label>
-                                    <input id='pembuat' name= 'pembuat' type="text" class="md-input" value="<% if (editing === 'edit') { %><%= article.pembuat %><% } %>"  />
+                                    <input required id='pembuat' name= 'pembuat' type="text" class="md-input" value="<% if (editing === 'edit') { %><%= article.pembuat %><% } %>"  />
                                 </div>
                             </div>
 
@@ -49,7 +49,7 @@
                           <div class="uk-grid">
                               <div class="uk-width-medium-1">
                                   <label>Konten</label>
-                                  <input id='konten' name= 'konten' type="text" class="md-input" value="<% if (editing === 'edit') { %><%= article.konten %><% } %>"  />
+                                  <input required id='konten' name= 'konten' type="text" class="md-input" value="<% if (editing === 'edit') { %><%= article.konten %><% } %>"  />
                                   <!-- <textarea value="<% if (editing === 'edit') { %><%= article.judul %><% } %>" name="konten" id="konten" class="md-input "></textarea> -->
                               </div>
 
@@ -66,7 +66,8 @@
                                 <br>
                                   <div class="md-card">
                                       <div class="md-card-content">
-                                          <input value= type="file" name="image" id="input-file-a" class="dropify" />
+                                          <input type="file" name="image" id="input-file-a" class="dropify" />
+
                                       </div>
                                   </div>
                             </div>
@@ -80,8 +81,8 @@
                         <div class="uk-input-group">
                             <!-- <span class="uk-input-group-addon"><a class="md-btn" type="submit" >Save</a></span> -->
                             <!-- <button type="submit" name="button">Save</button> -->
-                            <input type="hidden" name="check" value="<%= article.id %> }">
-s                            <button class="md-btn" type="submit" name="button">Save</button>
+                            <input type="hidden" name="update" value="<% if (editing === 'edit') { %><%= article.id %><% } %>">
+                            <button class="md-btn" type="submit" name="button">Save</button>
                         </div>
                     </div>
                 </div>

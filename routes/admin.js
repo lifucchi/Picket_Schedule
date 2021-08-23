@@ -38,6 +38,8 @@ router.get('/artikel/add' , artikelController.getFormArtikel );
 router.post('/artikel/add' , artikelController.postAddDataArtikel );
 router.post('/artikel/delete-artikel', artikelController.postDeleteArtikel);
 router.get('/artikel/edit' , artikelController.getFormUpdateArtikel );
+router.post('/artikel/update' , artikelController.postUpdateDataArtikel );
+
 
 
 // checklistruang

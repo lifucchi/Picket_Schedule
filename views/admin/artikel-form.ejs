@@ -21,7 +21,7 @@
         </div>
 
         <div class="md-card">
-        <form action="/admin/artikel/add" method="post" enctype="multipart/form-data">
+        <form action="<% if (editing === 'edit') {%> /admin/artikel/update <% } else{ %>/admin/artikel/add <%} %>" method="post" enctype="multipart/form-data">
             <div class="md-card-content">
                 <!-- <h3 class="heading_a"><%= pageTitle%></h3> -->
                 <div class="uk-grid" data-uk-grid-margin>
@@ -60,6 +60,9 @@
                           <div class="uk-grid">
                             <div class="uk-width-medium-1-2">
                               <label>Foto artikel</label>
+                              <br>
+                              <span class="uk-text-small uk-text-muted"> Hanya bisa uploud file berekstensi .jpg/.jpeg/.png </span>
+
                                 <br>
                                   <div class="md-card">
                                       <div class="md-card-content">
@@ -77,7 +80,8 @@
                         <div class="uk-input-group">
                             <!-- <span class="uk-input-group-addon"><a class="md-btn" type="submit" >Save</a></span> -->
                             <!-- <button type="submit" name="button">Save</button> -->
-                                <button class="md-btn" type="submit" name="button">Save</button>
+                            <input type="hidden" name="check" value="<%= article.id %> }">
+s                            <button class="md-btn" type="submit" name="button">Save</button>
                         </div>
                     </div>
                 </div>

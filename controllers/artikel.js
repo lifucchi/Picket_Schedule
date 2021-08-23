@@ -5,7 +5,6 @@ fs = require('fs');
 exports.getDataArtikel = (req,res,next) => {
   Artikel.findAll()
   .then(artikel => {
-    console.log(artikel);
     res.render('./admin/artikel', {
       articles: artikel,
       pageTitle: 'Artikel',
@@ -45,6 +44,22 @@ exports.getFormUpdateArtikel = (req,res,next) =>{
       path: '/artikel',
       editing: 'edit',
     });
+  })
+};
+
+
+
+exports.postUpdateDataArtikel = (req,res,next) =>{
+  // const id = req.body.update;
+  // var keyword = q.query.keyword;
+  const id = req.query.update;
+console.log(id);
+
+  Artikel.findByPk(id)
+  .then(artikel => {
+
+    res.redirect('/admin/artikel')
+
   })
 };
 

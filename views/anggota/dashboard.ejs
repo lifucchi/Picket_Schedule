@@ -51,39 +51,54 @@
         <h3 class="heading_b uk-margin-bottom "> Piket Hari ini,  <%= tanggal %> </h3>
 
         <div class="uk-grid uk-grid-width-large-1-2 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
-        <% schedules.forEach((schedule) => { %>
+          <% if(schedules.length != 0) { %>
+            <% schedules.forEach((schedule) => { %>
+            <div>
+                <div class="md-card  md-bg-light-green-200">
+                    <div class="md-card-content">
+                        <h2  class="uk-margin-remove"><span class="">Lantai <%= schedule.nik_pic_piket.level %></span></h2>
 
+                        <h4 class="uk-margin-remove"><span>PIC Piket : <%= schedule.nik_pic_piket.nama %> </h4>
+                        <h4 class="uk-margin-remove"><span>Fasilitator : <%= schedule.nik_pic_fasil.nama %> </h4>
+                        <h4 class="uk-margin-remove" >  <span>Status piket :</span>
+                        <% if (schedule.status_piket === 0) { %>
+                          <span class="uk-badge uk-badge-danger">Belum Piket</span>
+                          <% } else if (schedule.status_piket === 1) { %>
+                          <span class="uk-badge uk-badge-success">Sudah Piket</span>
+                        <% } else { %>
+                          <span class="uk-badge uk-badge-info">Sudah Piket tapi Melewati Jadwal</span>
+                        <% } %>
+                        </h4>
+                        <h4 class="uk-margin-remove" >  <span>Status fasil :</span>
+                          <% if (schedule.persetujuan_fasil === 0) {%>
+                          <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Approved</span>
+                          <% } else {%>
+                          <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Approved</span>
+                          <% } %>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+          <% }) %>
+        <%} else { %>
           <div>
               <div class="md-card  md-bg-light-green-200">
                   <div class="md-card-content">
-                      <span class="uk-text-muted uk-text-small">Lantai <%= schedule.nik_pic_piket.level %></span>
-                      <!-- <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript>64</noscript></span>%</h2> -->
-
-                      <h4 class="uk-margin-remove"><span>PIC Piket : <%= schedule.nik_pic_piket.nama %> </h4>
-                      <h4 class="uk-margin-remove"><span>Fasilitator : <%= schedule.nik_pic_fasil.nama %> </h4>
-                      <h4 class="uk-margin-remove" >  <span>Status piket :</span>
-                      <% if (schedule.status_piket === 0) { %>
-                        <span class="uk-badge uk-badge-danger">Belum Piket</span>
-                        <% } else if (schedule.status_piket === 1) { %>
-                        <span class="uk-badge uk-badge-success">Sudah Piket</span>
-                      <% } else { %>
-                        <span class="uk-badge uk-badge-info">Sudah Piket tapi Melewati Jadwal</span>
-                      <% } %>
-                      </h4>
-                      <h4 class="uk-margin-remove" >  <span>Status fasil :</span>
-                        <% if (schedule.persetujuan_fasil === 0) {%>
-                        <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Approved</span>
-                        <% } else {%>
-                        <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Approved</span>
-                        <% } %>
-
-                      </h4>
-
+                      <h2  class="uk-margin-remove">  <span class="">Lantai 1</span></h2>
+                      <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
+                  </div>
+              </div>
+          </div>
+          <div>
+              <div class="md-card  md-bg-light-green-200">
+                  <div class="md-card-content">
+                      <h2 class="uk-margin-remove" > <span class="">Lantai 2</span></h2>
+                      <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
                   </div>
               </div>
           </div>
 
-        <% }) %>
+        <%} %>
 
     </div>
 </div>

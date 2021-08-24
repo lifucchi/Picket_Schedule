@@ -60,7 +60,7 @@
                             <div class="uk-width-medium-1">
                               <h3> <%=room.ruang.nama_ruang%> </h3>
                                     <div class="md-card-content">
-                                      <% if ( room.persetujuanpicpiket === '2' && room.JadwalPiket.status_piket === 0 ) {%>
+                                      <% if ( room.persetujuanpicpiket === '2' && room.jadwal_piket.status_piket === 0 ) {%>
                                         <div class="uk-accordion" data-uk-accordion>
                                             <h3 class="uk-accordion-title">Nilai </h3>
                                             <div class="uk-accordion-content">
@@ -102,7 +102,7 @@
                                               </form>
                                             </div>
 
-                                            <% if ( (room.bobotruang === 2 || room.bobotruang === 1) && room.JadwalPiket.status_piket === 0  ){ %>
+                                            <% if ( (room.bobotruang === 2 || room.bobotruang === 1) && room.jadwal_piket.status_piket === 0  ){ %>
                                               <h3 class="uk-accordion-title"> Barang Temuan</h3>
                                               <div class="uk-accordion-content">
                                                 <form class="" action="/anggota/checklistruang/bukti" method="post" enctype="multipart/form-data">
@@ -372,7 +372,7 @@
                         </div>
                         <div class="uk-width-medium-1-4">
                         </div>
-                        <% if ( room.persetujuanpicpiket === '2' && room.JadwalPiket.status_piket === 0 ) {%>
+                        <% if ( room.persetujuanpicpiket === '2' && room.jadwal_piket.status_piket === 0 ) {%>
 
                         <div class="uk-width-medium-1-4">
                             <form class="" action="/anggota/checklistruang/postCheckPic" method="post">

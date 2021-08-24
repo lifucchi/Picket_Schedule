@@ -6,6 +6,8 @@ const JadwalPiket = require('../models/jadwal_piket');
 const Bukti_temuan = require('../models/bukti_temuan');
 const { Op } = require("sequelize");
 
+
+// Admin
 exports.getDataRuangAdmin= (req,res, next) => {
     Pengguna.findAll()
     .then(pengguna => {
@@ -74,8 +76,8 @@ exports.postDeleteRuang = ( req,res, next) => {
 
 };
 
+// ANGOTA
 exports.getDataRuangAnggota = (req,res, next) => {
-
   const nowTanggal = moment().format('YYYY-MM-DD');
   console.log(nowTanggal);
 
@@ -100,12 +102,14 @@ exports.getDataRuangAnggota = (req,res, next) => {
           {
             model: Ruang,
             include : {
-              model: Pengguna
+              model: Pengguna,
+              where: {level: req.session.level }
             }
           }
         ]
       })
       .then( ruang => {
+        console.log(ruang);
         res.render('./anggota/checklistRuang', {
           rooms: ruang,
           pageTitle: 'Checklist Ruang',

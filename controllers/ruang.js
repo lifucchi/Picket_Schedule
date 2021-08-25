@@ -8,20 +8,46 @@ const { Op } = require("sequelize");
 
 
 // Admin
+// exports.getDataRuangAdmin= (req,res, next) => {
+//     Pengguna.findAll()
+//     .then(pengguna => {
+//       Ruang.findAll( {include: Pengguna, as: 'PemilikMeja'} )
+//       .then( ruang => {
+//         res.render('./admin/checklistruang', {
+//           rooms: ruang,
+//           users: pengguna,
+//           pageTitle: 'Checklist Ruang',
+//           path: '/checklistruang'
+//         });
+//       })
+//     })
+//     .catch(err => console.log(err));
+// };
+
 exports.getDataRuangAdmin= (req,res, next) => {
-    Pengguna.findAll()
-    .then(pengguna => {
-      Ruang.findAll( {include: Pengguna} )
-      .then( ruang => {
-        res.render('./admin/checklistruang', {
-          rooms: ruang,
-          users: pengguna,
-          pageTitle: 'Checklist Ruang',
-          path: '/checklistruang'
-        });
+
+  const pengguna = Pengguna.findAll();
+  const ruang = Ruang.findAll( {include: Pengguna});
+
+
+  Promise
+      .all([pengguna, ruang])
+      .then(hasil => {
+          console.log('**********COMPLETE RESULTS****************');
+          console.log(hasil[0]);
+          res.render('./admin/checklistruang', {
+            rooms: hasil[1],
+            users: hasil[0],
+            pageTitle: 'Checklist Ruang',
+            path: '/checklistruang'
+          });
+
       })
-    })
-    .catch(err => console.log(err));
+      .catch(err => {
+          console.log('**********ERROR RESULT****************');
+          console.log(err);
+      });
+
 };
 
 exports.postAddDataRuang = (req,res,next) => {

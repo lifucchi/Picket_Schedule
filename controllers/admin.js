@@ -26,29 +26,170 @@ exports.getAdminDashboard = (req,res) => {
     }
   ]
 }).then(piket => {
-  const id = 5;
+   var prevMonth = moment(nowTanggal).subtract(1, 'months').endOf('month').format('MM');
+   console.log(prevMonth);
 
-  const belumruang = Penilaian_ruang.count(
-    { where: { JadwalPiketId: id,
-      persetujuanpicpiket: 2},
-    include: [{
-      model: JadwalPiket,
-    },
-  ]
-  })
+  const mejaTerbaik = Penilaian_meja.findAll(
+    {
+        include: [
+        {
+          model: Meja,
+          include: [{
+            model: Pengguna,
+          }],
+        },
+        {
+          model: JadwalPiket,
+          where: sequelize.where(sequelize.fn('month', sequelize.col('tanggal')), prevMonth)
+        }
+      ],
+      attributes: {
+        // 'bobotmeja',
+        // 'meja.JadwalPiketId',
+        // 'meja.jadwal_piket.tanggal',
+        // "skor",
+        include: [
+          [sequelize.literal('SUM(bobotmeja) / COUNT(bobotmeja)'), 'bobotmeja']
+          // [sequelize.fn('SUM', sequelize.col('bobotmeja')), 'bobotmeja'],
+        ]},
+      group : ['penggunaNik'],
+      order: [
+          ['bobotmeja', 'DESC'],
+      ],
+      // raw: true,
+    }
+  )
+
+  const lantaiSatuTerbaik = Penilaian_ruang.findAll(
+    {
+        include: [
+        {
+          model: Ruang,
+        },
+        {
+          model: JadwalPiket,
+          where: sequelize.where(sequelize.fn('month', sequelize.col('tanggal')), prevMonth),
+          include: [{
+            model: Pengguna,
+            as: 'nik_pic_piket',
+            where: {level: 1}
+          },
+          {
+            model: Pengguna,
+            as: 'nik_pic_fasil',
+
+          }
+        ]
+        }
+      ],
+      attributes: {
+        // 'bobotmeja',
+        // 'meja.JadwalPiketId',
+        // 'meja.jadwal_piket.tanggal',
+        // "skor",
+        include: [
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          // [sequelize.fn('SUM', sequelize.col('bobotruang')), 'skor'],
+        ]},
+      group : ['jadwalPiketId', 'jadwal_piket.nik_pic_piket.level'],
+      order: [
+          ['bobotruang', 'DESC'],
+      ],
+      // raw: true,
+    }
+  )
+
+  const lantaiDuaTerbaik = Penilaian_ruang.findAll(
+    {
+        include: [
+        {
+          model: Ruang,
+        },
+        {
+          model: JadwalPiket,
+          where: sequelize.where(sequelize.fn('month', sequelize.col('tanggal')), prevMonth),
+          include: [{
+            model: Pengguna,
+            as: 'nik_pic_piket',
+            where: {level: 2}
+          },
+          {
+            model: Pengguna,
+            as: 'nik_pic_fasil',
+
+          }
+        ]
+        }
+      ],
+      attributes: {
+        // 'bobotmeja',
+        // 'meja.JadwalPiketId',
+        // 'meja.jadwal_piket.tanggal',
+        // "skor",
+        include: [
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          // [sequelize.fn('SUM', sequelize.col('bobotruang')), 'skor'],
+        ]},
+      group : ['jadwalPiketId', 'jadwal_piket.nik_pic_piket.level'],
+      order: [
+          ['bobotruang', 'DESC'],
+      ],
+      // raw: true,
+    }
+  )
 
 
   Promise
-      .all([belumruang ])
+      .all([mejaTerbaik,lantaiSatuTerbaik, lantaiDuaTerbaik])
       .then(count => {
           console.log('**********COMPLETE RESULTS****************');
-          console.log(count[0]); // user profile
+          for(i = 0; i < count[0].length; i++){
+;            count[0][i].bobotmeja = parseFloat(count[0][i].bobotmeja).toFixed(2);
+          }
+          console.log(count[1]);
+          console.log(count[1].length);
+          // sum all
+          let lantaiSatu = 0;
+          for(i = 0; i < count[1].length; i++){
+            console.log("putaran" + i);
+            console.log(count[1][i].bobotruang);
+            console.log(count[1][i].jadwal_piket.nik_pic_piket.level);
+            lantaiSatu = parseFloat(lantaiSatu) + parseFloat(count[1][i].bobotruang);
+            console.log(lantaiSatu);
+          }
+          lantaiSatu = parseFloat(lantaiSatu) / parseFloat(count[1].length)
+          console.log(lantaiSatu);
+          let lantaiDua = 0;
+          for(i = 0; i < count[2].length; i++){
+            console.log("putaran" + i);
+            console.log(count[2][i].bobotruang);
+            console.log(count[2][i].jadwal_piket.nik_pic_piket.level);
+            lantaiDua = parseFloat(lantaiDua) + parseFloat(count[2][i].bobotruang);
+            console.log(lantaiDua);
+          }
+          lantaiDua = parseFloat(lantaiDua) / parseFloat(count[2].length)
+          console.log(lantaiDua);
 
-          res.render('./anggota/checklistpiketdetail', {
-            piket: piket,
-            pageTitle: 'Checklist Piket',
-            path: '/checklistpiketada',
-            count:count
+          // mencari yang terbesar
+          let lantaiTerbaik = [];
+          if ( lantaiSatu > lantaiDua ){
+            lantaiTerbaik[0] = lantaiSatu;
+            lantaiTerbaik[1] = 1;
+          } else{
+            lantaiTerbaik[0] = lantaiDua;
+            lantaiTerbaik[1] = 2;
+
+          }
+
+
+
+          res.render('./admin/admin', {
+            pageTitle: 'Dashboard',
+            path: '/',
+            schedules: piket,
+            tanggal : nowTanggal2,
+            mejaTerbaik : count[0][0],
+            lantaiTerbaik: lantaiTerbaik
           });
 
       })
@@ -58,12 +199,7 @@ exports.getAdminDashboard = (req,res) => {
       });
 
 
-  res.render('./admin/admin', {
-    pageTitle: 'Dashboard',
-    path: '/',
-    schedules: piket,
-    tanggal : nowTanggal2
-  });
+
 }).catch(err => {
       console.log('**********ERROR RESULT****************');
       console.log(err);

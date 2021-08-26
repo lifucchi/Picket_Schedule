@@ -31,7 +31,6 @@ exports.postAddDataMeja = (req,res,next) => {
   Meja.create({
     penggunaNik: pemilik_meja,
     standar:standar,
-
   }).then(
     res.redirect('/admin/checklistmeja')
   ).catch(err => console.log(err));
@@ -40,11 +39,9 @@ exports.postAddDataMeja = (req,res,next) => {
 exports.postAddDataAllMeja = (req,res,next) => {
   const standar = req.body.standar;
 
-
   Pengguna
   .findAll({ where: {peran: { [Op.not] : 'Admin'}}})
   .then( pemilik => {
-
     var pemilikmeja = [];
     for (var i = 0; i < pemilik.length; i++){
       var penObj = {
@@ -67,7 +64,7 @@ exports.postEditMeja = ( req,res, next) => {
   const id = req.body.id;
   const pemilik = req.body.pemilik_meja_edit;
   const standar = req.body.standar_edit;
-  // console.log(pemilik);
+
   Meja.findByPk(id)
     .then(meja => {
       meja.penggunaNik = pemilik;
@@ -98,9 +95,7 @@ exports.postDeleteMeja = ( req,res, next) => {
 
 
 // ANGGOTA
-
 exports.getDataMejaAnggota = (req,res, next) => {
-
   const nowTanggal = moment().format('YYYY-MM-DD');
   console.log(nowTanggal);
 
@@ -109,9 +104,6 @@ exports.getDataMejaAnggota = (req,res, next) => {
     where: {tanggal: nowTanggal},
   })
   .then( result => {
-    console.log("ini getpemilikjadwal");
-    console.log(result);
-
     if (result.length === 0){
         return res.render('./anggota/checklistmeja', {
           pageTitle: 'Checklist Meja',
@@ -173,11 +165,28 @@ const id = req.params.mejaId;
   ]
   })
   .then( table => {
-    res.render('./anggota/checklistmejadetail', {
-      tables: table,
-      pageTitle: 'Checklist Meja',
-      path: '/checklistmejaada'
+
+    const buktiTemuan = Bukti_temuan.findAll({
+      where: {penilaianMejaId: id}
     });
+    Promise
+        .all([buktiTemuan])
+        .then(bukti => {
+            console.log('**********COMPLETE RESULTS****************');
+            console.log(bukti);
+
+            res.render('./anggota/checklistmejadetail', {
+              tables: table,
+              pageTitle: 'Checklist Meja',
+              path: '/checklistmejaada',
+              buktiTemuan: bukti[0]
+            });
+
+        })
+        .catch(err => {
+            console.log('**********ERROR RESULT****************');
+            console.log(err);
+        });
   })
   .catch(err => console.log(err));
 

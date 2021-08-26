@@ -29,7 +29,6 @@ exports.getDataRuangAdmin= (req,res, next) => {
   const pengguna = Pengguna.findAll();
   const ruang = Ruang.findAll( {include: Pengguna});
 
-
   Promise
       .all([pengguna, ruang])
       .then(hasil => {
@@ -55,6 +54,7 @@ exports.postAddDataRuang = (req,res,next) => {
   const standar = req.body.standar;
   const poin_ruang = req.body.poin_ruang;
   const pic_ruang = req.body.pic_ruang;
+
   Ruang.create({
     nama_ruang: nama_ruang,
     standar:standar,
@@ -71,6 +71,7 @@ exports.postEditRuang = ( req,res, next) => {
   const standar = req.body.standar_edit;
   const poin_ruang = req.body.poin_ruang_edit;
   const pic_ruang = req.body.pic_ruang_edit;
+
   Ruang.findByPk(id)
     .then(ruang => {
       ruang.nama_ruang = nama_ruang;
@@ -87,9 +88,9 @@ exports.postEditRuang = ( req,res, next) => {
 };
 
 
-
 exports.postDeleteRuang = ( req,res, next) => {
   const id = req.body.ruangId;
+
   Ruang.findByPk(id)
     .then(ruang => {
       return ruang.destroy();
@@ -145,7 +146,6 @@ exports.getDataRuangAnggota = (req,res, next) => {
 
   })
     .catch(err => console.log(err));
-
 };
 
 exports.getDataRuangDetail = (req,res, next) => {
@@ -162,8 +162,7 @@ const id = req.params.ruangId;
         model: Pengguna,
         as: 'nik_pic_fasil',
       }
-    ]
-    },
+    ]},
     {
       model: Ruang,
       include : {
@@ -173,11 +172,30 @@ const id = req.params.ruangId;
   ]
   })
   .then( room => {
-    res.render('./anggota/checklistruangdetail', {
-      room: room,
-      pageTitle: 'Checklist Ruang',
-      path: '/checklistruangada'
+    const buktiTemuan = Bukti_temuan.findAll({
+      where: {penilaianRuangId: id}
     });
+
+    Promise
+        .all([buktiTemuan])
+        .then(bukti => {
+            console.log('**********COMPLETE RESULTS****************');
+            console.log(bukti);
+
+            res.render('./anggota/checklistruangdetail', {
+              room: room,
+              pageTitle: 'Checklist Ruang',
+              path: '/checklistruangada',
+              buktiTemuan: bukti[0]
+            });
+
+        })
+        .catch(err => {
+            console.log('**********ERROR RESULT****************');
+            console.log(err);
+        });
+
+
   })
   .catch(err => console.log(err));
 

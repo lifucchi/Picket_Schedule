@@ -151,24 +151,24 @@ exports.getAdminDashboard = (req,res) => {
           // sum all
           let lantaiSatu = 0;
           for(i = 0; i < count[1].length; i++){
-            console.log("putaran" + i);
-            console.log(count[1][i].bobotruang);
-            console.log(count[1][i].jadwal_piket.nik_pic_piket.level);
+            // console.log("putaran" + i);
+            // console.log(count[1][i].bobotruang);
+            // console.log(count[1][i].jadwal_piket.nik_pic_piket.level);
             lantaiSatu = parseFloat(lantaiSatu) + parseFloat(count[1][i].bobotruang);
-            console.log(lantaiSatu);
+            // console.log(lantaiSatu);
           }
           lantaiSatu = parseFloat(lantaiSatu) / parseFloat(count[1].length)
-          console.log(lantaiSatu);
+          // console.log(lantaiSatu);
           let lantaiDua = 0;
           for(i = 0; i < count[2].length; i++){
-            console.log("putaran" + i);
-            console.log(count[2][i].bobotruang);
-            console.log(count[2][i].jadwal_piket.nik_pic_piket.level);
+            // console.log("putaran" + i);
+            // console.log(count[2][i].bobotruang);
+            // console.log(count[2][i].jadwal_piket.nik_pic_piket.level);
             lantaiDua = parseFloat(lantaiDua) + parseFloat(count[2][i].bobotruang);
-            console.log(lantaiDua);
+            // console.log(lantaiDua);
           }
           lantaiDua = parseFloat(lantaiDua) / parseFloat(count[2].length)
-          console.log(lantaiDua);
+          // console.log(lantaiDua);
 
           // mencari yang terbesar
           let lantaiTerbaik = [];

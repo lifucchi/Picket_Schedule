@@ -30,26 +30,97 @@
     <!-- main sidebar -->
     <%- include('../include_admin/sidebar_switch'); %>
     <!-- main sidebar end -->
+    <div id="page_content">
+        <div id="page_content_inner">
 
-<div id="page_content">
-    <div id="page_content_inner">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-grid" data-uk-grid-margin="">
+                        <!-- <div class="uk-width-medium-3-10">
+                            <label for="product_search_name">Product Name</label>
+                            <input type="text" class="md-input" id="product_search_name">
+                        </div>
+                        <div class="uk-width-medium-1-10">
+                            <label for="product_search_price">Price</label>
+                            <input type="text" class="md-input" id="product_search_price">
+                        </div>
+                        <div class="uk-width-medium-3-10">
+                            <div class="uk-margin-small-top">
+                                <select id="product_search_status" data-md-selectize multiple data-md-selectize-bottom>
+                                    <option value="">Status</option>
+                                    <option value="1">In stock</option>
+                                    <option value="2">Out of stock</option>
+                                    <option value="3">Ships in 3-5 days</option>
+                                </select>
+                            </div> -->
+                        </div>
+                        <div class="uk-width-medium-3-10">
+                            <div class="uk-margin-small-top">
+                                <select id="product_search_status" data-md-selectize data-md-selectize-bottom>
+                                    <option value=""></option>
+                                    <option value="1">Mingguan</option>
+                                    <option value="2">Bulanan</option>
+                                    <option value="3">Tahunan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-10">
+                            <div class="uk-margin-top uk-text-nowrap">
+                                <input type="checkbox" name="product_search_active" id="product_search_active" data-md-icheck/>
+                                <label for="product_search_active" class="inline-label">Active</label>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-2-10 uk-text-center">
+                            <a href="#" class="md-btn md-btn-primary uk-margin-small-top">Filter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-      <select name"jenis" onchange="myFunction(this);" class="md-input" required>
-          <option value="1">Hari</option>
-          <option value="2">Bulan</option>
-          <option value="2">Tahun</option>
-      </select>
+            <div class="md-card uk-margin-medium-bottom">
+                <div class="md-card-content">
+                    <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Jadwal Piket</th>
 
-      <select id="tanggal" name"tanggal" onchange="myFunction(this);" class="md-input" required>
-          <option value="1">Hari</option>
-          <option value="2">Bulan</option>
-          <option value="2">Tahun</option>
-      </select>
+                                <% for(var i = 0; i < rooms[0].penilaian_ruangs.length; i++) { %>
+                                  <th><%= rooms[0].penilaian_ruangs[i].ruang.nama_ruang %></th>
+                                <% } %>
 
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <% rooms.forEach((room) => { %>
+                        <tr>
 
+                            <td class="uk-text-large uk-text-nowrap"><a href="#"><%= room.tanggal%></a></td>
+                            <%  room.penilaian_ruangs.forEach(function(nama) { %>
+                                <td class="uk-text-large uk-text-nowrap"><%= nama.bobotruang%></td>
+                            <%  })%>
 
+                            <td class="uk-text-nowrap">
+                                <a href="ecommerce_product_details.html"><i class="material-icons md-24">&#xE8F4;</i></a>
+                                <a href="#"><i class="material-icons md-24">&#xE872;</i></a>
+                            </td>
+
+                            <!-- <td class="uk-text-nowrap">
+                                <button  href="javascript:void(0);" class="btn edit"><i class="material-icons md-24"></i></button>
+                                <form onsubmit="return confirm('Are you sure?');" action="/admin//checklistmeja/delete-checklistmeja" method="POST">
+                                    <input type="hidden" value="<%= room.id %>" name="mejaId">
+                                    <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                </form>
+                            </td> -->
+                        </tr>
+                          <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
 
 
     <!-- google web fonts -->
@@ -79,6 +150,8 @@
     <script src="/assets/js/uikit_custom.min.js"></script>
     <!-- altair common functions/helpers -->
     <script src="/assets/js/altair_admin_common.min.js"></script>
+    <%- include('../include_admin/datatables'); %>
+
 
 
     <script>

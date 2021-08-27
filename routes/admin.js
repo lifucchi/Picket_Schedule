@@ -13,7 +13,7 @@ const artikelController = require('../controllers/artikel');
 const ruangController = require('../controllers/ruang');
 const mejaController = require('../controllers/meja');
 
-const rekapitulasController = require('../controllers/rekapitulasi');
+const penilaianRuangController = require('../controllers/penilaianRuang');
 
 
 // dashboard
@@ -57,7 +57,7 @@ router.post('/checklistmeja/edit',mejaController.postEditMeja);
 router.post('/checklistmeja/delete-checklistmeja',mejaController.postDeleteMeja );
 
 // rekapitulasi
-router.get('/rekapitulasi' , rekapitulasController.getData );
+router.get('/skorruang' , penilaianRuangController.getDataPenilaianRuang );
 
 
 

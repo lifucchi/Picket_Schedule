@@ -12,7 +12,8 @@
     <link rel="icon" type="image/png" href="/assets/img/logo5rsmart.png" sizes="32x32">
 
     <title><%= pageTitle%></title>
-
+    <link rel="stylesheet" href="/bower_components/kendo-ui/styles/kendo.common-material.min.css"/>
+    <link rel="stylesheet" href="/bower_components/kendo-ui/styles/kendo.material.min.css"/>
     <!-- uikit -->
     <link rel="stylesheet" href="/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
 
@@ -54,7 +55,7 @@
                                 </select>
                             </div>
                         </div> -->
-                        <div class="uk-width-medium-3-10">
+                        <!-- <div class="uk-width-medium-3-10">
                             <div class="uk-margin-small-top">
                                 <select id="product_search_status" data-md-selectize data-md-selectize-bottom>
                                     <option value="">Berdasarkan</option>
@@ -63,13 +64,51 @@
                                     <option value="3">Tahunan</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
+                        <div class="uk-width-medium-2-10">
+                          <!-- <div class="uk-margin-small-top"> -->
+
+                              <!-- <span class="icheck-inline">
+                                  <input type="radio" name="mingguan" id="radio_demo_1" data-md-icheck />
+                                  <label for="radio_demo_inline_1" class="inline-label">Mingguan</label>
+                              </span>
+                              <span class="icheck-inline">
+                                  <input type="radio" name="bulanan" id="radio_demo_2" data-md-icheck />
+                                  <label for="radio_demo_inline_2" class="inline-label">Bulanan</label>
+                              </span>
+                              <span class="icheck-inline">
+                                  <input type="radio" name="tahunan" id="radio_demo_3" data-md-icheck />
+                                  <label for="radio_demo_inline_3" class="inline-label">Tahunan</label>
+                              </span>
+                          </div> -->
+                            <!-- <span class="icheck-inline">
+                                <input type="radio" name="radio_demo_inline" id="radio_demo_inline_1" data-md-icheck />
+                                <label for="radio_demo_inline_1" class="inline-label">Mingguan</label>
+                            </span>
+                            <span class="icheck-inline">
+                                <input type="radio" name="radio_demo_inline" id="radio_demo_inline_2" data-md-icheck />
+                                <label for="radio_demo_inline_2" class="inline-label">Bulanan</label>
+                            </span>
+                            <span class="icheck-inline">
+                                <input type="radio" name="radio_demo_inline" id="radio_demo_inline_3" data-md-icheck />
+                                <label for="radio_demo_inline_3" class="inline-label">Tahunan</label>
+                            </span> -->
+                        <!-- </div> -->
+                        <form class="uk-form-stacked">
+                            <label for="kUI_datepicker_b" class="uk-form-label">Datepicker (months)</label>
+                            <input id="kUI_datepicker_b" value="November 2021" />
+                        </form>
+
                         <!-- <div class="uk-width-medium-1-10">
                             <div class="uk-margin-top uk-text-nowrap">
                                 <input type="checkbox" name="product_search_active" id="product_search_active" data-md-icheck/>
                                 <label for="product_search_active" class="inline-label">Active</label>
                             </div>
                         </div> -->
+                      </div>
+
+                        <div>
+
                         <div class="uk-width-medium-2-10 uk-text-center">
                             <a href="#" class="md-btn md-btn-primary uk-margin-small-top">Filter</a>
                         </div>
@@ -151,6 +190,10 @@
     <!-- altair common functions/helpers -->
     <script src="/assets/js/altair_admin_common.min.js"></script>
     <%- include('../include_admin/datatables'); %>
+    <script src="/assets/js/kendoui_custom.min.js"></script>
+
+    <!--  kendoui functions -->
+    <script src="/assets/js/pages/kendoui.min.js"></script>
 
 
 
@@ -161,8 +204,10 @@
           document.getElementById("tanggal").innerHTML = '<input name="tanggal" class="md-input" type="text" id="tanggal" data-uk-datepicker="{format:'YYYY-MM-DD'}">';
 
 
-        }else{
+        }else if(){
           document.getElementById("demo").innerHTML = sel.value;
+        } else if (sel.value = 3) {
+
         }
     }
     </script>
@@ -177,6 +222,8 @@
                 FastClick.attach(document.body);
             }
         });
+
+
     </script>
 
 

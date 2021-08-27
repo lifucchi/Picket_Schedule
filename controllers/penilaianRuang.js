@@ -31,7 +31,7 @@ exports.getDataPenilaianRuang= (req,res, next) => {
       .all([ruang])
       .then(hasil => {
           console.log('**********COMPLETE RESULTS****************');
-          console.log(hasil[0]);
+          // console.log(hasil[0]);
           res.render('./admin/rekapitulasi', {
             rooms: hasil[0],
             pageTitle: 'Skor Ruang',
@@ -43,5 +43,22 @@ exports.getDataPenilaianRuang= (req,res, next) => {
           console.log('**********ERROR RESULT****************');
           console.log(err);
       });
+
+};
+
+
+
+exports.postDeletePenialaianRuang = ( req,res, next) => {
+  const id = req.body.penilaianRuangId;
+  console.log(id);
+  Penilaian_ruang.findByPk(id)
+    .then(penilaianRuang => {
+      return penilaianRuang.destroy();
+    })
+    .then(result => {
+      console.log('DESTROYED PENGGUNA');
+      res.redirect('/admin/skorruang');
+    })
+    .catch(err => console.log(err));
 
 };

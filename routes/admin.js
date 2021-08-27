@@ -58,6 +58,8 @@ router.post('/checklistmeja/delete-checklistmeja',mejaController.postDeleteMeja 
 
 // rekapitulasi
 router.get('/skorruang' , penilaianRuangController.getDataPenilaianRuang );
+router.post('/skorruang/delete-skorruang' , penilaianRuangController.postDeletePenialaianRuang );
+
 
 
 

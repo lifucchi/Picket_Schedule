@@ -23,6 +23,12 @@
     <!-- altair admin -->
     <link rel="stylesheet" href="/assets/css/main.min.css" media="all">
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css" media="all">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css" media="all">
+
+
+
+
 </head>
 <body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-200">
     <!-- main header -->
@@ -46,11 +52,11 @@
                             <!-- </div> -->
                           </form>
                         </div>
-                    <div class="uk-width-medium-2-10">
+                    <!-- <div class="uk-width-medium-2-10">
                           <a class="md-btn" href="/admin/artikel/add">
                               Eksport
                           </a>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
@@ -59,7 +65,7 @@
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
                   <% if (rooms2.length != 0) {%>
-                    <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
+                    <table id="dt_table" class="uk-table" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>Jadwal Piket</th>
@@ -100,15 +106,11 @@
                         <div class="uk-width-medium-8-10 uk-row-first">
                               <h3 class="heading_b uk-margin-bottom"> Level 1 </h3>
                         </div>
-                        <div class="uk-width-medium-2-10">
-                              <a class="md-btn" href="/admin/artikel/add">
-                                  Eksport
-                              </a>
-                        </div>
+
                     </div>
 
                   <% if (rooms.length != 0) { %>
-                  <table id="dt_individual_search" class="uk-table" cellspacing="0" width="100%">
+                  <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
                       <thead>
                           <tr>
                               <th>Jadwal Piket</th>
@@ -151,11 +153,7 @@
                         <div class="uk-width-medium-8-10 uk-row-first">
                               <h3 class="heading_b uk-margin-bottom"> Level 2 </h3>
                         </div>
-                        <div class="uk-width-medium-2-10">
-                              <a class="md-btn" href="/admin/artikel/add">
-                                  Eksport
-                              </a>
-                        </div>
+
                     </div>
                   <% if (rooms3.length != 0) { %>
                   <table id="dt_individual_search" class="uk-table" cellspacing="0" width="100%">
@@ -163,7 +161,7 @@
                           <tr>
                               <th>Jadwal Piket</th>
 
-                              <% for(var i = 0; i < rooms[0].penilaian_ruangs.length; i++) { %>
+                              <% for(var i = 0; i < rooms3[0].penilaian_ruangs.length; i++) { %>
                                 <th><%= rooms3[0].penilaian_ruangs[i].ruang.nama_ruang  %>
                                   (<%= (rooms3[0].penilaian_ruangs[i].ruang.standar)%>)
                                 </th>
@@ -228,21 +226,6 @@
 
 
 
-    <script>
-    function myFunction(sel) {
-        if (sel.value = 1){
-
-          document.getElementById("tanggal").innerHTML = '<input name="tanggal" class="md-input" type="text" id="tanggal" data-uk-datepicker="{format:'YYYY-MM-DD'}">';
-
-
-        }else if(){
-          document.getElementById("demo").innerHTML = sel.value;
-        } else if (sel.value = 3) {
-
-        }
-    }
-    </script>
-
 
     <script>
         $(function() {
@@ -252,6 +235,7 @@
             if(Modernizr.touch) {
                 FastClick.attach(document.body);
             }
+
         });
 
 

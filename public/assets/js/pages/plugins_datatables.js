@@ -5,9 +5,34 @@ $(function() {
     altair_datatables.dt_individual_search();
     altair_datatables.dt_colVis();
     altair_datatables.dt_tableTools();
+    altair_datatables.dt_table();
+
 });
 
 altair_datatables = {
+
+    dt_table: function() {
+        var dt_table = $('#dt_table');
+        if(dt_table.length) {
+
+          dt_table.DataTable(
+              {
+                  dom: 'Bfrtip',
+                  buttons: [
+                      'copyHtml5',
+                      'excelHtml5',
+                      'csvHtml5',
+                      'pdfHtml5'
+                  ]
+                }
+            );
+
+
+
+        }
+    },
+
+
     dt_default: function() {
         var $dt_default = $('#dt_default');
         if($dt_default.length) {

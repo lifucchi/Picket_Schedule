@@ -27,6 +27,8 @@ exports.getAdminDashboard = (req,res) => {
   ]
 }).then(piket => {
    var prevMonth = moment(nowTanggal).subtract(1, 'months').endOf('month').format('MM');
+   const tahun = moment(nowTanggal).format('YYYY');
+
    console.log(prevMonth);
 
   const mejaTerbaik = Penilaian_meja.findAll(
@@ -40,7 +42,13 @@ exports.getAdminDashboard = (req,res) => {
         },
         {
           model: JadwalPiket,
-          where: sequelize.where(sequelize.fn('month', sequelize.col('tanggal')), prevMonth)
+          where: {
+            [Op.and]:
+            [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
+            {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
+            {persetujuan_fasil:2}],
+
+          }
         }
       ],
       attributes: {
@@ -68,7 +76,12 @@ exports.getAdminDashboard = (req,res) => {
         },
         {
           model: JadwalPiket,
-          where: sequelize.where(sequelize.fn('month', sequelize.col('tanggal')), prevMonth),
+          where: {
+            [Op.and]:
+            [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
+            {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
+            {persetujuan_fasil:2}],
+          },
           include: [{
             model: Pengguna,
             as: 'nik_pic_piket',
@@ -107,7 +120,12 @@ exports.getAdminDashboard = (req,res) => {
         },
         {
           model: JadwalPiket,
-          where: sequelize.where(sequelize.fn('month', sequelize.col('tanggal')), prevMonth),
+          where: {
+            [Op.and]:
+            [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
+            {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
+            {persetujuan_fasil:2}],
+          },
           include: [{
             model: Pengguna,
             as: 'nik_pic_piket',

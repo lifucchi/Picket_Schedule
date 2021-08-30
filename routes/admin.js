@@ -14,6 +14,8 @@ const ruangController = require('../controllers/ruang');
 const mejaController = require('../controllers/meja');
 
 const penilaianRuangController = require('../controllers/penilaianRuang');
+const penilaianMejaController = require('../controllers/penilaianMeja');
+
 
 
 // dashboard
@@ -60,6 +62,10 @@ router.post('/checklistmeja/delete-checklistmeja',mejaController.postDeleteMeja 
 router.get('/skorruang' , penilaianRuangController.getDataPenilaianRuang );
 router.post('/skorruang/delete-skorruang' , penilaianRuangController.postDeletePenialaianRuang );
 router.post('/skorruang/filter' , penilaianRuangController.getDataFilterPenilaianRuang );
+
+
+router.get('/skormeja' , penilaianMejaController.getDataPenilaianMeja );
+router.post('/skormeja/filter' , penilaianMejaController.getDataFilterPenilaianMeja );
 
 
 

@@ -1,0 +1,161 @@
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no"/>
+
+    <link rel="icon" type="image/png" href="/assets/img/logo5rsmart.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/img/logo5rsmart.png" sizes="32x32">
+
+    <title><%= pageTitle%></title>
+    <link rel="stylesheet" href="/bower_components/kendo-ui/styles/kendo.common-material.min.css"/>
+    <link rel="stylesheet" href="/bower_components/kendo-ui/styles/kendo.material.min.css"/>
+    <!-- uikit -->
+    <link rel="stylesheet" href="/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+
+    <!-- flag icons -->
+    <link rel="stylesheet" href="/assets/icons/flags/flags.min.css" media="all">
+
+    <!-- altair admin -->
+    <link rel="stylesheet" href="/assets/css/main.min.css" media="all">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css" media="all">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css" media="all">
+
+
+
+
+</head>
+<body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-200">
+    <!-- main header -->
+    <%- include('../include_Admin/header'); %>
+    <!-- main header end -->
+    <!-- main sidebar -->
+    <%- include('../include_admin/sidebar_switch'); %>
+    <!-- main sidebar end -->
+    <div id="page_content">
+        <div id="page_content_inner">
+
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-grid" data-uk-grid-margin="">
+                        <div class="uk-width-medium-8-10 ">
+                          <form class="uk-form-stacked" action="/admin/skormeja/filter" method="POST">
+                            <label for="kUI_datepicker_b" class="uk-form-label">Datepicker (months)</label>
+                            <input name="bulanTahun" id="kUI_datepicker_b" value="" />
+                            <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
+                                <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button>
+                            <!-- </div> -->
+                          </form>
+                        </div>
+                </div>
+
+            </div>
+
+
+            <div class="md-card uk-margin-medium-bottom">
+                <div class="md-card-content">
+                  <% if (rooms.length != 0) {%>
+                    <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Tanggal Piket</th>
+                                <th>Pemilik Meja</th>
+                                <th>Penemu</th>
+                                <th>Deskripsi</th>
+                                <th>Deadline</th>
+                                <th style="width: 30%;" >Foto</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <% rooms.forEach((room) => { %>
+                        <tr>
+                          <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.jadwal_piket.tanggal %></td>
+                          <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.meja.pengguna.nama %> </td>
+                          <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.jadwal_piket.nik_pic_piket.nama %></td>
+                          <td class="uk-text-large uk-text-nowrap"><a href="#"><%= room.deskripsi_sebelum%> </a></td>
+                          <td class="uk-text-large uk-text-nowrap"><%= room.deadline %> </td>
+
+
+                          <td class="uk-text-large uk-text-nowrap"> <img src="/<%= room.fotosebelum%>" alt=""> </td>
+
+
+
+                            <td class="uk-text-nowrap">
+                                <!-- <button  href="javascript:void(0);" class="btn edit"><i class="material-icons md-24"></i></button> -->
+                                <form onsubmit="return confirm('Are you sure?');" action="/admin/buktitemuan/delete" method="POST">
+                                    <input type="hidden" value="<%= room.id %>" name="buktiTemuanId">
+                                    <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                          <% }) %>
+                        </tbody>
+                    </table>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <!-- common functions -->
+    <script src="/assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="/assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="/assets/js/altair_admin_common.min.js"></script>
+    <%- include('../include_admin/datatables'); %>
+    <script src="/assets/js/kendoui_custom.min.js"></script>
+
+    <!--  kendoui functions -->
+    <script src="/assets/js/pages/kendoui.min.js"></script>
+
+
+
+
+    <script>
+        $(function() {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if(Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+
+        });
+
+
+    </script>
+
+
+</body>
+</html>

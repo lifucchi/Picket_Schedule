@@ -71,6 +71,9 @@ router.post('/skormeja/filter' , penilaianMejaController.getDataFilterPenilaianM
 router.get('/buktitemuanruang' , buktiTemuanController.getDataBuktiTemuanAdmin);
 router.post('/buktitemuan/delete' , buktiTemuanController.postDeleteBuktiTemuanRuang);
 
+router.get('/buktitemuanmeja' , buktiTemuanController.getDataBuktiTemuanMeja);
+
+
 
 
 

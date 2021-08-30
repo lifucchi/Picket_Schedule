@@ -36,10 +36,10 @@ exports.getDataPenilaianRuang= (req,res, next) => {
         {
           model: JadwalPiket,
           where: {persetujuan_fasil: 2},
-          include : {
+          include : [{
             model: Pengguna,
             as: 'nik_pic_piket',
-          }
+          }]
         },
         {
           model: Ruang

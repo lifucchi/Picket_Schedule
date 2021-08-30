@@ -17,6 +17,8 @@ const penilaianRuangController = require('../controllers/penilaianRuang');
 const penilaianMejaController = require('../controllers/penilaianMeja');
 
 
+const buktiTemuanController = require('../controllers/buktitemuan');
+
 
 // dashboard
 router.get('/' , adminController.getAdminDashboard );
@@ -42,8 +44,6 @@ router.post('/artikel/delete-artikel', artikelController.postDeleteArtikel);
 router.get('/artikel/edit' , artikelController.getFormUpdateArtikel );
 router.post('/artikel/update' , artikelController.postUpdateDataArtikel );
 
-
-
 // checklistruang
 router.get('/checklistruang',ruangController.getDataRuangAdmin);
 router.post('/checklistruang',ruangController.postAddDataRuang);
@@ -58,14 +58,20 @@ router.post('/checklistmejastandar',mejaController.postAddDataAllMeja );
 router.post('/checklistmeja/edit',mejaController.postEditMeja);
 router.post('/checklistmeja/delete-checklistmeja',mejaController.postDeleteMeja );
 
-// rekapitulasi
+// rekapitulasi ruang
 router.get('/skorruang' , penilaianRuangController.getDataPenilaianRuang );
 router.post('/skorruang/delete-skorruang' , penilaianRuangController.postDeletePenialaianRuang );
 router.post('/skorruang/filter' , penilaianRuangController.getDataFilterPenilaianRuang );
 
-
+// rekapitulasi meja
 router.get('/skormeja' , penilaianMejaController.getDataPenilaianMeja );
 router.post('/skormeja/filter' , penilaianMejaController.getDataFilterPenilaianMeja );
+
+// buktiTemuan
+router.get('/buktitemuanruang' , buktiTemuanController.getDataBuktiTemuanAdmin);
+router.post('/buktitemuan/delete' , buktiTemuanController.postDeleteBuktiTemuanRuang);
+
+
 
 
 

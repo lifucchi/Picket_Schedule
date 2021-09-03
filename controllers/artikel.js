@@ -56,7 +56,7 @@ exports.postUpdateDataArtikel = (req,res,next) =>{
   const judul = req.body.judul;
   const konten = req.body.konten;
   const pembuat = req.body.pembuat;
-  const image = req.files;
+  const image = req.files.image;
 
 
   Artikel.findByPk(id)
@@ -74,7 +74,7 @@ exports.postUpdateDataArtikel = (req,res,next) =>{
                   return;
                 }
               });
-              const imgUrl = image.path;
+              const imgUrl = image[0].path;
               artikel.judul = judul;
               artikel.konten = konten;
               artikel.pembuat = pembuat;

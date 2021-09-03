@@ -35,6 +35,7 @@ const fasilitatorRoutes = require('./routes/fasilitator');
 app.use(bodyPaser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/images",express.static(path.join(__dirname, 'images')));
+app.use("/excel",express.static(path.join(__dirname, 'excel')));
 
 // untuk imag
 const imageFilter = (req, file, cb) => {
@@ -47,13 +48,30 @@ const imageFilter = (req, file, cb) => {
     } else {
       cb("Please upload only images.", false);
     }
+  }else if(file.fieldname === "excel"){
+      if (
+        file.mimetype.includes("excel") ||
+        file.mimetype.includes("spreadsheetml")
+      ) {
+        cb(null, true);
+      } else {
+        cb("Please upload only excel file.", false);
+      }
+
   }
 };
 
 var fileStorage = multer.diskStorage({
+
   destination: (req, file, cb) => {
-    cb(null, "images/");
+    if (file.fieldname === "image") {
+      cb(null, "images/");
+    }else if( file.fieldname === "excel"){
+      cb(null, "excel/");
+    }
   },
+
+
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
   },

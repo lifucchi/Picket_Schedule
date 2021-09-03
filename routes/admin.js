@@ -35,6 +35,7 @@ router.get('/jadwalpiket/add' , jadwalPiketController.getFormJadwalPiket );
 router.post('/jadwalpiket/add' , jadwalPiketController.postAddDataJadwalPiket );
 router.post('/jadwalpiket/delete-jadwalpiket' , jadwalPiketController.postDeleteJadwalPiket );
 router.post('/jadwalpiket/edit' , jadwalPiketController.postEditJadwal );
+router.post('/jadwalpiket/import' , jadwalPiketController.postImportJadwal );
 
 // artikel
 router.get('/artikel' , artikelController.getDataArtikel );
@@ -66,6 +67,7 @@ router.post('/skorruang/filter' , penilaianRuangController.getDataFilterPenilaia
 // rekapitulasi meja
 router.get('/skormeja' , penilaianMejaController.getDataPenilaianMeja );
 router.post('/skormeja/filter' , penilaianMejaController.getDataFilterPenilaianMeja );
+router.post('/skorruang/delete-skormeja' , penilaianMejaController.postDeletePenialaianMeja );
 
 // buktiTemuan
 router.get('/buktitemuanruang' , buktiTemuanController.getDataBuktiTemuanAdmin);

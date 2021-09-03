@@ -213,6 +213,14 @@ kendoUI = {
                 format: "MMMM yyyy"
             });
         }
+				var $kUI_datepicker_c = $('#kUI_datepicker_c');
+				if($kUI_datepicker_c.length) {
+						$kUI_datepicker_c.kendoDatePicker({
+							start: "decade",
+							depth: "decade",
+								format: "yyyy"
+						});
+				}
     },
     datetimepicker_widget: function() {
         var $kUI_datetimepicker_a = $('#kUI_datetimepicker_basic');

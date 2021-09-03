@@ -86,8 +86,8 @@
 
                             <td class="uk-text-nowrap">
                                 <!-- <button  href="javascript:void(0);" class="btn edit"><i class="material-icons md-24"></i></button> -->
-                                <form onsubmit="return confirm('Are you sure?');" action="/admin/skorruang/delete-skorruang" method="POST">
-                                    <input type="hidden" value="<%= room.id %>" name="penilaianRuangId">
+                                <form onsubmit="return confirm('Are you sure?');" action="/admin/skorruang/delete-skormeja" method="POST">
+                                    <input type="hidden" value="<%= room.id %>" name="penilaianMejaId">
                                     <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
                                 </form>
                             </td>

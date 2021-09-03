@@ -7,6 +7,8 @@ const jadwalPiketController = require('../controllers/jadwalpiket');
 const isAuth = require('../middleware/is-auth');
 const mejaController = require('../controllers/meja');
 const ruangController = require('../controllers/ruang');
+const rekapitulasiController = require('../controllers/rekapitulasi');
+
 
 
 const router = express.Router();
@@ -34,5 +36,11 @@ router.get('/checklistruang/detail/:ruangId', isAuth,  ruangController.getDataRu
 router.post('/checklistruang/nilai', isAuth,  ruangController.postNilaiRuang);
 router.post('/checklistruang/bukti', isAuth,  ruangController.postBuktiTemuan);
 router.post('/checklistruang/postCheckPic', isAuth,  ruangController.postCheckPic);
+
+router.get('/rekapitulasi/ruang', rekapitulasiController.getDataRekapitulasiRuang);
+router.post('/rekapitulasi/ruang/filter-mingguan', rekapitulasiController.getDataRekapitulasiRuangFilterMingguan);
+router.get('/rekapitulasi/ruang/filter-mingguan', rekapitulasiController.getDataRekapitulasiRuangFilterMingguan);
+
+
 
 module.exports = router;

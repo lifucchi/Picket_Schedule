@@ -56,8 +56,7 @@ exports.postUpdateDataArtikel = (req,res,next) =>{
   const judul = req.body.judul;
   const konten = req.body.konten;
   const pembuat = req.body.pembuat;
-
-  const image = req.file;
+  const image = req.files;
 
 
   Artikel.findByPk(id)
@@ -105,10 +104,15 @@ exports.postAddDataArtikel = (req,res,next) => {
   const konten = req.body.konten;
   const pembuat = req.body.pembuat;
 
-  const image = req.file;
+  const image = req.files.image;
+
+
+  console.log(image[0]);
 
   if (image != null ){
-  const imgUrl = image.path;
+  const imgUrl = image[0].path;
+  console.log(imgUrl);
+
   Artikel.create({
     judul: judul,
     konten: konten,
@@ -118,6 +122,7 @@ exports.postAddDataArtikel = (req,res,next) => {
       res.redirect('/admin/artikel')
     ).catch(err => console.log(err));
   } else{
+    console.log("masuk sinikah");
     Artikel.create({
       judul: judul,
       konten: konten,

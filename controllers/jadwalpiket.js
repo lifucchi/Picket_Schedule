@@ -148,6 +148,14 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
   .catch(err => console.log(err));
 };
 
+
+exports.postImportJadwal = ( req,res, next) => {
+  console.log("masuk sini gal");
+  // const excel = req.file;
+  // console.log(excel);
+
+};
+
 exports.postDeleteJadwalPiket = ( req,res, next) => {
   const id = req.body.penggunaId;
   JadwalPiket.findByPk(id)

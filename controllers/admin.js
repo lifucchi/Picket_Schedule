@@ -29,7 +29,7 @@ exports.getAdminDashboard = (req,res) => {
    var prevMonth = moment(nowTanggal).subtract(1, 'months').endOf('month').format('MM');
    const tahun = moment(nowTanggal).format('YYYY');
 
-   console.log(prevMonth);
+   console.log(tahun);
 
   const mejaTerbaik = Penilaian_meja.findAll(
     {
@@ -164,8 +164,8 @@ exports.getAdminDashboard = (req,res) => {
           for(i = 0; i < count[0].length; i++){
 ;            count[0][i].bobotmeja = parseFloat(count[0][i].bobotmeja).toFixed(2);
           }
-          console.log(count[1]);
-          console.log(count[1].length);
+          console.log(count[0]);
+          console.log(count[0].length);
           // sum all
           let lantaiSatu = 0;
           for(i = 0; i < count[1].length; i++){

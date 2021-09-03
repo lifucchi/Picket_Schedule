@@ -21,7 +21,6 @@ const Bukti_temuan = require('./models/bukti_temuan');
 const Notifikasi = require('./models/notifikasi');
 const Penilaian_meja = require('./models/penilaian_meja');
 const Penilaian_ruang = require('./models/penilaian_ruang');
-const Penilaian = require('./models/penilaian');
 const Ruang = require('./models/ruang');
 const Meja = require('./models/meja');
 
@@ -37,15 +36,17 @@ app.use(bodyPaser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/images",express.static(path.join(__dirname, 'images')));
 
-
+// untuk imag
 const imageFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/png' ||
-      file.mimetype === 'image/jpg' ||
-      file.mimetype === 'image/jpeg'
-    ) {
-    cb(null, true);
-  } else {
-    cb("Please upload only images.", false);
+  if (file.fieldname === "image") {
+    if (file.mimetype === 'image/png' ||
+        file.mimetype === 'image/jpg' ||
+        file.mimetype === 'image/jpeg'
+      ) {
+      cb(null, true);
+    } else {
+      cb("Please upload only images.", false);
+    }
   }
 };
 
@@ -57,7 +58,48 @@ var fileStorage = multer.diskStorage({
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
-app.use(multer({storage : fileStorage, fileFilter: imageFilter}).single('image'));
+app.use(multer({storage : fileStorage, fileFilter: imageFilter}).fields(
+    [
+      {
+        name: 'excel',
+        maxCount: 1
+      },
+      {
+        name: 'image',
+        maxCount: 1
+      }
+    ]
+  ));
+
+
+// app.use("/excel",express.static(path.join(__dirname, 'excel')));
+
+// untuk file
+// const excelFilter = (req, file, cb) => {
+//   if (
+//     file.mimetype.includes("excel") ||
+//     file.mimetype.includes("spreadsheetml")
+//   ) {
+//     cb(null, true);
+//   } else {
+//     cb("Please upload only excel file.", false);
+//   }
+// };
+//
+// var storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "excel/");
+//   },
+//   filename: (req, file, cb) => {
+//     console.log(file.originalname);
+//     cb(null, `${Date.now()}-jadwalpiket-${file.originalname}`);
+//   },
+// });
+//
+// app.use(multer({storage : storage, fileFilter: excelFilter}).single('excel'));
+
+
+
 app.use(
   session({
     secret: 'my secret',
@@ -128,7 +170,7 @@ Jadwal_piket.hasMany(Penilaian_ruang);
 Penilaian_ruang.belongsTo(Jadwal_piket);
 
 // penilaian ruang -> bukti Temuan
-Bukti_temuan.belongsTo(Penilaian_ruang);
+Bukti_temuan.belongsTo(Penilaian_ruang, { onDelete:'CASCADE'});
 Penilaian_ruang.hasMany(Bukti_temuan);
 
 // meja --> penilaian meja <-- jadwal piket
@@ -147,7 +189,7 @@ Jadwal_piket.hasMany(Penilaian_meja);
 Penilaian_meja.belongsTo(Jadwal_piket);
 
 // penilaian meja -> bukti Temuan
-Bukti_temuan.belongsTo(Penilaian_meja);
+Bukti_temuan.belongsTo(Penilaian_meja, { onDelete:'CASCADE'});
 Penilaian_meja.hasMany(Bukti_temuan);
 // var job = new CronJob('0 0 0 * * *', function() {
 //  //will run every day at 12:00 AM

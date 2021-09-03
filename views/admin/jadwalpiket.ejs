@@ -16,15 +16,47 @@
 <div id="page_content">
     <div id="page_content_inner">
             <div class="uk-grid" data-uk-grid-margin="">
-                <div class="uk-width-medium-8-10 uk-row-first">
+                <div class="uk-width-medium-6-10 uk-row-first">
                       <h3 class="heading_b uk-margin-bottom"> <%= pageTitle%> </h3>
                 </div>
                 <div class="uk-width-medium-2-10">
+                      <a class="md-btn" data-uk-modal="{target:'#modal_header_footer'}">
+                          import excel
+                      </a>
+                </div>
+                <div class="uk-width-medium-2-10">
                       <a class="md-btn" href="/admin/jadwalpiket/add">
-                          Tambah <%= pageTitle%>
+                          Tambah 1 <%= pageTitle%>
                       </a>
                 </div>
             </div>
+
+            <div class="uk-width-medium-1-3">
+              <div class="uk-modal" id="modal_header_footer" aria-hidden="true" style="display: none; overflow-y: auto;">
+                  <div class="uk-modal-dialog" style="top: 164px;">
+                      <div class="uk-modal-header">
+                          <h3 class="uk-modal-title">Import Excel</h3>
+                      </div>
+                      <form class="" action="/admin/jadwalpiket/import" method="post" enctype="multipart/form-data">
+                        <div class="uk-grid">
+                            <div class="uk-width-1-1">
+                                <div class="uk-form-file md-btn md-btn-primary">
+                                    Select
+                                    <input name="excel" id="form-file" type="file" required>
+                                </div>
+                                File hanya mendukung .xlxx dan .csv
+                                <div class="uk-form-file uk-text-primary"> <a href="#" target="_blank" rel="noopener noreferrer">Contoh Input</a> </div>.
+                            </div>
+                          </div>
+                        <div class="uk-modal-footer uk-text-right">
+                            <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
+                            <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Import</button>
+                        </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+
             <% if (path === '/jadwalpiket') {%>
                   <div class="md-card uk-margin-medium-bottom">
                       <div class="md-card-content">

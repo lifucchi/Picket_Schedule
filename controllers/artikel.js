@@ -147,8 +147,6 @@ exports.postDeleteArtikel = ( req,res, next) => {
 
       if (oldPhoto) {
         const oldPath = path.join(__dirname, "..", oldPhoto);
-        console.log("INI PATH LAMA");
-        console.log(oldPath);
         if (fs.existsSync(oldPath)) {
           fs.unlink(oldPath, (err) => {
             if (err) {

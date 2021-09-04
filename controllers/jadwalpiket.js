@@ -8,6 +8,10 @@ const moment = require('moment');
 const Ruang = require('../models/ruang');
 const sequelize = require('../util/database');
 
+const readXlsxFile = require("read-excel-file/node");
+const path = require('path');
+fs = require('fs');
+
 
 // admin
 exports.getDataJadwalPiket = (req,res, next) => {
@@ -150,9 +154,175 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
 
 
 exports.postImportJadwal = ( req,res, next) => {
-  console.log("masuk sini gal");
-  // const excel = req.file;
-  // console.log(excel);
+  const excelFile = req.files.excel[0].path;
+  const oldPath = path.join(__dirname, "..", excelFile);
+
+  readXlsxFile(oldPath)
+  .then((rows) => {
+     // skip header
+     rows.shift();
+     let jadwals1 = [];
+     let jadwals2 = [];
+
+
+     rows.forEach((row) => {
+      let jadwalSatu = {
+        tanggal: row[0],
+        nikpicpiket: row[1],
+        nikpicfasil: row[2],
+      };
+      let jadwalDua = {
+        tanggal: row[0],
+        nikpicpiket: row[3],
+        nikpicfasil: row[4],
+      };
+      jadwals1.push(jadwalSatu);
+      jadwals2.push(jadwalDua);
+
+    });
+
+    JadwalPiket.bulkCreate(jadwals1)
+    .then( results => {
+      var penilaian = [];
+
+      Meja
+      .findAll({
+        include: [{
+              model: Pengguna,
+              where: {level: 1},
+          }]
+        })
+      .then(meja => {
+
+        results.forEach((result) => {
+          console.log("inimeja 1");
+          for (var j = 0; j < meja.length; j++){
+              var penObj = {
+                bobotmeja: 0,
+                persetujuanpicpiket: 2,
+                mejaId: meja[j].dataValues.id,
+                jadwalPiketId: result.dataValues.id
+              };
+              penilaian.push(penObj);
+          }
+
+        });
+
+          Penilaian_meja
+          .bulkCreate(penilaian)
+
+      });
+
+      Ruang.findAll({
+        include: [{
+              model: Pengguna,
+              where: {level: 1},
+
+          }]
+        }).then( ruang => {
+        var penilaianruang = [];
+        results.forEach((result) => {
+        for (var j = 0; j < ruang.length; j++){
+
+            var penObj = {
+              bobotruang: 0,
+              persetujuanpicpiket: 2,
+              ruangId: ruang[j].dataValues.id,
+              jadwalPiketId: result.dataValues.id
+            };
+            penilaianruang.push(penObj);
+        }
+      });
+
+        Penilaian_ruang
+        .bulkCreate(penilaianruang)
+
+      }).catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+
+// LEVEL 2
+    JadwalPiket.bulkCreate(jadwals2)
+    .then( results => {
+      var penilaian = [];
+
+      Meja
+      .findAll({
+        include: [{
+              model: Pengguna,
+              where: {level: 2},
+
+
+          }]
+        })
+      .then(meja => {
+
+        results.forEach((result) => {
+          console.log("inimeja 2");
+
+          for (var j = 0; j < meja.length; j++){
+              var penObj = {
+                bobotmeja: 0,
+                persetujuanpicpiket: 2,
+                mejaId: meja[j].dataValues.id,
+                jadwalPiketId: result.dataValues.id
+              };
+
+              penilaian.push(penObj);
+
+          }
+          console.log(penilaian.length);
+        });
+
+
+        Penilaian_meja
+        .bulkCreate(penilaian)
+
+
+
+      });
+
+      Ruang.findAll({
+        include: [{
+              model: Pengguna,
+              where: {level: 2},
+
+          }]
+        }).then( ruang => {
+        var penilaianruang = [];
+        results.forEach((result) => {
+          for (var j = 0; j < ruang.length; j++){
+
+            var penObj = {
+              bobotruang: 0,
+              persetujuanpicpiket: 2,
+              ruangId: ruang[j].dataValues.id,
+              jadwalPiketId: result.dataValues.id
+            };
+            penilaianruang.push(penObj);
+        }
+      });
+
+        Penilaian_ruang
+        .bulkCreate(penilaianruang)
+
+      }).catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+  })
+  .then( () => {
+      if (fs.existsSync(oldPath)) {
+        fs.unlink(oldPath, (err) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+        });
+      }
+    res.redirect('/admin/jadwalpiket');
+
+    }
+  ).catch(err => console.log(err));
 
 };
 

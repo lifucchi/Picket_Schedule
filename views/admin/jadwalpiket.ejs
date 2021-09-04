@@ -44,7 +44,7 @@
                                     Select
                                     <input name="excel" id="form-file" type="file" required>
                                 </div>
-                                File hanya mendukung .xlxx dan .csv
+                                File hanya mendukung .xlsx dan .csv
                                 <div class="uk-form-file uk-text-primary"> <a href="#" target="_blank" rel="noopener noreferrer">Contoh Input</a> </div>.
                             </div>
                           </div>
@@ -71,6 +71,7 @@
                                       <th>Level</th>
                                       <th>Persetujuan Fasil</th>
                                       <th>Status Piket</th>
+                                      <th>Rekam check</th>
 
                                       <th>Aksi</th>
                                   </tr>
@@ -92,10 +93,16 @@
 
                                 <% if (schedule.status_piket === 0) { %>
                                   <td><span class="uk-badge uk-badge-danger">Belum Piket</span></td>
+                                  <td>Belum Piket</td>
                                   <% } else if (schedule.status_piket === 1) { %>
-                                    <td><span class="uk-badge uk-badge-success">Sudah Piket</span></td>
+                                  <td><span class="uk-badge uk-badge-success">Sudah Piket</span></td>
+                                  <td><%= schedule.rekam_check%> </td>
+
                                 <% } else { %>
-                                  <td><span class="uk-badge uk-badge-info">Sudah Piket tapi Melewati Jadwal</span></td>
+                                  <td>Sudah Piket tapi Melewati Jadwal</td>
+                                  <td><%= schedule.rekam_check%> </td>
+
+
                                 <% } %>
 
 

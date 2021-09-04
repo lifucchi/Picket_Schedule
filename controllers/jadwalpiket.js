@@ -277,9 +277,6 @@ exports.postImportJadwal = ( req,res, next) => {
 
         Penilaian_meja
         .bulkCreate(penilaian)
-
-
-
       });
 
       Ruang.findAll({
@@ -302,7 +299,6 @@ exports.postImportJadwal = ( req,res, next) => {
             penilaianruang.push(penObj);
         }
       });
-
         Penilaian_ruang
         .bulkCreate(penilaianruang)
 
@@ -319,7 +315,7 @@ exports.postImportJadwal = ( req,res, next) => {
           }
         });
       }
-    res.redirect('/admin/jadwalpiket');
+    return res.redirect('/admin/jadwalpiket');
 
     }
   ).catch(err => console.log(err));

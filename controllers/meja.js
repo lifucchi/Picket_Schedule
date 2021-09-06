@@ -220,10 +220,10 @@ exports.postBuktiTemuan = (req,res, next) => {
   const id = req.body.mejaId;
   const tanggal = req.body.tanggal;
   const deskripsi = req.body.deskripsi;
-  const image = req.file;
+  const image = req.files.image;
 
   if (image != null ){
-    const imgUrl = image.path;
+    const imgUrl = image[0].path;
     Bukti_temuan.create(
       { fotosebelum:imgUrl,
         deskripsi_sebelum:deskripsi,

@@ -229,10 +229,10 @@ exports.postBuktiTemuan = (req,res, next) => {
   const id = req.body.ruangId;
   const tanggal = req.body.tanggal;
   const deskripsi = req.body.deskripsi;
-  const image = req.file;
+  const image = req.files.image;
 
   if (image != null ){
-    const imgUrl = image.path;
+    const imgUrl = image[0].path;
 
     console.log(imgUrl);
     console.log("tanggal " + tanggal);

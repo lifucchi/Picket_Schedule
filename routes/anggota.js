@@ -40,6 +40,10 @@ router.post('/checklistruang/postCheckPic', isAuth,  ruangController.postCheckPi
 router.get('/rekapitulasi/ruang', rekapitulasiController.getDataRekapitulasiRuang);
 router.post('/rekapitulasi/ruang/filter-mingguan', rekapitulasiController.getDataRekapitulasiRuangFilterMingguan);
 router.get('/rekapitulasi/ruang/filter-mingguan', rekapitulasiController.getDataRekapitulasiRuangFilterMingguan);
+router.post('/rekapitulasi/ruang/filter-bulanan', rekapitulasiController.getDataRekapitulasiRuangFilterBulanan);
+router.get('/rekapitulasi/ruang/filter-bulanan', rekapitulasiController.getDataRekapitulasiRuangFilterBulanan);
+router.post('/rekapitulasi/ruang/filter-tahunan', rekapitulasiController.getDataRekapitulasiRuangFilterTahunan);
+router.get('/rekapitulasi/ruang/filter-tahunan', rekapitulasiController.getDataRekapitulasiRuangFilterTahunan);
 
 
 

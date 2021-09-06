@@ -93,7 +93,7 @@ exports.getAdminDashboard = (req,res) => {
         ]},
       group : ['jadwalPiketId'],
       order: [
-          ['bobotruang', 'DESC'],
+            [[sequelize.literal('bobotruang'), 'DESC']],
       ],
     }
   )
@@ -131,7 +131,7 @@ exports.getAdminDashboard = (req,res) => {
         ]},
       group : ['jadwalPiketId'],
       order: [
-          ['bobotruang', 'DESC'],
+            [[sequelize.literal('bobotruang'), 'DESC']],
       ],
   }
   )

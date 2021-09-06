@@ -89,13 +89,9 @@ exports.getDataPenilaianRuang= (req,res, next) => {
 };
 exports.getDataFilterPenilaianRuang= (req,res, next) => {
   const bulanTahun = req.body.bulanTahun;
-  console.log(bulanTahun);
-  // console.log("edit");
   const tahun = moment(bulanTahun, "MMM-YYYY").format('YYYY');
   const bulan = moment(bulanTahun,  "MMM-YYYY").format('MM');
 
-  console.log(tahun);
-  console.log(bulan);
   let andOp = Op.and;
   const ruang = JadwalPiket.findAll(
     {

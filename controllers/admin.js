@@ -142,8 +142,6 @@ exports.getAdminDashboard = (req,res) => {
           console.log('**********COMPLETE RESULTS****************');
 
 ;         count[0][0].bobotmeja = parseFloat(count[0][0].bobotmeja).toFixed(2);
-          console.log(count[1]);
-
           // sum all
           let lantaiSatu = 0;
           for(i = 0; i < count[1].length; i++){

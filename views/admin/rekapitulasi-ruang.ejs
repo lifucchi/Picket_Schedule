@@ -64,7 +64,7 @@
 
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
-                  <% if (rooms2.length != 0) {%>
+                  <% if (rooms2 != 'undefined') {%>
                     <table id="dt_table" class="uk-table" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -109,12 +109,11 @@
 
                     </div>
 
-                  <% if (rooms.length != 0) { %>
+                  <% if (rooms[0] != 'undefined' && rooms[0]) { %>
                   <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
                       <thead>
                           <tr>
                               <th>Jadwal Piket</th>
-
                               <% for(var i = 0; i < rooms[0].penilaian_ruangs.length; i++) { %>
                                 <th><%= rooms[0].penilaian_ruangs[i].ruang.nama_ruang  %>
                                   (<%= (rooms[0].penilaian_ruangs[i].ruang.standar)%>)
@@ -155,7 +154,7 @@
                         </div>
 
                     </div>
-                  <% if (rooms3.length != 0) { %>
+                  <% if (rooms3[0] != 'undefined' && rooms3[0]) { %>
                   <table id="dt_individual_search" class="uk-table" cellspacing="0" width="100%">
                       <thead>
                           <tr>

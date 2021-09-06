@@ -119,6 +119,8 @@
 
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
+                  <% if (locals.rooms) { %>
+
                     <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -156,11 +158,15 @@
                           <% }) %>
                         </tbody>
                     </table>
+                    <% } %>
+
                 </div>
             </div>
 
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
+                  <% if (locals.room2) { %>
+
                     <table id="dt_default2" class="uk-table" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -194,6 +200,8 @@
                           <% }) %>
                         </tbody>
                     </table>
+                    <% } %>
+
                 </div>
             </div>
         </div>

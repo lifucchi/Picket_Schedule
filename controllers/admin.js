@@ -11,7 +11,6 @@ const { Op } = require("sequelize");;
 
 
 exports.getAdminDashboard = (req,res) => {
-  // res.send('<h1>hello admin</h1>')
   const nowTanggal = moment().format('YYYY-MM-DD');
   const nowTanggal2 = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
   JadwalPiket.findAll({
@@ -26,10 +25,8 @@ exports.getAdminDashboard = (req,res) => {
     }
   ]
 }).then(piket => {
-   var prevMonth = moment(nowTanggal).subtract(1, 'months').endOf('month').format('MM');
-   const tahun = moment(nowTanggal).format('YYYY');
-
-   console.log(tahun);
+  var prevMonth = moment(nowTanggal).subtract(1, 'months').endOf('month').format('MM');
+  const tahun = moment(nowTanggal).format('YYYY');
 
   const mejaTerbaik = Penilaian_meja.findAll(
     {
@@ -52,19 +49,14 @@ exports.getAdminDashboard = (req,res) => {
         }
       ],
       attributes: {
-        // 'bobotmeja',
-        // 'meja.JadwalPiketId',
-        // 'meja.jadwal_piket.tanggal',
-        // "skor",
         include: [
           [sequelize.literal('SUM(bobotmeja) / COUNT(bobotmeja)'), 'bobotmeja']
-          // [sequelize.fn('SUM', sequelize.col('bobotmeja')), 'bobotmeja'],
+
         ]},
       group : ['penggunaNik'],
       order: [
-          ['bobotmeja', 'DESC'],
+          [[sequelize.literal('bobotmeja'), 'DESC']],
       ],
-      // raw: true,
     }
   )
 
@@ -96,19 +88,13 @@ exports.getAdminDashboard = (req,res) => {
         }
       ],
       attributes: {
-        // 'bobotmeja',
-        // 'meja.JadwalPiketId',
-        // 'meja.jadwal_piket.tanggal',
-        // "skor",
         include: [
           [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
-          // [sequelize.fn('SUM', sequelize.col('bobotruang')), 'skor'],
         ]},
-      group : ['jadwalPiketId', 'jadwal_piket.nik_pic_piket.level'],
+      group : ['jadwalPiketId'],
       order: [
           ['bobotruang', 'DESC'],
       ],
-      // raw: true,
     }
   )
 
@@ -140,63 +126,42 @@ exports.getAdminDashboard = (req,res) => {
         }
       ],
       attributes: {
-        // 'bobotmeja',
-        // 'meja.JadwalPiketId',
-        // 'meja.jadwal_piket.tanggal',
-        // "skor",
-        include: [
+      include: [
           [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
-          // [sequelize.fn('SUM', sequelize.col('bobotruang')), 'skor'],
         ]},
-      group : ['jadwalPiketId', 'jadwal_piket.nik_pic_piket.level'],
+      group : ['jadwalPiketId'],
       order: [
           ['bobotruang', 'DESC'],
       ],
-      // raw: true,
-    }
+  }
   )
-
 
   Promise
       .all([mejaTerbaik,lantaiSatuTerbaik, lantaiDuaTerbaik])
       .then(count => {
           console.log('**********COMPLETE RESULTS****************');
-          for(i = 0; i < count[0].length; i++){
-;            count[0][i].bobotmeja = parseFloat(count[0][i].bobotmeja).toFixed(2);
-          }
-          console.log(count[0]);
-          console.log(count[0].length);
+
+;         count[0][0].bobotmeja = parseFloat(count[0][0].bobotmeja).toFixed(2);
+          console.log(count[1]);
+
           // sum all
           let lantaiSatu = 0;
           for(i = 0; i < count[1].length; i++){
-            // console.log("putaran" + i);
-            // console.log(count[1][i].bobotruang);
-            // console.log(count[1][i].jadwal_piket.nik_pic_piket.level);
             lantaiSatu = parseFloat(lantaiSatu) + parseFloat(count[1][i].bobotruang);
-            // console.log(lantaiSatu);
           }
           lantaiSatu = parseFloat(lantaiSatu) / parseFloat(count[1].length)
-          // console.log(lantaiSatu);
           let lantaiDua = 0;
           for(i = 0; i < count[2].length; i++){
-            // console.log("putaran" + i);
-            // console.log(count[2][i].bobotruang);
-            // console.log(count[2][i].jadwal_piket.nik_pic_piket.level);
             lantaiDua = parseFloat(lantaiDua) + parseFloat(count[2][i].bobotruang);
-            // console.log(lantaiDua);
           }
           lantaiDua = parseFloat(lantaiDua) / parseFloat(count[2].length)
-          // console.log(lantaiDua);
-
-          // mencari yang terbesar
           let lantaiTerbaik = [];
           if ( lantaiSatu > lantaiDua ){
-            lantaiTerbaik[0] = lantaiSatu;
+            lantaiTerbaik[0] = lantaiSatu.toFixed(2);
             lantaiTerbaik[1] = 1;
           } else{
-            lantaiTerbaik[0] = lantaiDua;
+            lantaiTerbaik[0] = lantaiDua.toFixed(2);
             lantaiTerbaik[1] = 2;
-
           }
 
 

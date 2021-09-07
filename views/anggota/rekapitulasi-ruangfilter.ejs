@@ -23,10 +23,13 @@
     <!-- altair admin -->
     <link rel="stylesheet" href="/assets/css/main.min.css" media="all">
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css" media="all">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css" media="all">
-
-
+    <!-- additional styles for plugins -->
+    <!-- metrics graphics (charts) -->
+    <link rel="stylesheet" href="/bower_components/metrics-graphics/dist/metricsgraphics.css">
+    <!-- c3.js (charts) -->
+    <link rel="stylesheet" href="/bower_components/c3js-chart/c3.min.css">
+    <!-- chartist -->
+    <link rel="stylesheet" href="/bower_components/chartist/dist/chartist.min.css">
 
 
 </head>
@@ -44,7 +47,7 @@
                 <div class="md-card-content">
                     <div class="uk-grid" data-uk-grid-margin="">
                         <div class="uk-width-medium-3-10 ">
-                          <form class="uk-form-stacked" action="/admin/skormeja/filter" method="POST">
+                          <form class="uk-form-stacked" action="/anggota/rekapitulasi/ruang/filter-mingguan" method="POST">
                             <label for="kUI_datepicker_a" class="uk-form-label">Mingguan</label>
                             <input name="tanggal" id="kUI_datepicker_a" value="" />
                             <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
@@ -53,7 +56,7 @@
                           </form>
                         </div>
                         <div class="uk-width-medium-3-10">
-                          <form class="uk-form-stacked" action="/admin/skormeja/filter" method="POST">
+                          <form class="uk-form-stacked" action="/anggota/rekapitulasi/ruang/filter-bulanan" method="POST">
                             <label for="kUI_datepicker_b" class="uk-form-label">Bulanan</label>
                             <input name="tanggal" id="kUI_datepicker_b" value="" />
                             <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
@@ -62,7 +65,7 @@
                           </form>
                         </div>
                         <div class="uk-width-medium-3-10 ">
-                          <form class="uk-form-stacked" action="/admin/skormeja/filter" method="POST">
+                          <form class="uk-form-stacked" action="/anggota/rekapitulasi/ruang/filter-tahunan" method="POST">
                             <label for="kUI_datepicker_c" class="uk-form-label">Tahunan</label>
                             <input name="tanggal" id="kUI_datepicker_c" value="" />
                             <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
@@ -74,57 +77,95 @@
             </div>
         </div>
 
-        <div class="md-card">
-            <div class="md-card-content">
-              <h2>Seluruh Lantai</h2>
-              <% if (rooms2.length != 0) {%>
-                <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th>Jadwal Piket</th>
-                            <th>Nama Ruang</th>
-                            <th>Standar</th>
-                            <th>Bobot Ruang</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      <% rooms2.forEach((room) => { %>
-                    <tr>
-                      <td class="uk-text-large uk-text-nowrap"><a href="#"><%= room.jadwal_piket.tanggal%> </a></td>
-                      <td class="uk-text-large uk-text-nowrap"><%= room.ruang.nama_ruang %> </td>
-                      <td class="uk-text-large uk-text-nowrap"><%= room.ruang.standar %> </td>
-                      <td class="uk-text-large uk-text-nowrap"><%= room.bobotruang %></td>
-                    </tr>
-                      <% }) %>
-                    </tbody>
-                </table>
-                <%}%>
-            </div>
-        </div>
 
+        <% if (path === '/mingguan') {%>
         <div class="md-card">
-            <div class="md-card-content">
-              <h2>Lantai 1</h2>
-              <% if (rooms2.length != 0) {%>
+          <div class="md-card-content">
+            <h2> <%= monday  %> sampai dengan <%= friday%> </h2>
 
-                <%}%>
+            <div class="uk-width-large-1">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <h4 class="heading_c uk-margin-bottom">Level 1</h4>
+                        <div id="chartist_ruang1_lines" class="chartist"></div>
+                    </div>
+                </div>
             </div>
+
+            <div class="uk-width-large-1">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+                        <div id="chartist_ruang2_lines" class="chartist"></div>
+                    </div>
+                </div>
+            </div>
+          </div>
         </div>
+        <% }%>
+
+        <% if (path === '/bulanan') {%>
 
         <div class="md-card">
-            <div class="md-card-content">
-              <h2>Lantai 2</h2>
-              <% if (rooms2.length != 0) {%>
-                
-                <%}%>
+          <div class="md-card-content">
+            <h2> <%= bulan  %>  </h2>
+
+            <div class="uk-width-large-1">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <h4 class="heading_c uk-margin-bottom">Level 1</h4>
+                        <div id="chartist_ruang1_lines_bulanan" class="chartist"></div>
+                    </div>
+                </div>
             </div>
+
+            <div class="uk-width-large-1">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+                        <div id="chartist_ruang2_lines_bulanan" class="chartist"></div>
+                    </div>
+                </div>
+            </div>
+          </div>
         </div>
+        <% }%>
+
+        <% if (path === '/tahunan') {%>
+
+        <div class="md-card">
+          <div class="md-card-content">
+            <h2> <%= tahun %> </h2>
+          <%if (locals.rooms1 && rooms1 != 'undefined') {%>
+            <div class="uk-width-large-1">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <h4 class="heading_c uk-margin-bottom">Level 1</h4>
+                        <div id="chartist_ruang1_lines_tahun" class="chartist"></div>
+                    </div>
+                </div>
+            </div>
+
+          <%}%>
+
+          <%if (locals.rooms2 && rooms1 != 'undefined') {%>
+
+            <div class="uk-width-large-1">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+                        <div id="chartist_ruang2_lines_tahun" class="chartist"></div>
+                    </div>
+                </div>
+            </div>
+            <%}%>
 
 
+          </div>
+        </div>
+        <% }%>
 
     </div>
-
-
 
     <!-- google web fonts -->
     <script>
@@ -153,11 +194,144 @@
     <script src="/assets/js/uikit_custom.min.js"></script>
     <!-- altair common functions/helpers -->
     <script src="/assets/js/altair_admin_common.min.js"></script>
-    <%- include('../include_admin/datatables'); %>
+
     <script src="/assets/js/kendoui_custom.min.js"></script>
 
     <!--  kendoui functions -->
     <script src="/assets/js/pages/kendoui.min.js"></script>
+
+    <!-- d3 -->
+    <!-- metrics graphics (charts) -->
+    <!-- chartist -->
+    <script src="/bower_components/chartist/dist/chartist.min.js"></script>
+
+    <script type="text/javascript">
+
+    $(function() {
+
+        // chartist
+        altair_charts.ruang_charts();
+    });
+
+    altair_charts = {
+
+      ruang_charts: function() {
+
+        var responsiveOptions = [
+            ['screen and (min-width: 641px) and (max-width: 1024px)', {
+              showPoint: false,
+              fullWidth: true,
+              chartPadding: {
+                  right: 40
+              },
+              axisX: {
+                labelInterpolationFnc: function(value) {
+                  // Will return Mon, Tue, Wed etc. on medium screens
+                  return value.slice(0, 3);
+                }
+              }
+            }],
+
+            ['screen and (max-width: 640px)', {
+              showLine: false,
+              fullWidth: true,
+              chartPadding: {
+                  right: 40
+              },
+              axisX: {
+                labelInterpolationFnc: function(value) {
+                  // Will return M, T, W etc. on small screens
+                  return value[0];
+                }
+              }
+            }]
+          ];
+          // simple lines
+          new Chartist.Line('#chartist_ruang1_lines', {
+            labels: [  <% rooms1.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
+
+
+              // labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+              series: [
+                  [<% rooms1.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
+              ]
+          }, {
+              fullWidth: true,
+              chartPadding: {
+                  right: 40
+              }
+          });
+
+          new Chartist.Line('#chartist_ruang2_lines', {
+            labels: [  <% rooms2.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
+
+              // labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+              series: [
+                  [<% rooms2.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
+              ]
+          }, {
+              fullWidth: true,
+              chartPadding: {
+                  right: 40
+              }
+          });
+
+          new Chartist.Line('#chartist_ruang1_lines_bulanan', {
+            labels: [  <% rooms1.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
+
+              // labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+              series: [
+                  [<% rooms1.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
+              ]
+          }, {
+              fullWidth: true,
+              chartPadding: {
+                  right: 40
+              }
+          });
+
+          new Chartist.Line('#chartist_ruang2_lines_bulanan', {
+            labels: [  <% rooms2.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
+
+              // labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+              series: [
+                  [<% rooms2.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
+              ]
+          }, {
+              fullWidth: true,
+              chartPadding: {
+                  right: 40
+              }
+          });
+
+          new Chartist.Line('#chartist_ruang1_lines_tahun', {
+            labels: [  <% rooms1.forEach((room) => { %>'<%=  room.dataValues.bulan %>',<% }) %>],
+            // labels: [  'Januari', 'Februari'],
+
+
+              // labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+              series: [
+                  [<% rooms1.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
+              ]
+          }, responsiveOptions);
+
+          new Chartist.Line('#chartist_ruang2_lines_tahun', {
+            labels: [  <% rooms2.forEach((room) => { %>'<%=  room.dataValues.bulan %>',<% }) %>],
+
+              // labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+              series: [
+                  [<% rooms2.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
+              ]
+          }, responsiveOptions);
+
+
+      }
+
+
+    };
+
+
+    </script>
 
 
 

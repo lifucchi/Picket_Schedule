@@ -1,0 +1,140 @@
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no"/>
+
+    <link rel="icon" type="image/png" href="/assets/img/logo5rsmart.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/img/logo5rsmart.png" sizes="32x32">
+
+    <title><%= pageTitle%></title>
+    <link rel="stylesheet" href="/bower_components/kendo-ui/styles/kendo.common-material.min.css"/>
+    <link rel="stylesheet" href="/bower_components/kendo-ui/styles/kendo.material.min.css"/>
+    <!-- uikit -->
+    <link rel="stylesheet" href="/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+
+    <!-- flag icons -->
+    <link rel="stylesheet" href="/assets/icons/flags/flags.min.css" media="all">
+
+    <!-- altair admin -->
+    <link rel="stylesheet" href="/assets/css/main.min.css" media="all">
+
+    <!-- additional styles for plugins -->
+    <!-- metrics graphics (charts) -->
+    <link rel="stylesheet" href="/bower_components/metrics-graphics/dist/metricsgraphics.css">
+    <!-- c3.js (charts) -->
+    <link rel="stylesheet" href="/bower_components/c3js-chart/c3.min.css">
+    <!-- chartist -->
+    <link rel="stylesheet" href="/bower_components/chartist/dist/chartist.min.css">
+
+
+</head>
+<body class="top_menu md-bg-grey-200">
+    <!-- main header -->
+    <%- include('header'); %>
+    <!-- main header end -->
+    <!-- main sidebar -->
+    <%- include('top_bar'); %>
+
+    <!-- main sidebar end -->
+    <div id="page_content">
+        <div id="page_content_inner">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-grid" data-uk-grid-margin="">
+                        <!-- <div class="uk-width-medium-3-10 "> -->
+                          <!-- <form class="uk-form-stacked" action="/anggota/rekapitulasi/ruang/filter-mingguan" method="POST"> -->
+                            <!-- <label for="kUI_datepicker_a" class="uk-form-label">Mingguan</label> -->
+                            <!-- <input name="tanggal" id="kUI_datepicker_a" value="" /> -->
+                            <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
+                                <!-- <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button> -->
+                            <!-- </div> -->
+                          <!-- </form> -->
+                        <!-- </div> -->
+                        <div class="uk-width-medium-3-10">
+                          <form class="uk-form-stacked" action="/anggota/rekapitulasi/meja/filter-bulanan" method="POST">
+                            <label for="kUI_datepicker_b" class="uk-form-label">Bulanan</label>
+                            <input name="tanggal" id="kUI_datepicker_b" value="" />
+                            <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
+                                <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button>
+                            <!-- </div> -->
+                          </form>
+                        </div>
+                        <!-- <div class="uk-width-medium-3-10 "> -->
+                          <!-- <form class="uk-form-stacked" action="/anggota/rekapitulasi/ruang/filter-tahunan" method="POST"> -->
+                            <!-- <label for="kUI_datepicker_c" class="uk-form-label">Tahunan</label> -->
+                            <!-- <input name="tanggal" id="kUI_datepicker_c" value="" /> -->
+                            <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
+                                <!-- <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button> -->
+                            <!-- </div> -->
+                          <!-- </form> -->
+                        <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <!-- common functions -->
+    <script src="/assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="/assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="/assets/js/altair_admin_common.min.js"></script>
+
+    <script src="/assets/js/kendoui_custom.min.js"></script>
+
+    <!--  kendoui functions -->
+    <script src="/assets/js/pages/kendoui.min.js"></script>
+
+    <!-- d3 -->
+    <!-- metrics graphics (charts) -->
+    <!-- chartist -->
+    <script src="/bower_components/chartist/dist/chartist.min.js"></script>
+
+
+
+
+
+
+    <script>
+        $(function() {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if(Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+
+        });
+
+
+    </script>
+
+
+</body>
+</html>

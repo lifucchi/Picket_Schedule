@@ -45,6 +45,13 @@ router.get('/rekapitulasi/ruang/filter-bulanan', rekapitulasiController.getDataR
 router.post('/rekapitulasi/ruang/filter-tahunan', rekapitulasiController.getDataRekapitulasiRuangFilterTahunan);
 router.get('/rekapitulasi/ruang/filter-tahunan', rekapitulasiController.getDataRekapitulasiRuangFilterTahunan);
 
+router.get('/rekapitulasi/meja', rekapitulasiController.getDataRekapitulasiMeja);
+router.post('/rekapitulasi/meja/filter-mingguan', rekapitulasiController.getDataRekapitulasiMejaFilterMingguan);
+router.get('/rekapitulasi/meja/filter-mingguan', rekapitulasiController.getDataRekapitulasiMejaFilterMingguan);
+router.post('/rekapitulasi/meja/filter-bulanan', rekapitulasiController.getDataRekapitulasiMejaFilterBulanan);
+router.get('/rekapitulasi/meja/filter-bulanan', rekapitulasiController.getDataRekapitulasiMejaFilterBulanan);
+router.post('/rekapitulasi/meja/filter-tahunan', rekapitulasiController.getDataRekapitulasiMejaFilterTahunan);
+router.get('/rekapitulasi/meja/filter-tahunan', rekapitulasiController.getDataRekapitulasiMejaFilterTahunan);
 
 
 module.exports = router;

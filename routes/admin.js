@@ -72,7 +72,6 @@ router.post('/skorruang/delete-skormeja' , penilaianMejaController.postDeletePen
 // buktiTemuan
 router.get('/buktitemuanruang' , buktiTemuanController.getDataBuktiTemuanAdmin);
 router.post('/buktitemuan/delete' , buktiTemuanController.postDeleteBuktiTemuanRuang);
-
 router.get('/buktitemuanmeja' , buktiTemuanController.getDataBuktiTemuanMeja);
 
 

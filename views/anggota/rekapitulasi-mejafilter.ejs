@@ -89,11 +89,13 @@
                 </div>
             </div> -->
 
-            <div class="uk-width-large-1">
-                <div class="md-card">
-                    <div class="md-card-content">
+            <div class="uk-width-large-1" >
+                <div class="md-card"  >
+                    <div class="md-card-content" >
                         <h4 class="heading_c uk-margin-bottom">Gabungan</h4>
-                        <div id="chartist_meja_lines_bulanan" class="chartist"></div>
+                        <div style="overflow-x: scroll;">
+                          <div style="width:400vh; height:500px;"  id="chartist_meja_lines_bulanan" class="chartist"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -209,8 +211,8 @@
           // simple lines
 
           new Chartist.Line('#chartist_meja_lines_bulanan', {
-            labels: [  <% rooms1.forEach((room) => { %>'<%=  room.meja.pengguna.nik %>',<% }) %>
-                        <% rooms2.forEach((room) => { %>'<%=  room.meja.pengguna.nik %>',<% }) %>],
+            labels: [  <% rooms1.forEach((room) => { %>'<%=  room.meja.pengguna.nama %>',<% }) %>
+                        <% rooms2.forEach((room) => { %>'<%=  room.meja.pengguna.nama %>',<% }) %>],
 
               // labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
               series: [

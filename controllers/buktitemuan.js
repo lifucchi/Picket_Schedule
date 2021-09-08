@@ -6,7 +6,10 @@ const Penilaian_ruang = require('../models/penilaian_ruang');
 const Penilaian_meja = require('../models/penilaian_meja');
 const JadwalPiket = require('../models/jadwal_piket');
 const Bukti_temuan = require('../models/bukti_temuan');
-const { Op } = require("sequelize");
+
+const sequelize = require('../util/database');
+var Sequelize = require('sequelize')
+var Op = Sequelize.Op
 
 // Admin Ruang
 exports.getDataBuktiTemuanAdmin= (req,res, next) => {
@@ -38,11 +41,76 @@ exports.getDataBuktiTemuanAdmin= (req,res, next) => {
       .all([buktiTemuan])
       .then(hasil => {
           console.log('**********COMPLETE RESULTS****************');
-          console.log(hasil[0]);
           res.render('./admin/buktitemuanruang', {
             rooms: hasil[0],
             pageTitle: 'Bukti Temuan Ruang',
-            // path: '/checklistruang'
+          });
+
+      })
+      .catch(err => {
+          console.log('**********ERROR RESULT****************');
+          console.log(err);
+      });
+};
+
+exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
+  const bulanTahun = req.body.bulanTahun;
+  const kategori = req.body.kategori;
+  const tahun = moment(bulanTahun, "MMM-YYYY").format('YYYY');
+  const bulan = moment(bulanTahun,  "MMM-YYYY").format('MM');
+  console.log("ini bulantahun");
+  console.log(bulanTahun);
+  let setuju = 0;
+  if (kategori === 'on'){
+    setuju = 1;
+  }else{
+    setuju = 2;
+  }
+
+  const buktiTemuan = Bukti_temuan
+                      .findAll(
+                        {
+                          where: { tinjak_lanjut: setuju,
+                                    penilaianMejaId: {
+                                    [Op.is]: null,
+                                  }
+                                },
+                          include: [
+                        {
+                          model: Penilaian_ruang,
+                          include : [
+                            {model: Ruang},
+                            {
+                              model: JadwalPiket,
+                              where: {
+                                [Op.and]:
+                                [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
+                                {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
+                                {persetujuan_fasil:2}],
+                              },
+                              include : {
+                                model: Pengguna,
+                                as: 'nik_pic_piket',
+                              }
+                            }
+                          ],
+                          required: true
+                        }]
+                      }
+                    );
+
+
+
+  Promise
+      .all([buktiTemuan])
+      .then(hasil => {
+          console.log('**********COMPLETE RESULTS****************');
+          // console.log(hasil[0]);
+          console.log(hasil[0].length);
+
+          res.render('./admin/buktitemuanruang', {
+            rooms: hasil[0],
+            pageTitle: 'Bukti Temuan Ruang',
           });
 
       })

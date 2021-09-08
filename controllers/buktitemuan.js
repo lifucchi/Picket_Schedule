@@ -17,6 +17,11 @@ exports.getDataBuktiTemuanAdmin= (req,res, next) => {
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
+                          where: {
+                                    penilaianMejaId: {
+                                    [Op.is]: null,
+                                  }
+                                },
                           include: [
                         {
                           model: Penilaian_ruang,
@@ -58,8 +63,6 @@ exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
   const kategori = req.body.kategori;
   const tahun = moment(bulanTahun, "MMM-YYYY").format('YYYY');
   const bulan = moment(bulanTahun,  "MMM-YYYY").format('MM');
-  console.log("ini bulantahun");
-  console.log(bulanTahun);
   let setuju = 0;
   if (kategori === 'on'){
     setuju = 1;
@@ -106,7 +109,7 @@ exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
       .then(hasil => {
           console.log('**********COMPLETE RESULTS****************');
           // console.log(hasil[0]);
-          console.log(hasil[0].length);
+
 
           res.render('./admin/buktitemuanruang', {
             rooms: hasil[0],
@@ -128,8 +131,21 @@ exports.postDeleteBuktiTemuanRuang = ( req,res, next) => {
       return hasil.destroy();
     })
     .then(result => {
-      console.log('DESTROYED BUKTI');
       res.redirect('/admin/buktiTemuanruang');
+    })
+    .catch(err => console.log(err));
+
+};
+
+exports.postDeleteBuktiTemuanMeja = ( req,res, next) => {
+  const id = req.body.buktiTemuanId;
+  console.log(id);
+  Bukti_temuan.findByPk(id)
+    .then(hasil => {
+      return hasil.destroy();
+    })
+    .then(result => {
+      res.redirect('/admin/buktiTemuanmeja');
     })
     .catch(err => console.log(err));
 
@@ -140,9 +156,16 @@ exports.postDeleteBuktiTemuanRuang = ( req,res, next) => {
 
 exports.getDataBuktiTemuanMeja= (req,res, next) => {
 
+
+
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
+                          where: {
+                                    penilaianRuangId: {
+                                    [Op.is]: null,
+                                  }
+                                },
                           include: [
                         {
                           model: Penilaian_meja,
@@ -155,7 +178,6 @@ exports.getDataBuktiTemuanMeja= (req,res, next) => {
                             },
                             {
                               model: JadwalPiket,
-                              where: {persetujuan_fasil: 2},
                               include : {
                                 model: Pengguna,
                                 as: 'nik_pic_piket',
@@ -172,7 +194,74 @@ exports.getDataBuktiTemuanMeja= (req,res, next) => {
       .all([buktiTemuan])
       .then(hasil => {
           console.log('**********COMPLETE RESULTS****************');
-          console.log(hasil[0]);
+          res.render('./admin/buktitemuanmeja', {
+            rooms: hasil[0],
+            pageTitle: 'Bukti Temuan Meja',
+            // path: '/checklistruang'
+          });
+
+      })
+      .catch(err => {
+          console.log('**********ERROR RESULT****************');
+          console.log(err);
+      });
+};
+
+exports.getDataBuktiTemuanMejaFilter= (req,res, next) => {
+
+  const bulanTahun = req.body.bulanTahun;
+  const kategori = req.body.kategori;
+  const tahun = moment(bulanTahun, "MMM-YYYY").format('YYYY');
+  const bulan = moment(bulanTahun,  "MMM-YYYY").format('MM');
+  let setuju = 0;
+  if (kategori === 'on'){
+    setuju = 1;
+  }else{
+    setuju = 2;
+  }
+
+  const buktiTemuan = Bukti_temuan
+                      .findAll(
+                        {
+                          where: {tinjak_lanjut: setuju,
+                                    penilaianRuangId: {
+                                    [Op.is]: null,
+                                  }
+                                },
+                          include: [
+                        {
+                          model: Penilaian_meja,
+                          include : [
+                            {
+                              model: Meja,
+                              include : {
+                                model: Pengguna,
+                              }
+                            },
+                            {
+                              model: JadwalPiket,
+                              where: {
+                                [Op.and]:
+                                [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
+                                {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
+                                {persetujuan_fasil:2}],
+                              },
+                              include : {
+                                model: Pengguna,
+                                as: 'nik_pic_piket',
+                              }
+                            }
+                          ],
+                          required: true
+                        }]
+                      }
+                    );
+
+
+  Promise
+      .all([buktiTemuan])
+      .then(hasil => {
+          console.log('**********COMPLETE RESULTS****************');
           res.render('./admin/buktitemuanmeja', {
             rooms: hasil[0],
             pageTitle: 'Bukti Temuan Meja',

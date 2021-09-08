@@ -40,23 +40,29 @@
     <div id="page_content">
         <div id="page_content_inner">
 
+          <div class="md-card">
+              <div class="md-card-content">
+                <form  action="/admin/buktitemuanmeja/filter" method="POST">
+                  <div class="uk-grid" data-uk-grid-margin="">
+                      <div class="uk-width-medium-3-10">
+                        <label for="kUI_datepicker_b" class="uk-form-label">Datepicker (months)</label>
+                        <input name="bulanTahun" id="kUI_datepicker_b" value="" />
+                      </div>
+                      <div class="uk-width-medium-1-10">
+                          <div class="uk-margin-top uk-text-nowrap">
+                              <input type="checkbox" name="kategori" id="product_search_active" data-md-icheck/>
+                              <label for="product_search_active" class="inline-label">Sudah Tinjak Lanjut</label>
+                          </div>
+                      </div>
+                      <div class="uk-width-medium-2-10 uk-text-center">
+                            <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+
             <div class="md-card">
-                <div class="md-card-content">
-                    <div class="uk-grid" data-uk-grid-margin="">
-                        <div class="uk-width-medium-8-10 ">
-                          <form class="uk-form-stacked" action="/admin/skormeja/filter" method="POST">
-                            <label for="kUI_datepicker_b" class="uk-form-label">Datepicker (months)</label>
-                            <input name="bulanTahun" id="kUI_datepicker_b" value="" />
-                            <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
-                                <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button>
-                            <!-- </div> -->
-                          </form>
-                        </div>
-                </div>
-
-            </div>
-
-
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
                   <% if (rooms.length != 0) {%>
@@ -80,15 +86,10 @@
                           <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.jadwal_piket.nik_pic_piket.nama %></td>
                           <td class="uk-text-large uk-text-nowrap"><a href="#"><%= room.deskripsi_sebelum%> </a></td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.deadline %> </td>
-
-
                           <td class="uk-text-large uk-text-nowrap"> <img src="/<%= room.fotosebelum%>" alt=""> </td>
-
-
-
                             <td class="uk-text-nowrap">
                                 <!-- <button  href="javascript:void(0);" class="btn edit"><i class="material-icons md-24"></i></button> -->
-                                <form onsubmit="return confirm('Are you sure?');" action="/admin/buktitemuan/delete" method="POST">
+                                <form onsubmit="return confirm('Are you sure?');" action="/admin/buktitemuanmeja/delete" method="POST">
                                     <input type="hidden" value="<%= room.id %>" name="buktiTemuanId">
                                     <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
                                 </form>

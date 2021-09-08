@@ -76,6 +76,10 @@ router.post('/buktitemuanruang/filter' , buktiTemuanController.getDataBuktiTemua
 
 
 router.get('/buktitemuanmeja' , buktiTemuanController.getDataBuktiTemuanMeja);
+router.post('/buktitemuanmeja/delete' , buktiTemuanController.postDeleteBuktiTemuanMeja);
+router.post('/buktitemuanmeja/filter' , buktiTemuanController.getDataBuktiTemuanMejaFilter);
+
+
 
 
 

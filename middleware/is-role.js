@@ -1,8 +1,12 @@
 module.exports = function(role) {
    return function (req, res, next) {
-     if (req.session.user.role !== role) {
+     console.log("ini role");
+     console.log(role);
+     console.log("ini user");
+     console.log(req.session.user.peran);
+     if (req.session.user.peran !== role) {
        res.status(401);
-       return res.send('Not Allowed');
+       return  res.render('./error/error_404', { pageTitle: 'Not Allowed' });
      }
      next();
    }

@@ -1,3 +1,7 @@
 exports.get404 = (req, res, next) => {
-  res.status(404).render('./error/error_404', { pageTitle: 'Page Not Found' });
+  res.status(404).render('./error/error_404', { pageTitle: 'The requested URL was not found on this server.' });
 };
+
+// exports.get401 = (req, res, next) => {
+//   res.status(401).render('./error/error_404', { pageTitle: 'Not Allowed' });
+// };

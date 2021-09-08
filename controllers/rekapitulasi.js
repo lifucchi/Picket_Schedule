@@ -29,21 +29,25 @@ exports.getDataRekapitulasiRuang = (req,res) => {
   var friday = tanggal2.clone().weekday(5).format("YYYY-MM-DD");
 
   console.log('**********COMPLETE RESULTS****************');
-  const hasil = []
-  res.render('./anggota/rekapitulasi-ruang', {
-    pageTitle: 'Rekapitulasi',
-    monday: monday,
-    friday: friday,
-    path: '/'
 
-  })
+  if(req.session.user.peran === 'Anggota') {
+    res.render('./anggota/rekapitulasi-ruang', {
+      pageTitle: 'Rekapitulasi',
+      monday: monday,
+      friday: friday,
+      path: '/'
 
-          // })
-          // .catch(err => {
-          //     console.log('**********ERROR RESULT****************');
-          //     console.log(err);
-          // });
+    })
 
+  }else if(req.session.user.peran === 'Fasilitator'){
+    res.render('./fasilitator/rekapitulasi-ruang', {
+      pageTitle: 'Rekapitulasi',
+      monday: monday,
+      friday: friday,
+      path: '/'
+
+    })
+  }
 };
 
 exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
@@ -115,6 +119,8 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
           .all([ruang1, ruang2])
           .then(hasil => {
               console.log('**********COMPLETE RESULTS****************');
+
+            if(req.session.user.peran === 'Anggota') {
               res.render('./anggota/rekapitulasi-ruangfilter', {
                 pageTitle: 'Rekapitulasi',
                 path: '/mingguan',
@@ -123,6 +129,19 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
                 monday: monday,
                 friday: friday,
               })
+
+            }else if(req.session.user.peran === 'Fasilitator'){
+              res.render('./fasilitator/rekapitulasi-ruangfilter', {
+                pageTitle: 'Rekapitulasi',
+                path: '/mingguan',
+                rooms1: hasil[0],
+                rooms2: hasil[1],
+                monday: monday,
+                friday: friday,
+              })
+
+            }
+
 
           })
           .catch(err => {
@@ -200,13 +219,27 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
           .all([ruang1, ruang2])
           .then(hasil => {
               console.log('**********COMPLETE RESULTS****************');
-              res.render('./anggota/rekapitulasi-ruangfilter', {
-                pageTitle: 'Rekapitulasi',
-                path: '/bulanan',
-                rooms1: hasil[0],
-                rooms2: hasil[1],
-                bulan: bulanTahun
-              })
+
+              if(req.session.user.peran === 'Anggota') {
+                res.render('./anggota/rekapitulasi-ruangfilter', {
+                  pageTitle: 'Rekapitulasi',
+                  path: '/bulanan',
+                  rooms1: hasil[0],
+                  rooms2: hasil[1],
+                  bulan: bulanTahun
+                })
+
+              }else if(req.session.user.peran === 'Fasilitator'){
+                res.render('./fasilitator/rekapitulasi-ruangfilter', {
+                  pageTitle: 'Rekapitulasi',
+                  path: '/bulanan',
+                  rooms1: hasil[0],
+                  rooms2: hasil[1],
+                  bulan: bulanTahun
+                })
+
+              }
+
 
           })
           .catch(err => {
@@ -284,17 +317,26 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
           .then(hasil => {
               console.log('**********COMPLETE RESULTS****************');
 
-              // console.log(hasil[1][0]);
+              if(req.session.user.peran === 'Anggota') {
+                res.render('./anggota/rekapitulasi-ruangfilter', {
+                  pageTitle: 'Rekapitulasi',
+                  path: '/tahunan',
+                  rooms1: hasil[0],
+                  rooms2: hasil[1],
+                  tahun: tahun,
+                })
 
-              console.log("==========");
-              // console.log(hasil[1]);
-              res.render('./anggota/rekapitulasi-ruangfilter', {
-                pageTitle: 'Rekapitulasi',
-                path: '/tahunan',
-                rooms1: hasil[0],
-                rooms2: hasil[1],
-                tahun: tahun,
-              })
+              }else if(req.session.user.peran === 'Fasilitator'){
+                res.render('./fasilitator/rekapitulasi-ruangfilter', {
+                  pageTitle: 'Rekapitulasi',
+                  path: '/tahunan',
+                  rooms1: hasil[0],
+                  rooms2: hasil[1],
+                  tahun: tahun,
+                })
+
+              }
+
 
           })
           .catch(err => {
@@ -319,103 +361,27 @@ exports.getDataRekapitulasiMeja = (req,res) => {
   var monday = tanggal2.clone().weekday(1).format("YYYY-MM-DD");
   var friday = tanggal2.clone().weekday(5).format("YYYY-MM-DD");
 
-  console.log('**********COMPLETE RESULTS****************');
-  const hasil = []
-  res.render('./anggota/rekapitulasi-meja', {
-    pageTitle: 'Rekapitulasi',
-    monday: monday,
-    friday: friday,
-    path: '/'
+  if(req.session.user.peran === 'Anggota') {
+    res.render('./anggota/rekapitulasi-meja', {
+      pageTitle: 'Rekapitulasi',
+      monday: monday,
+      friday: friday,
+      path: '/'
+    })
 
-  })
+  }else if(req.session.user.peran === 'Fasilitator'){
+    res.render('./fasilitator/rekapitulasi-meja', {
+      pageTitle: 'Rekapitulasi',
+      monday: monday,
+      friday: friday,
+      path: '/'
+    })
 
-};
+  }
 
-exports.getDataRekapitulasiMejaFilterMingguan = (req,res) => {
-
-  const tanggal = req.body.tanggal;
-  const tanggal2 = moment(tanggal, "DD-MM-YYYY");
-  var monday = tanggal2.clone().weekday(1).format("YYYY-MM-DD");
-  var friday = tanggal2.clone().weekday(5).format("YYYY-MM-DD");
-
-  const ruang1 = Penilaian_ruang.findAll(
-    {
-      include:[
-        {
-          model: JadwalPiket,
-          where: {
-            persetujuan_fasil:2,
-            tanggal: {
-              [Op.between]: [monday, friday]
-            }
-          },
-          include : [{
-            model: Pengguna,
-            as: 'nik_pic_piket',
-            where: { level: 1}
-          }]
-        },
-        {
-          model: Ruang
-        }
-      ],
-      attributes: {
-      include: [
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
-        ]},
-      group : ['jadwalPiketId'],
-    }
-  );
-
-  const ruang2 = Penilaian_ruang.findAll(
-    {
-      include:[
-        {
-          model: JadwalPiket,
-          where: {
-            persetujuan_fasil:2,
-            tanggal: {
-              [Op.between]: [monday, friday]
-            }
-          },
-          include : [{
-            model: Pengguna,
-            as: 'nik_pic_piket',
-            where: { level: 2}
-          }]
-        },
-        {
-          model: Ruang
-        }
-      ],
-      attributes: {
-      include: [
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
-        ]},
-      group : ['jadwalPiketId'],
-    }
-  );
-
-      Promise
-          .all([ruang1, ruang2])
-          .then(hasil => {
-              console.log('**********COMPLETE RESULTS****************');
-              res.render('./anggota/rekapitulasi-ruang', {
-                pageTitle: 'Rekapitulasi',
-                path: '/mingguan',
-                rooms1: hasil[0],
-                rooms2: hasil[1],
-                monday: monday,
-                friday: friday,
-              })
-
-          })
-          .catch(err => {
-              console.log('**********ERROR RESULT****************');
-              console.log(err);
-          });
 
 };
+
 
 exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
 
@@ -497,6 +463,8 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
           .all([meja1, meja2])
           .then(hasil => {
               console.log('**********COMPLETE RESULTS****************');
+
+            if(req.session.user.peran === 'Anggota') {
               res.render('./anggota/rekapitulasi-mejafilter', {
                 pageTitle: 'Rekapitulasi',
                 path: '/bulanan',
@@ -505,93 +473,16 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
                 bulan: bulanTahun
               })
 
-          })
-          .catch(err => {
-              console.log('**********ERROR RESULT****************');
-              console.log(err);
-          });
-
-};
-
-exports.getDataRekapitulasiMejaFilterTahunan = (req,res) => {
-
-  const bulanTahun = req.body.tanggal;
-  const tahun = moment(bulanTahun, "MMM-YYYY").format('YYYY');
-
-  const ruang1 = Penilaian_ruang.findAll(
-    {
-      include:[
-        {
-          model: JadwalPiket,
-          where: {
-            [Op.and]:
-            [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
-            {persetujuan_fasil:2}],
-          },
-          include : [{
-            model: Pengguna,
-            as: 'nik_pic_piket',
-            where: { level: 1}
-          }]
-        },
-        {
-          model: Ruang
-        }
-      ],
-      attributes: {
-      include: [
-          [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan'],
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
-        ]},
-        group: [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan']
-    }
-  );
-
-  const ruang2 = Penilaian_ruang.findAll(
-    {
-      include:[
-        {
-          model: JadwalPiket,
-          where: {
-            [Op.and]:
-            [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
-            {persetujuan_fasil:2}],
-          },
-          include : [{
-            model: Pengguna,
-            as: 'nik_pic_piket',
-            where: { level: 2}
-          }]
-        },
-        {
-          model: Ruang
-        }
-      ],
-      attributes: {
-      include: [
-          [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan'],
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
-        ]},
-        group: [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan']
-    }
-  );
-
-      Promise
-          .all([ruang1, ruang2])
-          .then(hasil => {
-              console.log('**********COMPLETE RESULTS****************');
-
-              // console.log(hasil[1][0]);
-
-              console.log("==========");
-              // console.log(hasil[1]);
-              res.render('./anggota/rekapitulasi-ruang', {
+            }else if(req.session.user.peran === 'Fasilitator'){
+              res.render('./fasilitator/rekapitulasi-mejafilter', {
                 pageTitle: 'Rekapitulasi',
-                path: '/tahunan',
+                path: '/bulanan',
                 rooms1: hasil[0],
                 rooms2: hasil[1],
-                tahun: tahun,
+                bulan: bulanTahun
               })
+            }
+
 
           })
           .catch(err => {

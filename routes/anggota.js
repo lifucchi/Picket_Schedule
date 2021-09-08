@@ -37,21 +37,18 @@ router.post('/checklistruang/nilai', isAuth,  ruangController.postNilaiRuang);
 router.post('/checklistruang/bukti', isAuth,  ruangController.postBuktiTemuan);
 router.post('/checklistruang/postCheckPic', isAuth,  ruangController.postCheckPic);
 
-router.get('/rekapitulasi/ruang', rekapitulasiController.getDataRekapitulasiRuang);
-router.post('/rekapitulasi/ruang/filter-mingguan', rekapitulasiController.getDataRekapitulasiRuangFilterMingguan);
-router.get('/rekapitulasi/ruang/filter-mingguan', rekapitulasiController.getDataRekapitulasiRuangFilterMingguan);
-router.post('/rekapitulasi/ruang/filter-bulanan', rekapitulasiController.getDataRekapitulasiRuangFilterBulanan);
-router.get('/rekapitulasi/ruang/filter-bulanan', rekapitulasiController.getDataRekapitulasiRuangFilterBulanan);
-router.post('/rekapitulasi/ruang/filter-tahunan', rekapitulasiController.getDataRekapitulasiRuangFilterTahunan);
-router.get('/rekapitulasi/ruang/filter-tahunan', rekapitulasiController.getDataRekapitulasiRuangFilterTahunan);
+router.get('/rekapitulasi/ruang', isAuth, rekapitulasiController.getDataRekapitulasiRuang);
+router.post('/rekapitulasi/ruang/filter-mingguan', isAuth,  rekapitulasiController.getDataRekapitulasiRuangFilterMingguan);
+router.get('/rekapitulasi/ruang/filter-mingguan', isAuth,  rekapitulasiController.getDataRekapitulasiRuangFilterMingguan);
+router.post('/rekapitulasi/ruang/filter-bulanan', isAuth, rekapitulasiController.getDataRekapitulasiRuangFilterBulanan);
+router.get('/rekapitulasi/ruang/filter-bulanan', isAuth, rekapitulasiController.getDataRekapitulasiRuangFilterBulanan);
+router.post('/rekapitulasi/ruang/filter-tahunan', isAuth, rekapitulasiController.getDataRekapitulasiRuangFilterTahunan);
+router.get('/rekapitulasi/ruang/filter-tahunan', isAuth, rekapitulasiController.getDataRekapitulasiRuangFilterTahunan);
 
-router.get('/rekapitulasi/meja', rekapitulasiController.getDataRekapitulasiMeja);
-router.post('/rekapitulasi/meja/filter-mingguan', rekapitulasiController.getDataRekapitulasiMejaFilterMingguan);
-router.get('/rekapitulasi/meja/filter-mingguan', rekapitulasiController.getDataRekapitulasiMejaFilterMingguan);
-router.post('/rekapitulasi/meja/filter-bulanan', rekapitulasiController.getDataRekapitulasiMejaFilterBulanan);
-router.get('/rekapitulasi/meja/filter-bulanan', rekapitulasiController.getDataRekapitulasiMejaFilterBulanan);
-router.post('/rekapitulasi/meja/filter-tahunan', rekapitulasiController.getDataRekapitulasiMejaFilterTahunan);
-router.get('/rekapitulasi/meja/filter-tahunan', rekapitulasiController.getDataRekapitulasiMejaFilterTahunan);
+router.get('/rekapitulasi/meja', isAuth, rekapitulasiController.getDataRekapitulasiMeja);
+router.post('/rekapitulasi/meja/filter-bulanan', isAuth,  rekapitulasiController.getDataRekapitulasiMejaFilterBulanan);
+router.get('/rekapitulasi/meja/filter-bulanan', isAuth, rekapitulasiController.getDataRekapitulasiMejaFilterBulanan);
+
 
 
 module.exports = router;

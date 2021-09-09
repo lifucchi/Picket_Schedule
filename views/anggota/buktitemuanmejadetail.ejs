@@ -44,20 +44,6 @@
     <div id="page_content">
 
         <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
-            <!-- <div class="heading_actions">
-                <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Archive"><i class="md-icon material-icons">&#xE149;</i></a>
-                <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Print"><i class="md-icon material-icons">&#xE8AD;</i></a>
-                <div data-uk-dropdown>
-                    <i class="md-icon material-icons">&#xE5D4;</i>
-                    <div class="uk-dropdown uk-dropdown-small">
-                        <ul class="uk-nav">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Other Action</a></li>
-                            <li><a href="#">Other Action</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div> -->
             <h1> <%=pageTitle%> </h1>
             <span class="uk-text-upper uk-text-small"><a href="/anggota/buktitemuan/meja">Bukti Temuan</a> / <a href="#"> <%= rooms.penilaian_meja.meja.pengguna.nama %></a></span>
         </div>
@@ -163,54 +149,7 @@
                 </div>
             </div>
 
-            <% if ( rooms.tinjak_lanjut === 2 ) {%>
-
-            <div class="md-card">
-                <div class="md-card-content">
-                  <h2>Tindak Lanjuti</h2>
-                  <form class="" action="/anggota/buktitemuan/bukti" method="post" enctype="multipart/form-data">
-                    <div class="uk-form-row">
-                        <div class="uk-grid">
-                            <div class="uk-width-medium-1-2">
-                              <br>
-                              <br>
-                              <div class="uk-input-group" >
-                                <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
-                                  <label>Deskripsi</label>
-                                  <input id='deskripsi' name='deskripsi' type="text" class="md-input label-fixed" required />
-                              </div>
-                            </div>
-
-                            <div class="uk-width-medium-1-2">
-                                <div class="md-card">
-                                    <div class="md-card-content">
-                                      <span class="uk-text-small uk-text-muted"> Hanya bisa uploud file berekstensi .jpg/.jpeg/.png </span>
-                                        <input type="file" name="image" id="input-file-a" class="dropify" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-grid" data-uk-grid-margin>
-                            <div class="uk-width-medium-1-5">
-                            </div>
-
-                            <div class="uk-width-medium-1-3">
-                                <div class="uk-input-group">
-                                        <input type="hidden" name="buktiId" value="<%= rooms.id%>">
-                                        <button class="md-btn md-btn-success" type="submit" name="button">Save</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                  </form>
-              </div>
-            </div>
-
-            <% } %>
-
-
+      
 
         </div>
     </div>

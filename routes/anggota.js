@@ -54,12 +54,18 @@ router.get('/rekapitulasi/meja/filter-bulanan', isAuth, isRole('Anggota'),rekapi
 
 router.get('/buktitemuan/meja' , isAuth,isRole('Anggota'),buktiTemuanController.getDataBuktiTemuanMejaAnggota);
 router.get('/buktitemuan/meja/detail/:buktiId' , isAuth,isRole('Anggota'), buktiTemuanController.getDataBuktiTemuanMejaAnggotaDetail);
-router.post('/buktitemuan/bukti' , isAuth,isRole('Anggota'), buktiTemuanController.postTindakLanut);
+
+router.get('/tindaklanjut/meja' , isAuth,isRole('Anggota'),buktiTemuanController.getDataTindakLanjutMejaAnggota);
+router.get('/tindaklanjut/meja/detail/:buktiId' , isAuth,isRole('Anggota'), buktiTemuanController.getDataTindakLanjutMejaAnggotaDetail);
+router.post('/tindaklanjut/bukti' , isAuth,isRole('Anggota'), buktiTemuanController.postTindakLanut);
 
 
 router.get('/buktitemuan/ruang' , isAuth,isRole('Anggota') ,buktiTemuanController.getDataBuktiTemuanRuangAnggota);
 router.get('/buktitemuan/ruang/detail/:buktiId' , isAuth,isRole('Anggota') ,buktiTemuanController.getDataBuktiTemuanRuangAnggotaDetail);
-router.post('/buktitemuan/buktiruang' , isAuth,isRole('Anggota') ,buktiTemuanController.postTindakLanutRuang);
+
+router.get('/tindaklanjut/ruang' , isAuth,isRole('Anggota') ,buktiTemuanController.getDataTindakLanjutRuangAnggota);
+router.get('/tindaklanjut/ruang/detail/:buktiId' , isAuth,isRole('Anggota') ,buktiTemuanController.getDataTindakLanjutRuangAnggotaDetail);
+router.post('/tindaklanjut/buktiruang' , isAuth,isRole('Anggota') ,buktiTemuanController.postTindakLanutRuang);
 
 
 module.exports = router;

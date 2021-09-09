@@ -46,7 +46,7 @@
                   <div class="uk-grid" data-uk-grid-margin="">
                       <div class="uk-width-medium-3-10">
                         <label for="kUI_datepicker_b" class="uk-form-label">Datepicker (months)</label>
-                        <input name="bulanTahun" id="kUI_datepicker_b" value="" />
+                        <input required name="bulanTahun" id="kUI_datepicker_b" value="" />
                       </div>
                       <div class="uk-width-medium-1-10">
                           <div class="uk-margin-top uk-text-nowrap">
@@ -70,23 +70,23 @@
                         <thead>
                             <tr>
                                 <th>Tanggal Piket</th>
+                                <th >Foto</th>
                                 <th>Pemilik Meja</th>
                                 <th>Penemu</th>
                                 <th>Deskripsi</th>
                                 <th>Deadline</th>
-                                <th style="width: 30%;" >Foto</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                           <% rooms.forEach((room) => { %>
                         <tr>
-                          <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.jadwal_piket.tanggal %></td>
+                          <td class="uk-text-large uk-text-nowrap"><a href="/admin/buktitemuanmeja/detail/<%= room.id %>"><%= room.penilaian_meja.jadwal_piket.tanggal %></a></td>
+                          <td class="uk-text-large uk-text-nowrap"> <img class="img_thumb" src="/<%= room.fotosebelum%>" alt=""> </td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.meja.pengguna.nama %> </td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.jadwal_piket.nik_pic_piket.nama %></td>
-                          <td class="uk-text-large uk-text-nowrap"><a href="#"><%= room.deskripsi_sebelum%> </a></td>
+                          <td class="uk-text-large uk-text-nowrap"><%= room.deskripsi_sebelum%> </td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.deadline %> </td>
-                          <td class="uk-text-large uk-text-nowrap"> <img src="/<%= room.fotosebelum%>" alt=""> </td>
                             <td class="uk-text-nowrap">
                                 <!-- <button  href="javascript:void(0);" class="btn edit"><i class="material-icons md-24"></i></button> -->
                                 <form onsubmit="return confirm('Are you sure?');" action="/admin/buktitemuanmeja/delete" method="POST">

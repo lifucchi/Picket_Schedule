@@ -127,24 +127,6 @@ exports.getDataBuktiTemuanRuangDetail= (req,res, next) => {
 
   const id = req.params.buktiId;
 
-  // Bukti_temuan
-  // .findByPk(id, {
-  //   include: [
-  // {
-  //   model: Penilaian_ruang,
-  //   include : [
-  //     {model: Ruang},
-  //     {
-  //       model: JadwalPiket,
-  //       include : {
-  //         model: Pengguna,
-  //         as: 'nik_pic_piket',
-  //       }
-  //     }
-  //   ],
-  // }]
-  // })
-
   Bukti_temuan.findByPk(id, {
     include: [
       {model: Penilaian_ruang,
@@ -326,6 +308,45 @@ exports.getDataBuktiTemuanMejaFilter= (req,res, next) => {
           console.log('**********ERROR RESULT****************');
           console.log(err);
       });
+};
+
+exports.getDataBuktiTemuanMejaDetail= (req,res, next) => {
+
+  const id = req.params.buktiId;
+
+  Bukti_temuan.findByPk(id, {
+    include: [
+      {model: Penilaian_meja,
+        include: [
+          {model: Meja,
+            include: {
+              model: Pengguna,
+            }
+          },
+          {model: JadwalPiket,
+          include: {
+            model: Pengguna,
+            as: 'nik_pic_piket',
+          }}
+        ]
+      }
+    ]
+  })
+  .then(bukti => {
+    console.log('**********COMPLETE RESULTS****************');
+    console.log(bukti);
+    res.render('./admin/buktitemuanmejadetail', {
+      rooms: bukti,
+      pageTitle: 'Bukti Temuan Meja',
+      path: '/buktimeja'
+    });
+
+  })
+  .catch(err => {
+      console.log('**********ERROR RESULT****************');
+      console.log(err);
+  });
+
 };
 
 

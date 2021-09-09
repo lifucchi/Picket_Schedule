@@ -50,7 +50,7 @@
                         <thead>
                             <tr>
                                 <th>Tanggal Piket</th>
-                                <th>Foto</th>
+                                <th >Foto</th>
                                 <th>Penemu</th>
                                 <th>Deskripsi</th>
                                 <th>Deadline</th>
@@ -61,9 +61,9 @@
                         <tbody>
                           <% rooms.forEach((room) => { %>
                         <tr>
-                          <td class="uk-text-large uk-text-nowrap"><a href="/fasilitator/buktitemuan/ruang/detail/<%= room.id %>"><%= room.penilaian_ruang.jadwal_piket.tanggal %></a></td>
+                          <td class="uk-text-large uk-text-nowrap"><a href="/fasilitator/buktitemuan/meja/detail/<%= room.id %>"><%= room.penilaian_meja.jadwal_piket.tanggal %></a></td>
                           <td class="uk-text-large uk-text-nowrap"> <img class="img_thumb" src="/<%= room.fotosebelum%>" alt=""> </td>
-                          <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_ruang.jadwal_piket.nik_pic_piket.nama %></td>
+                          <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.jadwal_piket.nik_pic_piket.nama %></td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.deskripsi_sebelum%> </td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.deadline %> </td>
                           <% if (room.tinjak_lanjut == 2) {%>

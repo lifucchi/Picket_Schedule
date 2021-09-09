@@ -766,92 +766,182 @@ exports.postTindakLanutFasilitator= (req,res, next) => {
 
 };
 
-// exports.getDataBuktiTemuanRuangFasilitator= (req,res, next) => {
-//   console.log(req.session.user.nik);
-//   const buktiTemuan = Bukti_temuan
-//                       .findAll(
-//                         {
-//                           where: {
-//                                     penilaianMejaId: {
-//                                     [Op.is]: null,
-//                                   },
-//                                 },
-//                           include: [
-//                         {
-//                           model: Penilaian_ruang,
-//                           include : [
-//                             {
-//                               model: Ruang,
-//                               where: {penggunaNik: req.session.user.nik},
-//                               include : {
-//                                 model: Pengguna,
-//                               }
-//                             },
-//                             {
-//                               model: JadwalPiket,
-//                               where: {persetujuan_fasil: 2},
-//                               include : {
-//                                 model: Pengguna,
-//                                 as: 'nik_pic_piket',
-//                               }
-//                             }
-//                           ],
-//                           required: true
-//                         }]
-//                       }
-//                     );
-//
-//
-//   Promise
-//       .all([buktiTemuan])
-//       .then(hasil => {
-//           console.log('**********COMPLETE RESULTS****************');
-//           res.render('./anggota/buktitemuanruang', {
-//             rooms: hasil[0],
-//             pageTitle: 'Bukti Temuan Ruang',
-//             // path: '/checklistruang'
-//           });
-//
-//       })
-//       .catch(err => {
-//           console.log('**********ERROR RESULT****************');
-//           console.log(err);
-//       });
-// };
-//
-// exports.getDataBuktiTemuanRuangFasilitatorDetail= (req,res, next) => {
-//   const id = req.params.buktiId;
-//
-//   Bukti_temuan.findByPk(id, {
-//     include: [
-//       {model: Penilaian_ruang,
-//         include: [
-//           {model: Ruang,
-//             include: {
-//               model: Pengguna,
-//             }
-//           },
-//           {model: JadwalPiket,
-//           include: {
-//             model: Pengguna,
-//             as: 'nik_pic_piket',
-//           }}
-//         ]
-//       }
-//     ]
-//   })
-//   .then(bukti => {
-//     console.log('**********COMPLETE RESULTS****************');
-//     res.render('./anggota/buktitemuanruangdetail', {
-//       rooms: bukti,
-//       pageTitle: 'Bukti Temuan Ruang',
-//       path: '/buktiruang'
-//     });
-//
-//   })
-//   .catch(err => {
-//       console.log('**********ERROR RESULT****************');
-//       console.log(err);
-//   });
-//
-// };
+exports.getDataBuktiTemuanMejaFasilitator= (req,res, next) => {
+  console.log(req.session.user.nik);
+  const buktiTemuan = Bukti_temuan
+                      .findAll(
+                        {
+                          where: {
+                                    penilaianRuangId: {
+                                    [Op.is]: null,
+                                  },
+                                },
+                          include: [
+                        {
+                          model: Penilaian_meja,
+                          include : [
+                            {
+                              model: Meja,
+                              include : {
+                                model: Pengguna,
+                              }
+                            },
+                            {
+                              model: JadwalPiket,
+                              where: {persetujuan_fasil: 2},
+
+                              include : {
+                                model: Pengguna,
+                                as: 'nik_pic_piket',
+                              }
+                            }
+                          ],
+                          required: true
+                        }]
+                      }
+                    );
+
+
+  Promise
+      .all([buktiTemuan])
+      .then(hasil => {
+          console.log('**********COMPLETE RESULTS****************');
+          res.render('./fasilitator/buktitemuanmeja', {
+            rooms: hasil[0],
+            pageTitle: 'Bukti Temuan Meja',
+            // path: '/checklistruang'
+          });
+
+      })
+      .catch(err => {
+          console.log('**********ERROR RESULT****************');
+          console.log(err);
+      });
+};
+
+exports.getDataBuktiTemuanMejaFasilitatorDetail= (req,res, next) => {
+  console.log(req.session.user.nik);
+  const id = req.params.buktiId;
+
+  Bukti_temuan.findByPk(id, {
+    include: [
+      {model: Penilaian_meja,
+        include: [
+          {model: Meja,
+            include: {
+              model: Pengguna,
+            }
+          },
+          {model: JadwalPiket,
+          include: {
+            model: Pengguna,
+            as: 'nik_pic_piket',
+          }}
+        ]
+      }
+    ]
+  })
+  .then(bukti => {
+    console.log('**********COMPLETE RESULTS****************');
+    res.render('./fasilitator/buktitemuanmejadetail', {
+      rooms: bukti,
+      pageTitle: 'Bukti Temuan Meja',
+      path: '/buktimeja'
+    });
+
+  })
+  .catch(err => {
+      console.log('**********ERROR RESULT****************');
+      console.log(err);
+  });
+
+};
+
+exports.getDataBuktiTemuanRuangFasilitator= (req,res, next) => {
+  console.log(req.session.user.nik);
+  const buktiTemuan = Bukti_temuan
+                      .findAll(
+                        {
+                          where: {
+                                    penilaianMejaId: {
+                                    [Op.is]: null,
+                                  },
+                                },
+                          include: [
+                        {
+                          model: Penilaian_ruang,
+                          include : [
+                            {
+                              model: Ruang,
+                              include : {
+                                model: Pengguna,
+                              }
+                            },
+                            {
+                              model: JadwalPiket,
+                              where: {persetujuan_fasil: 2},
+                              include : {
+                                model: Pengguna,
+                                as: 'nik_pic_piket',
+                              }
+                            }
+                          ],
+                          required: true
+                        }]
+                      }
+                    );
+
+
+  Promise
+      .all([buktiTemuan])
+      .then(hasil => {
+          console.log('**********COMPLETE RESULTS****************');
+          res.render('./fasilitator/buktitemuanruang', {
+            rooms: hasil[0],
+            pageTitle: 'Bukti Temuan Ruang',
+            // path: '/checklistruang'
+          });
+
+      })
+      .catch(err => {
+          console.log('**********ERROR RESULT****************');
+          console.log(err);
+      });
+};
+
+exports.getDataBuktiTemuanRuangFasilitatorDetail= (req,res, next) => {
+  const id = req.params.buktiId;
+
+  Bukti_temuan.findByPk(id, {
+    include: [
+      {model: Penilaian_ruang,
+        include: [
+          {model: Ruang,
+            include: {
+              model: Pengguna,
+            }
+          },
+          {model: JadwalPiket,
+          include: {
+            model: Pengguna,
+            as: 'nik_pic_piket',
+          }}
+        ]
+      }
+    ]
+  })
+  .then(bukti => {
+    console.log('**********COMPLETE RESULTS****************');
+    res.render('./fasilitator/buktitemuanruangdetail', {
+      rooms: bukti,
+      pageTitle: 'Bukti Temuan Ruang',
+      path: '/buktiruang'
+    });
+
+  })
+  .catch(err => {
+      console.log('**********ERROR RESULT****************');
+      console.log(err);
+  });
+
+};

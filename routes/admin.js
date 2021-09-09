@@ -73,11 +73,13 @@ router.post('/skorruang/delete-skormeja' , penilaianMejaController.postDeletePen
 router.get('/buktitemuanruang' , buktiTemuanController.getDataBuktiTemuanAdmin);
 router.post('/buktitemuan/delete' , buktiTemuanController.postDeleteBuktiTemuanRuang);
 router.post('/buktitemuanruang/filter' , buktiTemuanController.getDataBuktiTemuanAdminFilter);
+router.get('/buktitemuanruang/detail/:buktiId', buktiTemuanController.getDataBuktiTemuanRuangDetail);
 
 
 router.get('/buktitemuanmeja' , buktiTemuanController.getDataBuktiTemuanMeja);
 router.post('/buktitemuanmeja/delete' , buktiTemuanController.postDeleteBuktiTemuanMeja);
 router.post('/buktitemuanmeja/filter' , buktiTemuanController.getDataBuktiTemuanMejaFilter);
+
 
 
 

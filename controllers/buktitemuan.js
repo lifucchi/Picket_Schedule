@@ -123,6 +123,63 @@ exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
       });
 };
 
+exports.getDataBuktiTemuanRuangDetail= (req,res, next) => {
+
+  const id = req.params.buktiId;
+
+  // Bukti_temuan
+  // .findByPk(id, {
+  //   include: [
+  // {
+  //   model: Penilaian_ruang,
+  //   include : [
+  //     {model: Ruang},
+  //     {
+  //       model: JadwalPiket,
+  //       include : {
+  //         model: Pengguna,
+  //         as: 'nik_pic_piket',
+  //       }
+  //     }
+  //   ],
+  // }]
+  // })
+
+  Bukti_temuan.findByPk(id, {
+    include: [
+      {model: Penilaian_ruang,
+        include: [
+          {model: Ruang,
+            include: {
+              model: Pengguna,
+            }
+          },
+          {model: JadwalPiket,
+          include: {
+            model: Pengguna,
+            as: 'nik_pic_piket',
+          }}
+        ]
+      }
+    ]
+  })
+  .then(bukti => {
+    console.log('**********COMPLETE RESULTS****************');
+    console.log(bukti);
+    res.render('./admin/buktitemuanruangdetail', {
+      rooms: bukti,
+      pageTitle: 'Bukti Temuan Ruang',
+      path: '/buktiruang'
+    });
+
+  })
+  .catch(err => {
+      console.log('**********ERROR RESULT****************');
+      console.log(err);
+  });
+
+};
+
 exports.postDeleteBuktiTemuanRuang = ( req,res, next) => {
   const id = req.body.buktiTemuanId;
   console.log(id);
@@ -153,11 +210,7 @@ exports.postDeleteBuktiTemuanMeja = ( req,res, next) => {
 
 
 // Admin Meja
-
 exports.getDataBuktiTemuanMeja= (req,res, next) => {
-
-
-
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
@@ -274,3 +327,7 @@ exports.getDataBuktiTemuanMejaFilter= (req,res, next) => {
           console.log(err);
       });
 };
+
+
+
+// ANGGOTA

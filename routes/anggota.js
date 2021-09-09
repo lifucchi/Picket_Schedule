@@ -38,7 +38,7 @@ router.post('/checklistruang/nilai', isAuth, isRole('Anggota'), ruangController.
 router.post('/checklistruang/bukti', isAuth, isRole('Anggota'), ruangController.postBuktiTemuan);
 router.post('/checklistruang/postCheckPic', isRole('Anggota'),isAuth,  ruangController.postCheckPic);
 
-router.get('/rekapitulasi/ruang', isAuth,isRole('anggota'), rekapitulasiController.getDataRekapitulasiRuang);
+router.get('/rekapitulasi/ruang', isAuth,isRole('Anggota'), rekapitulasiController.getDataRekapitulasiRuang);
 router.post('/rekapitulasi/ruang/filter-mingguan', isAuth,isRole('Anggota'),  rekapitulasiController.getDataRekapitulasiRuangFilterMingguan);
 router.get('/rekapitulasi/ruang/filter-mingguan', isAuth,isRole('Anggota'),  rekapitulasiController.getDataRekapitulasiRuangFilterMingguan);
 router.post('/rekapitulasi/ruang/filter-bulanan', isAuth,isRole('Anggota'), rekapitulasiController.getDataRekapitulasiRuangFilterBulanan);

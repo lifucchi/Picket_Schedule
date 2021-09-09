@@ -176,19 +176,6 @@ exports.postDeleteBuktiTemuanRuang = ( req,res, next) => {
 
 };
 
-exports.postDeleteBuktiTemuanMeja = ( req,res, next) => {
-  const id = req.body.buktiTemuanId;
-  console.log(id);
-  Bukti_temuan.findByPk(id)
-    .then(hasil => {
-      return hasil.destroy();
-    })
-    .then(result => {
-      res.redirect('/admin/buktiTemuanmeja');
-    })
-    .catch(err => console.log(err));
-
-};
 
 
 // Admin Meja
@@ -349,8 +336,37 @@ exports.getDataBuktiTemuanMejaDetail= (req,res, next) => {
 
 };
 
+exports.postDeleteBuktiTemuanMeja = ( req,res, next) => {
+  const id = req.body.buktiTemuanId;
+  console.log(id);
+  Bukti_temuan.findByPk(id)
+    .then(hasil => {
+      return hasil.destroy();
+    })
+    .then(result => {
+      res.redirect('/admin/buktiTemuanmeja');
+    })
+    .catch(err => console.log(err));
 
+};
 
+exports.postDeleteTindakLanjutMeja = ( req,res, next) => {
+  const id = req.body.buktiTemuanId;
+  console.log(id);
+  Bukti_temuan.findByPk(id)
+    .then(bukti => {
+      bukti.deskripsi_sesudah=null;
+      bukti.fotosesudah = null;
+      bukti.tinjak_lanjut = 2;
+      return bukti.save();
+    })
+    .then(result => {
+      res.redirect('/admin/buktitemuanmeja/detail/'+id)
+
+    })
+    .catch(err => console.log(err));
+
+};
 // ANGGOTA
 
 exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
@@ -433,7 +449,6 @@ exports.getDataBuktiTemuanMejaAnggotaDetail= (req,res, next) => {
   })
   .then(bukti => {
     console.log('**********COMPLETE RESULTS****************');
-    console.log(bukti);
     res.render('./anggota/buktitemuanmejadetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Meja',

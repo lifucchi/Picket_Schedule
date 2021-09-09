@@ -78,6 +78,8 @@ router.get('/buktitemuanruang/detail/:buktiId', buktiTemuanController.getDataBuk
 
 router.get('/buktitemuanmeja' , buktiTemuanController.getDataBuktiTemuanMeja);
 router.post('/buktitemuanmeja/delete' , buktiTemuanController.postDeleteBuktiTemuanMeja);
+router.post('/tindaklanjutmeja/delete' , buktiTemuanController.postDeleteTindakLanjutMeja);
+
 router.post('/buktitemuanmeja/filter' , buktiTemuanController.getDataBuktiTemuanMejaFilter);
 router.get('/buktitemuanmeja/detail/:buktiId', buktiTemuanController.getDataBuktiTemuanMejaDetail);
 

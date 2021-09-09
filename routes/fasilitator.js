@@ -8,6 +8,8 @@ const mejaController = require('../controllers/meja');
 const ruangController = require('../controllers/ruang');
 const rekapitulasiController = require('../controllers/rekapitulasi');
 const isRole = require('../middleware/is-role');
+const buktiTemuanController = require('../controllers/buktitemuan');
+
 
 const router = express.Router();
 
@@ -28,6 +30,9 @@ router.get('/rekapitulasi/ruang/filter-bulanan',isAuth,isRole('Fasilitator'),  r
 router.post('/rekapitulasi/ruang/filter-tahunan',isAuth,isRole('Fasilitator'), rekapitulasiController.getDataRekapitulasiRuangFilterTahunan);
 router.get('/rekapitulasi/ruang/filter-tahunan', isAuth,isRole('Fasilitator'),rekapitulasiController.getDataRekapitulasiRuangFilterTahunan);
 
+router.get('/tindaklanjut/meja' , isAuth,isRole('Fasilitator'),buktiTemuanController.getDataTindakLanjutMejaFasilitator);
+router.get('/tindaklanjut/meja/detail/:buktiId' , isAuth,isRole('Fasilitator'), buktiTemuanController.getDataTindakLanjutMejaFasilitatorDetail);
+router.post('/tindaklanjut/bukti' , isAuth,isRole('Fasilitator'), buktiTemuanController.postTindakLanutFasilitator);
 
 
 

@@ -3,21 +3,39 @@
       <ul id="menu_top" class="uk-clearfix">
           <li><a href="/fasilitator"><i class="material-icons md-24 md-color-light-green-400">&#xE88A;</i></a></li>
 
-          <li data-uk-dropdown>
-              <a class="md-color-light-green-400" href="#">Checklist Piket</a>
+          <li data-uk-dropdown ="{mode:'click'}">
+              <a class="md-color-light-green-400 uk-text-small" href="#">Piket</a>
               <div class="uk-dropdown">
-                  <ul class="uk-nav uk-nav-dropdown">
+
+                    <ul class="uk-nav uk-nav-dropdown">
                       <li><a href="/fasilitator/laporan">Laporan</a></li>
-                  </ul>
+                    </ul>
+
               </div>
           </li>
-          <li data-uk-dropdown>
-              <a class="md-color-light-green-400" href="#">Rekapitulasi</a>
+
+          <li data-uk-dropdown ="{mode:'click'}">
+              <a class="md-color-light-green-400 uk-text-small" href="#">Temuan</a>
+              <div class="uk-dropdown">
+                <ul class="uk-nav uk-nav-dropdown">
+                  <li class="uk-nav-header">Bukti Temuan</li>
+                  <li><a href="/fasilitator/buktitemuan/ruang">Ruang</a></li>
+                  <li><a href="/fasilitator/buktitemuan/meja">Meja</a></li>
+                  <li class="uk-nav-header">Tindak Lanjut</li>
+                  <li><a href="/fasilitator/tindaklanjut/meja">
+                    Meja
+                    <span class="uk-badge uk-badge-notification uk-badge-danger">16</span></a></li>
+                </ul>
+              </div>
+          </li>
+
+          <li data-uk-dropdown ="{mode:'click'}">
+              <a class="md-color-light-green-400 uk-text-small href="#">Rekapitulasi</a>
               <div class="uk-dropdown uk-dropdown-scrollable">
                   <ul class="uk-nav uk-nav-dropdown">
-                      <li><a href="/fasilitator/rekapitulasi/ruang">Piket Ruang</a></li>
+                      <li class="uk-nav-header">Rekapitulasi</li>
+                      <li><a href="/fasilitator/rekapitulasi/ruang">Ruang</a></li>
                       <li><a href="/fasilitator/rekapitulasi/meja">Piket Meja</a></li>
-                      <li><a href="/fasilitator/rekapitulasi/ruang">Bukti Temuan</a></li>
                   </ul>
               </div>
           </li>

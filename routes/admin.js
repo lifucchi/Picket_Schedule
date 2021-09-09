@@ -74,6 +74,7 @@ router.get('/buktitemuanruang' , buktiTemuanController.getDataBuktiTemuanAdmin);
 router.post('/buktitemuan/delete' , buktiTemuanController.postDeleteBuktiTemuanRuang);
 router.post('/buktitemuanruang/filter' , buktiTemuanController.getDataBuktiTemuanAdminFilter);
 router.get('/buktitemuanruang/detail/:buktiId', buktiTemuanController.getDataBuktiTemuanRuangDetail);
+router.post('/tindaklanjutruang/delete' , buktiTemuanController.postDeleteTindakLanjutRuang);
 
 
 router.get('/buktitemuanmeja' , buktiTemuanController.getDataBuktiTemuanMeja);

@@ -367,7 +367,7 @@ exports.postDeleteTindakLanjutMeja = ( req,res, next) => {
     .catch(err => console.log(err));
 
 };
-// ANGGOTA
+// ANGGOTA MEJA
 
 exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
 
@@ -463,7 +463,6 @@ exports.getDataBuktiTemuanMejaAnggotaDetail= (req,res, next) => {
 
 };
 
-
 exports.postTindakLanut= (req,res, next) => {
 
   const id = req.body.buktiId;
@@ -488,6 +487,133 @@ exports.postTindakLanut= (req,res, next) => {
   })
   .then( () => {
       res.redirect('/anggota/buktitemuan/meja/detail/'+id)
+
+  })
+  .catch(err => {
+      console.log('**********ERROR RESULT****************');
+      console.log(err);
+  });
+
+};
+
+// ANggota ruang
+
+exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
+
+  console.log(req.session.user.nik);
+  const buktiTemuan = Bukti_temuan
+                      .findAll(
+                        {
+                          where: {
+                                    penilaianMejaId: {
+                                    [Op.is]: null,
+                                  },
+                                },
+                          include: [
+                        {
+                          model: Penilaian_ruang,
+                          include : [
+                            {
+                              model: Ruang,
+                              where: {penggunaNik: req.session.user.nik},
+                              include : {
+                                model: Pengguna,
+                              }
+                            },
+                            {
+                              model: JadwalPiket,
+                              where: {persetujuan_fasil: 2},
+                              include : {
+                                model: Pengguna,
+                                as: 'nik_pic_piket',
+                              }
+                            }
+                          ],
+                          required: true
+                        }]
+                      }
+                    );
+
+
+  Promise
+      .all([buktiTemuan])
+      .then(hasil => {
+          console.log('**********COMPLETE RESULTS****************');
+          res.render('./anggota/buktitemuanruang', {
+            rooms: hasil[0],
+            pageTitle: 'Bukti Temuan Ruang',
+            // path: '/checklistruang'
+          });
+
+      })
+      .catch(err => {
+          console.log('**********ERROR RESULT****************');
+          console.log(err);
+      });
+};
+
+exports.getDataBuktiTemuanRuangAnggotaDetail= (req,res, next) => {
+
+  const id = req.params.buktiId;
+
+  Bukti_temuan.findByPk(id, {
+    include: [
+      {model: Penilaian_ruang,
+        include: [
+          {model: Ruang,
+            include: {
+              model: Pengguna,
+            }
+          },
+          {model: JadwalPiket,
+          include: {
+            model: Pengguna,
+            as: 'nik_pic_piket',
+          }}
+        ]
+      }
+    ]
+  })
+  .then(bukti => {
+    console.log('**********COMPLETE RESULTS****************');
+    res.render('./anggota/buktitemuanruangdetail', {
+      rooms: bukti,
+      pageTitle: 'Bukti Temuan Ruang',
+      path: '/buktiruang'
+    });
+
+  })
+  .catch(err => {
+      console.log('**********ERROR RESULT****************');
+      console.log(err);
+  });
+
+};
+
+exports.postTindakLanutRuang= (req,res, next) => {
+
+  const id = req.body.buktiId;
+  const deskripsi = req.body.deskripsi;
+  const image = req.files.image;
+
+  Bukti_temuan.findByPk(id)
+  .then(bukti => {
+    console.log('**********COMPLETE RESULTS****************');
+    if (image != null ){
+        const imgUrl = image[0].path;
+        bukti.deskripsi_sesudah=deskripsi;
+        bukti.fotosesudah = imgUrl;
+        bukti.tinjak_lanjut = 1;
+        return bukti.save();
+
+        }else {
+          bukti.deskripsi_sesudah = deskripsi;
+          bukti.tinjak_lanjut = 1;
+          return bukti.save();
+        }
+  })
+  .then( () => {
+      res.redirect('/anggota/buktitemuan/ruang/detail/'+id)
 
   })
   .catch(err => {

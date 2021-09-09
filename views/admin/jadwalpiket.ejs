@@ -86,9 +86,9 @@
                                   <td><%= schedule.nik_pic_piket.level%></td>
 
                                 <% if (schedule.persetujuan_fasil === 0) { %>
-                                  <td> <i href="#" class="uk-icon-large uk-icon-times-circle uk-text-danger"></i></td>
+                                  <td> <i href="#" class="uk-icon-large uk-icon-times-circle uk-text-danger"><span hidden> 2</span></i></td>
                                 <% } else { %>
-                                  <td> <i href="#" class="uk-icon-large uk-icon-check-circle uk-text-success"></i></td>
+                                  <td> <i href="#" class="uk-icon-large uk-icon-check-circle uk-text-success"> <span hidden> 1</span> </i></td>
                                 <% } %>
 
                                 <% if (schedule.status_piket === 0) { %>
@@ -100,9 +100,7 @@
 
                                 <% } else { %>
                                   <td>Sudah Piket tapi Melewati Jadwal</td>
-                                  <td><%= schedule.rekam_check%> </td>
-
-
+                                  <td ><%= schedule.rekam_check%> </td>
                                 <% } %>
 
 

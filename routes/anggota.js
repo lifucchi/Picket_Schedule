@@ -9,6 +9,8 @@ const isRole = require('../middleware/is-role');
 const mejaController = require('../controllers/meja');
 const ruangController = require('../controllers/ruang');
 const rekapitulasiController = require('../controllers/rekapitulasi');
+const buktiTemuanController = require('../controllers/buktitemuan');
+
 
 
 
@@ -50,6 +52,9 @@ router.get('/rekapitulasi/meja', isAuth,isRole('Anggota'), rekapitulasiControlle
 router.post('/rekapitulasi/meja/filter-bulanan', isAuth,isRole('Anggota'),  rekapitulasiController.getDataRekapitulasiMejaFilterBulanan);
 router.get('/rekapitulasi/meja/filter-bulanan', isAuth, isRole('Anggota'),rekapitulasiController.getDataRekapitulasiMejaFilterBulanan);
 
+router.get('/buktitemuan/meja' , buktiTemuanController.getDataBuktiTemuanMejaAnggota);
+router.get('/buktitemuan/meja/detail/:buktiId' , buktiTemuanController.getDataBuktiTemuanMejaAnggotaDetail);
+router.post('/buktitemuan/bukti' , buktiTemuanController.postTindakLanut);
 
 
 module.exports = router;

@@ -352,3 +352,132 @@ exports.getDataBuktiTemuanMejaDetail= (req,res, next) => {
 
 
 // ANGGOTA
+
+exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
+
+  console.log(req.session.user.nik);
+  const buktiTemuan = Bukti_temuan
+                      .findAll(
+                        {
+                          where: {
+                                    penilaianRuangId: {
+                                    [Op.is]: null,
+                                  },
+                                },
+                          include: [
+                        {
+                          model: Penilaian_meja,
+                          include : [
+                            {
+                              model: Meja,
+                              where: {penggunaNik: req.session.user.nik},
+                              include : {
+                                model: Pengguna,
+                              }
+                            },
+                            {
+                              model: JadwalPiket,
+                              where: {persetujuan_fasil: 2},
+
+                              include : {
+                                model: Pengguna,
+                                as: 'nik_pic_piket',
+                              }
+                            }
+                          ],
+                          required: true
+                        }]
+                      }
+                    );
+
+
+  Promise
+      .all([buktiTemuan])
+      .then(hasil => {
+          console.log('**********COMPLETE RESULTS****************');
+          res.render('./anggota/buktitemuanmeja', {
+            rooms: hasil[0],
+            pageTitle: 'Bukti Temuan Meja',
+            // path: '/checklistruang'
+          });
+
+      })
+      .catch(err => {
+          console.log('**********ERROR RESULT****************');
+          console.log(err);
+      });
+};
+
+exports.getDataBuktiTemuanMejaAnggotaDetail= (req,res, next) => {
+
+  console.log(req.session.user.nik);
+  const id = req.params.buktiId;
+
+  Bukti_temuan.findByPk(id, {
+    include: [
+      {model: Penilaian_meja,
+        include: [
+          {model: Meja,
+            include: {
+              model: Pengguna,
+            }
+          },
+          {model: JadwalPiket,
+          include: {
+            model: Pengguna,
+            as: 'nik_pic_piket',
+          }}
+        ]
+      }
+    ]
+  })
+  .then(bukti => {
+    console.log('**********COMPLETE RESULTS****************');
+    console.log(bukti);
+    res.render('./anggota/buktitemuanmejadetail', {
+      rooms: bukti,
+      pageTitle: 'Bukti Temuan Meja',
+      path: '/buktimeja'
+    });
+
+  })
+  .catch(err => {
+      console.log('**********ERROR RESULT****************');
+      console.log(err);
+  });
+
+};
+
+
+exports.postTindakLanut= (req,res, next) => {
+
+  const id = req.body.buktiId;
+  const deskripsi = req.body.deskripsi;
+  const image = req.files.image;
+
+  Bukti_temuan.findByPk(id)
+  .then(bukti => {
+    console.log('**********COMPLETE RESULTS****************');
+    if (image != null ){
+        const imgUrl = image[0].path;
+        bukti.deskripsi_sesudah=deskripsi;
+        bukti.fotosesudah = imgUrl;
+        bukti.tinjak_lanjut = 1;
+        return bukti.save();
+
+        }else {
+          bukti.deskripsi_sesudah = deskripsi;
+          bukti.tinjak_lanjut = 1;
+          return bukti.save();
+        }
+  })
+  .then( () => {
+      res.redirect('/anggota/buktitemuan/meja/detail/'+id)
+
+  })
+  .catch(err => {
+      console.log('**********ERROR RESULT****************');
+      console.log(err);
+  });
+
+};

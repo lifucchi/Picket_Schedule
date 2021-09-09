@@ -156,6 +156,8 @@ app.use('/fasilitator',fasilitatorRoutes);
 
 
 app.use(errorController.get404);
+app.use(errorController.get500);
+
 // app.use(errorController.get401);
 
 

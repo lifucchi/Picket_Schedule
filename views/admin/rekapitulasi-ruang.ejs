@@ -78,7 +78,7 @@
                         <tbody>
                           <% rooms2.forEach((room) => { %>
                         <tr>
-                          <td class="uk-text-large uk-text-nowrap"><a href="#"><%= room.jadwal_piket.tanggal%></a></td>
+                          <td class="uk-text-large uk-text-nowrap"><%= room.jadwal_piket.tanggal%></td>
 
                             <td class="uk-text-large uk-text-nowrap"><%= room.ruang.nama_ruang%></td>
                             <td class="uk-text-large uk-text-nowrap"><%= room.ruang.standar%></td>

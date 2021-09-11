@@ -705,3 +705,11 @@ exports.postCheckFasil = (req,res, next) => {
 
 
 };
+
+exports.getContohInput = ( req,res, next) => {
+
+    res.render('./admin/contohinput', {
+      pageTitle: 'COntoh Input',
+    });
+
+};

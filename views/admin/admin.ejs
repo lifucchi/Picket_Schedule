@@ -48,8 +48,7 @@
             <div>
                 <div class="md-card  md-bg-light-green-200">
                     <div class="md-card-content">
-                        <h2  class="uk-margin-remove"><span class="">Lantai <%= schedule.nik_pic_piket.level %></span></h2>
-
+                        <h2  class="uk-text-center"><span class="">Lantai <%= schedule.nik_pic_piket.level %></span></h2>
                         <h4 class="uk-margin-remove"><span>PIC Piket : <%= schedule.nik_pic_piket.nama %> </h4>
                         <h4 class="uk-margin-remove"><span>Fasilitator : <%= schedule.nik_pic_fasil.nama %> </h4>
                         <h4 class="uk-margin-remove" >  <span>Status piket :</span>
@@ -76,7 +75,7 @@
           <div>
               <div class="md-card  md-bg-light-green-200">
                   <div class="md-card-content">
-                      <h2  class="uk-margin-remove">  <span class="">Lantai 1</span></h2>
+                      <h2  class="uk-text-center">  <span class="">Lantai 1</span></h2>
                       <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
                   </div>
               </div>
@@ -84,7 +83,7 @@
           <div>
               <div class="md-card  md-bg-light-green-200">
                   <div class="md-card-content">
-                      <h2 class="uk-margin-remove" > <span class="">Lantai 2</span></h2>
+                      <h2 class="uk-text-center" > <span class="">Lantai 2</span></h2>
                       <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
                   </div>
               </div>
@@ -97,10 +96,36 @@
           <div>
               <div class="md-card  md-bg-light-green-200">
                   <div class="md-card-content">
-                    <h2 class="uk-margin-remove" >  <span>Meja Ter-SO GOOD</span>
-                      <% if (locals.mejaTerbaik) {%>
-                      <h4 class="uk-margin-remove"><span> <%= mejaTerbaik.meja.pengguna.nama %> Level <%= mejaTerbaik.meja.pengguna.level %>  </h4>
-                      <h4 class="uk-margin-remove"><span> <%= mejaTerbaik.bobotmeja %> </h4>
+                    <h2 class="uk-text-center" >  <span>Meja Ter-SO GOOD</span>
+                      <hv>
+
+                      <% if (mejaTerbaik) {%>
+                        <div class="uk-grid">
+                            <div class="uk-width-1-2">
+                              <!-- <div class="uk-panel"> -->
+                                  <i href="" class="uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                                  <% if (mejaTerbaik.bobotmeja >= 4.5 ) {%>
+                                      <h2> Consistent Star </h2>
+                                  <% }else if (mejaTerbaik.bobotmeja >= 4){%>
+                                    <h2> Future Star </h2>
+                                  <% }else if (mejaTerbaik.bobotmeja >= 3.5 ){%>
+                                    <h2> Utility Hi-Pro </h2>
+
+                                  <% }else if (mejaTerbaik.bobotmeja >= 3){%>
+                                    <h2> Contributor </h2>
+
+                                  <% }else if (mejaTerbaik.bobotmeja < 3){%>
+                                    <h2> Iceberg </h2>
+                                  <% }%>
+
+                                  <h2 class=" uk-text-center uk-text-bold"> <%= mejaTerbaik.bobotmeja %> </h2>
+                              <!-- </div> -->
+                            </div>
+                            <div class="uk-width-1-2">
+                              <h1 class="">Level <%= mejaTerbaik.meja.pengguna.level %></h1>
+                              <h2 class=""><%= mejaTerbaik.meja.pengguna.nama %>   </h2>
+                            </div>
+                        </div>
                         <% } %>
                   </div>
               </div>
@@ -112,11 +137,40 @@
             <div>
                 <div class="md-card  md-bg-light-green-200">
                     <div class="md-card-content">
-                      <h2 class="uk-margin-remove" >  <span>Lantai Ter-SO GOOD</span>
+                      <h2 class="uk-margin-remove uk-text-center" >  <span>Lantai Ter-SO GOOD</span>
                         <% if (locals.lantaiTerbaik[0]) {%>
-                        <h4 class="uk-margin-remove"><span> level <%= lantaiTerbaik[1] %> </h4>
-                        <h4 class="uk-margin-remove"><span> <%= lantaiTerbaik[0] %> </h4>
+
+
+                                  <div class="uk-grid">
+                                      <div class="uk-width-1-2">
+                                        <!-- <div class="uk-panel"> -->
+                                            <i href="" class="uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                                            <% if (lantaiTerbaik[0] >= 1000 ) {%>
+                                                <h2> Consistent Star </h2>
+                                            <% }else if (lantaiTerbaik[0] >= 800){%>
+                                              <h2> Future Star </h2>
+                                            <% }else if (lantaiTerbaik[0] >= 600 ){%>
+                                              <h2> Utility Hi-Pro </h2>
+
+                                            <% }else if (lantaiTerbaik[0] >= 400){%>
+                                              <h2> Contributor </h2>
+
+                                            <% }else if (lantaiTerbaik[0] < 499){%>
+                                              <h2> Iceberg </h2>
+                                            <% }%>
+                                            <h2 class="uk-margin-remove"><span> <%= lantaiTerbaik[0] %> </h2>
+
+                                      </div>
+                                      <div class="uk-width-1-2">
+                                        <br>
+                                          <h1 class="uk-margin-remove"><span> level <%= lantaiTerbaik[1] %> </h1>
+                                      </div>
+
+                                  </div>
+
+
                         <% } %>
+
                     </div>
                 </div>
             </div>

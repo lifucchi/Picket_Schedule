@@ -190,16 +190,3 @@ exports.getAdminDashboard = (req,res) => {
 
 
 //
-// exports.getDetailDataPengguna = ( req,res, next) => {
-//   const nik = req.params.penggunaId;
-//   Pengguna.findById(nik)
-//   .then(([pengguna]) => {
-//     console.log(pengguna[0]);
-//     res.render('admin', {
-//       pageTitle: 'Detail',
-//       users: pengguna[0],
-//       path: '/pengguna/detail'
-//     });
-//
-//   }).catch(err => console.log(err));
-// };

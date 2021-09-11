@@ -36,6 +36,9 @@ router.post('/jadwalpiket/add' , jadwalPiketController.postAddDataJadwalPiket );
 router.post('/jadwalpiket/delete-jadwalpiket' , jadwalPiketController.postDeleteJadwalPiket );
 router.post('/jadwalpiket/edit' , jadwalPiketController.postEditJadwal );
 router.post('/jadwalpiket/import' , jadwalPiketController.postImportJadwal );
+router.get('/jadwalpiket/contohinput' , jadwalPiketController.getContohInput );
+
+
 
 // artikel
 router.get('/artikel' , artikelController.getDataArtikel );

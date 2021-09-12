@@ -29,13 +29,13 @@ router.get('/checklistruang/:ruangId', isAuth, isRole('Anggota'), ruangControlle
 
 
 // router.get('/checklistmeja', isAuth,isRole('Anggota'), mejaController.getDataMejaAnggota);
-router.get('/checklistmeja/detail/:mejaId',isRole('Anggota'), isAuth,  mejaController.getDataMejaDetail);
+router.get('/checklistmeja/detail/:mejaId',isAuth,isRole('Anggota'),  mejaController.getDataMejaDetail);
 router.post('/checklistmeja/nilai', isAuth, isRole('Anggota'), mejaController.postNilaiMeja);
 router.post('/checklistmeja/bukti', isAuth, isRole('Anggota'), mejaController.postBuktiTemuan);
 router.post('/checklistmeja/postCheckPic', isAuth,isRole('Anggota'),  mejaController.postCheckPic);
 
 router.get('/checklistruang', isAuth,  isRole('Anggota'),ruangController.getDataRuangAnggota);
-router.get('/checklistruang/detail/:ruangId',isRole('Anggota'), isAuth,  ruangController.getDataRuangDetail);
+router.get('/checklistruang/detail/:ruangId',isAuth, isRole('Anggota'), ruangController.getDataRuangDetail);
 router.post('/checklistruang/nilai', isAuth, isRole('Anggota'), ruangController.postNilaiRuang);
 router.post('/checklistruang/bukti', isAuth, isRole('Anggota'), ruangController.postBuktiTemuan);
 router.post('/checklistruang/postCheckPic', isRole('Anggota'),isAuth,  ruangController.postCheckPic);

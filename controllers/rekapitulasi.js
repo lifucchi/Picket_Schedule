@@ -8,8 +8,8 @@ const moment = require('moment');
 const Ruang = require('../models/ruang');
 const sequelize = require('../util/database');
 
-var Sequelize = require('sequelize')
-var Op = Sequelize.Op
+var Sequelize = require('sequelize');
+var Op = Sequelize.Op;
 
 
 // RUANG

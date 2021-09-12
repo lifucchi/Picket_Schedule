@@ -4,7 +4,9 @@ const moment = require('moment');
 const Penilaian_ruang = require('../models/penilaian_ruang');
 const JadwalPiket = require('../models/jadwal_piket');
 const Bukti_temuan = require('../models/bukti_temuan');
-const { Op } = require("sequelize");
+const sequelize = require('../util/database');
+var Sequelize = require('sequelize');
+var Op = Sequelize.Op;
 
 
 // Admin
@@ -175,18 +177,27 @@ const id = req.params.ruangId;
     const buktiTemuan = Bukti_temuan.findAll({
       where: {penilaianRuangId: id}
     });
+    const users = Pengguna.findAll({
+      where: {
+                peran: {
+                [Op.not]: 'Admin',
+              }
+            },
+
+
+    });
 
     Promise
-        .all([buktiTemuan])
+        .all([buktiTemuan,users])
         .then(bukti => {
             console.log('**********COMPLETE RESULTS****************');
-            console.log(bukti);
 
             res.render('./anggota/checklistruangdetail', {
               room: room,
               pageTitle: 'Checklist Ruang',
               path: '/checklistruangada',
-              buktiTemuan: bukti[0]
+              buktiTemuan: bukti[0],
+              users:bukti[1]
             });
 
         })
@@ -204,11 +215,6 @@ const id = req.params.ruangId;
 exports.postNilaiRuang = (req,res, next) => {
   const id = req.body.ruangId;
   const nilai = req.body.nilai;
-
-  console.log("ini nilai");
-  console.log(nilai);
-  console.log("ini ruang");
-  console.log(id);
 
   Penilaian_ruang
   .findByPk(id)
@@ -229,6 +235,7 @@ exports.postBuktiTemuan = (req,res, next) => {
   const id = req.body.ruangId;
   const tanggal = req.body.tanggal;
   const deskripsi = req.body.deskripsi;
+  const tindaklanjut = req.body.tindaklanjut;
   const image = req.files.image;
 
   if (image != null ){
@@ -243,7 +250,8 @@ exports.postBuktiTemuan = (req,res, next) => {
       { fotosebelum:imgUrl,
         deskripsi_sebelum:deskripsi,
         deadline:tanggal,
-        penilaianRuangId: id
+        penilaianRuangId: id,
+        penggunaNik: tindaklanjut
       }
     )
     .then(result => {
@@ -258,7 +266,8 @@ exports.postBuktiTemuan = (req,res, next) => {
       {
         deskripsi_sebelum:deskripsi,
         deadline:tanggal,
-        penilaianRuangId: id
+        penilaianRuangId: id,
+        penggunaNik: tindaklanjut
       }
     )
     .then(result => {

@@ -85,7 +85,6 @@ exports.getLogout = (req, res, next) => {
 
 exports.changePassword = (req, res, next) => {
   let message = req.flash('error');
-  console.log("masuk sini kah?");
 
   res.render('login/changePassword', {
     path: '/',
@@ -126,7 +125,7 @@ exports.changePasswordPengguna = (req, res, next) => {
               .catch(err => console.log(err));
 
               res.redirect('/');
-              
+
           }
 
           req.flash('error', 'Password saat ini salah');

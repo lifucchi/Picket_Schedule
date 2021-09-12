@@ -9,7 +9,7 @@ const Bukti_temuan = require('../models/bukti_temuan');
 
 const sequelize = require('../util/database');
 var Sequelize = require('sequelize')
-var Op = Sequelize.Op
+var Op = Sequelize.Op;
 
 // Admin Ruang
 exports.getDataBuktiTemuanAdmin= (req,res, next) => {

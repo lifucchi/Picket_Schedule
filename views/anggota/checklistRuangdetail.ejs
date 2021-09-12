@@ -48,9 +48,6 @@
         </div>
 
 
-
-
-
       <% if (path === '/checklistruangada') {%>
         <div id="page_content_inner">
 
@@ -120,6 +117,19 @@
                                                               <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
                                                                 <label>Deskripsi</label>
                                                                 <input id='deskripsi' name='deskripsi' type="text" class="md-input label-fixed" required />
+                                                            </div>
+                                                            <br>
+                                                            <div class="uk-input-group" >
+                                                              <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                                                <label>Petindak Lanjut</label>
+                                                                <select name='tindaklanjut' id='tindaklanjut' class="md-input label-fixed" required data-md-selectize-inline >
+                                                                    <option value="">Pengguna</option>
+                                                                    <% users.forEach((user) => { %>
+                                                                       <option value="<%= user.nik %>"> <%= user.nama %></option>
+                                                                    <% }); %>
+                                                                </select>
+
+
                                                             </div>
                                                           </div>
 

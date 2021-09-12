@@ -123,24 +123,48 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
-  }
+  }else{
+    if (req.session.user.peran === "Anggota" ){
+        const belumchecklist =
+        Jadwal_piket.count(
+          {
+            where: {
+              nikpicpiket: req.session.user.nik,
+              status_piket: 0
+          },
+        });
 
-  if (req.session.user.peran === "Anggota" ){
-      const belumchecklist =
+      Promise
+          .all([belumchecklist])
+          .then(count => {
+              console.log('**********COMPLETE RESULTS****************');
+              console.log(count[0]); // user profile
+              res.locals.belumchecheklist = count[0];
+              next();
+
+          })
+          .catch(err => {
+              console.log('**********ERROR RESULT****************');
+              console.log(err);
+          });
+
+    }else if(req.session.user.peran === "Fasilitator"){
+      const belumlaporan =
       Jadwal_piket.count(
         {
           where: {
-            nikpicpiket: req.session.user.nik,
-            status_piket: 0
+            nikpicfasil: req.session.user.nik,
+            status_piket: 2,
+            persetujuan_fasil: 0
         },
       });
 
     Promise
-        .all([belumchecklist])
+        .all([belumlaporan])
         .then(count => {
             console.log('**********COMPLETE RESULTS****************');
             console.log(count[0]); // user profile
-            res.locals.belumchecheklist = count[0];
+            res.locals.belumlaporan = count[0];
             next();
 
         })
@@ -149,35 +173,12 @@ app.use((req, res, next) => {
             console.log(err);
         });
 
-  }else if(req.session.user.peran === "Fasilitator"){
-    const belumlaporan =
-    Jadwal_piket.count(
-      {
-        where: {
-          nikpicfasil: req.session.user.nik,
-          status_piket: 2,
-          persetujuan_fasil: 0
-      },
-    });
+    }else if(req.session.user.peran === "Admin"){
+      next();
 
-  Promise
-      .all([belumlaporan])
-      .then(count => {
-          console.log('**********COMPLETE RESULTS****************');
-          console.log(count[0]); // user profile
-          res.locals.belumlaporan = count[0];
-          next();
-
-      })
-      .catch(err => {
-          console.log('**********ERROR RESULT****************');
-          console.log(err);
-      });
-
-  }else if(req.session.user.peran === "Admin"){
-    next();
-
+    }
   }
+
 });
 
 // routes

@@ -29,7 +29,6 @@ exports.getDataBuktiTemuanAdmin= (req,res, next) => {
                             {model: Ruang},
                             {
                               model: JadwalPiket,
-                              where: {persetujuan_fasil: 2},
                               include : {
                                 model: Pengguna,
                                 as: 'nik_pic_piket',
@@ -89,7 +88,6 @@ exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
                                 [Op.and]:
                                 [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
                                 {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-                                {persetujuan_fasil:2}],
                               },
                               include : {
                                 model: Pengguna,
@@ -283,7 +281,6 @@ exports.getDataBuktiTemuanMejaFilter= (req,res, next) => {
                                 [Op.and]:
                                 [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
                                 {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-                                {persetujuan_fasil:2}],
                               },
                               include : {
                                 model: Pengguna,
@@ -409,7 +406,6 @@ exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
                             },
                             {
                               model: JadwalPiket,
-                              where: {persetujuan_fasil: 2},
 
                               include : {
                                 model: Pengguna,
@@ -501,7 +497,6 @@ exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
                             },
                             {
                               model: JadwalPiket,
-                              where: {persetujuan_fasil: 2},
 
                               include : {
                                 model: Pengguna,
@@ -628,7 +623,6 @@ exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
                             },
                             {
                               model: JadwalPiket,
-                              where: {persetujuan_fasil: 2},
                               include : {
                                 model: Pengguna,
                                 as: 'nik_pic_piket',
@@ -753,7 +747,6 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
                             },
                             {
                               model: JadwalPiket,
-                              where: {persetujuan_fasil: 2},
                               include : {
                                 model: Pengguna,
                                 as: 'nik_pic_piket',
@@ -846,8 +839,6 @@ exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
                             },
                             {
                               model: JadwalPiket,
-                              where: {persetujuan_fasil: 2},
-
                               include : {
                                 model: Pengguna,
                                 as: 'nik_pic_piket',
@@ -969,8 +960,6 @@ exports.getDataBuktiTemuanMejaFasilitator= (req,res, next) => {
                             },
                             {
                               model: JadwalPiket,
-                              where: {persetujuan_fasil: 2},
-
                               include : {
                                 model: Pengguna,
                                 as: 'nik_pic_piket',
@@ -1060,7 +1049,6 @@ exports.getDataBuktiTemuanRuangFasilitator= (req,res, next) => {
                             },
                             {
                               model: JadwalPiket,
-                              where: {persetujuan_fasil: 2},
                               include : {
                                 model: Pengguna,
                                 as: 'nik_pic_piket',

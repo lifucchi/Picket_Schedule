@@ -40,7 +40,7 @@ exports.postLogin = (req, res, next) => {
   Pengguna.findOne({ where: { nik: nik } })
     .then(user => {
       if (!user) {
-        req.flash('error', 'User gaada');
+        req.flash('error', 'User Tidak Ditemukan');
         return res.redirect('/');
       }
       bcrypt
@@ -85,31 +85,58 @@ exports.getLogout = (req, res, next) => {
 
 exports.changePassword = (req, res, next) => {
   let message = req.flash('error');
+  console.log("masuk sini kah?");
+
   res.render('login/changePassword', {
     path: '/',
-    pageTitle: 'ganti Password',
+    pageTitle: 'Ganti Password',
     errorMessage: message
   });
 };
 
 exports.changePasswordPengguna = (req, res, next) => {
   let message = req.flash('error');
+  const nik = req.session.user.nik;
+  const passwordnew = req.body.changePassword;
+  const passwordnow = req.body.Password;
+  console.log(nik);
+  console.log(passwordnew);
+  console.log(passwordnow);
+  Pengguna.findOne({ where: { nik: nik } })
+    .then(user => {
+      if (!user) {
+        req.flash('error', 'User Tidak Ditemukan');
+        return res.redirect('/');
+      }
+      bcrypt
+        .compare(passwordnow, user.password)
+        .then(doMatch => {
+          if (doMatch) {
+            console.log("password match");
+            Pengguna.findByPk(nik)
+              .then( pengguna => {
+                  return bcrypt.hash(passwordnew,12)
+                  .then(hashedPassword => {
+                    pengguna.password = hashedPassword;
+                    return pengguna.save();
+                }).then(result => {
+                  console.log('UPDATED PASSWORD!');
+              }).catch(err => console.log(err));
+              })
+              .catch(err => console.log(err));
 
-  const password = req.body.changePassword;
+              res.redirect('/');
+              
+          }
 
-    Pengguna.findByPk(req.session.user.nik)
-      .then( pengguna => {
-          return bcrypt.hash(password,12)
-          .then(hashedPassword => {
-            pengguna.password = hashedPassword;
-            return pengguna.save();
+          req.flash('error', 'Password saat ini salah');
+          res.redirect('/changePassword');
         })
-      }).then(result => {
-        console.log('UPDATED PASSWORD!');
-        res.redirect('/');
-
-      })
-      .catch(err => console.log(err));
-
+        .catch(err => {
+          console.log(err);
+          // res.redirect('/');
+        });
+    })
+    .catch(err => console.log(err));
 
 };

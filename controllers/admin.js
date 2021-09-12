@@ -162,6 +162,8 @@ exports.getAdminDashboard = (req,res) => {
             lantaiTerbaik[1] = 2;
           }
 
+          res.locals.mejaTerbaik = count[0][0];
+          res.locals.lantaiTerbaik = lantaiTerbaik;
 
 
           res.render('./admin/admin', {

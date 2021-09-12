@@ -63,31 +63,74 @@
 
         <% if (path === '/bulanan') {%>
 
+          <div class="uk-grid uk-grid-width-large-1 uk-grid-width-medium-1 uk-grid-medium"  data-uk-grid-margin >
+              <div class="">
+                <div class="md-card">
+                  <div class="md-card-content uk-align-center">
+                    <h2 class="uk-text-center uk-margin-bottom"> Keterangan Hasil Penilaian Meja </h2>
+                    <hv>
+
+                      <h3 class="uk-text-center">
+                    	>= 4.5 Consistent Star
+                      <br>
+                    	>= 4 Future Star
+                      <br>
+                    	>= 3.5 Utility Hi-Pro
+                      <br>
+                    	>= 3 Contributor
+                      <br>
+                    	< 3 Iceberg
+                      <br>
+
+                      </h3>
+                  </div>
+
+                </div>
+              </div>
+
+
+              <div>
+                <div class="md-card">
+                  <div class="md-card-content">
+                    <h2 class="uk-text-center uk-margin-bottom">Nilai Tertinggi</h2>
+                    <% if (mejaTerbaik) {%>
+                      <div class="uk-grid">
+                          <div class="uk-width-1-2">
+                            <div class="uk-panel">
+                                <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                                <% if (mejaTerbaik.bobotmeja >= 4.5 ) {%>
+                                  <h3 class="uk-text-center"> Consistent Star </h3>
+                                <% }else if (mejaTerbaik.bobotmeja >= 4){%>
+                                  <h3 class="uk-text-center"> Future Star </h3>
+                                <% }else if (mejaTerbaik.bobotmeja >= 3.5 ){%>
+                                  <h3 class="uk-text-center"> Utility Hi-Pro </h3>
+
+                                <% }else if (mejaTerbaik.bobotmeja >= 3){%>
+                                  <h3 class="uk-text-center"> Contributor </h3>
+
+                                <% }else if (mejaTerbaik.bobotmeja < 3){%>
+                                  <h3 class="uk-text-center"> Iceberg </h3>
+                                <% }%>
+
+                                <h2 class=" uk-text-center uk-text-bold"> <%= mejaTerbaik.bobotmeja %> </h2>
+                            </div>
+                          </div>
+                          <div class="uk-width-1-2">
+                            <h3 class="uk-text-center">Level <%= mejaTerbaik.meja.pengguna.level %></h3>
+                            <h3 class="uk-text-center"><%= mejaTerbaik.meja.pengguna.nama %>   </h3>
+                          </div>
+                      </div>
+                      <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
         <div class="md-card">
           <div class="md-card-content">
             <h2> <%= bulan  %>  </h2>
-
-            <!-- <div class="uk-grid">
-                <div class="uk-width-1-1">
-                    <div class="md-card">
-                        <div class="md-card-toolbar">
-                            <div class="md-card-toolbar-actions">
-                                <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
-                                <i class="md-icon material-icons">&#xE5D5;</i>
-                            </div>
-                            <h3 class="md-card-toolbar-heading-text">
-                                Chart
-                            </h3>
-                        </div>
-                        <div class="md-card-content">
-                            <div class="chartist-wrapper">
-                                <div id="chartist_meja_lines_bulanan" class="chartist"></div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div> -->
 
             <div class="uk-width-large-1" >
                 <div class="md-card"  >
@@ -104,7 +147,11 @@
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 1</h4>
-                        <div id="chartist_meja1_lines_bulanan" class="chartist"></div>
+                        <div style="overflow-x: scroll;">
+
+                        <div style="width:400vh; height:500px;"  id="chartist_meja1_lines_bulanan" class="chartist"></div>
+                      </div>
+
                     </div>
                 </div>
             </div>
@@ -113,7 +160,11 @@
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 2</h4>
-                        <div id="chartist_meja2_lines_bulanan" class="chartist"></div>
+                        <div style="overflow-x: scroll;">
+
+                        <div style="width:400vh; height:500px;" id="chartist_meja2_lines_bulanan" class="chartist"></div>
+                      </div>
+
                     </div>
                 </div>
             </div>

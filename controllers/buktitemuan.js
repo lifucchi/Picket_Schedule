@@ -87,7 +87,7 @@ exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
                               where: {
                                 [Op.and]:
                                 [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
-                                {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
+                                {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)}]
                               },
                               include : {
                                 model: Pengguna,
@@ -280,7 +280,7 @@ exports.getDataBuktiTemuanMejaFilter= (req,res, next) => {
                               where: {
                                 [Op.and]:
                                 [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
-                                {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
+                                {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)}]
                               },
                               include : {
                                 model: Pengguna,

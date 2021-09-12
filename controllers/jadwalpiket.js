@@ -422,7 +422,10 @@ exports.getChecklistPiket = (req,res, next) => {
       model: Pengguna,
       as: 'nik_pic_fasil',
     }
-  ]
+  ],
+  order: [
+      ['tanggal', 'DESC'],
+  ],
   })
   .then(jadwalpiket => {
     res.render('./anggota/checklistpiket', {

@@ -213,6 +213,11 @@ Penilaian_meja.belongsTo(Jadwal_piket);
 // penilaian meja -> bukti Temuan
 Bukti_temuan.belongsTo(Penilaian_meja, { onDelete:'CASCADE'});
 Penilaian_meja.hasMany(Bukti_temuan);
+
+// Bukti temuan <- Pengguna
+Bukti_temuan.belongsTo(Pengguna);
+Pengguna.hasMany(Bukti_temuan);
+
 // var job = new CronJob('0 0 0 * * *', function() {
 //  //will run every day at 12:00 AM
 // });

@@ -90,34 +90,6 @@ app.use(multer({storage : fileStorage, fileFilter: imageFilter}).fields(
   ));
 
 
-// app.use("/excel",express.static(path.join(__dirname, 'excel')));
-
-// untuk file
-// const excelFilter = (req, file, cb) => {
-//   if (
-//     file.mimetype.includes("excel") ||
-//     file.mimetype.includes("spreadsheetml")
-//   ) {
-//     cb(null, true);
-//   } else {
-//     cb("Please upload only excel file.", false);
-//   }
-// };
-//
-// var storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "excel/");
-//   },
-//   filename: (req, file, cb) => {
-//     console.log(file.originalname);
-//     cb(null, `${Date.now()}-jadwalpiket-${file.originalname}`);
-//   },
-// });
-//
-// app.use(multer({storage : storage, fileFilter: excelFilter}).single('excel'));
-
-
-
 app.use(
   session({
     secret: 'my secret',
@@ -146,6 +118,66 @@ app.use((req, res, next) => {
   res.locals.session = req.session;
   // res.locals.csrfToken = req.csrfToken();
   next();
+});
+
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+
+  if (req.session.user.peran === "Anggota" ){
+      const belumchecklist =
+      Jadwal_piket.count(
+        {
+          where: {
+            nikpicpiket: req.session.user.nik,
+            status_piket: 0
+        },
+      });
+
+    Promise
+        .all([belumchecklist])
+        .then(count => {
+            console.log('**********COMPLETE RESULTS****************');
+            console.log(count[0]); // user profile
+            res.locals.belumchecheklist = count[0];
+            next();
+
+        })
+        .catch(err => {
+            console.log('**********ERROR RESULT****************');
+            console.log(err);
+        });
+
+  }else if(req.session.user.peran === "Fasilitator"){
+    const belumlaporan =
+    Jadwal_piket.count(
+      {
+        where: {
+          nikpicfasil: req.session.user.nik,
+          status_piket: 2,
+          persetujuan_fasil: 0
+      },
+    });
+
+  Promise
+      .all([belumlaporan])
+      .then(count => {
+          console.log('**********COMPLETE RESULTS****************');
+          console.log(count[0]); // user profile
+          res.locals.belumlaporan = count[0];
+          next();
+
+      })
+      .catch(err => {
+          console.log('**********ERROR RESULT****************');
+          console.log(err);
+      });
+
+  }else if(req.session.user.peran === "Admin"){
+    next();
+
+  }
 });
 
 // routes

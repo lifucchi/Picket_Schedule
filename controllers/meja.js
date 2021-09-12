@@ -102,6 +102,9 @@ exports.getDataMejaAnggota = (req,res, next) => {
   req.user
   .getPemilikJadwal({
     where: {tanggal: nowTanggal},
+    order: [
+        ['persetujuanpicpiket', 'ASC'],
+    ],
   })
   .then( result => {
     if (result.length === 0){
@@ -110,7 +113,7 @@ exports.getDataMejaAnggota = (req,res, next) => {
           path: '/checklistmeja'
         })
       }
-
+      console.log("TES");
     Penilaian_meja
     .findAll({
       where: {jadwalPiketId: result[0].dataValues.id},
@@ -124,11 +127,12 @@ exports.getDataMejaAnggota = (req,res, next) => {
             model: Pengguna
           }
         }
-      ]
+      ],
+      order: [
+          ['bobotmeja', 'ASC'],
+      ],
     })
     .then( penilaianmeja => {
-      console.log("penilaian meja");
-      console.log(penilaianmeja);
       return res.render('./anggota/checklistmeja', {
         tables: penilaianmeja,
         pageTitle: 'Checklist Meja',
@@ -196,10 +200,6 @@ exports.postNilaiMeja = (req,res, next) => {
   const id = req.body.mejaId;
   const nilai = req.body.nilai;
 
-  console.log("ini nilai");
-  console.log(nilai);
-  console.log("ini meja");
-  console.log(id);
 
   Penilaian_meja
   .findByPk(id)
@@ -294,7 +294,11 @@ exports.getDataMeja = (req,res, next) => {
             model: Pengguna
           }
         }
-      ]
+      ],
+      order: [
+          ['persetujuanpicpiket', 'DESC'],
+      ],
+
     })
     .then( penilaianmeja => {
       console.log("penilaian meja");

@@ -28,7 +28,7 @@ router.get('/checklistmeja/:mejaId', isAuth, isRole('Anggota'),  mejaController.
 router.get('/checklistruang/:ruangId', isAuth, isRole('Anggota'), ruangController.getDataRuang);
 
 
-router.get('/checklistmeja', isAuth,isRole('Anggota'), mejaController.getDataMejaAnggota);
+// router.get('/checklistmeja', isAuth,isRole('Anggota'), mejaController.getDataMejaAnggota);
 router.get('/checklistmeja/detail/:mejaId',isRole('Anggota'), isAuth,  mejaController.getDataMejaDetail);
 router.post('/checklistmeja/nilai', isAuth, isRole('Anggota'), mejaController.postNilaiMeja);
 router.post('/checklistmeja/bukti', isAuth, isRole('Anggota'), mejaController.postBuktiTemuan);

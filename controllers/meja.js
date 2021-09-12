@@ -173,8 +173,10 @@ const id = req.params.mejaId;
     const buktiTemuan = Bukti_temuan.findAll({
       where: {penilaianMejaId: id}
     });
+
+    const member = Pengguna.findAll()
     Promise
-        .all([buktiTemuan])
+        .all([buktiTemuan,member])
         .then(bukti => {
             console.log('**********COMPLETE RESULTS****************');
             console.log(bukti);
@@ -220,6 +222,8 @@ exports.postBuktiTemuan = (req,res, next) => {
   const id = req.body.mejaId;
   const tanggal = req.body.tanggal;
   const deskripsi = req.body.deskripsi;
+  const tindaklanjut = req.body.tindaklanjut;
+
   const image = req.files.image;
 
   if (image != null ){
@@ -228,7 +232,8 @@ exports.postBuktiTemuan = (req,res, next) => {
       { fotosebelum:imgUrl,
         deskripsi_sebelum:deskripsi,
         deadline:tanggal,
-        penilaianMejaId: id
+        penilaianMejaId: id,
+        penggunaNik: tindaklanjut
       }
     )
     .then(result => {
@@ -241,7 +246,9 @@ exports.postBuktiTemuan = (req,res, next) => {
       {
         deskripsi_sebelum:deskripsi,
         deadline:tanggal,
-        penilaianMejaId: id
+        penilaianMejaId: id,
+        penggunaNik: tindaklanjut
+        
     }
   )
   .then(result => {

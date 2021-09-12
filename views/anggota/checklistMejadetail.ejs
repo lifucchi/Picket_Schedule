@@ -58,14 +58,6 @@
             <div class="md-card">
                 <div class="md-card-content">
                     <div class="uk-margin-bottom" data-uk-margin>
-                        <!-- <a href="#" class="md-btn"><i class="material-icons">&#xE254;</i>Nilai</a> -->
-                        <!-- <div class="md-btn-group"> -->
-                            <!-- <a class="md-btn" href="#">Barang Temuan</a> -->
-                            <!-- <a href="#" class="md-btn">Close Issue</a> -->
-                        <!-- </div> -->
-                        <!-- <a href="#" class="md-btn md-btn-warning">Check !!</a> -->
-
-                        <!-- <div class="md-card uk-margin-medium-bottom"> -->
 
                             <div class="uk-width-medium-1">
                                 <!-- <div class="md-card"> -->
@@ -148,6 +140,8 @@
                                                           <div class="uk-width-medium-1-3">
                                                               <div class="uk-input-group">
                                                                       <input type="hidden" name="mejaId" value="<%= tables.id%>">
+                                                                      <input type="hidden" name="tindaklanjut" value="<%= tables.meja.pengguna.nama%>">
+
                                                                       <button class="md-btn md-btn-success" type="submit" name="button">Save</button>
                                                               </div>
                                                           </div>
@@ -190,6 +184,8 @@
                                                         <div class="uk-width-medium-1-3">
                                                             <div class="uk-input-group">
                                                                     <input type="hidden" name="mejaId" value="<%= tables.id%>">
+                                                                    <input type="hidden" name="tindaklanjut" value="<%= tables.meja.pengguna.nik%>">
+
                                                                     <button class="md-btn md-btn-success" type="submit" name="button">Save</button>
                                                             </div>
                                                         </div>

@@ -127,7 +127,8 @@ exports.getDataBuktiTemuanRuangDetail= (req,res, next) => {
 
   Bukti_temuan.findByPk(id, {
     include: [
-      {model: Penilaian_ruang,
+      {
+        model: Penilaian_ruang,
         include: [
           {model: Ruang,
             include: {
@@ -138,14 +139,16 @@ exports.getDataBuktiTemuanRuangDetail= (req,res, next) => {
           include: {
             model: Pengguna,
             as: 'nik_pic_piket',
-          }}
+          }},
         ]
+      },
+      {
+        model: Pengguna
       }
     ]
   })
   .then(bukti => {
     console.log('**********COMPLETE RESULTS****************');
-    console.log(bukti);
     res.render('./admin/buktitemuanruangdetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Ruang',
@@ -669,8 +672,12 @@ exports.getDataBuktiTemuanRuangAnggotaDetail= (req,res, next) => {
           include: {
             model: Pengguna,
             as: 'nik_pic_piket',
-          }}
+          }},
+
         ]
+      },
+      {
+        model: Pengguna
       }
     ]
   })
@@ -740,7 +747,6 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
                           include : [
                             {
                               model: Ruang,
-                              where: {penggunaNik: req.session.user.nik},
                               include : {
                                 model: Pengguna,
                               }
@@ -754,7 +760,12 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }]
+                        },
+                        {
+                          model: Pengguna,
+                          where: {nik: req.session.user.nik},
+                        }
+                      ]
                       }
                     );
 
@@ -793,8 +804,11 @@ exports.getDataTindakLanjutRuangAnggotaDetail= (req,res, next) => {
           include: {
             model: Pengguna,
             as: 'nik_pic_piket',
-          }}
+          }},
+
         ]
+      },
+      {model: Pengguna
       }
     ]
   })
@@ -885,9 +899,9 @@ exports.getDataTindakLanjutMejaFasilitatorDetail= (req,res, next) => {
           include: {
             model: Pengguna,
             as: 'nik_pic_piket',
-          }}
+          }},
         ]
-      }
+      },
     ]
   })
   .then(bukti => {
@@ -990,7 +1004,6 @@ exports.getDataBuktiTemuanMejaFasilitator= (req,res, next) => {
 };
 
 exports.getDataBuktiTemuanMejaFasilitatorDetail= (req,res, next) => {
-  console.log(req.session.user.nik);
   const id = req.params.buktiId;
 
   Bukti_temuan.findByPk(id, {
@@ -1006,7 +1019,7 @@ exports.getDataBuktiTemuanMejaFasilitatorDetail= (req,res, next) => {
           include: {
             model: Pengguna,
             as: 'nik_pic_piket',
-          }}
+          }},
         ]
       }
     ]
@@ -1094,8 +1107,10 @@ exports.getDataBuktiTemuanRuangFasilitatorDetail= (req,res, next) => {
           include: {
             model: Pengguna,
             as: 'nik_pic_piket',
-          }}
+          }},
         ]
+      },
+      {model: Pengguna
       }
     ]
   })

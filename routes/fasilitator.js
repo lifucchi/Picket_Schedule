@@ -34,6 +34,10 @@ router.get('/tindaklanjut/meja' , isAuth,isRole('Fasilitator'),buktiTemuanContro
 router.get('/tindaklanjut/meja/detail/:buktiId' , isAuth,isRole('Fasilitator'), buktiTemuanController.getDataTindakLanjutMejaFasilitatorDetail);
 router.post('/tindaklanjut/bukti' , isAuth,isRole('Fasilitator'), buktiTemuanController.postTindakLanutFasilitator);
 
+router.get('/tindaklanjut/ruang' , isAuth,isRole('Fasilitator'),buktiTemuanController.getDataTindakLanjutMejaFasilitator);
+router.get('/tindaklanjut/ruang/detail/:buktiId' , isAuth,isRole('Fasilitator'), buktiTemuanController.getDataTindakLanjutMejaFasilitatorDetail);
+router.post('/tindaklanjut/ruang/bukti' , isAuth,isRole('Fasilitator'), buktiTemuanController.postTindakLanutFasilitator);
+
 router.get('/buktitemuan/meja' , isAuth,isRole('Fasilitator'),buktiTemuanController.getDataBuktiTemuanMejaFasilitator);
 router.get('/buktitemuan/meja/detail/:buktiId' , isAuth,isRole('Fasilitator'), buktiTemuanController.getDataBuktiTemuanMejaFasilitatorDetail);
 

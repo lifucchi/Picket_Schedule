@@ -24,12 +24,6 @@
     <!-- altair admin -->
     <link rel="stylesheet" href="/assets/css/main.min.css" media="all">
 
-    <!-- matchMedia polyfill for testing media queries in JS -->
-    <!--[if lte IE 9]>
-        <script type="text/javascript" src="bower_components/matchMedia/matchMedia.js"></script>
-        <script type="text/javascript" src="bower_components/matchMedia/matchMedia.addListener.js"></script>
-    <![endif]-->
-
 </head>
 <body class=" top_menu">
     <!-- main header -->
@@ -133,6 +127,15 @@
                                     <div class="md-list-content">
                                         <span class="md-list-heading"><%= rooms.penilaian_ruang.jadwal_piket.nik_pic_piket.nama %></span>
                                         <span class="uk-text-small uk-text-muted">Penemu</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="md-list-addon-element">
+                                        <img class="md-user-image md-list-addon-avatar" src="/assets/img/avatars/avatar_02_tn.png" alt=""/>
+                                    </div>
+                                    <div class="md-list-content">
+                                        <span class="md-list-heading"><%= rooms.pengguna.nama %></span>
+                                        <span class="uk-text-small uk-text-muted">Petindak Lanjut</span>
                                     </div>
                                 </li>
                                 <li>

@@ -45,8 +45,8 @@
             <div class="md-card">
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
-                  <% if (rooms.length != 0) {%>
                     <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
+                      <% if (rooms.length != 0) {%>
                         <thead>
                             <tr>
                                 <th>Tanggal Piket</th>
@@ -61,7 +61,7 @@
                         <tbody>
                           <% rooms.forEach((room) => { %>
                         <tr>
-                          <td class="uk-text-large uk-text-nowrap"><a href="/fasilitator/buktitemuan/ruang/detail/<%= room.id %>"><%= room.penilaian_ruang.jadwal_piket.tanggal %></a></td>
+                          <td class="uk-text-large uk-text-nowrap"><a href="/fasilitator/tindaklanjut/ruang/detail/<%= room.id %>"><%= room.penilaian_ruang.jadwal_piket.tanggal %></a></td>
                           <td class="uk-text-large uk-text-nowrap"> <img class="img_thumb" src="/<%= room.fotosebelum%>" alt=""> </td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_ruang.jadwal_piket.nik_pic_piket.nama %></td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.deskripsi_sebelum%> </td>
@@ -76,8 +76,8 @@
                         </tr>
                           <% }) %>
                         </tbody>
+                        <%}%>
                     </table>
-                    <%}%>
                 </div>
             </div>
         </div>

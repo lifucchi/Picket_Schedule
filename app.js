@@ -13,6 +13,8 @@ const multer = require('multer');
 const errorController = require('./controllers/error');
 // database
 const sequelize = require('./util/database');
+var Sequelize = require('sequelize')
+var Op = Sequelize.Op;
 // model
 const Pengguna = require('./models/pengguna');
 const Jadwal_piket = require('./models/jadwal_piket');
@@ -133,13 +135,36 @@ app.use((req, res, next) => {
               status_piket: 0
           },
         });
+        const tindaklanjutmeja = Bukti_temuan.count({
+          where:{
+            penggunaNik: req.session.user.nik,
+            penilaianRuangId: {
+            [Op.is]: null,
+          },
+          tinjak_lanjut: 2
+          }
+        });
+
+        const tindaklanjutruang = Bukti_temuan.count({
+          where:{
+            penggunaNik: req.session.user.nik,
+            penilaianMejaId: {
+            [Op.is]: null,
+          },
+          tinjak_lanjut: 2
+          }
+        });
 
       Promise
-          .all([belumchecklist])
+          .all([belumchecklist,tindaklanjutmeja,tindaklanjutruang])
           .then(count => {
               console.log('**********COMPLETE RESULTS****************');
-              console.log(count[0]); // user profile
+
               res.locals.belumchecheklist = count[0];
+              res.locals.tindaklanjutmeja = count[1];
+              res.locals.tindaklanjutruang = count[2];
+
+
               next();
 
           })
@@ -158,13 +183,34 @@ app.use((req, res, next) => {
             persetujuan_fasil: 0
         },
       });
+      const tindaklanjutmeja = Bukti_temuan.count({
+        where:{
+          penggunaNik: req.session.user.nik,
+          penilaianRuangId: {
+          [Op.is]: null,
+        },
+        tinjak_lanjut: 2
+        }
+      });
+
+      const tindaklanjutruang = Bukti_temuan.count({
+        where:{
+          penggunaNik: req.session.user.nik,
+          penilaianMejaId: {
+          [Op.is]: null,
+        },
+        tinjak_lanjut: 2
+        }
+      });
 
     Promise
-        .all([belumlaporan])
+        .all([belumlaporan, tindaklanjutmeja, tindaklanjutruang])
         .then(count => {
             console.log('**********COMPLETE RESULTS****************');
-            console.log(count[0]); // user profile
+
             res.locals.belumlaporan = count[0];
+            res.locals.tindaklanjutmeja = count[1];
+            res.locals.tindaklanjutruang = count[2];
             next();
 
         })

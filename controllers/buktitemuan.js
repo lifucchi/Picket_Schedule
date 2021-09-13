@@ -1041,7 +1041,7 @@ exports.getDataBuktiTemuanMejaFasilitatorDetail= (req,res, next) => {
 };
 
 exports.getDataBuktiTemuanRuangFasilitator= (req,res, next) => {
-  console.log(req.session.user.nik);
+
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
@@ -1121,6 +1121,130 @@ exports.getDataBuktiTemuanRuangFasilitatorDetail= (req,res, next) => {
       pageTitle: 'Bukti Temuan Ruang',
       path: '/buktiruang'
     });
+
+  })
+  .catch(err => {
+      console.log('**********ERROR RESULT****************');
+      console.log(err);
+  });
+
+};
+
+exports.getDataTindakLanjutRuangFasilitator= (req,res, next) => {
+
+  const buktiTemuan = Bukti_temuan
+                      .findAll(
+                        {
+                          where: {
+                                    penilaianMejaId: {
+                                    [Op.is]: null,
+                                  },
+                                  penggunaNik: req.session.user.nik
+                                },
+                          include: [
+                        {
+                          model: Penilaian_ruang,
+                          include : [
+                            {
+                              model: Ruang,
+                              include : {
+                                model: Pengguna,
+                              }
+                            },
+                            {
+                              model: JadwalPiket,
+                              include : {
+                                model: Pengguna,
+                                as: 'nik_pic_piket',
+                              }
+                            }
+                          ],
+                          required: true
+                        }]
+                      }
+                    );
+
+
+  Promise
+      .all([buktiTemuan])
+      .then(hasil => {
+          console.log('**********COMPLETE RESULTS****************');
+          res.render('./fasilitator/tindaklanjutruang', {
+            rooms: hasil[0],
+            pageTitle: 'Bukti Temuan Ruang',
+            // path: '/checklistruang'
+          });
+
+      })
+      .catch(err => {
+          console.log('**********ERROR RESULT****************');
+          console.log(err);
+      });
+};
+
+exports.getDataTindakLanjutRuangFasilitatorDetail= (req,res, next) => {
+  const id = req.params.buktiId;
+
+  Bukti_temuan.findByPk(id, {
+    include: [
+      {model: Penilaian_ruang,
+        include: [
+          {model: Ruang,
+            include: {
+              model: Pengguna,
+            }
+          },
+          {model: JadwalPiket,
+          include: {
+            model: Pengguna,
+            as: 'nik_pic_piket',
+          }},
+        ]
+      },
+      {model: Pengguna
+      }
+    ]
+  })
+  .then(bukti => {
+    console.log('**********COMPLETE RESULTS****************');
+    res.render('./fasilitator/tindaklanjutruangdetail', {
+      rooms: bukti,
+      pageTitle: 'Bukti Temuan Ruang',
+      path: '/buktiruang'
+    });
+
+  })
+  .catch(err => {
+      console.log('**********ERROR RESULT****************');
+      console.log(err);
+  });
+
+};
+
+exports.postTindakLanutRuangFasilitator= (req,res, next) => {
+
+  const id = req.body.buktiId;
+  const deskripsi = req.body.deskripsi;
+  const image = req.files.image;
+
+  Bukti_temuan.findByPk(id)
+  .then(bukti => {
+    console.log('**********COMPLETE RESULTS****************');
+    if (image != null ){
+        const imgUrl = image[0].path;
+        bukti.deskripsi_sesudah=deskripsi;
+        bukti.fotosesudah = imgUrl;
+        bukti.tinjak_lanjut = 1;
+        return bukti.save();
+
+        }else {
+          bukti.deskripsi_sesudah = deskripsi;
+          bukti.tinjak_lanjut = 1;
+          return bukti.save();
+        }
+  })
+  .then( () => {
+      res.redirect('/fasilitator/tindaklanjut/ruang/detail/'+id)
 
   })
   .catch(err => {

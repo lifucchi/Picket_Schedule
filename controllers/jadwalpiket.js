@@ -578,9 +578,11 @@ exports.getLaporan = (req,res) => {
     {
       model: Pengguna,
       as: 'nik_pic_fasil',
-
     }
-  ]
+  ],
+  order: [
+      ['tanggal', 'DESC'],
+  ],
 })
 
 

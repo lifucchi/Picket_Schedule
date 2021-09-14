@@ -8,47 +8,22 @@ const sequelize = require('../util/database');
 var Sequelize = require('sequelize');
 var Op = Sequelize.Op;
 
-
-// Admin
-// exports.getDataRuangAdmin= (req,res, next) => {
-//     Pengguna.findAll()
-//     .then(pengguna => {
-//       Ruang.findAll( {include: Pengguna, as: 'PemilikMeja'} )
-//       .then( ruang => {
-//         res.render('./admin/checklistruang', {
-//           rooms: ruang,
-//           users: pengguna,
-//           pageTitle: 'Checklist Ruang',
-//           path: '/checklistruang'
-//         });
-//       })
-//     })
-//     .catch(err => console.log(err));
-// };
-
 exports.getDataRuangAdmin= (req,res, next) => {
-
   const pengguna = Pengguna.findAll();
   const ruang = Ruang.findAll( {include: Pengguna});
-
   Promise
       .all([pengguna, ruang])
       .then(hasil => {
-          console.log('**********COMPLETE RESULTS****************');
-          console.log(hasil[0]);
           res.render('./admin/checklistruang', {
             rooms: hasil[1],
             users: hasil[0],
             pageTitle: 'Checklist Ruang',
             path: '/checklistruang'
           });
-
       })
       .catch(err => {
-          console.log('**********ERROR RESULT****************');
           console.log(err);
       });
-
 };
 
 exports.postAddDataRuang = (req,res,next) => {
@@ -62,8 +37,9 @@ exports.postAddDataRuang = (req,res,next) => {
     standar:standar,
     poin_ruang: poin_ruang,
     penggunaNik: pic_ruang
-  }).then(
-    res.redirect('/admin/checklistruang')
+  }).then( result =>{
+    res.redirect('/admin/checklistruang');
+    }
   ).catch(err => console.log(err));
 };
 
@@ -83,12 +59,10 @@ exports.postEditRuang = ( req,res, next) => {
       return ruang.save();
     })
     .then(result => {
-      console.log('UPDATED RUANG!');
       res.redirect('/admin/checklistruang');
     })
     .catch(err => console.log(err));
 };
-
 
 exports.postDeleteRuang = ( req,res, next) => {
   const id = req.body.ruangId;
@@ -98,11 +72,9 @@ exports.postDeleteRuang = ( req,res, next) => {
       return ruang.destroy();
     })
     .then(result => {
-      console.log('DESTROYED RUANG');
       res.redirect('/admin/checklistruang');
     })
     .catch(err => console.log(err));
-
 };
 
 // ANGOTA
@@ -119,14 +91,14 @@ exports.getDataRuangAnggota = (req,res, next) => {
         return res.render('./anggota/checklistruang', {
           pageTitle: 'Checklist Ruang',
           path: '/checklistruang'
-        })
+        });
       }
       Penilaian_ruang
       .findAll({
         where: {jadwalPiketId: result[0].dataValues.id},
           include: [
             {
-            model: JadwalPiket,
+            model: JadwalPiket
           },
           {
             model: Ruang,
@@ -144,8 +116,7 @@ exports.getDataRuangAnggota = (req,res, next) => {
           pageTitle: 'Checklist Ruang',
           path: '/checklistruangada'
         });
-      })
-
+      });
   })
     .catch(err => console.log(err));
 };
@@ -158,11 +129,11 @@ const id = req.params.ruangId;
       model: JadwalPiket,
       include : [{
         model: Pengguna,
-        as: 'nik_pic_piket',
+        as: 'nik_pic_piket'
       },
       {
         model: Pengguna,
-        as: 'nik_pic_fasil',
+        as: 'nik_pic_fasil'
       }
     ]},
     {
@@ -180,18 +151,14 @@ const id = req.params.ruangId;
     const users = Pengguna.findAll({
       where: {
                 peran: {
-                [Op.not]: 'Admin',
+                [Op.not]: 'Admin'
               }
-            },
-
-
+            }
     });
 
     Promise
         .all([buktiTemuan,users])
         .then(bukti => {
-            console.log('**********COMPLETE RESULTS****************');
-
             res.render('./anggota/checklistruangdetail', {
               room: room,
               pageTitle: 'Checklist Ruang',
@@ -199,7 +166,6 @@ const id = req.params.ruangId;
               buktiTemuan: bukti[0],
               users:bukti[1]
             });
-
         })
         .catch(err => {
             console.log('**********ERROR RESULT****************');
@@ -209,7 +175,6 @@ const id = req.params.ruangId;
 
   })
   .catch(err => console.log(err));
-
 };
 
 exports.postNilaiRuang = (req,res, next) => {
@@ -223,12 +188,9 @@ exports.postNilaiRuang = (req,res, next) => {
     return penilaian.save();
   })
   .then(result => {
-    console.log('UPDATED NILAI!');
     res.redirect('/anggota/checklistruang/detail/'+id);
   })
   .catch(err => console.log(err));
-
-
 };
 
 exports.postBuktiTemuan = (req,res, next) => {
@@ -238,14 +200,8 @@ exports.postBuktiTemuan = (req,res, next) => {
   const tindaklanjut = req.body.tindaklanjut;
   const image = req.files.image;
 
-  if (image != null ){
+  if (image !== undefined ){
     const imgUrl = image[0].path;
-
-    console.log(imgUrl);
-    console.log("tanggal " + tanggal);
-    console.log("deskripsi " +deskripsi);
-    console.log("id " + id);
-
     Bukti_temuan.create(
       { fotosebelum:imgUrl,
         deskripsi_sebelum:deskripsi,
@@ -255,7 +211,6 @@ exports.postBuktiTemuan = (req,res, next) => {
       }
     )
     .then(result => {
-        console.log('UPDATED BUKTI!');
         res.redirect('/anggota/checklistruang/detail/'+id);
       })
     .catch(err => console.log(err));
@@ -271,13 +226,10 @@ exports.postBuktiTemuan = (req,res, next) => {
       }
     )
     .then(result => {
-        console.log('UPDATED BUKTI!');
         res.redirect('/anggota/checklistruang/detail/'+id);
       })
     .catch(err => console.log(err));
-
   }
-
 };
 
 exports.postCheckPic = (req,res, next) => {
@@ -289,7 +241,6 @@ exports.postCheckPic = (req,res, next) => {
     return penilaian.save();
   })
   .then(result => {
-    console.log('UPDATED NILAI!');
     res.redirect('/anggota/checklistruang/detail/'+id);
   })
   .catch(err => console.log(err));
@@ -299,7 +250,6 @@ exports.postCheckPic = (req,res, next) => {
 
 exports.getDataRuang = (req,res, next) => {
   const id = req.params.ruangId;
-
       Penilaian_ruang
       .findAll({
         where: {jadwalPiketId: id},
@@ -322,8 +272,6 @@ exports.getDataRuang = (req,res, next) => {
           path: '/checklistruangada',
           piketId: id
         });
-
   })
     .catch(err => console.log(err));
-
 };

@@ -7,7 +7,6 @@ const Bukti_temuan = require('../models/bukti_temuan');
 const { Op } = require("sequelize");
 
 // ADMIN
-
 exports.getDataMejaAdmin = (req,res, next) => {
   Pengguna.findAll()
   .then(pengguna => {
@@ -19,7 +18,7 @@ exports.getDataMejaAdmin = (req,res, next) => {
         pageTitle: 'Checklist Meja',
         path: '/checklistmeja'
       });
-    })
+    });
   })
   .catch(err => console.log(err));
 };
@@ -30,7 +29,7 @@ exports.postAddDataMeja = (req,res,next) => {
 
   Meja.create({
     penggunaNik: pemilik_meja,
-    standar:standar,
+    standar:standar
   }).then(
     res.redirect('/admin/checklistmeja')
   ).catch(err => console.log(err));
@@ -43,8 +42,9 @@ exports.postAddDataAllMeja = (req,res,next) => {
   .findAll({ where: {peran: { [Op.not] : 'Admin'}}})
   .then( pemilik => {
     var pemilikmeja = [];
+    var penObj = {};
     for (var i = 0; i < pemilik.length; i++){
-      var penObj = {
+      penObj = {
         penggunaNik: pemilik[i].dataValues.nik,
         standar:standar
       };
@@ -55,8 +55,6 @@ exports.postAddDataAllMeja = (req,res,next) => {
     .then( res.redirect('/admin/checklistmeja') );
   })
   .catch(err => console.log(err));
-
-
 };
 
 
@@ -69,7 +67,6 @@ exports.postEditMeja = ( req,res, next) => {
     .then(meja => {
       meja.penggunaNik = pemilik;
       meja.standar = standar;
-
       return meja.save();
     })
     .then(result => {
@@ -104,22 +101,21 @@ exports.getDataMejaAnggota = (req,res, next) => {
     where: {tanggal: nowTanggal},
     order: [
         ['persetujuanpicpiket', 'ASC'],
-    ],
+    ]
   })
   .then( result => {
     if (result.length === 0){
-        return res.render('./anggota/checklistmeja', {
+         res.render('./anggota/checklistmeja', {
           pageTitle: 'Checklist Meja',
           path: '/checklistmeja'
-        })
+        });
       }
-      console.log("TES");
     Penilaian_meja
     .findAll({
       where: {jadwalPiketId: result[0].dataValues.id},
         include: [
           {
-          model: JadwalPiket,
+          model: JadwalPiket
         },
         {
           model: Meja,
@@ -129,16 +125,16 @@ exports.getDataMejaAnggota = (req,res, next) => {
         }
       ],
       order: [
-          ['bobotmeja', 'ASC'],
+          ['bobotmeja', 'ASC']
       ],
     })
     .then( penilaianmeja => {
-      return res.render('./anggota/checklistmeja', {
+       res.render('./anggota/checklistmeja', {
         tables: penilaianmeja,
         pageTitle: 'Checklist Meja',
         path: '/checklistmejaada'
       });
-    })
+    });
   })
     .catch(err => console.log(err));
 
@@ -152,11 +148,11 @@ const id = req.params.mejaId;
       model: JadwalPiket,
       include : [{
         model: Pengguna,
-        as: 'nik_pic_piket',
+        as: 'nik_pic_piket'
       },
       {
         model: Pengguna,
-        as: 'nik_pic_fasil',
+        as: 'nik_pic_fasil'
       }
     ]
     },
@@ -174,12 +170,11 @@ const id = req.params.mejaId;
       where: {penilaianMejaId: id}
     });
 
-    const member = Pengguna.findAll()
+    const member = Pengguna.findAll();
     Promise
         .all([buktiTemuan,member])
         .then(bukti => {
             console.log('**********COMPLETE RESULTS****************');
-            console.log(bukti);
 
             res.render('./anggota/checklistmejadetail', {
               tables: table,
@@ -202,7 +197,6 @@ exports.postNilaiMeja = (req,res, next) => {
   const id = req.body.mejaId;
   const nilai = req.body.nilai;
 
-
   Penilaian_meja
   .findByPk(id)
   .then(penilaian => {
@@ -210,12 +204,9 @@ exports.postNilaiMeja = (req,res, next) => {
     return penilaian.save();
   })
   .then(result => {
-    console.log('UPDATED NILAI!');
     res.redirect('/anggota/checklistmeja/detail/'+id);
   })
   .catch(err => console.log(err));
-
-
 };
 
 exports.postBuktiTemuan = (req,res, next) => {
@@ -225,8 +216,9 @@ exports.postBuktiTemuan = (req,res, next) => {
   const tindaklanjut = req.body.tindaklanjut;
 
   const image = req.files.image;
+  console.log(image);
 
-  if (image != null ){
+  if (image !== undefined  ){
     const imgUrl = image[0].path;
     Bukti_temuan.create(
       { fotosebelum:imgUrl,
@@ -237,7 +229,6 @@ exports.postBuktiTemuan = (req,res, next) => {
       }
     )
     .then(result => {
-          console.log('UPDATED BUKTI!');
           res.redirect('/anggota/checklistmeja/detail/'+id);
         })
       .catch(err => console.log(err));
@@ -248,22 +239,14 @@ exports.postBuktiTemuan = (req,res, next) => {
         deadline:tanggal,
         penilaianMejaId: id,
         penggunaNik: tindaklanjut
-        
+
     }
   )
   .then(result => {
-        console.log('UPDATED BUKTI!');
         res.redirect('/anggota/checklistmeja/detail/'+id);
       })
     .catch(err => console.log(err));
 }
-
-  // console.log(imgUrl);
-  // console.log("tanggal " + tanggal);
-  // console.log("deskripsi " +deskripsi);
-  // console.log("id " + id);
-
-
 
 
 };
@@ -277,23 +260,19 @@ exports.postCheckPic = (req,res, next) => {
     return penilaian.save();
   })
   .then(result => {
-    console.log('UPDATED!');
     res.redirect('/anggota/checklistmeja/detail/'+id);
   })
   .catch(err => console.log(err));
-
-
 };
 
 exports.getDataMeja = (req,res, next) => {
   const id = req.params.mejaId;
-
     Penilaian_meja
     .findAll({
       where: {jadwalPiketId: id},
         include: [
           {
-          model: JadwalPiket,
+          model: JadwalPiket
         },
         {
           model: Meja,
@@ -303,20 +282,16 @@ exports.getDataMeja = (req,res, next) => {
         }
       ],
       order: [
-          ['persetujuanpicpiket', 'DESC'],
-      ],
-
+          ['persetujuanpicpiket', 'DESC']
+      ]
     })
     .then( penilaianmeja => {
-      console.log("penilaian meja");
-      console.log(penilaianmeja);
-      return res.render('./anggota/checklistmeja', {
+      res.render('./anggota/checklistmeja', {
         tables: penilaianmeja,
         pageTitle: 'Checklist Meja',
         path: '/checklistmejaada',
-        piketId: id,
+        piketId: id
       });
     })
     .catch(err => console.log(err));
-
 };

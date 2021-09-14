@@ -2,37 +2,31 @@ const path = require('path');
 const express = require('express');
 const bodyPaser = require('body-parser');
 const session = require('express-session');
-var MemoryStore = require('memorystore')(session);
-var cookieParser = require('cookie-parser');
+const MemoryStore = require('memorystore')(session);
+const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
 const moment = require('moment');
 const multer = require('multer');
 const csrf = require('csurf');
-
 const app = express();
 const csrfProtection = csrf();
-
 const port = 8080;
-
 // controller
 const errorController = require('./controllers/error');
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const anggotaRoutes = require('./routes/anggota');
 const fasilitatorRoutes = require('./routes/fasilitator');
-
 // database
 const sequelize = require('./util/database');
-var Sequelize = require('sequelize')
-var Op = Sequelize.Op;
-
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op;
 // model
 const Pengguna = require('./models/pengguna');
 const Jadwal_piket = require('./models/jadwal_piket');
 const Artikel = require('./models/artikel');
 const Bukti_temuan = require('./models/bukti_temuan');
-
 const Penilaian_meja = require('./models/penilaian_meja');
 const Penilaian_ruang = require('./models/penilaian_ruang');
 const Ruang = require('./models/ruang');
@@ -40,14 +34,12 @@ const Meja = require('./models/meja');
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
-
 app.use(bodyPaser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/images",express.static(path.join(__dirname, 'images')));
 app.use("/excel",express.static(path.join(__dirname, 'excel')));
 app.use(cookieParser());
 
-// untuk imag
 const imageFilter = (req, file, cb) => {
   if (file.fieldname === "image") {
     if (file.mimetype === 'image/png' ||
@@ -72,7 +64,6 @@ const imageFilter = (req, file, cb) => {
 };
 
 var fileStorage = multer.diskStorage({
-
   destination: (req, file, cb) => {
     if (file.fieldname === "image") {
       cb(null, "images/");
@@ -80,8 +71,6 @@ var fileStorage = multer.diskStorage({
       cb(null, "excel/");
     }
   },
-
-
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
   },
@@ -100,43 +89,26 @@ app.use(multer({storage : fileStorage, fileFilter: imageFilter}).fields(
   ));
 
 app.set('trust proxy', 1);
-//
-// app.use(
-//   cookieSession({
-//     name: 'session',
-//     keys: ['key1', 'key2']
-//     // secret: 'my secret',
-//     // resave: false,
-//     // saveUninitialized: false,
-//     // store: store
-//   })
-// );
-
 app.use(session({
     cookie: { maxAge: 86400000 },
     store: new MemoryStore({
-      checkPeriod: 86400000 // prune expired entries every 24h
+      checkPeriod: 86400000
     }),
     resave: false,
     saveUninitialized: false,
     secret: 'keyboard cat'
 }));
-
 app.use(flash());
 app.use(csrfProtection);
-
-// sampe sin idulu
 app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
   }else{
-
       Pengguna.findByPk(req.session.user.nik)
         .then(user => {
           req.user = user;
         })
         .catch(err => console.log(err));
-
         if (req.session.user.peran === "Anggota" ){
             const belumchecklist =
             Jadwal_piket.count(
@@ -144,15 +116,15 @@ app.use((req, res, next) => {
                 where: {
                   nikpicpiket: req.session.user.nik,
                   status_piket: 0
-              },
+              }
             });
             const tindaklanjutmeja = Bukti_temuan.count({
               where:{
                 penggunaNik: req.session.user.nik,
                 penilaianRuangId: {
                 [Op.is]: null
-              },
-              tinjak_lanjut: 2
+                },
+                tinjak_lanjut: 2
               }
             });
 
@@ -161,24 +133,20 @@ app.use((req, res, next) => {
                 penggunaNik: req.session.user.nik,
                 penilaianMejaId: {
                 [Op.is]: null
-              },
-              tinjak_lanjut: 2
+                },
+                tinjak_lanjut: 2
               }
             });
 
           Promise
               .all([belumchecklist,tindaklanjutmeja,tindaklanjutruang])
               .then(count => {
-                  console.log('**********COMPLETE RESULTS****************');
-
                   res.locals.belumchecheklist = count[0];
                   res.locals.tindaklanjutmeja = count[1];
                   res.locals.tindaklanjutruang = count[2];
-                  next();
-
+                  return next();
               })
               .catch(err => {
-                  console.log('**********ERROR RESULT****************');
                   console.log(err);
               });
 
@@ -197,10 +165,10 @@ app.use((req, res, next) => {
               penggunaNik: req.session.user.nik,
               penilaianRuangId: {
               [Op.is]: null
-            },
-            tinjak_lanjut: 2
-            }
-          });
+              },
+              tinjak_lanjut: 2
+              }
+            });
 
           const tindaklanjutruang = Bukti_temuan.count({
             where:{
@@ -208,28 +176,25 @@ app.use((req, res, next) => {
               penilaianMejaId: {
               [Op.is]: null
             },
-            tinjak_lanjut: 2
+              tinjak_lanjut: 2
             }
           });
 
         Promise
             .all([belumlaporan, tindaklanjutmeja, tindaklanjutruang])
             .then(count => {
-                console.log('**********COMPLETE RESULTS****************');
-
                 res.locals.belumlaporan = count[0];
                 res.locals.tindaklanjutmeja = count[1];
                 res.locals.tindaklanjutruang = count[2];
-                next();
+                return next();
 
             })
             .catch(err => {
-                console.log('**********ERROR RESULT****************');
                 console.log(err);
             });
 
         }else if(req.session.user.peran === "Admin"){
-          next();
+           return next();
         }
   }
 });
@@ -240,7 +205,6 @@ app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken();
   next();
 });
-
 
 // routes
 app.use(authRoutes);
@@ -253,14 +217,11 @@ app.use(errorController.get404);
 app.use(errorController.get500);
 
 // app.use(errorController.get401);
-
-
 // sync database
 // Pengguna punya banyak jadwal_piket
 Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', foreignKey: 'nikpicpiket', as: 'nik_pic_piket'});
 Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', foreignKey: 'nikpicfasil', as: 'nik_pic_fasil'});
 Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nikpicpiket', as: 'PemilikJadwal'});
-
 
 // pengguna punya banyak standar Meja
 Pengguna.hasOne(Meja , {  foreignKey: 'penggunaNik', as: 'PemilikMeja' });

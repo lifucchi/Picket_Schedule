@@ -1,8 +1,6 @@
 const Pengguna = require('../models/pengguna');
 const bcrypt = require('bcryptjs');
 
-
-
 exports.getDataPengguna = (req,res, next) => {
   Pengguna.findAll()
   .then(pengguna => {
@@ -38,11 +36,11 @@ exports.postAddDataPengguna = ( req,res, next) => {
         peran: peran,
         password: hashedPassword,
         level:level}
-      )
+      );
       })
       .then(result => {
         res.redirect('/admin/pengguna');
-      })
+      });
   })
   .catch(err => console.log(err));
 };
@@ -67,7 +65,6 @@ exports.postEditPengguna = ( req,res, next) => {
   const usernameUp = req.body.username_edit;
   const namaUp = req.body.nama_edit;
   const peranUp = req.body.peran_edit;
-  // const passwordUp = req.body.password_edit;
   const levelUp = req.body.level_edit;
   Pengguna.findByPk(nikUp)
     .then(pengguna => {
@@ -92,7 +89,7 @@ const nikUp = req.body.penggunaId;
         .then(hashedPassword => {
           pengguna.password = hashedPassword;
           return pengguna.save();
-      })
+      });
     }).then(result => {
       console.log('UPDATED PASSWORD!');
       res.redirect('/admin/pengguna');

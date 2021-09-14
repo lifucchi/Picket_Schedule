@@ -3,27 +3,16 @@ const JadwalPiket = require('../models/jadwal_piket');
 const Meja = require('../models/meja');
 const Penilaian_meja = require('../models/penilaian_meja');
 const Penilaian_ruang = require('../models/penilaian_ruang');
-
 const moment = require('moment');
 const Ruang = require('../models/ruang');
 const sequelize = require('../util/database');
-
 var Sequelize = require('sequelize');
 var Op = Sequelize.Op;
 
-
 // RUANG
 exports.getDataRekapitulasiRuang = (req,res) => {
-  // const test = moment().day("Monday").year(year).week(week).toDate();
-  const begin = moment('2021-07-01').startOf('week').isoWeekday(4);
-  const test2 = moment().startOf('week').isoWeekday(1).format('YYYY-MM-DD hh:mm');
-  const endofweek  = moment().endOf('week').isoWeekday(5).format('YYYY-MM-DD hh:mm');
 
-  let currentDate = moment();
-  let weekStart = currentDate.clone().startOf('week').isoWeekday(1);
-  let weekEnd = currentDate.clone().endOf('week').isoWeekday(5);
   var tanggal = moment();
-
   const tanggal2 = moment(tanggal, "DD-MM-YYYY");
   var monday = tanggal2.clone().weekday(1).format("YYYY-MM-DD");
   var friday = tanggal2.clone().weekday(5).format("YYYY-MM-DD");
@@ -36,8 +25,7 @@ exports.getDataRekapitulasiRuang = (req,res) => {
       monday: monday,
       friday: friday,
       path: '/'
-
-    })
+    });
 
   }else if(req.session.user.peran === 'Fasilitator'){
     res.render('./fasilitator/rekapitulasi-ruang', {
@@ -45,8 +33,7 @@ exports.getDataRekapitulasiRuang = (req,res) => {
       monday: monday,
       friday: friday,
       path: '/'
-
-    })
+    });
   }
 };
 
@@ -80,9 +67,9 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
       ],
       attributes: {
       include: [
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
-      group : ['jadwalPiketId'],
+      group : ['jadwalPiketId']
     }
   );
 
@@ -109,17 +96,15 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
       ],
       attributes: {
       include: [
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
-      group : ['jadwalPiketId'],
+      group : ['jadwalPiketId']
     }
   );
 
       Promise
           .all([ruang1, ruang2])
           .then(hasil => {
-              console.log('**********COMPLETE RESULTS****************');
-
             if(req.session.user.peran === 'Anggota') {
               res.render('./anggota/rekapitulasi-ruangfilter', {
                 pageTitle: 'Rekapitulasi',
@@ -128,7 +113,7 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
                 rooms2: hasil[1],
                 monday: monday,
                 friday: friday,
-              })
+              });
 
             }else if(req.session.user.peran === 'Fasilitator'){
               res.render('./fasilitator/rekapitulasi-ruangfilter', {
@@ -138,21 +123,19 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
                 rooms2: hasil[1],
                 monday: monday,
                 friday: friday,
-              })
+              });
 
             }
 
 
           })
           .catch(err => {
-              console.log('**********ERROR RESULT****************');
               console.log(err);
           });
 
 };
 
 exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
-
   const bulanTahun = req.body.tanggal;
   const tahun = moment(bulanTahun, "MMM-YYYY").format('YYYY');
   const bulan = moment(bulanTahun,  "MMM-YYYY").format('MM');
@@ -180,9 +163,9 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
       ],
       attributes: {
       include: [
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
-      group : ['jadwalPiketId'],
+      group : ['jadwalPiketId']
     }
   );
 
@@ -195,7 +178,7 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:2}]
           },
           include : [{
             model: Pengguna,
@@ -209,16 +192,15 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
       ],
       attributes: {
       include: [
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
-      group : ['jadwalPiketId'],
+      group : ['jadwalPiketId']
     }
   );
 
       Promise
           .all([ruang1, ruang2])
           .then(hasil => {
-              console.log('**********COMPLETE RESULTS****************');
 
               if(req.session.user.peran === 'Anggota') {
                 res.render('./anggota/rekapitulasi-ruangfilter', {
@@ -227,7 +209,7 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                   rooms1: hasil[0],
                   rooms2: hasil[1],
                   bulan: bulanTahun
-                })
+                });
 
               }else if(req.session.user.peran === 'Fasilitator'){
                 res.render('./fasilitator/rekapitulasi-ruangfilter', {
@@ -236,7 +218,7 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                   rooms1: hasil[0],
                   rooms2: hasil[1],
                   bulan: bulanTahun
-                })
+                });
 
               }
 
@@ -253,7 +235,6 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
 
   const bulanTahun = req.body.tanggal;
   const tahun = moment(bulanTahun, "MMM-YYYY").format('YYYY');
-
   const ruang1 = Penilaian_ruang.findAll(
     {
       include:[
@@ -262,7 +243,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
           where: {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:2}]
           },
           include : [{
             model: Pengguna,
@@ -277,7 +258,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
       attributes: {
       include: [
           [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan'],
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
         group: [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan']
     }
@@ -291,7 +272,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
           where: {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:2}]
           },
           include : [{
             model: Pengguna,
@@ -306,7 +287,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
       attributes: {
       include: [
           [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan'],
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
         group: [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan']
     }
@@ -315,8 +296,6 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
       Promise
           .all([ruang1, ruang2])
           .then(hasil => {
-              console.log('**********COMPLETE RESULTS****************');
-
               if(req.session.user.peran === 'Anggota') {
                 res.render('./anggota/rekapitulasi-ruangfilter', {
                   pageTitle: 'Rekapitulasi',
@@ -324,7 +303,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
                   rooms1: hasil[0],
                   rooms2: hasil[1],
                   tahun: tahun,
-                })
+                });
 
               }else if(req.session.user.peran === 'Fasilitator'){
                 res.render('./fasilitator/rekapitulasi-ruangfilter', {
@@ -333,11 +312,9 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
                   rooms1: hasil[0],
                   rooms2: hasil[1],
                   tahun: tahun,
-                })
+                });
 
               }
-
-
           })
           .catch(err => {
               console.log('**********ERROR RESULT****************');
@@ -349,13 +326,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
 // MEJS
 
 exports.getDataRekapitulasiMeja = (req,res) => {
-  const begin = moment('2021-07-01').startOf('week').isoWeekday(4);
-  const test2 = moment().startOf('week').isoWeekday(1).format('YYYY-MM-DD hh:mm');
-  const endofweek  = moment().endOf('week').isoWeekday(5).format('YYYY-MM-DD hh:mm');
 
-  let currentDate = moment();
-  let weekStart = currentDate.clone().startOf('week').isoWeekday(1);
-  let weekEnd = currentDate.clone().endOf('week').isoWeekday(5);
   var tanggal = moment();
   const tanggal2 = moment(tanggal, "DD-MM-YYYY");
   var monday = tanggal2.clone().weekday(1).format("YYYY-MM-DD");
@@ -367,7 +338,7 @@ exports.getDataRekapitulasiMeja = (req,res) => {
       monday: monday,
       friday: friday,
       path: '/'
-    })
+    });
 
   }else if(req.session.user.peran === 'Fasilitator'){
     res.render('./fasilitator/rekapitulasi-meja', {
@@ -375,11 +346,8 @@ exports.getDataRekapitulasiMeja = (req,res) => {
       monday: monday,
       friday: friday,
       path: '/'
-    })
-
+    });
   }
-
-
 };
 
 
@@ -398,7 +366,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:2}]
           },
           include : {
             model: Pengguna,
@@ -409,7 +377,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
         {
           model: Meja,
           include : {
-            model: Pengguna,
+            model: Pengguna
           }
         }
       ],
@@ -419,7 +387,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
         ]},
       group : ['penggunaNik'],
       order: [
-          ['bobotmeja', 'DESC'],
+          ['bobotmeja', 'DESC']
       ],
     }
   );
@@ -433,7 +401,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:2}]
           },
           include : {
             model: Pengguna,
@@ -444,7 +412,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
         {
           model: Meja,
           include : {
-            model: Pengguna,
+            model: Pengguna
           }
         }
       ],
@@ -454,7 +422,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
         ]},
       group : ['penggunaNik'],
       order: [
-          ['bobotmeja', 'DESC'],
+          ['bobotmeja', 'DESC']
       ],
     }
   );
@@ -471,7 +439,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
                 rooms1: hasil[0],
                 rooms2: hasil[1],
                 bulan: bulanTahun
-              })
+              });
 
             }else if(req.session.user.peran === 'Fasilitator'){
               res.render('./fasilitator/rekapitulasi-mejafilter', {
@@ -480,13 +448,11 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
                 rooms1: hasil[0],
                 rooms2: hasil[1],
                 bulan: bulanTahun
-              })
+              });
             }
-
-
           })
           .catch(err => {
-              console.log('**********ERROR RESULT****************');
+            console.log('**********ERROR RESULT****************');
               console.log(err);
           });
 

@@ -4,9 +4,9 @@ const moment = require('moment');
 const Penilaian_meja = require('../models/penilaian_meja');
 const JadwalPiket = require('../models/jadwal_piket');
 const Bukti_temuan = require('../models/bukti_temuan');
-const sequelize = require('../util/database')
-var Sequelize = require('sequelize')
-var Op = Sequelize.Op
+const sequelize = require('../util/database');
+var Sequelize = require('sequelize');
+var Op = Sequelize.Op;
 const Meja = require('../models/meja');
 
 
@@ -72,7 +72,7 @@ exports.getDataPenilaianMeja= (req,res, next) => {
           where: { level: 2}
         }
       ]
-    },
+    }
   );
 
 
@@ -109,32 +109,6 @@ exports.getDataFilterPenilaianMeja= (req,res, next) => {
   console.log(bulan);
   let andOp = Op.and;
 
-  // const meja = JadwalPiket.findAll(
-  //   {
-  //     where: {
-  //       [Op.and]:
-  //       [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
-  //       {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-  //       {persetujuan_fasil:2}],
-  //
-  //     },
-  //     include: [
-  //   {
-  //     model: Penilaian_meja,
-  //     include : {
-  //       model: Meja,
-  //       include : {
-  //         model: Pengguna,
-  //       }
-  //     }
-  //   },
-  //   {
-  //     model: Pengguna,
-  //     as: 'nik_pic_piket',
-  //     where: { level: 1}
-  //   }
-  // ]}
-  // );
 
   const meja2 = Penilaian_meja.findAll(
     {
@@ -175,33 +149,7 @@ exports.getDataFilterPenilaianMeja= (req,res, next) => {
     }
   );
 
-  // const meja3 = JadwalPiket.findAll(
-  //   {
-  //     where: {
-  //       [Op.and]:
-  //       [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
-  //       {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-  //       {persetujuan_fasil:2}],
-  //
-  //     },
-  //     include: [
-  //       {
-  //         model: Penilaian_meja,
-  //         include : {
-  //         model: Meja,
-  //         include : {
-  //           model: Pengguna,
-  //         }
-  //       }
-  //       },
-  //       {
-  //         model: Pengguna,
-  //         as: 'nik_pic_piket',
-  //         where: { level: 2}
-  //       }
-  //     ]
-  //   },
-  // );
+
 
 
   Promise
@@ -209,7 +157,7 @@ exports.getDataFilterPenilaianMeja= (req,res, next) => {
       .then(hasil => {
           console.log('**********COMPLETE RESULTS****************');
           for(i = 0; i < hasil[0].length; i++){
-;            hasil[0][i].bobotmeja = parseFloat(hasil[0][i].bobotmeja).toFixed(2);
+            hasil[0][i].bobotmeja = parseFloat(hasil[0][i].bobotmeja).toFixed(2);
           }
           res.render('./admin/rekapitulasi-mejafilter', {
             rooms2: hasil[0],

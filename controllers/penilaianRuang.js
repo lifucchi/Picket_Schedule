@@ -4,9 +4,9 @@ const moment = require('moment');
 const Penilaian_ruang = require('../models/penilaian_ruang');
 const JadwalPiket = require('../models/jadwal_piket');
 const Bukti_temuan = require('../models/bukti_temuan');
-const sequelize = require('../util/database')
-var Sequelize = require('sequelize')
-var Op = Sequelize.Op
+const sequelize = require('../util/database');
+var Sequelize = require('sequelize');
+var Op = Sequelize.Op;
 // let andOp = Op.and
 // const { Op } = require("sequelize");
 
@@ -19,7 +19,7 @@ exports.getDataPenilaianRuang= (req,res, next) => {
     {
       model: Penilaian_ruang,
       include : {
-        model: Ruang,
+        model: Ruang
       }
     },
     {
@@ -38,7 +38,7 @@ exports.getDataPenilaianRuang= (req,res, next) => {
           where: {persetujuan_fasil: 2},
           include : [{
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }]
         },
         {
@@ -54,7 +54,7 @@ exports.getDataPenilaianRuang= (req,res, next) => {
         {
           model: Penilaian_ruang,
           include : {
-          model: Ruang,
+          model: Ruang
         }
         },
         {
@@ -63,7 +63,7 @@ exports.getDataPenilaianRuang= (req,res, next) => {
           where: { level: 2}
         }
       ]
-    },
+    }
   );
 
 
@@ -99,14 +99,14 @@ exports.getDataFilterPenilaianRuang= (req,res, next) => {
         [Op.and]:
         [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
         {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-        {persetujuan_fasil:2}],
+        {persetujuan_fasil:2}]
 
       },
       include: [
         {
           model: Penilaian_ruang,
           include : {
-          model: Ruang,
+          model: Ruang
         }
         },
         {
@@ -115,7 +115,7 @@ exports.getDataFilterPenilaianRuang= (req,res, next) => {
           where: { level: 1}
         }
       ]
-    },
+    }
   );
 
   const ruang2 = Penilaian_ruang.findAll(
@@ -132,7 +132,7 @@ exports.getDataFilterPenilaianRuang= (req,res, next) => {
               },
           include : {
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }
         },
         {
@@ -148,14 +148,14 @@ exports.getDataFilterPenilaianRuang= (req,res, next) => {
         [Op.and]:
         [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
         {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-        {persetujuan_fasil:2}],
+        {persetujuan_fasil:2}]
 
       },
       include: [
         {
           model: Penilaian_ruang,
           include : {
-          model: Ruang,
+          model: Ruang
         }
         },
         {
@@ -164,20 +164,14 @@ exports.getDataFilterPenilaianRuang= (req,res, next) => {
           where: { level: 2}
         }
       ]
-    },
+    }
   );
 
-// const ruang = JadwalPiket.findAll(
-//     {
-//         where: {[Op.and]: [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)}, {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)}]}
-//     }
-// );
 
   Promise
       .all([ruang, ruang2, ruang3])
       .then(hasil => {
           console.log('**********COMPLETE RESULTS****************');
-          // console.log(hasil[0]);
           res.render('./admin/rekapitulasi-ruang', {
             rooms: hasil[0],
             rooms2: hasil[1],
@@ -185,7 +179,6 @@ exports.getDataFilterPenilaianRuang= (req,res, next) => {
             pageTitle: 'Skor Ruang',
             bulanTahun: bulanTahun,
             filter: 'filter'
-            // path: '/checklistruang'
           });
 
       })

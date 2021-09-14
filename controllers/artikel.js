@@ -9,6 +9,7 @@ exports.getDataArtikel = (req,res,next) => {
       articles: artikel,
       pageTitle: 'Artikel',
       path: '/artikel',
+
     });
   })
   .catch(err => console.log(err));
@@ -20,29 +21,37 @@ exports.getFormArtikel = (req,res,next) =>{
     // articles: artikel,
     pageTitle: 'Artikel',
     jenis: 'Tambah',
-    editing: 'no'
+    editing: 'no',
+    // path: '/artikel'
   });
 
 };
 
 exports.getFormUpdateArtikel = (req,res,next) =>{
+  // const id = req.body.update;
+  // var keyword = q.query.keyword;
   const id = req.query.update;
+
+
   Artikel.findByPk(id)
   .then(artikel => {
 
     res.render("./admin/artikel-form", {
+      // articles: artikel,
       pageTitle: 'Artikel',
       article: artikel,
       jenis: 'Update',
       path: '/artikel',
-      editing: 'edit'
+      editing: 'edit',
     });
-  })
+  });
 };
 
 
 
 exports.postUpdateDataArtikel = (req,res,next) =>{
+  // const id = req.body.update;
+  // var keyword = q.query.keyword;
   const id = req.body.update;
   const judul = req.body.judul;
   const konten = req.body.konten;
@@ -52,7 +61,7 @@ exports.postUpdateDataArtikel = (req,res,next) =>{
 
   Artikel.findByPk(id)
     .then(artikel => {
-      if (image != null ){
+      if (image !== null ){
         const oldPhoto = artikel.foto_Artikel;
           if (oldPhoto) {
             const oldPath = path.join(__dirname, "..", oldPhoto);
@@ -79,12 +88,14 @@ exports.postUpdateDataArtikel = (req,res,next) =>{
             artikel.pembuat = pembuat;
             return artikel.save();
           }
-      next()
+      next();
     })
 
   .then(artikel => {
-    res.redirect('/admin/artikel')
-  })
+
+    res.redirect('/admin/artikel');
+
+  });
 };
 
 
@@ -92,9 +103,15 @@ exports.postAddDataArtikel = (req,res,next) => {
   const judul = req.body.judul;
   const konten = req.body.konten;
   const pembuat = req.body.pembuat;
+
   const image = req.files.image;
-  if (image != null ){
+
+
+  console.log(image[0]);
+
+  if (image !== null ){
   const imgUrl = image[0].path;
+  console.log(imgUrl);
 
   Artikel.create({
     judul: judul,
@@ -109,12 +126,15 @@ exports.postAddDataArtikel = (req,res,next) => {
     Artikel.create({
       judul: judul,
       konten: konten,
-      pembuat: pembuat
+      pembuat: pembuat,
       }).then(
         res.redirect('/admin/artikel')
       ).catch(err => console.log(err));
+
   }
+
 };
+
 
 
 exports.postDeleteArtikel = ( req,res, next) => {

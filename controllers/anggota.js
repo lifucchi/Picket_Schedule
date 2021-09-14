@@ -6,10 +6,11 @@ const Penilaian_meja = require('../models/penilaian_meja');
 const Penilaian_ruang = require('../models/penilaian_ruang');
 
 const Ruang = require('../models/ruang');
-const sequelize = require('../util/database')
-const { Op } = require("sequelize");;
+const sequelize = require('../util/database');
+const { Op } = require("sequelize");
 
 exports.getDashboard = (req,res) => {
+  // res.send('<h1>hello admin</h1>')
   const nowTanggal = moment().format('YYYY-MM-DD');
   const nowTanggal2 = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
   JadwalPiket.findAll({
@@ -26,13 +27,14 @@ exports.getDashboard = (req,res) => {
 }).then(piket => {
   var prevMonth = moment(nowTanggal).subtract(1, 'months').endOf('month').format('MM');
   const tahun = moment(nowTanggal).format('YYYY');
+
   const mejaTerbaik = Penilaian_meja.findAll(
     {
         include: [
         {
           model: Meja,
           include: [{
-            model: Pengguna
+            model: Pengguna,
           }],
         },
         {
@@ -41,7 +43,7 @@ exports.getDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:2}],
 
           }
         }
@@ -53,16 +55,16 @@ exports.getDashboard = (req,res) => {
         ]},
       group : ['penggunaNik'],
       order: [
-          [[sequelize.literal('bobotmeja'), 'DESC']]
+          [[sequelize.literal('bobotmeja'), 'DESC']],
       ],
     }
-  )
+  );
 
   const lantaiSatuTerbaik = Penilaian_ruang.findAll(
     {
         include: [
         {
-          model: Ruang
+          model: Ruang,
         },
         {
           model: JadwalPiket,
@@ -70,7 +72,7 @@ exports.getDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:2}],
           },
           include: [{
             model: Pengguna,
@@ -79,7 +81,7 @@ exports.getDashboard = (req,res) => {
           },
           {
             model: Pengguna,
-            as: 'nik_pic_fasil'
+            as: 'nik_pic_fasil',
 
           }
         ]
@@ -91,10 +93,10 @@ exports.getDashboard = (req,res) => {
         ]},
       group : ['jadwalPiketId'],
       order: [
-            [[sequelize.literal('bobotruang'), 'DESC']]
+            [[sequelize.literal('bobotruang'), 'DESC']],
       ],
     }
-  )
+  );
 
   const lantaiDuaTerbaik = Penilaian_ruang.findAll(
     {
@@ -108,7 +110,7 @@ exports.getDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:2}],
           },
           include: [{
             model: Pengguna,
@@ -117,39 +119,40 @@ exports.getDashboard = (req,res) => {
           },
           {
             model: Pengguna,
-            as: 'nik_pic_fasil'
+            as: 'nik_pic_fasil',
+
           }
         ]
         }
       ],
       attributes: {
       include: [
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
         ]},
       group : ['jadwalPiketId'],
       order: [
-            [[sequelize.literal('bobotruang'), 'DESC']]
+            [[sequelize.literal('bobotruang'), 'DESC']],
       ],
   }
-  )
+  );
 
   Promise
       .all([mejaTerbaik,lantaiSatuTerbaik, lantaiDuaTerbaik])
       .then(count => {
           console.log('**********COMPLETE RESULTS****************');
 
-          count[0][0].bobotmeja = parseFloat(count[0][0].bobotmeja).toFixed(2);
-
+         count[0][0].bobotmeja = parseFloat(count[0][0].bobotmeja).toFixed(2);
+          // sum all
           let lantaiSatu = 0;
           for(i = 0; i < count[1].length; i++){
             lantaiSatu = parseFloat(lantaiSatu) + parseFloat(count[1][i].bobotruang);
           }
-          lantaiSatu = parseFloat(lantaiSatu) / parseFloat(count[1].length)
+          lantaiSatu = parseFloat(lantaiSatu) / parseFloat(count[1].length);
           let lantaiDua = 0;
           for(i = 0; i < count[2].length; i++){
             lantaiDua = parseFloat(lantaiDua) + parseFloat(count[2][i].bobotruang);
           }
-          lantaiDua = parseFloat(lantaiDua) / parseFloat(count[2].length)
+          lantaiDua = parseFloat(lantaiDua) / parseFloat(count[2].length);
           let lantaiTerbaik = [];
           if ( lantaiSatu > lantaiDua ){
             lantaiTerbaik[0] = lantaiSatu.toFixed(2);
@@ -177,8 +180,12 @@ exports.getDashboard = (req,res) => {
           console.log('**********ERROR RESULT****************');
           console.log(err);
       });
+
+
+
 }).catch(err => {
       console.log('**********ERROR RESULT****************');
       console.log(err);
       });
+
 };

@@ -6,20 +6,18 @@ const Penilaian_ruang = require('../models/penilaian_ruang');
 const Penilaian_meja = require('../models/penilaian_meja');
 const JadwalPiket = require('../models/jadwal_piket');
 const Bukti_temuan = require('../models/bukti_temuan');
-
 const sequelize = require('../util/database');
-var Sequelize = require('sequelize')
+var Sequelize = require('sequelize');
 var Op = Sequelize.Op;
 
 // Admin Ruang
 exports.getDataBuktiTemuanAdmin= (req,res, next) => {
-
-  const buktiTemuan = Bukti_temuan
+  let buktiTemuan = Bukti_temuan
                       .findAll(
                         {
                           where: {
                                     penilaianMejaId: {
-                                    [Op.is]: null,
+                                    [Op.is]: null
                                   }
                                 },
                           include: [
@@ -31,7 +29,7 @@ exports.getDataBuktiTemuanAdmin= (req,res, next) => {
                               model: JadwalPiket,
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -40,19 +38,15 @@ exports.getDataBuktiTemuanAdmin= (req,res, next) => {
                       }
                     );
 
-
   Promise
       .all([buktiTemuan])
       .then(hasil => {
-          console.log('**********COMPLETE RESULTS****************');
           res.render('./admin/buktitemuanruang', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Ruang',
+            pageTitle: 'Bukti Temuan Ruang'
           });
-
       })
       .catch(err => {
-          console.log('**********ERROR RESULT****************');
           console.log(err);
       });
 };
@@ -69,12 +63,12 @@ exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
     setuju = 2;
   }
 
-  const buktiTemuan = Bukti_temuan
+  let buktiTemuan = Bukti_temuan
                       .findAll(
                         {
                           where: { tinjak_lanjut: setuju,
                                     penilaianMejaId: {
-                                    [Op.is]: null,
+                                    [Op.is]: null
                                   }
                                 },
                           include: [
@@ -91,7 +85,7 @@ exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
                               },
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -100,23 +94,15 @@ exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
                       }
                     );
 
-
-
   Promise
       .all([buktiTemuan])
       .then(hasil => {
-          console.log('**********COMPLETE RESULTS****************');
-          // console.log(hasil[0]);
-
-
           res.render('./admin/buktitemuanruang', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Ruang',
+            pageTitle: 'Bukti Temuan Ruang'
           });
-
       })
       .catch(err => {
-          console.log('**********ERROR RESULT****************');
           console.log(err);
       });
 };
@@ -124,7 +110,6 @@ exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
 exports.getDataBuktiTemuanRuangDetail= (req,res, next) => {
 
   const id = req.params.buktiId;
-
   Bukti_temuan.findByPk(id, {
     include: [
       {
@@ -132,13 +117,13 @@ exports.getDataBuktiTemuanRuangDetail= (req,res, next) => {
         include: [
           {model: Ruang,
             include: {
-              model: Pengguna,
+              model: Pengguna
             }
           },
           {model: JadwalPiket,
           include: {
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }},
         ]
       },
@@ -174,7 +159,6 @@ exports.postDeleteBuktiTemuanRuang = ( req,res, next) => {
       res.redirect('/admin/buktiTemuanruang');
     })
     .catch(err => console.log(err));
-
 };
 
 exports.postDeleteTindakLanjutRuang = ( req,res, next) => {
@@ -188,22 +172,20 @@ exports.postDeleteTindakLanjutRuang = ( req,res, next) => {
       return bukti.save();
     })
     .then(result => {
-      res.redirect('/admin/buktitemuanruang/detail/'+id)
-
+      res.redirect('/admin/buktitemuanruang/detail/'+id);
     })
     .catch(err => console.log(err));
 
 };
 
-
 // Admin Meja
 exports.getDataBuktiTemuanMeja= (req,res, next) => {
-  const buktiTemuan = Bukti_temuan
+  let buktiTemuan = Bukti_temuan
                       .findAll(
                         {
                           where: {
                                     penilaianRuangId: {
-                                    [Op.is]: null,
+                                    [Op.is]: null
                                   }
                                 },
                           include: [
@@ -213,14 +195,14 @@ exports.getDataBuktiTemuanMeja= (req,res, next) => {
                             {
                               model: Meja,
                               include : {
-                                model: Pengguna,
+                                model: Pengguna
                               }
                             },
                             {
                               model: JadwalPiket,
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -233,16 +215,13 @@ exports.getDataBuktiTemuanMeja= (req,res, next) => {
   Promise
       .all([buktiTemuan])
       .then(hasil => {
-          console.log('**********COMPLETE RESULTS****************');
           res.render('./admin/buktitemuanmeja', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Meja',
-            // path: '/checklistruang'
+            pageTitle: 'Bukti Temuan Meja'
           });
 
       })
       .catch(err => {
-          console.log('**********ERROR RESULT****************');
           console.log(err);
       });
 };
@@ -260,12 +239,12 @@ exports.getDataBuktiTemuanMejaFilter= (req,res, next) => {
     setuju = 2;
   }
 
-  const buktiTemuan = Bukti_temuan
+  let buktiTemuan = Bukti_temuan
                       .findAll(
                         {
                           where: {tinjak_lanjut: setuju,
                                     penilaianRuangId: {
-                                    [Op.is]: null,
+                                    [Op.is]: null
                                   }
                                 },
                           include: [
@@ -275,7 +254,7 @@ exports.getDataBuktiTemuanMejaFilter= (req,res, next) => {
                             {
                               model: Meja,
                               include : {
-                                model: Pengguna,
+                                model: Pengguna
                               }
                             },
                             {
@@ -287,7 +266,7 @@ exports.getDataBuktiTemuanMejaFilter= (req,res, next) => {
                               },
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -296,49 +275,41 @@ exports.getDataBuktiTemuanMejaFilter= (req,res, next) => {
                       }
                     );
 
-
   Promise
       .all([buktiTemuan])
       .then(hasil => {
-          console.log('**********COMPLETE RESULTS****************');
           res.render('./admin/buktitemuanmeja', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Meja',
-            // path: '/checklistruang'
+            pageTitle: 'Bukti Temuan Meja'
           });
 
       })
       .catch(err => {
-          console.log('**********ERROR RESULT****************');
           console.log(err);
       });
 };
 
 exports.getDataBuktiTemuanMejaDetail= (req,res, next) => {
-
   const id = req.params.buktiId;
-
   Bukti_temuan.findByPk(id, {
     include: [
       {model: Penilaian_meja,
         include: [
           {model: Meja,
             include: {
-              model: Pengguna,
+              model: Pengguna
             }
           },
           {model: JadwalPiket,
           include: {
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }}
         ]
       }
     ]
   })
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
-    console.log(bukti);
     res.render('./admin/buktitemuanmejadetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Meja',
@@ -347,7 +318,6 @@ exports.getDataBuktiTemuanMejaDetail= (req,res, next) => {
 
   })
   .catch(err => {
-      console.log('**********ERROR RESULT****************');
       console.log(err);
   });
 
@@ -355,7 +325,6 @@ exports.getDataBuktiTemuanMejaDetail= (req,res, next) => {
 
 exports.postDeleteBuktiTemuanMeja = ( req,res, next) => {
   const id = req.body.buktiTemuanId;
-  console.log(id);
   Bukti_temuan.findByPk(id)
     .then(hasil => {
       return hasil.destroy();
@@ -364,7 +333,6 @@ exports.postDeleteBuktiTemuanMeja = ( req,res, next) => {
       res.redirect('/admin/buktiTemuanmeja');
     })
     .catch(err => console.log(err));
-
 };
 
 exports.postDeleteTindakLanjutMeja = ( req,res, next) => {
@@ -372,14 +340,13 @@ exports.postDeleteTindakLanjutMeja = ( req,res, next) => {
   console.log(id);
   Bukti_temuan.findByPk(id)
     .then(bukti => {
-      bukti.deskripsi_sesudah=null;
+      bukti.deskripsi_sesudah =null;
       bukti.fotosesudah = null;
       bukti.tinjak_lanjut = 2;
       return bukti.save();
     })
     .then(result => {
-      res.redirect('/admin/buktitemuanmeja/detail/'+id)
-
+      res.redirect('/admin/buktitemuanmeja/detail/'+id);
     })
     .catch(err => console.log(err));
 
@@ -387,15 +354,14 @@ exports.postDeleteTindakLanjutMeja = ( req,res, next) => {
 
 // ANGGOTA MEJA
 exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
-
   console.log(req.session.user.nik);
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
                           where: {
                                     penilaianRuangId: {
-                                    [Op.is]: null,
-                                  },
+                                    [Op.is]: null
+                                  }
                                 },
                           include: [
                         {
@@ -404,7 +370,7 @@ exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
                             {
                               model: Meja,
                               include : {
-                                model: Pengguna,
+                                model: Pengguna
                               }
                             },
                             {
@@ -412,7 +378,7 @@ exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
 
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -421,48 +387,41 @@ exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
                       }
                     );
 
-
   Promise
       .all([buktiTemuan])
       .then(hasil => {
-          console.log('**********COMPLETE RESULTS****************');
           res.render('./anggota/buktitemuanmeja', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Meja',
-            // path: '/checklistruang'
+            pageTitle: 'Bukti Temuan Meja'
           });
 
       })
       .catch(err => {
-          console.log('**********ERROR RESULT****************');
           console.log(err);
       });
 };
 
 exports.getDataBuktiTemuanMejaAnggotaDetail= (req,res, next) => {
-
   const id = req.params.buktiId;
-
   Bukti_temuan.findByPk(id, {
     include: [
       {model: Penilaian_meja,
         include: [
           {model: Meja,
             include: {
-              model: Pengguna,
+              model: Pengguna
             }
           },
           {model: JadwalPiket,
           include: {
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }}
         ]
       }
     ]
   })
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
     res.render('./anggota/buktitemuanmejadetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Meja',
@@ -478,14 +437,13 @@ exports.getDataBuktiTemuanMejaAnggotaDetail= (req,res, next) => {
 };
 
 exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
-
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
                           where: {
                                     penilaianRuangId: {
-                                    [Op.is]: null,
-                                  },
+                                    [Op.is]: null
+                                  }
                                 },
                           include: [
                         {
@@ -495,7 +453,7 @@ exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
                               model: Meja,
                               where: {penggunaNik: req.session.user.nik},
                               include : {
-                                model: Pengguna,
+                                model: Pengguna
                               }
                             },
                             {
@@ -503,7 +461,7 @@ exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
 
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -511,18 +469,14 @@ exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
                         }]
                       }
                     );
-
-
   Promise
       .all([buktiTemuan])
       .then(hasil => {
           console.log('**********COMPLETE RESULTS****************');
           res.render('./anggota/tindaklanjutmeja', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Meja',
-            // path: '/checklistruang'
+            pageTitle: 'Bukti Temuan Meja'
           });
-
       })
       .catch(err => {
           console.log('**********ERROR RESULT****************');
@@ -531,29 +485,26 @@ exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
 };
 
 exports.getDataTindakLanjutMejaAnggotaDetail= (req,res, next) => {
-
   const id = req.params.buktiId;
-
   Bukti_temuan.findByPk(id, {
     include: [
       {model: Penilaian_meja,
         include: [
           {model: Meja,
             include: {
-              model: Pengguna,
+              model: Pengguna
             }
           },
           {model: JadwalPiket,
           include: {
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }}
         ]
       }
     ]
   })
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
     res.render('./anggota/tindaklanjutmejadetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Meja',
@@ -562,14 +513,12 @@ exports.getDataTindakLanjutMejaAnggotaDetail= (req,res, next) => {
 
   })
   .catch(err => {
-      console.log('**********ERROR RESULT****************');
       console.log(err);
   });
 
 };
 
 exports.postTindakLanut= (req,res, next) => {
-
   const id = req.body.buktiId;
   const deskripsi = req.body.deskripsi;
   const image = req.files.image;
@@ -591,28 +540,25 @@ exports.postTindakLanut= (req,res, next) => {
         }
   })
   .then( () => {
-      res.redirect('/anggota/tindaklanjut/meja/detail/'+id)
+      res.redirect('/anggota/tindaklanjut/meja/detail/'+id);
 
   })
   .catch(err => {
-      console.log('**********ERROR RESULT****************');
       console.log(err);
   });
 
 };
 
 // ANggota ruang
-
 exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
-
   console.log(req.session.user.nik);
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
                           where: {
                                     penilaianMejaId: {
-                                    [Op.is]: null,
-                                  },
+                                    [Op.is]: null
+                                  }
                                 },
                           include: [
                         {
@@ -621,14 +567,14 @@ exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
                             {
                               model: Ruang,
                               include : {
-                                model: Pengguna,
+                                model: Pengguna
                               }
                             },
                             {
                               model: JadwalPiket,
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -644,8 +590,7 @@ exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
           console.log('**********COMPLETE RESULTS****************');
           res.render('./anggota/buktitemuanruang', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Ruang',
-            // path: '/checklistruang'
+            pageTitle: 'Bukti Temuan Ruang'
           });
 
       })
@@ -656,22 +601,20 @@ exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
 };
 
 exports.getDataBuktiTemuanRuangAnggotaDetail= (req,res, next) => {
-
   const id = req.params.buktiId;
-
   Bukti_temuan.findByPk(id, {
     include: [
       {model: Penilaian_ruang,
         include: [
           {model: Ruang,
             include: {
-              model: Pengguna,
+              model: Pengguna
             }
           },
           {model: JadwalPiket,
           include: {
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }},
 
         ]
@@ -682,7 +625,6 @@ exports.getDataBuktiTemuanRuangAnggotaDetail= (req,res, next) => {
     ]
   })
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
     res.render('./anggota/buktitemuanruangdetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Ruang',
@@ -691,22 +633,19 @@ exports.getDataBuktiTemuanRuangAnggotaDetail= (req,res, next) => {
 
   })
   .catch(err => {
-      console.log('**********ERROR RESULT****************');
       console.log(err);
   });
 
 };
 
 exports.postTindakLanutRuang= (req,res, next) => {
-
   const id = req.body.buktiId;
   const deskripsi = req.body.deskripsi;
   const image = req.files.image;
 
   Bukti_temuan.findByPk(id)
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
-    if (image != null ){
+    if (image !== undefined ){
         const imgUrl = image[0].path;
         bukti.deskripsi_sesudah=deskripsi;
         bukti.fotosesudah = imgUrl;
@@ -720,7 +659,7 @@ exports.postTindakLanutRuang= (req,res, next) => {
         }
   })
   .then( () => {
-      res.redirect('/anggota/tindaklanjut/ruang/detail/'+id)
+      res.redirect('/anggota/tindaklanjut/ruang/detail/'+id);
 
   })
   .catch(err => {
@@ -731,15 +670,14 @@ exports.postTindakLanutRuang= (req,res, next) => {
 };
 
 exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
-
   console.log(req.session.user.nik);
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
                           where: {
                                     penilaianMejaId: {
-                                    [Op.is]: null,
-                                  },
+                                    [Op.is]: null
+                                  }
                                 },
                           include: [
                         {
@@ -748,14 +686,14 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
                             {
                               model: Ruang,
                               include : {
-                                model: Pengguna,
+                                model: Pengguna
                               }
                             },
                             {
                               model: JadwalPiket,
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -763,12 +701,11 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
                         },
                         {
                           model: Pengguna,
-                          where: {nik: req.session.user.nik},
+                          where: {nik: req.session.user.nik}
                         }
                       ]
                       }
                     );
-
 
   Promise
       .all([buktiTemuan])
@@ -776,8 +713,7 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
           console.log('**********COMPLETE RESULTS****************');
           res.render('./anggota/tindaklanjutruang', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Ruang',
-            // path: '/checklistruang'
+            pageTitle: 'Bukti Temuan Ruang'
           });
 
       })
@@ -788,22 +724,20 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
 };
 
 exports.getDataTindakLanjutRuangAnggotaDetail= (req,res, next) => {
-
   const id = req.params.buktiId;
-
   Bukti_temuan.findByPk(id, {
     include: [
       {model: Penilaian_ruang,
         include: [
           {model: Ruang,
             include: {
-              model: Pengguna,
+              model: Pengguna
             }
           },
           {model: JadwalPiket,
           include: {
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }},
 
         ]
@@ -813,7 +747,6 @@ exports.getDataTindakLanjutRuangAnggotaDetail= (req,res, next) => {
     ]
   })
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
     res.render('./anggota/tindaklanjutruangdetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Ruang',
@@ -822,23 +755,20 @@ exports.getDataTindakLanjutRuangAnggotaDetail= (req,res, next) => {
 
   })
   .catch(err => {
-      console.log('**********ERROR RESULT****************');
       console.log(err);
   });
-
 };
 
 // fasilitator
 
 exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
-
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
                           where: {
                                     penilaianRuangId: {
-                                    [Op.is]: null,
-                                  },
+                                    [Op.is]: null
+                                  }
                                 },
                           include: [
                         {
@@ -848,14 +778,14 @@ exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
                               model: Meja,
                               where: {penggunaNik: req.session.user.nik},
                               include : {
-                                model: Pengguna,
+                                model: Pengguna
                               }
                             },
                             {
                               model: JadwalPiket,
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -864,20 +794,16 @@ exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
                       }
                     );
 
-
   Promise
       .all([buktiTemuan])
       .then(hasil => {
-          console.log('**********COMPLETE RESULTS****************');
           res.render('./fasilitator/tindaklanjutmeja', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Meja',
-            // path: '/checklistruang'
+            pageTitle: 'Bukti Temuan Meja'
           });
 
       })
       .catch(err => {
-          console.log('**********ERROR RESULT****************');
           console.log(err);
       });
 };
@@ -892,20 +818,19 @@ exports.getDataTindakLanjutMejaFasilitatorDetail= (req,res, next) => {
         include: [
           {model: Meja,
             include: {
-              model: Pengguna,
+              model: Pengguna
             }
           },
           {model: JadwalPiket,
           include: {
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }},
         ]
       },
     ]
   })
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
     res.render('./fasilitator/tindaklanjutmejadetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Meja',
@@ -914,7 +839,6 @@ exports.getDataTindakLanjutMejaFasilitatorDetail= (req,res, next) => {
 
   })
   .catch(err => {
-      console.log('**********ERROR RESULT****************');
       console.log(err);
   });
 
@@ -927,8 +851,7 @@ exports.postTindakLanutFasilitator= (req,res, next) => {
 
   Bukti_temuan.findByPk(id)
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
-    if (image != null ){
+    if (image !== undefined ){
         const imgUrl = image[0].path;
         bukti.deskripsi_sesudah=deskripsi;
         bukti.fotosesudah = imgUrl;
@@ -942,11 +865,11 @@ exports.postTindakLanutFasilitator= (req,res, next) => {
         }
   })
   .then( () => {
-      res.redirect('/fasilitator/tindaklanjut/meja/detail/'+id)
+      res.redirect('/fasilitator/tindaklanjut/meja/detail/'+id);
 
   })
   .catch(err => {
-      console.log('**********ERROR RESULT****************');
+
       console.log(err);
   });
 
@@ -959,8 +882,8 @@ exports.getDataBuktiTemuanMejaFasilitator= (req,res, next) => {
                         {
                           where: {
                                     penilaianRuangId: {
-                                    [Op.is]: null,
-                                  },
+                                    [Op.is]: null
+                                  }
                                 },
                           include: [
                         {
@@ -969,14 +892,14 @@ exports.getDataBuktiTemuanMejaFasilitator= (req,res, next) => {
                             {
                               model: Meja,
                               include : {
-                                model: Pengguna,
+                                model: Pengguna
                               }
                             },
                             {
                               model: JadwalPiket,
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -989,16 +912,13 @@ exports.getDataBuktiTemuanMejaFasilitator= (req,res, next) => {
   Promise
       .all([buktiTemuan])
       .then(hasil => {
-          console.log('**********COMPLETE RESULTS****************');
           res.render('./fasilitator/buktitemuanmeja', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Meja',
-            // path: '/checklistruang'
+            pageTitle: 'Bukti Temuan Meja'
           });
 
       })
       .catch(err => {
-          console.log('**********ERROR RESULT****************');
           console.log(err);
       });
 };
@@ -1012,20 +932,19 @@ exports.getDataBuktiTemuanMejaFasilitatorDetail= (req,res, next) => {
         include: [
           {model: Meja,
             include: {
-              model: Pengguna,
+              model: Pengguna
             }
           },
           {model: JadwalPiket,
           include: {
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }},
         ]
       }
     ]
   })
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
     res.render('./fasilitator/buktitemuanmejadetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Meja',
@@ -1034,7 +953,6 @@ exports.getDataBuktiTemuanMejaFasilitatorDetail= (req,res, next) => {
 
   })
   .catch(err => {
-      console.log('**********ERROR RESULT****************');
       console.log(err);
   });
 
@@ -1047,8 +965,8 @@ exports.getDataBuktiTemuanRuangFasilitator= (req,res, next) => {
                         {
                           where: {
                                     penilaianMejaId: {
-                                    [Op.is]: null,
-                                  },
+                                    [Op.is]: null
+                                  }
                                 },
                           include: [
                         {
@@ -1057,14 +975,14 @@ exports.getDataBuktiTemuanRuangFasilitator= (req,res, next) => {
                             {
                               model: Ruang,
                               include : {
-                                model: Pengguna,
+                                model: Pengguna
                               }
                             },
                             {
                               model: JadwalPiket,
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -1077,16 +995,13 @@ exports.getDataBuktiTemuanRuangFasilitator= (req,res, next) => {
   Promise
       .all([buktiTemuan])
       .then(hasil => {
-          console.log('**********COMPLETE RESULTS****************');
           res.render('./fasilitator/buktitemuanruang', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Ruang',
-            // path: '/checklistruang'
+            pageTitle: 'Bukti Temuan Ruang'
           });
 
       })
       .catch(err => {
-          console.log('**********ERROR RESULT****************');
           console.log(err);
       });
 };
@@ -1100,13 +1015,13 @@ exports.getDataBuktiTemuanRuangFasilitatorDetail= (req,res, next) => {
         include: [
           {model: Ruang,
             include: {
-              model: Pengguna,
+              model: Pengguna
             }
           },
           {model: JadwalPiket,
           include: {
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }},
         ]
       },
@@ -1115,7 +1030,6 @@ exports.getDataBuktiTemuanRuangFasilitatorDetail= (req,res, next) => {
     ]
   })
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
     res.render('./fasilitator/buktitemuanruangdetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Ruang',
@@ -1124,7 +1038,6 @@ exports.getDataBuktiTemuanRuangFasilitatorDetail= (req,res, next) => {
 
   })
   .catch(err => {
-      console.log('**********ERROR RESULT****************');
       console.log(err);
   });
 
@@ -1148,14 +1061,14 @@ exports.getDataTindakLanjutRuangFasilitator= (req,res, next) => {
                             {
                               model: Ruang,
                               include : {
-                                model: Pengguna,
+                                model: Pengguna
                               }
                             },
                             {
                               model: JadwalPiket,
                               include : {
                                 model: Pengguna,
-                                as: 'nik_pic_piket',
+                                as: 'nik_pic_piket'
                               }
                             }
                           ],
@@ -1168,16 +1081,13 @@ exports.getDataTindakLanjutRuangFasilitator= (req,res, next) => {
   Promise
       .all([buktiTemuan])
       .then(hasil => {
-          console.log('**********COMPLETE RESULTS****************');
           res.render('./fasilitator/tindaklanjutruang', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Ruang',
-            // path: '/checklistruang'
+            pageTitle: 'Bukti Temuan Ruang'
           });
 
       })
       .catch(err => {
-          console.log('**********ERROR RESULT****************');
           console.log(err);
       });
 };
@@ -1191,13 +1101,13 @@ exports.getDataTindakLanjutRuangFasilitatorDetail= (req,res, next) => {
         include: [
           {model: Ruang,
             include: {
-              model: Pengguna,
+              model: Pengguna
             }
           },
           {model: JadwalPiket,
           include: {
             model: Pengguna,
-            as: 'nik_pic_piket',
+            as: 'nik_pic_piket'
           }},
         ]
       },
@@ -1206,7 +1116,6 @@ exports.getDataTindakLanjutRuangFasilitatorDetail= (req,res, next) => {
     ]
   })
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
     res.render('./fasilitator/tindaklanjutruangdetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Ruang',
@@ -1215,7 +1124,6 @@ exports.getDataTindakLanjutRuangFasilitatorDetail= (req,res, next) => {
 
   })
   .catch(err => {
-      console.log('**********ERROR RESULT****************');
       console.log(err);
   });
 
@@ -1229,8 +1137,7 @@ exports.postTindakLanutRuangFasilitator= (req,res, next) => {
 
   Bukti_temuan.findByPk(id)
   .then(bukti => {
-    console.log('**********COMPLETE RESULTS****************');
-    if (image != null ){
+    if (image !== undefined ){
         const imgUrl = image[0].path;
         bukti.deskripsi_sesudah=deskripsi;
         bukti.fotosesudah = imgUrl;
@@ -1244,11 +1151,10 @@ exports.postTindakLanutRuangFasilitator= (req,res, next) => {
         }
   })
   .then( () => {
-      res.redirect('/fasilitator/tindaklanjut/ruang/detail/'+id)
+      res.redirect('/fasilitator/tindaklanjut/ruang/detail/'+id);
 
   })
   .catch(err => {
-      console.log('**********ERROR RESULT****************');
       console.log(err);
   });
 

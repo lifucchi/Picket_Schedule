@@ -11,11 +11,7 @@ const ruangController = require('../controllers/ruang');
 const rekapitulasiController = require('../controllers/rekapitulasi');
 const buktiTemuanController = require('../controllers/buktitemuan');
 
-
-
-
 const router = express.Router();
-
 
 // dashboard
 router.get('/', isAuth, isRole('Anggota'), anggotaController.getDashboard);

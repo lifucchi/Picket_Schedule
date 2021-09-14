@@ -1,10 +1,6 @@
 const path = require('path');
-
 const express = require('express');
-
 const rootDir = require('../util/path');
-
-const router = express.Router();
 
 const adminController = require('../controllers/admin');
 const penggunaController = require('../controllers/pengguna');
@@ -12,12 +8,11 @@ const jadwalPiketController = require('../controllers/jadwalpiket');
 const artikelController = require('../controllers/artikel');
 const ruangController = require('../controllers/ruang');
 const mejaController = require('../controllers/meja');
-
 const penilaianRuangController = require('../controllers/penilaianRuang');
 const penilaianMejaController = require('../controllers/penilaianMeja');
-
-
 const buktiTemuanController = require('../controllers/buktitemuan');
+
+const router = express.Router();
 
 
 // dashboard
@@ -87,14 +82,7 @@ router.post('/tindaklanjutmeja/delete' , buktiTemuanController.postDeleteTindakL
 router.post('/buktitemuanmeja/filter' , buktiTemuanController.getDataBuktiTemuanMejaFilter);
 router.get('/buktitemuanmeja/detail/:buktiId', buktiTemuanController.getDataBuktiTemuanMejaDetail);
 
+// exports.routes = router;
+module.exports = router;
 
-
-
-
-
-
-
-
-
-exports.routes = router;
 // exports.products = products;

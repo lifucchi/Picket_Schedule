@@ -4,17 +4,23 @@ const bodyPaser = require('body-parser');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
-var CronJob = require('cron').CronJob;
 const app = express();
 const moment = require('moment');
 const multer = require('multer');
+const port = 8080;
 
 // controller
 const errorController = require('./controllers/error');
+const adminRoutes = require('./routes/admin');
+const authRoutes = require('./routes/auth');
+const anggotaRoutes = require('./routes/anggota');
+const fasilitatorRoutes = require('./routes/fasilitator');
+
 // database
 const sequelize = require('./util/database');
 var Sequelize = require('sequelize')
 var Op = Sequelize.Op;
+
 // model
 const Pengguna = require('./models/pengguna');
 const Jadwal_piket = require('./models/jadwal_piket');
@@ -28,11 +34,6 @@ const Meja = require('./models/meja');
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
-
-const adminRoutes = require('./routes/admin');
-const authRoutes = require('./routes/auth');
-const anggotaRoutes = require('./routes/anggota');
-const fasilitatorRoutes = require('./routes/fasilitator');
 
 app.use(bodyPaser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -101,18 +102,115 @@ app.use(
   })
 );
 app.use(flash());
-
+// sampe sin idulu
 app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
-  }
+  }else{
 
-  Pengguna.findByPk(req.session.user.nik)
-    .then(user => {
-      req.user = user;
-      next();
-    })
-    .catch(err => console.log(err));
+      Pengguna.findByPk(req.session.user.nik)
+        .then(user => {
+          req.user = user;
+        })
+        .catch(err => console.log(err));
+
+        if (req.session.user.peran === "Anggota" ){
+            const belumchecklist =
+            Jadwal_piket.count(
+              {
+                where: {
+                  nikpicpiket: req.session.user.nik,
+                  status_piket: 0
+              },
+            });
+            const tindaklanjutmeja = Bukti_temuan.count({
+              where:{
+                penggunaNik: req.session.user.nik,
+                penilaianRuangId: {
+                [Op.is]: null,
+              },
+              tinjak_lanjut: 2
+              }
+            });
+
+            const tindaklanjutruang = Bukti_temuan.count({
+              where:{
+                penggunaNik: req.session.user.nik,
+                penilaianMejaId: {
+                [Op.is]: null,
+              },
+              tinjak_lanjut: 2
+              }
+            });
+
+          Promise
+              .all([belumchecklist,tindaklanjutmeja,tindaklanjutruang])
+              .then(count => {
+                  console.log('**********COMPLETE RESULTS****************');
+
+                  res.locals.belumchecheklist = count[0];
+                  res.locals.tindaklanjutmeja = count[1];
+                  res.locals.tindaklanjutruang = count[2];
+                  next();
+
+              })
+              .catch(err => {
+                  console.log('**********ERROR RESULT****************');
+                  console.log(err);
+              });
+
+        }else if(req.session.user.peran === "Fasilitator"){
+          const belumlaporan =
+          Jadwal_piket.count(
+            {
+              where: {
+                nikpicfasil: req.session.user.nik,
+                status_piket: 2,
+                persetujuan_fasil: 0
+            },
+          });
+          const tindaklanjutmeja = Bukti_temuan.count({
+            where:{
+              penggunaNik: req.session.user.nik,
+              penilaianRuangId: {
+              [Op.is]: null,
+            },
+            tinjak_lanjut: 2
+            }
+          });
+
+          const tindaklanjutruang = Bukti_temuan.count({
+            where:{
+              penggunaNik: req.session.user.nik,
+              penilaianMejaId: {
+              [Op.is]: null,
+            },
+            tinjak_lanjut: 2
+            }
+          });
+
+        Promise
+            .all([belumlaporan, tindaklanjutmeja, tindaklanjutruang])
+            .then(count => {
+                console.log('**********COMPLETE RESULTS****************');
+
+                res.locals.belumlaporan = count[0];
+                res.locals.tindaklanjutmeja = count[1];
+                res.locals.tindaklanjutruang = count[2];
+                next();
+
+            })
+            .catch(err => {
+                console.log('**********ERROR RESULT****************');
+                console.log(err);
+            });
+
+        }else if(req.session.user.peran === "Admin"){
+          next();
+
+        }
+
+  }
 });
 
 app.use((req, res, next) => {
@@ -122,114 +220,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
-  if (!req.session.user) {
-    return next();
-  }else{
-    if (req.session.user.peran === "Anggota" ){
-        const belumchecklist =
-        Jadwal_piket.count(
-          {
-            where: {
-              nikpicpiket: req.session.user.nik,
-              status_piket: 0
-          },
-        });
-        const tindaklanjutmeja = Bukti_temuan.count({
-          where:{
-            penggunaNik: req.session.user.nik,
-            penilaianRuangId: {
-            [Op.is]: null,
-          },
-          tinjak_lanjut: 2
-          }
-        });
-
-        const tindaklanjutruang = Bukti_temuan.count({
-          where:{
-            penggunaNik: req.session.user.nik,
-            penilaianMejaId: {
-            [Op.is]: null,
-          },
-          tinjak_lanjut: 2
-          }
-        });
-
-      Promise
-          .all([belumchecklist,tindaklanjutmeja,tindaklanjutruang])
-          .then(count => {
-              console.log('**********COMPLETE RESULTS****************');
-
-              res.locals.belumchecheklist = count[0];
-              res.locals.tindaklanjutmeja = count[1];
-              res.locals.tindaklanjutruang = count[2];
-
-
-              next();
-
-          })
-          .catch(err => {
-              console.log('**********ERROR RESULT****************');
-              console.log(err);
-          });
-
-    }else if(req.session.user.peran === "Fasilitator"){
-      const belumlaporan =
-      Jadwal_piket.count(
-        {
-          where: {
-            nikpicfasil: req.session.user.nik,
-            status_piket: 2,
-            persetujuan_fasil: 0
-        },
-      });
-      const tindaklanjutmeja = Bukti_temuan.count({
-        where:{
-          penggunaNik: req.session.user.nik,
-          penilaianRuangId: {
-          [Op.is]: null,
-        },
-        tinjak_lanjut: 2
-        }
-      });
-
-      const tindaklanjutruang = Bukti_temuan.count({
-        where:{
-          penggunaNik: req.session.user.nik,
-          penilaianMejaId: {
-          [Op.is]: null,
-        },
-        tinjak_lanjut: 2
-        }
-      });
-
-    Promise
-        .all([belumlaporan, tindaklanjutmeja, tindaklanjutruang])
-        .then(count => {
-            console.log('**********COMPLETE RESULTS****************');
-
-            res.locals.belumlaporan = count[0];
-            res.locals.tindaklanjutmeja = count[1];
-            res.locals.tindaklanjutruang = count[2];
-            next();
-
-        })
-        .catch(err => {
-            console.log('**********ERROR RESULT****************');
-            console.log(err);
-        });
-
-    }else if(req.session.user.peran === "Admin"){
-      next();
-
-    }
-  }
-
-});
 
 // routes
-app.use('/admin',adminRoutes.routes);
 app.use(authRoutes);
+app.use('/admin',adminRoutes);
 app.use('/anggota',anggotaRoutes);
 app.use('/fasilitator',fasilitatorRoutes);
 
@@ -284,6 +278,7 @@ Jadwal_piket.belongsToMany(Meja, {
   through: Penilaian_meja,
   as: 'Meja'
  });
+
 Meja.hasMany(Penilaian_meja);
 Penilaian_meja.belongsTo(Meja);
 Jadwal_piket.hasMany(Penilaian_meja);
@@ -297,40 +292,12 @@ Penilaian_meja.hasMany(Bukti_temuan);
 Bukti_temuan.belongsTo(Pengguna);
 Pengguna.hasMany(Bukti_temuan);
 
-// var job = new CronJob('0 0 0 * * *', function() {
-//  //will run every day at 12:00 AM
-// });
-
-// var job = new CronJob('0 0 0 * * *', function() {
-//   console.log('Ini jam 12 malam');
-//
-// }, null, true, 'Asia/Jakarta');
-// job.start();
-
-// var job = new CronJob('* 5 * * * *', function() {
-//   console.log('halo');
-//   const nowTanggal = moment().format('YYYY-MM-DD');
-//
-//   JadwalPiket
-//   .findAll({
-//     where: {tanggal: nowTanggal}
-//   })
-//   .then(jadwal=>{
-//     jadwal.setPenilaian_ruang([1,2])
-//     .then(sc=>{
-//         console.log(sc);
-//     });
-// });
-// }, null, true, 'Asia/Jakarta');
-// job.start();
-
-
 sequelize
   .sync()
   // .sync({alter: true})
   // .sync({force: true})
   .then(result => {
-    app.listen(80);
+    app.listen(port);
   })
   .catch( err => {
     console.log(err);

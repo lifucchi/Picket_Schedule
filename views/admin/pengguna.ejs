@@ -32,7 +32,6 @@
                                   <!-- <th colspan="5">HR Information</th> -->
                               </tr>
                               <tr>
-                                  <th>Username</th>
                                   <th>Nama</th>
                                   <th>Peran</th>
                                   <!-- <th>Password</th> -->
@@ -44,14 +43,13 @@
                             <% users.forEach((user) => { %>
                           <tr>
                               <td><%= user.nik%></td>
-                              <td><%= user.username%></td>
                               <td><%= user.nama%></td>
                               <td><%= user.peran%></td>
                               <!-- <td><%= user.password%></td> -->
                               <td><%= user.level%></td>
                               <td>
                                   <!-- <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>" >Edit</a> -->
-                                  <button  href="javascript:void(0);" class="btn edit" data-nik="<%= user.nik %>" data-username= "<%= user.username%>" data-nama="<%= user.nama%>" data-peran="<%= user.peran%>" data-password="<%= user.password%>" data-level="<%= user.level%>"><i class="material-icons md-24"></i></button>
+                                  <button  href="javascript:void(0);" class="btn edit" data-nik="<%= user.nik %>"  data-nama="<%= user.nama%>" data-peran="<%= user.peran%>" data-password="<%= user.password%>" data-level="<%= user.level%>"><i class="material-icons md-24"></i></button>
                                   <!-- <a  href="javascript:void(0);" class="btn delete" data-nik="<%= user.nik %>"> <i class="material-icons md-24"></i>  </a> -->
                                   <!-- <a class="md-btn md-btn-primary md-btn-wave-light waves-effect waves-button waves-light" href="#">Reset Password</a> -->
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/delete-pengguna" method="POST">
@@ -100,10 +98,6 @@
                                       </div>
                                       <div class="uk-form-row">
                                         <div class="uk-grid">
-                                            <div class="uk-width-medium-1-2">
-                                                <label>Username</label>
-                                                <input id='username' name= 'username' type="text" class="md-input" required />
-                                            </div>
                                             <div class="uk-width-medium-1-2">
                                                 <label>Password</label>
                                                 <input id='password' name= 'password' type="password" class="md-input" required />
@@ -177,14 +171,6 @@
                                       </div>
                                       <div class="uk-form-row">
                                         <div class="uk-grid">
-                                            <div class="uk-width-medium-1-2">
-                                                <label>Username</label>
-                                                <input name='username_edit' id='username_edit' type="text" class="md-input label-fixed username_edit" required />
-                                            </div>
-                                            <!-- <div class="uk-width-medium-1-2">
-                                                <label>Password</label>
-                                                <input id='password_edit' name= 'password' type="password" class="md-input label-fixed" required />
-                                            </div> -->
                                         </div>
                                       </div>
 
@@ -269,7 +255,7 @@
             }
             $('#dt_default').on( 'click', '.edit', function () {
                 var pengguna_nik = $(this).data('nik');
-                var pengguna_username = $(this).data('username');
+
                 var pengguna_nama = $(this).data('nama');
                 // var pengguna_password = $(this).data('password');
                 var pengguna_peran = $(this).data('peran');
@@ -277,7 +263,7 @@
                 $('.edit').attr('data-uk-modal', "{target:'#modal_header_footeredit'}");
                 $('.nik_edit').val(pengguna_nik);
                 $('.nik_edit2').val(pengguna_nik);
-                $('.username_edit').val(pengguna_username);
+
                 $('.nama_edit').val(pengguna_nama);
                 // $('#password_edit').val(pengguna_password);
                 $('.peran_edit').val(pengguna_peran);

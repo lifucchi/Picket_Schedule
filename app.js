@@ -1,7 +1,9 @@
 const path = require('path');
 const express = require('express');
 const bodyPaser = require('body-parser');
-const session = require('express-session');
+// const session = require('express-session');
+var cookieSession = require('cookie-session');
+var cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
 const moment = require('moment');
@@ -30,7 +32,7 @@ const Pengguna = require('./models/pengguna');
 const Jadwal_piket = require('./models/jadwal_piket');
 const Artikel = require('./models/artikel');
 const Bukti_temuan = require('./models/bukti_temuan');
-const Notifikasi = require('./models/notifikasi');
+
 const Penilaian_meja = require('./models/penilaian_meja');
 const Penilaian_ruang = require('./models/penilaian_ruang');
 const Ruang = require('./models/ruang');
@@ -43,6 +45,7 @@ app.use(bodyPaser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/images",express.static(path.join(__dirname, 'images')));
 app.use("/excel",express.static(path.join(__dirname, 'excel')));
+app.use(cookieParser());
 
 // untuk imag
 const imageFilter = (req, file, cb) => {
@@ -96,15 +99,37 @@ app.use(multer({storage : fileStorage, fileFilter: imageFilter}).fields(
     ]
   ));
 
+app.set('trust proxy', 1)
+//
+// app.use(
+//   cookieSession({
+//     name: 'session',
+//     keys: ['key1', 'key2']
+//     // secret: 'my secret',
+//     // resave: false,
+//     // saveUninitialized: false,
+//     // store: store
+//   })
+// );
+var expiryDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
 
-app.use(
-  session({
-    secret: 'my secret',
-    resave: false,
-    saveUninitialized: false,
-    // store: store
-  })
-);
+// const session = cookieSession({
+//    secret: 'my secret',
+//    resave: false,
+//    saveUninitialized: true,
+//    cookie: {
+//      secureProxy: true,
+//      httpOnly: true,
+//      // domain: 'lifucchi.com',
+//      expires: expiryDate
+//    }
+//  })
+
+app.use(cookieSession({
+   name: 'session',
+   keys: ['x', 'y']
+}));
+
 app.use(flash());
 app.use(csrfProtection);
 

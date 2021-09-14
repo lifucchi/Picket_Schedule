@@ -37,32 +37,51 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
   const nik = req.body.login_username;
   const password = req.body.login_password;
+  console.log("masuk sini");
   Pengguna.findOne({ where: { nik: nik } })
     .then(user => {
       if (!user) {
         req.flash('error', 'User Tidak Ditemukan');
+        console.log("masuk sini2");
         return res.redirect('/');
       }
       bcrypt
         .compare(password, user.password)
         .then(doMatch => {
           if (doMatch) {
+            console.log("masuk sini3");
+
             req.session.isLoggedIn = true;
             req.session.user = user;
-            return req.session.save(err => {
-              console.log(err);
-              if (req.session.user.peran === 'Admin'){
-                res.redirect('/admin');
 
-              }else if(req.session.user.peran === 'Anggota') {
-                res.redirect('/anggota');
+            if (req.session.user.peran === 'Admin'){
+              res.redirect('/admin');
 
-              }else if(req.session.user.peran === 'Fasilitator'){
-                res.redirect('/fasilitator');
+            }else if(req.session.user.peran === 'Anggota') {
+              console.log("masuk sini4");
 
-              }
+              res.redirect('/anggota');
 
-            });
+            }else if(req.session.user.peran === 'Fasilitator'){
+              res.redirect('/fasilitator');
+
+            }
+            // return req.session.save(err => {
+            //   console.log(err);
+            //   if (req.session.user.peran === 'Admin'){
+            //     res.redirect('/admin');
+            //
+            //   }else if(req.session.user.peran === 'Anggota') {
+            //     console.log("masuk sini4");
+            //
+            //     res.redirect('/anggota');
+            //
+            //   }else if(req.session.user.peran === 'Fasilitator'){
+            //     res.redirect('/fasilitator');
+            //
+            //   }
+            //
+            // });
           }
           req.flash('error', 'Password salah');
           res.redirect('/');
@@ -76,10 +95,10 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.getLogout = (req, res, next) => {
-  req.session.destroy(err => {
-    console.log(err);
+
+    req.session = null;
     res.redirect('/');
-  });
+
 };
 
 

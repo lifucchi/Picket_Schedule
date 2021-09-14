@@ -17,7 +17,7 @@ const sequelize = new Sequelize('u2964880_5Rsmart', 'u2964880_root', 'password',
 });
 // const sequelize = new Sequelize('lift3227_5Rsmart', 'lift3227_root', 'inipassword5rsmart', {
 //   dialect: 'mysql',
-//   host: '103.253.212.244',
+//   host: 'localhost',
 //   port: 3306,
 // });
 

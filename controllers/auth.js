@@ -1,11 +1,8 @@
 const bcrypt = require('bcryptjs');
-
 const Pengguna = require('../models/pengguna');
 
 exports.getLogin = (req, res, next) => {
-
   if (!req.session.isLoggedIn) {
-
   let message = req.flash('error');
   if (message.length > 0) {
     message = message[0];
@@ -27,17 +24,13 @@ exports.getLogin = (req, res, next) => {
 
         }else if(req.session.user.peran === 'Fasilitator'){
         res.redirect('/fasilitator');
-
         }
     }
-
-
 };
 
 exports.postLogin = (req, res, next) => {
   const nik = req.body.login_username;
   const password = req.body.login_password;
-  console.log("masuk sini");
   Pengguna.findOne({ where: { nik: nik } })
     .then(user => {
       if (!user) {
@@ -49,39 +42,25 @@ exports.postLogin = (req, res, next) => {
         .compare(password, user.password)
         .then(doMatch => {
           if (doMatch) {
-            console.log("masuk sini3");
 
             req.session.isLoggedIn = true;
             req.session.user = user;
 
-            if (req.session.user.peran === 'Admin'){
-              res.redirect('/admin');
+            return req.session.save(err => {
+              console.log(err);
+              if (req.session.user.peran === 'Admin'){
+                res.redirect('/admin');
 
-            }else if(req.session.user.peran === 'Anggota') {
-              console.log("masuk sini4");
+              }else if(req.session.user.peran === 'Anggota') {
 
-              res.redirect('/anggota');
+                res.redirect('/anggota');
 
-            }else if(req.session.user.peran === 'Fasilitator'){
-              res.redirect('/fasilitator');
+              }else if(req.session.user.peran === 'Fasilitator'){
+                res.redirect('/fasilitator');
 
-            }
-            // return req.session.save(err => {
-            //   console.log(err);
-            //   if (req.session.user.peran === 'Admin'){
-            //     res.redirect('/admin');
-            //
-            //   }else if(req.session.user.peran === 'Anggota') {
-            //     console.log("masuk sini4");
-            //
-            //     res.redirect('/anggota');
-            //
-            //   }else if(req.session.user.peran === 'Fasilitator'){
-            //     res.redirect('/fasilitator');
-            //
-            //   }
-            //
-            // });
+              }
+
+            });
           }
           req.flash('error', 'Password salah');
           res.redirect('/');
@@ -95,9 +74,9 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.getLogout = (req, res, next) => {
-
-    req.session = null;
+ req.session.destroy(err => {
     res.redirect('/');
+  });
 
 };
 
@@ -152,7 +131,6 @@ exports.changePasswordPengguna = (req, res, next) => {
         })
         .catch(err => {
           console.log(err);
-          // res.redirect('/');
         });
     })
     .catch(err => console.log(err));

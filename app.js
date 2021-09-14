@@ -1,8 +1,9 @@
 const path = require('path');
 const express = require('express');
 const bodyPaser = require('body-parser');
-// const session = require('express-session');
-var cookieSession = require('cookie-session');
+const session = require('express-session');
+var MemoryStore = require('memorystore')(session);
+// var cookieSession = require('cookie-session');
 var cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
@@ -111,24 +112,16 @@ app.set('trust proxy', 1)
 //     // store: store
 //   })
 // );
-var expiryDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
 
-// const session = cookieSession({
-//    secret: 'my secret',
-//    resave: false,
-//    saveUninitialized: true,
-//    cookie: {
-//      secureProxy: true,
-//      httpOnly: true,
-//      // domain: 'lifucchi.com',
-//      expires: expiryDate
-//    }
-//  })
-
-app.use(cookieSession({
-   name: 'session',
-   keys: ['x', 'y']
-}));
+app.use(session({
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    resave: false,
+    saveUninitialized: false,
+    secret: 'keyboard cat'
+}))
 
 app.use(flash());
 app.use(csrfProtection);
@@ -158,7 +151,7 @@ app.use((req, res, next) => {
               where:{
                 penggunaNik: req.session.user.nik,
                 penilaianRuangId: {
-                [Op.is]: null,
+                [Op.is]: null
               },
               tinjak_lanjut: 2
               }
@@ -168,7 +161,7 @@ app.use((req, res, next) => {
               where:{
                 penggunaNik: req.session.user.nik,
                 penilaianMejaId: {
-                [Op.is]: null,
+                [Op.is]: null
               },
               tinjak_lanjut: 2
               }
@@ -204,7 +197,7 @@ app.use((req, res, next) => {
             where:{
               penggunaNik: req.session.user.nik,
               penilaianRuangId: {
-              [Op.is]: null,
+              [Op.is]: null
             },
             tinjak_lanjut: 2
             }
@@ -214,7 +207,7 @@ app.use((req, res, next) => {
             where:{
               penggunaNik: req.session.user.nik,
               penilaianMejaId: {
-              [Op.is]: null,
+              [Op.is]: null
             },
             tinjak_lanjut: 2
             }
@@ -238,9 +231,7 @@ app.use((req, res, next) => {
 
         }else if(req.session.user.peran === "Admin"){
           next();
-
         }
-
   }
 });
 

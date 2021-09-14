@@ -9,7 +9,6 @@ const Ruang = require('../models/ruang');
 const sequelize = require('../util/database')
 const { Op } = require("sequelize");;
 
-
 exports.getAdminDashboard = (req,res) => {
   const nowTanggal = moment().format('YYYY-MM-DD');
   const nowTanggal2 = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
@@ -17,11 +16,11 @@ exports.getAdminDashboard = (req,res) => {
     where: {tanggal: nowTanggal},
     include: [{
       model: Pengguna,
-      as: 'nik_pic_piket',
+      as: 'nik_pic_piket'
     },
     {
       model: Pengguna,
-      as: 'nik_pic_fasil',
+      as: 'nik_pic_fasil'
     }
   ]
 }).then(piket => {
@@ -34,7 +33,7 @@ exports.getAdminDashboard = (req,res) => {
         {
           model: Meja,
           include: [{
-            model: Pengguna,
+            model: Pengguna
           }],
         },
         {
@@ -43,7 +42,7 @@ exports.getAdminDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:2}]
 
           }
         }
@@ -55,7 +54,7 @@ exports.getAdminDashboard = (req,res) => {
         ]},
       group : ['penggunaNik'],
       order: [
-          [[sequelize.literal('bobotmeja'), 'DESC']],
+          [[sequelize.literal('bobotmeja'), 'DESC']]
       ],
     }
   )
@@ -64,7 +63,7 @@ exports.getAdminDashboard = (req,res) => {
     {
         include: [
         {
-          model: Ruang,
+          model: Ruang
         },
         {
           model: JadwalPiket,
@@ -72,7 +71,7 @@ exports.getAdminDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:2}]
           },
           include: [{
             model: Pengguna,
@@ -81,19 +80,18 @@ exports.getAdminDashboard = (req,res) => {
           },
           {
             model: Pengguna,
-            as: 'nik_pic_fasil',
-
+            as: 'nik_pic_fasil'
           }
         ]
         }
       ],
       attributes: {
         include: [
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
       group : ['jadwalPiketId'],
       order: [
-            [[sequelize.literal('bobotruang'), 'DESC']],
+            [[sequelize.literal('bobotruang'), 'DESC']]
       ],
     }
   )
@@ -110,7 +108,7 @@ exports.getAdminDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:2}]
           },
           include: [{
             model: Pengguna,
@@ -119,7 +117,7 @@ exports.getAdminDashboard = (req,res) => {
           },
           {
             model: Pengguna,
-            as: 'nik_pic_fasil',
+            as: 'nik_pic_fasil'
 
           }
         ]
@@ -127,11 +125,11 @@ exports.getAdminDashboard = (req,res) => {
       ],
       attributes: {
       include: [
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
       group : ['jadwalPiketId'],
       order: [
-            [[sequelize.literal('bobotruang'), 'DESC']],
+            [[sequelize.literal('bobotruang'), 'DESC']]
       ],
   }
   )
@@ -141,8 +139,8 @@ exports.getAdminDashboard = (req,res) => {
       .then(count => {
           console.log('**********COMPLETE RESULTS****************');
 
-;         count[0][0].bobotmeja = parseFloat(count[0][0].bobotmeja).toFixed(2);
-          // sum all
+         count[0][0].bobotmeja = parseFloat(count[0][0].bobotmeja).toFixed(2);
+
           let lantaiSatu = 0;
           for(i = 0; i < count[1].length; i++){
             lantaiSatu = parseFloat(lantaiSatu) + parseFloat(count[1][i].bobotruang);
@@ -189,6 +187,3 @@ exports.getAdminDashboard = (req,res) => {
       });
 
 };
-
-
-//

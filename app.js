@@ -11,18 +11,14 @@ const multer = require('multer');
 const csrf = require('csurf');
 const app = express();
 const csrfProtection = csrf();
-const port = 8080;
-// controller
 const errorController = require('./controllers/error');
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const anggotaRoutes = require('./routes/anggota');
 const fasilitatorRoutes = require('./routes/fasilitator');
-// database
 const sequelize = require('./util/database');
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
-// model
 const Pengguna = require('./models/pengguna');
 const Jadwal_piket = require('./models/jadwal_piket');
 const Artikel = require('./models/artikel');
@@ -31,7 +27,6 @@ const Penilaian_meja = require('./models/penilaian_meja');
 const Penilaian_ruang = require('./models/penilaian_ruang');
 const Ruang = require('./models/ruang');
 const Meja = require('./models/meja');
-
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(bodyPaser.urlencoded({extended: true}));
@@ -62,7 +57,6 @@ const imageFilter = (req, file, cb) => {
 
   }
 };
-
 var fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (file.fieldname === "image") {
@@ -127,7 +121,6 @@ app.use((req, res, next) => {
                 tinjak_lanjut: 2
               }
             });
-
             const tindaklanjutruang = Bukti_temuan.count({
               where:{
                 penggunaNik: req.session.user.nik,
@@ -137,7 +130,6 @@ app.use((req, res, next) => {
                 tinjak_lanjut: 2
               }
             });
-
           Promise
               .all([belumchecklist,tindaklanjutmeja,tindaklanjutruang])
               .then(count => {
@@ -149,7 +141,6 @@ app.use((req, res, next) => {
               .catch(err => {
                   console.log(err);
               });
-
         }else if(req.session.user.peran === "Fasilitator"){
           const belumlaporan =
           Jadwal_piket.count(
@@ -169,7 +160,6 @@ app.use((req, res, next) => {
               tinjak_lanjut: 2
               }
             });
-
           const tindaklanjutruang = Bukti_temuan.count({
             where:{
               penggunaNik: req.session.user.nik,
@@ -179,7 +169,6 @@ app.use((req, res, next) => {
               tinjak_lanjut: 2
             }
           });
-
         Promise
             .all([belumlaporan, tindaklanjutmeja, tindaklanjutruang])
             .then(count => {
@@ -187,36 +176,28 @@ app.use((req, res, next) => {
                 res.locals.tindaklanjutmeja = count[1];
                 res.locals.tindaklanjutruang = count[2];
                 return next();
-
             })
             .catch(err => {
                 console.log(err);
             });
-
         }else if(req.session.user.peran === "Admin"){
            return next();
         }
   }
 });
-
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
   res.locals.session = req.session;
   res.locals.csrfToken = req.csrfToken();
   next();
 });
-
 // routes
 app.use(authRoutes);
 app.use('/admin',adminRoutes);
 app.use('/anggota',anggotaRoutes);
 app.use('/fasilitator',fasilitatorRoutes);
 
-
 app.use(errorController.get404);
-app.use(errorController.get500);
-
-// app.use(errorController.get401);
 // sync database
 // Pengguna punya banyak jadwal_piket
 Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', foreignKey: 'nikpicpiket', as: 'nik_pic_piket'});
@@ -279,7 +260,7 @@ sequelize
   // .sync({alter: true})
   // .sync({force: true})
   .then(result => {
-    app.listen(port);
+    app.listen(8080);
   })
   .catch( err => {
     console.log(err);

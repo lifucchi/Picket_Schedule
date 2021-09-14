@@ -3,7 +3,6 @@ const express = require('express');
 const bodyPaser = require('body-parser');
 const session = require('express-session');
 var MemoryStore = require('memorystore')(session);
-// var cookieSession = require('cookie-session');
 var cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
@@ -100,7 +99,7 @@ app.use(multer({storage : fileStorage, fileFilter: imageFilter}).fields(
     ]
   ));
 
-app.set('trust proxy', 1)
+app.set('trust proxy', 1);
 //
 // app.use(
 //   cookieSession({
@@ -121,7 +120,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     secret: 'keyboard cat'
-}))
+}));
 
 app.use(flash());
 app.use(csrfProtection);

@@ -2,34 +2,9 @@
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Remove Tap Highlight on Windows Phone IE -->
-    <meta name="msapplication-tap-highlight" content="no"/>
-
-    <link rel="icon" type="image/png" href="/assets/img/logo5rsmart.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="/assets/img/logo5rsmart.png" sizes="32x32">
-
-    <title><%= pageTitle%></title>
-    <link rel="stylesheet" href="/bower_components/kendo-ui/styles/kendo.common-material.min.css"/>
-    <link rel="stylesheet" href="/bower_components/kendo-ui/styles/kendo.material.min.css"/>
-    <!-- uikit -->
-    <link rel="stylesheet" href="/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
-
-    <!-- flag icons -->
-    <link rel="stylesheet" href="/assets/icons/flags/flags.min.css" media="all">
-
-    <!-- altair admin -->
-    <link rel="stylesheet" href="/assets/css/main.min.css" media="all">
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css" media="all">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css" media="all">
-
-
-
-
+  <%- include('head'); %>
 </head>
+
 <body class=" top_menu">
     <!-- main header -->
     <%- include('header'); %>
@@ -42,27 +17,6 @@
     <div id="page_content">
         <div id="page_content_inner">
 
-          <!-- <div class="md-card">
-              <div class="md-card-content">
-                <form  action="/admin/buktitemuanmeja/filter" method="POST">
-                  <div class="uk-grid" data-uk-grid-margin="">
-                      <div class="uk-width-medium-3-10">
-                        <label for="kUI_datepicker_b" class="uk-form-label">Datepicker (months)</label>
-                        <input required name="bulanTahun" id="kUI_datepicker_b" value="" />
-                      </div>
-                      <div class="uk-width-medium-1-10">
-                          <div class="uk-margin-top uk-text-nowrap">
-                              <input type="checkbox" name="kategori" id="product_search_active" data-md-icheck/>
-                              <label for="product_search_active" class="inline-label">Sudah Tinjak Lanjut</label>
-                          </div>
-                      </div>
-                      <div class="uk-width-medium-2-10 uk-text-center">
-                            <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button>
-                      </div>
-                  </div>
-                </form>
-              </div>
-          </div> -->
 
             <div class="md-card">
             <div class="md-card uk-margin-medium-bottom">
@@ -135,11 +89,11 @@
     <script src="/assets/js/uikit_custom.min.js"></script>
     <!-- altair common functions/helpers -->
     <script src="/assets/js/altair_admin_common.min.js"></script>
-    <%- include('../include_admin/datatables'); %>
     <script src="/assets/js/kendoui_custom.min.js"></script>
-
     <!--  kendoui functions -->
     <script src="/assets/js/pages/kendoui.min.js"></script>
+
+    <%- include('../include_admin/datatables'); %>
 
 
 

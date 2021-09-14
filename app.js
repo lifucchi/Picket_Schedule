@@ -4,9 +4,13 @@ const bodyPaser = require('body-parser');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
-const app = express();
 const moment = require('moment');
 const multer = require('multer');
+const csrf = require('csurf');
+
+const app = express();
+const csrfProtection = csrf();
+
 const port = 8080;
 
 // controller
@@ -102,6 +106,8 @@ app.use(
   })
 );
 app.use(flash());
+app.use(csrfProtection);
+
 // sampe sin idulu
 app.use((req, res, next) => {
   if (!req.session.user) {
@@ -216,7 +222,7 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
   res.locals.session = req.session;
-  // res.locals.csrfToken = req.csrfToken();
+  res.locals.csrfToken = req.csrfToken();
   next();
 });
 

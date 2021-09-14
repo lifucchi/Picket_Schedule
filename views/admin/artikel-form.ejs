@@ -81,6 +81,8 @@
                         <div class="uk-input-group">
                             <!-- <span class="uk-input-group-addon"><a class="md-btn" type="submit" >Save</a></span> -->
                             <!-- <button type="submit" name="button">Save</button> -->
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            
                             <input type="hidden" name="update" value="<% if (editing === 'edit') { %><%= article.id %><% } %>">
                             <button class="md-btn" type="submit" name="button">Save</button>
                         </div>

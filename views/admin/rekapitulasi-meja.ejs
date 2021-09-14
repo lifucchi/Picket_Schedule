@@ -49,6 +49,8 @@
                             <input name="bulanTahun" id="kUI_datepicker_b" value="" />
                             <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
                                 <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button>
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                             <!-- </div> -->
                           </form>
                         </div>
@@ -91,6 +93,8 @@
                                 <form onsubmit="return confirm('Are you sure?');" action="/admin/skorruang/delete-skormeja" method="POST">
                                     <input type="hidden" value="<%= room.id %>" name="penilaianMejaId">
                                     <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    
                                 </form>
                             </td>
                         </tr>

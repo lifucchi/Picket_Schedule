@@ -55,6 +55,8 @@
                           </div>
                       </div>
                       <div class="uk-width-medium-2-10 uk-text-center">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                             <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button>
                       </div>
                   </div>
@@ -90,6 +92,8 @@
                             <td class="uk-text-nowrap">
                                 <!-- <button  href="javascript:void(0);" class="btn edit"><i class="material-icons md-24"></i></button> -->
                                 <form onsubmit="return confirm('Are you sure?');" action="/admin/buktitemuanmeja/delete" method="POST">
+                                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                  
                                     <input type="hidden" value="<%= room.id %>" name="buktiTemuanId">
                                     <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
                                 </form>

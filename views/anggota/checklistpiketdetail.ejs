@@ -99,6 +99,8 @@
                             <form class="" action="/anggota/checklistPiket/postCheckPic" method="post">
                               <div class="md-btn-group">
                                 <input type="hidden" name="check" value="<%= piket.id %>">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                
                                 <button class="md-btn md-btn-warning" type="submit" name="button">Check !!</button>
                               </div>
                             </form>

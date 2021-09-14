@@ -57,8 +57,12 @@
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/delete-pengguna" method="POST">
                                       <input type="hidden" value="<%= user.nik %>" name="penggunaId">
                                       <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                                   </form>
                                   <form  onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/reset-password" method="POST">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                                     <input type="hidden" value="<%= user.nik %>" name="penggunaId">
                                     <button type="submit" class=" md-bg-light-green-600 md-btn md-btn-primary md-btn-small md-btn-wave-light waves-effect waves-button waves-light" >Reset Password</button>
                                   </form>
@@ -140,6 +144,8 @@
                       <div class="uk-modal-footer uk-text-right">
                           <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
                           <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                       </div>
                   </form>
                   </div>
@@ -215,6 +221,8 @@
                       <div class="uk-modal-footer uk-text-right">
                           <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
                           <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                       </div>
                   </form>
                   </div>

@@ -74,6 +74,8 @@
 
                             <div class="">
                               <form onsubmit="return confirm('Are you sure?');" action="/admin/buktitemuanmeja/delete" method="POST">
+                                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                                   <input type="hidden" value="<%= rooms.id %>" name="buktiTemuanId">
                                   <button id="delete" type="submit" class="md-btn md-bg-light-green-200" >Hapus Bukti Temuan</button>
                               </form>
@@ -107,6 +109,8 @@
 
                             <% if (rooms.tinjak_lanjut === 1) {%>
                             <form onsubmit="return confirm('Are you sure?');" action="/admin/tindaklanjutmeja/delete" method="POST">
+                              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                              
                                 <input type="hidden" value="<%= rooms.id %>" name="buktiTemuanId">
                                 <button id="delete" type="submit" class="md-btn md-bg-light-green-200"> Hapus Tinjak Lanjut</button>
                             </form>

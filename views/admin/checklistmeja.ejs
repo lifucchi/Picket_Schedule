@@ -62,8 +62,10 @@
 
                               <td>
                                   <button  href="javascript:void(0);" class="btn edit" data-id="<%= table.id %>" data-nama="<%= table.pengguna.nik %>" data-standar="<%= table.standar%>"  ><i class="material-icons md-24"></i></button>
-                                  <form onsubmit="return confirm('Are you sure?');" action="/admin//checklistmeja/delete-checklistmeja" method="POST">
+                                  <form onsubmit="return confirm('Are you sure?');" action="/admin/checklistmeja/delete-checklistmeja" method="POST">
                                       <input type="hidden" value="<%= table.id %>" name="mejaId">
+                                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                                       <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
                                   </form>
                               </td>
@@ -120,7 +122,10 @@
                               </div>
                           </div>
                       <div class="uk-modal-footer uk-text-right">
-                          <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button><button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                          <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
+                          <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                       </div>
                   </form>
                   </div>
@@ -156,7 +161,12 @@
                               </div>
                           </div>
                       <div class="uk-modal-footer uk-text-right">
-                          <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button><button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+                          <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
+                          <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                          
                       </div>
                   </form>
                   </div>
@@ -211,6 +221,8 @@
                           <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
                           <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
                           <input id='id' name='id' type="hidden" class="md-input label-fixed" />
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                       </div>
                   </form>
                   </div>

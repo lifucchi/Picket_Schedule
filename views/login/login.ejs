@@ -57,10 +57,9 @@
                       <input class="md-input" type="password" id="login_password" name="login_password" />
                   </div>
                   <div class="uk-margin-medium-top">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                       <button type="submit" class="md-btn md-btn-success md-btn-block md-btn-large">Sign In</button>
                   </div>
-                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                  
               </form>
           </div>
       </div>

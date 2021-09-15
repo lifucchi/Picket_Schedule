@@ -10,7 +10,6 @@ const moment = require('moment');
 const multer = require('multer');
 const csrf = require('csurf');
 const app = express();
-const csrfProtection = csrf();
 const errorController = require('./controllers/error');
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
@@ -34,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/images",express.static(path.join(__dirname, 'images')));
 app.use("/excel",express.static(path.join(__dirname, 'excel')));
 app.use(cookieParser());
+
 
 const imageFilter = (req, file, cb) => {
   if (file.fieldname === "image") {
@@ -92,8 +92,9 @@ app.use(session({
     saveUninitialized: false,
     secret: 'keyboard cat'
 }));
-app.use(flash());
+const csrfProtection = csrf({cookie: true});
 app.use(csrfProtection);
+app.use(flash());
 app.use((req, res, next) => {
   if (!req.session.user) {
     return next();

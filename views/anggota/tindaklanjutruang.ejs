@@ -22,7 +22,6 @@
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
                     <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
-                      <% if (rooms.length != 0) {%>
                         <thead>
                             <tr>
                                 <th>Tanggal Piket</th>
@@ -35,6 +34,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                          <% if (rooms.length != 0) {%>
                           <% rooms.forEach((room) => { %>
                         <tr>
                           <td class="uk-text-large uk-text-nowrap"><a href="/anggota/tindaklanjut/ruang/detail/<%= room.id %>"><%= room.penilaian_ruang.jadwal_piket.tanggal %></a></td>
@@ -51,8 +51,8 @@
 
                         </tr>
                           <% }) %>
+                          <%}%>
                         </tbody>
-                        <%}%>
                     </table>
                 </div>
             </div>

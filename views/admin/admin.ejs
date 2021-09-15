@@ -2,33 +2,14 @@
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Remove Tap Highlight on Windows Phone IE -->
-    <meta name="msapplication-tap-highlight" content="no"/>
-
-    <link rel="icon" type="image/png" href="/assets/img/logo5rsmart.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="/assets/img/logo5rsmart.png" sizes="32x32">
-
-    <title><%= pageTitle%></title>
-
-    <!-- uikit -->
-    <link rel="stylesheet" href="/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
-
-    <!-- flag icons -->
-    <link rel="stylesheet" href="/assets/icons/flags/flags.min.css" media="all">
-
-    <!-- altair admin -->
-    <link rel="stylesheet" href="/assets/css/main.min.css" media="all">
-
+  <%- include('head'); %>
 </head>
 <body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-800">
     <!-- main header -->
-    <%- include('../include_Admin/header'); %>
+    <%- include('header'); %>
     <!-- main header end -->
     <!-- main sidebar -->
-    <%- include('../include_admin/sidebar_switch'); %>
+    <%- include('sidebar_switch'); %>
     <!-- main sidebar end -->
 
 <div id="page_content">

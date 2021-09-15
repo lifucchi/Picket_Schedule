@@ -360,8 +360,23 @@ exports.getJadwalPiketAnggota = (req,res, next) => {
 
 exports.getChecklistPiket = (req,res, next) => {
 
-  req.user
-  .getPemilikJadwal({
+  // req.user
+  // .getPemilikJadwal({
+  //   include: [{
+  //     model: Pengguna,
+  //     as: 'nik_pic_piket'
+  //   },
+  //   {
+  //     model: Pengguna,
+  //     as: 'nik_pic_fasil'
+  //   }
+  // ],
+  // order: [
+  //     ['tanggal', 'DESC']
+  // ],
+  // })
+
+  JadwalPiket.findByPk(req.session.user.nik, {
     include: [{
       model: Pengguna,
       as: 'nik_pic_piket'

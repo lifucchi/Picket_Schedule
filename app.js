@@ -27,7 +27,7 @@ const Penilaian_ruang = require('./models/penilaian_ruang');
 const Ruang = require('./models/ruang');
 const Meja = require('./models/meja');
 app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set('views', path.join(__dirname, 'views'));
 app.use(bodyPaser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/images",express.static(path.join(__dirname, 'images')));

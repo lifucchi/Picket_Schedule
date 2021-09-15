@@ -1,15 +1,17 @@
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <%- include('head'); %>
 
-    <%- include('../include/head'); %>
+</head>
 
 <body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-500">
     <!-- main header -->
-    <%- include('../include_Admin/header'); %>
+    <%- include('header'); %>
     <!-- main header end -->
     <!-- main sidebar -->
-    <%- include('../include_admin/sidebar_switch'); %>
+    <%- include('sidebar_switch'); %>
     <!-- main sidebar end -->
 
 <div id="page_content">
@@ -82,7 +84,7 @@
                             <!-- <span class="uk-input-group-addon"><a class="md-btn" type="submit" >Save</a></span> -->
                             <!-- <button type="submit" name="button">Save</button> -->
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            
+
                             <input type="hidden" name="update" value="<% if (editing === 'edit') { %><%= article.id %><% } %>">
                             <button class="md-btn" type="submit" name="button">Save</button>
                         </div>

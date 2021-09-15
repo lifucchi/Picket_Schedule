@@ -141,29 +141,42 @@ exports.getDashboard = (req,res) => {
       .then(count => {
           console.log('**********COMPLETE RESULTS****************');
 
-         count[0][0].bobotmeja = parseFloat(count[0][0].bobotmeja).toFixed(2);
-          // sum all
+          if (count[0] > 0){
+            count[0][0].bobotmeja = parseFloat(count[0][0].bobotmeja).toFixed(2);
+
+          }
+
           let lantaiSatu = 0;
-          for(i = 0; i < count[1].length; i++){
-            lantaiSatu = parseFloat(lantaiSatu) + parseFloat(count[1][i].bobotruang);
-          }
-          lantaiSatu = parseFloat(lantaiSatu) / parseFloat(count[1].length);
           let lantaiDua = 0;
-          for(i = 0; i < count[2].length; i++){
-            lantaiDua = parseFloat(lantaiDua) + parseFloat(count[2][i].bobotruang);
+
+          if (count[1] > 0){
+            for(i = 0; i < count[1].length; i++){
+              lantaiSatu = parseFloat(lantaiSatu) + parseFloat(count[1][i].bobotruang);
+            }
+            lantaiSatu = parseFloat(lantaiSatu) / parseFloat(count[1].length);
+
           }
-          lantaiDua = parseFloat(lantaiDua) / parseFloat(count[2].length);
+
+          if (count[2] > 0){
+            for(i = 0; i < count[2].length; i++){
+              lantaiDua = parseFloat(lantaiDua) + parseFloat(count[2][i].bobotruang);
+            }
+            lantaiDua = parseFloat(lantaiDua) / parseFloat(count[2].length);
+          }
+
           let lantaiTerbaik = [];
           if ( lantaiSatu > lantaiDua ){
             lantaiTerbaik[0] = lantaiSatu.toFixed(2);
             lantaiTerbaik[1] = 1;
-          } else{
+          } else if ( lantaiSatu < lantaiDua ){
             lantaiTerbaik[0] = lantaiDua.toFixed(2);
             lantaiTerbaik[1] = 2;
+          }else{
+            lantaiTerbaik[0] = 0;
+            lantaiTerbaik[1] = 'belum ada';
           }
-
-          global.mejaTerbaik = count[0][0];
-          global.lantaiTerbaik = lantaiTerbaik;
+          res.locals.mejaTerbaik = count[0][0];
+          res.locals.lantaiTerbaik = lantaiTerbaik;
 
 
           res.render('./anggota/dashboard', {

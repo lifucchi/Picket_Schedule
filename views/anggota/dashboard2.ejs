@@ -1,0 +1,208 @@
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <%- include('head'); %>
+
+  <style>
+    html, body {
+        height: 100%;
+    }
+    .half {
+        height: 30%;
+    }
+
+    .full {
+        height: 100%;
+    }
+</style>
+
+</head>
+<body class="  top_menu">
+    <!-- main header -->
+    <%- include('header'); %>
+
+  <div class="md-bg-grey-800" id="top_bar">
+      <%- include('top_bar'); %>
+  </div>
+
+  <div class="full" id="page_content">
+
+    <div class="half uk-section md-bg-grey-800">
+      <br>
+      <div class=" uk-container ">
+            <h2 class=" uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400"  >
+              <span>Meja Ter-SO GOOD</span>
+              <% if (mejaTerbaik && mejaTerbaik.bobotmeja !== 'undefined' ) {%>
+                <div class="uk-grid">
+                    <div class="uk-width-1-2">
+                      <!-- <div class="uk-panel"> -->
+                          <i href="" class="uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                          <% if (mejaTerbaik.bobotmeja >= 4.5 ) {%>
+                            <h2> Consistent Star </h2>
+                          <% }else if (mejaTerbaik.bobotmeja >= 4){%>
+                            <h2> Future Star </h2>
+                          <% }else if (mejaTerbaik.bobotmeja >= 3.5 ){%>
+                            <h2> Utility Hi-Pro </h2>
+
+                          <% }else if (mejaTerbaik.bobotmeja >= 3){%>
+                            <h2> Contributor </h2>
+
+                          <% }else if (mejaTerbaik.bobotmeja < 3){%>
+                            <h2> Iceberg </h2>
+                          <% }%>
+
+                          <h2 class=" uk-text-center uk-text-bold"> <%= mejaTerbaik.bobotmeja %> </h2>
+                      <!-- </div> -->
+                    </div>
+                    <div class="uk-width-1-2">
+                      <h1 class="">Level <%= mejaTerbaik.meja.pengguna.level %></h1>
+                      <h2 class=""><%= mejaTerbaik.meja.pengguna.nama %>   </h2>
+                    </div>
+                </div>
+                <% } %>
+      </div>
+    </div>
+
+    <div class="half uk-section md-color-light-green-200">
+      <br>
+      <div class=" uk-container">
+              <div>
+                  <h2 class="uk-margin-remove uk-text-right" >  <span>Lantai Ter-SO GOOD</span>
+              </div>
+                <% if (lantaiTerbaik[0]) {%>
+                          <div class="uk-grid">
+                              <div class="uk-width-1-2">
+                                <!-- <div class="uk-panel"> -->
+                                    <i href="" class="uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                                    <% if (lantaiTerbaik[0] >= 1000 ) {%>
+                                        <h2> Consistent Star </h2>
+                                    <% }else if (lantaiTerbaik[0] >= 800){%>
+                                      <h2> Future Star </h2>
+                                    <% }else if (lantaiTerbaik[0] >= 600 ){%>
+                                      <h2> Utility Hi-Pro </h2>
+
+                                    <% }else if (lantaiTerbaik[0] >= 400){%>
+                                      <h2> Contributor </h2>
+
+                                    <% }else if (lantaiTerbaik[0] < 499){%>
+                                      <h2> Iceberg </h2>
+                                    <% }%>
+                                    <h2 class="uk-margin-remove"><span> <%= lantaiTerbaik[0] %> </h2>
+
+                              </div>
+                              <div class="uk-width-1-2">
+                                <br>
+                                  <h1 class="uk-margin-remove"><span> level <%= lantaiTerbaik[1] %> </h1>
+                              </div>
+                          </div>
+                <% } %>
+          </div>
+      </div>
+
+      <div class="half uk-section md-color-light-green-200">
+        <br>
+        <div class=" uk-container">
+          <div class="uk-grid uk-grid-width-large-1-2 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+            <% if(schedules.length != 0) { %>
+              <% schedules.forEach((schedule) => { %>
+              <div>
+                  <div class="md-card  md-bg-light-green-200">
+                      <div class="md-card-content">
+                          <h2  class="uk-margin-remove"><span class="">Lantai <%= schedule.nik_pic_piket.level %></span></h2>
+
+                          <h4 class="uk-margin-remove"><span>PIC Piket : <%= schedule.nik_pic_piket.nama %> </h4>
+                          <h4 class="uk-margin-remove"><span>Fasilitator : <%= schedule.nik_pic_fasil.nama %> </h4>
+                          <h4 class="uk-margin-remove" >  <span>Status piket :</span>
+                          <% if (schedule.status_piket === 0) { %>
+                            <span class="uk-badge uk-badge-danger">Belum Piket</span>
+                            <% } else if (schedule.status_piket === 1) { %>
+                            <span class="uk-badge uk-badge-success">Sudah Piket</span>
+                          <% } else { %>
+                            <span class="uk-badge uk-badge-info">Sudah Piket tapi Melewati Jadwal</span>
+                          <% } %>
+                          </h4>
+                          <h4 class="uk-margin-remove" >  <span>Status fasil :</span>
+                            <% if (schedule.persetujuan_fasil === 0) {%>
+                            <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Approved</span>
+                            <% } else {%>
+                            <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Approved</span>
+                            <% } %>
+                          </h4>
+                      </div>
+                  </div>
+              </div>
+            <% }) %>
+          <%} else { %>
+            <div>
+                <div class="md-card  md-bg-light-green-200">
+                    <div class="md-card-content">
+                        <h2  class="uk-margin-remove">  <span class="">Lantai 1</span></h2>
+                        <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="md-card  md-bg-light-green-200">
+                    <div class="md-card-content">
+                        <h2 class="uk-margin-remove" > <span class="">Lantai 2</span></h2>
+                        <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
+                    </div>
+                </div>
+            </div>
+
+          <%} %>
+      </div>
+        </div>
+      </div>
+
+  </div>
+
+
+
+
+
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <!-- common functions -->
+    <script src="/assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="/assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="/assets/js/altair_admin_common.min.js"></script>
+
+
+    <script>
+        $(function() {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if(Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+        });
+    </script>
+
+
+
+</body>
+</html>

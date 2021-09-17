@@ -12,7 +12,9 @@ const { Op } = require("sequelize");
 exports.getDashboard = (req,res) => {
   // res.send('<h1>hello admin</h1>')
   const nowTanggal = moment().format('YYYY-MM-DD');
-  const nowTanggal2 = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
+  const nowTanggal2 = moment().locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
+  var monthMinusOneName =  moment().locale('id').subtract(1, "month").startOf("month").format('MMMM');
+
   JadwalPiket.findAll({
     where: {tanggal: nowTanggal},
     include: [{
@@ -149,7 +151,7 @@ exports.getDashboard = (req,res) => {
           let lantaiSatu = 0;
           let lantaiDua = 0;
 
-          if (count[1] > 0){
+          if (count[1]){
             for(i = 0; i < count[1].length; i++){
               lantaiSatu = parseFloat(lantaiSatu) + parseFloat(count[1][i].bobotruang);
             }
@@ -157,7 +159,7 @@ exports.getDashboard = (req,res) => {
 
           }
 
-          if (count[2] > 0){
+          if (count[2]){
             for(i = 0; i < count[2].length; i++){
               lantaiDua = parseFloat(lantaiDua) + parseFloat(count[2][i].bobotruang);
             }
@@ -185,7 +187,8 @@ exports.getDashboard = (req,res) => {
             schedules: piket,
             tanggal : nowTanggal2,
             mejaTerbaik : count[0][0],
-            lantaiTerbaik: lantaiTerbaik
+            lantaiTerbaik: lantaiTerbaik,
+            monthMinusOneName: monthMinusOneName
           });
 
       })

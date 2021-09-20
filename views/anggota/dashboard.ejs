@@ -29,7 +29,7 @@
   <div class="full">
     <div class=" uk-section md-bg-grey-800">
       <br>
-          <h1 class="uk-text-center uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400" >Meja Ter-SO GOOD</h1>
+          <h1 class="uk-text-center uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400" >Meja Ter-SO GOOD Bulan <%= monthMinusOneName%></h1>
           <% if (mejaTerbaik && mejaTerbaik.bobotmeja !== 'undefined' ) {%>
             <div class="uk-grid">
                 <div class="uk-width-1-1">
@@ -56,13 +56,20 @@
                   <!-- </div> -->
                 </div>
             </div>
+            <% }else { %>
+
+              <h3 class="uk-text-middle  uk-text-center  md-color-light-green-400 ">
+                  belum ada
+              </h3>
+
+
             <% } %>
             <br>
     </div>
 
     <div class=" uk-section md-bg-light-green-200">
          <br>
-            <h1 class="uk-text-center uk-margin-remove uk-text-lead uk-text-bolder ">Lantai Ter-SO GOOD</h1>
+            <h1 class="uk-text-center uk-margin-remove uk-text-lead uk-text-bolder ">Lantai Bulan Ter-SO GOOD Bulan <%= monthMinusOneName%></h1>
             <br>
             <% if (lantaiTerbaik !== 'undefined') {%>
                       <div class="uk-grid">
@@ -155,66 +162,40 @@
   </div>
 
   <div class="">
-    <div class="half uk-section md-bg-grey-800">
-      <br>
-      <div class="uk-container">
-
-          <h2 class=" uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400" >Meja Ter-SO GOOD</h2>
-
-          <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
-              <div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-              </div>
-              <div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-              </div>
-              <div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-              </div>
-          </div>
-
-      </div>
-    </div>
-
-    <div class="half uk-section">
-        <div class="uk-container">
-         <br>
-            <h2 class="uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400 ">Lantai Ter-SO GOOD</h2>
-
-            <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
-                <div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-                </div>
-                <div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-                </div>
-                <div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-                </div>
+    <div class="uk-section">
+          <div>
+            <div class="uk-slidenav-position" data-uk-slideshow="{animation:'scale'}">
+                <ul class="uk-slideshow">
+                  <% if(artikel && artikel !== 'undefined') { %>
+                        <% artikel.forEach((artike) => { %>
+                    <li>
+                      <div class="uk-grid" data-uk-grid-margin="">
+                        <div class="uk-card-media-top uk-width-medium-6-10">
+                          <!-- <img src="assets/img/gallery/Image02.jpg" alt=""> -->
+                          <img  src="/<%= artike.foto_Artikel %>" alt="">
+                        </div>
+                        <div class="uk-card-body uk-width-medium-4-10">
+                          <br>
+                            <h3 class="uk-card-title"><%= artike.judul %></h3>
+                            <p><%= artike.konten %></p>
+                        </div>
+                      </div>
+                  </li>
+                    <% }) %>
+                  <% } %>
+                </ul>
+                <a href="" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideshow-item="previous"></a>
+                <a href="" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slideshow-item="next"></a>
+                <ul class="uk-dotnav uk-dotnav-contrast uk-position-bottom uk-flex-center">
+                    <li data-uk-slideshow-item="0"><a href=""></a></li>
+                    <li data-uk-slideshow-item="1"><a href=""></a></li>
+                    <li data-uk-slideshow-item="2"><a href=""></a></li>
+                    <li data-uk-slideshow-item="3"><a href=""></a></li>
+                </ul>
             </div>
 
         </div>
     </div>
-
-    <div class="half uk-section-default md-bg-grey-800">
-          <div class="uk-container">
-           <br>
-              <h2 class="uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400 " >Piket Hari Ini</h2>
-
-              <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
-                  <div>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-                  </div>
-                  <div>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-                  </div>
-                  <div>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-                  </div>
-              </div>
-
-      </div>
-  </div>
   </div>
 
 

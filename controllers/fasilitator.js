@@ -7,27 +7,29 @@ const Penilaian_ruang = require('../models/penilaian_ruang');
 const Ruang = require('../models/ruang');
 const sequelize = require('../util/database');
 const { Op } = require("sequelize");
+const Artikel = require('../models/artikel');
 
 
 exports.getDashboard = (req,res) => {
+  // res.send('<h1>hello admin</h1>')
   const nowTanggal = moment().format('YYYY-MM-DD');
   const nowTanggal2 = moment().locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
   var monthMinusOneName =  moment().locale('id').subtract(1, "month").startOf("month").format('MMMM');
-
-  JadwalPiket.findAll({
-    where: {tanggal: nowTanggal},
-    include: [{
-      model: Pengguna,
-      as: 'nik_pic_piket',
-    },
-    {
-      model: Pengguna,
-      as: 'nik_pic_fasil',
-    }
-  ]
-}).then(piket => {
   var prevMonth = moment(nowTanggal).subtract(1, 'months').endOf('month').format('MM');
   const tahun = moment(nowTanggal).format('YYYY');
+
+  const piket =   JadwalPiket.findAll({
+      where: {tanggal: nowTanggal},
+      include: [{
+        model: Pengguna,
+        as: 'nik_pic_piket'
+      },
+      {
+        model: Pengguna,
+        as: 'nik_pic_fasil'
+      }
+    ]
+  });
 
   const mejaTerbaik = Penilaian_meja.findAll(
     {
@@ -35,7 +37,7 @@ exports.getDashboard = (req,res) => {
         {
           model: Meja,
           include: [{
-            model: Pengguna,
+            model: Pengguna
           }],
         },
         {
@@ -44,7 +46,7 @@ exports.getDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:2}]
 
           }
         }
@@ -56,7 +58,7 @@ exports.getDashboard = (req,res) => {
         ]},
       group : ['penggunaNik'],
       order: [
-          [[sequelize.literal('bobotmeja'), 'DESC']],
+          [[sequelize.literal('bobotmeja'), 'DESC']]
       ],
     }
   );
@@ -65,7 +67,7 @@ exports.getDashboard = (req,res) => {
     {
         include: [
         {
-          model: Ruang,
+          model: Ruang
         },
         {
           model: JadwalPiket,
@@ -73,7 +75,7 @@ exports.getDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:2}]
           },
           include: [{
             model: Pengguna,
@@ -82,19 +84,18 @@ exports.getDashboard = (req,res) => {
           },
           {
             model: Pengguna,
-            as: 'nik_pic_fasil',
-
+            as: 'nik_pic_fasil'
           }
         ]
         }
       ],
       attributes: {
         include: [
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
       group : ['jadwalPiketId'],
       order: [
-            [[sequelize.literal('bobotruang'), 'DESC']],
+            [[sequelize.literal('bobotruang'), 'DESC']]
       ],
     }
   );
@@ -111,7 +112,7 @@ exports.getDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:2}]
           },
           include: [{
             model: Pengguna,
@@ -120,7 +121,7 @@ exports.getDashboard = (req,res) => {
           },
           {
             model: Pengguna,
-            as: 'nik_pic_fasil',
+            as: 'nik_pic_fasil'
 
           }
         ]
@@ -128,27 +129,33 @@ exports.getDashboard = (req,res) => {
       ],
       attributes: {
       include: [
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang'],
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
       group : ['jadwalPiketId'],
       order: [
-            [[sequelize.literal('bobotruang'), 'DESC']],
+            [[sequelize.literal('bobotruang'), 'DESC']]
       ],
   }
-  );
+);
+const artikel = Artikel.findAll({
+  order: [
+      ['createdAt', 'DESC']
+  ],
+  limit: 2
+})
 
   Promise
-      .all([mejaTerbaik,lantaiSatuTerbaik, lantaiDuaTerbaik])
+      .all([mejaTerbaik,lantaiSatuTerbaik, lantaiDuaTerbaik,piket,artikel])
       .then(count => {
           console.log('**********COMPLETE RESULTS****************');
 
           if (count[0] > 0){
             count[0][0].bobotmeja = parseFloat(count[0][0].bobotmeja).toFixed(2);
-
           }
 
           let lantaiSatu = 0;
           let lantaiDua = 0;
+
 
           if (count[1]){
             for(i = 0; i < count[1].length; i++){
@@ -179,28 +186,23 @@ exports.getDashboard = (req,res) => {
           res.locals.mejaTerbaik = count[0][0];
           res.locals.lantaiTerbaik = lantaiTerbaik;
 
+          console.log(count[4]);
 
-          res.render('./fasilitator/dashboard', {
+          res.render('./fasilitator/Dashboard', {
             pageTitle: 'Dashboard',
             path: '/',
-            schedules: piket,
+            schedules: count[3],
             tanggal : nowTanggal2,
             mejaTerbaik : count[0][0],
             lantaiTerbaik: lantaiTerbaik,
-            monthMinusOneName: monthMinusOneName
+            monthMinusOneName:monthMinusOneName,
+            artikel:count[4]
           });
 
       })
       .catch(err => {
           console.log('**********ERROR RESULT****************');
           console.log(err);
-      });
-
-
-
-}).catch(err => {
-      console.log('**********ERROR RESULT****************');
-      console.log(err);
       });
 
 };

@@ -4,6 +4,19 @@
 <head>
 
   <%- include('head'); %>
+
+  <style>
+    html, body {
+        height: 100%;
+    }
+    .half {
+        height: 50%;
+    }
+
+    .full {
+        height: 100%;
+    }
+</style>
 </head>
 
 <body class="top_menu">
@@ -16,77 +29,177 @@
     <%- include('top_bar'); %>
 
 
-<div id="page_content">
-    <div id="page_content_inner">
+    <div class="full">
+      <div class=" uk-section md-bg-grey-800">
+        <br>
+            <h1 class="uk-text-center uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400" >Meja Ter-SO GOOD Bulan <%= monthMinusOneName%></h1>
+            <% if (mejaTerbaik && mejaTerbaik.bobotmeja !== 'undefined' ) {%>
+              <div class="uk-grid">
+                  <div class="uk-width-1-1 md-bg-light-green-200">
+                    <!-- <div class="uk-panel"> -->
+                    <br>
+                    <hv>
+                      <h3 class="uk-text-middle  uk-text-center  md-color-light-green-400 ">
+                        <% if (mejaTerbaik.bobotmeja >= 4.5 ) {%>
+                         Consistent Star
+                        <% }else if (mejaTerbaik.bobotmeja >= 4){%>
+                         Future Star
+                        <% }else if (mejaTerbaik.bobotmeja >= 3.5 ){%>
+                         Utility Hi-Pro
+                        <% }else if (mejaTerbaik.bobotmeja >= 3){%>
+                         Contributor
+                        <% }else if (mejaTerbaik.bobotmeja < 3){%>
+                         Iceberg
+                        <% }%>
+                      </h3>
 
-      <h3 class="heading_b uk-margin-bottom "> Selamat Datang,
-        <% if (isAuthenticated) {%>
-           <%= session.user.nama %>
-        <% } else{%>
-         Tamu
-        <% }%>  </h3>
-
-        <h3 class="heading_b uk-margin-bottom "> Piket Hari ini,  <%= tanggal %> </h3>
-
-        <div class="uk-grid uk-grid-width-large-1-2 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
-          <% if(schedules.length != 0) { %>
-            <% schedules.forEach((schedule) => { %>
-            <div>
-                <div class="md-card  md-bg-light-green-200">
-                    <div class="md-card-content">
-                        <h2  class="uk-margin-remove"><span class="">Lantai <%= schedule.nik_pic_piket.level %></span></h2>
-
-                        <h4 class="uk-margin-remove"><span>PIC Piket : <%= schedule.nik_pic_piket.nama %> </h4>
-                        <h4 class="uk-margin-remove"><span>Fasilitator : <%= schedule.nik_pic_fasil.nama %> </h4>
-                        <h4 class="uk-margin-remove" >  <span>Status piket :</span>
-                        <% if (schedule.status_piket === 0) { %>
-                          <span class="uk-badge uk-badge-danger">Belum Piket</span>
-                          <% } else if (schedule.status_piket === 1) { %>
-                          <span class="uk-badge uk-badge-success">Sudah Piket</span>
-                        <% } else { %>
-                          <span class="uk-badge uk-badge-info">Sudah Piket tapi Melewati Jadwal</span>
-                        <% } %>
-                        </h4>
-                        <h4 class="uk-margin-remove" >  <span>Status fasil :</span>
-                          <% if (schedule.persetujuan_fasil === 0) {%>
-                          <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Approved</span>
-                          <% } else {%>
-                          <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Approved</span>
-                          <% } %>
-                        </h4>
-                    </div>
+                      <h2 class="uk-text-middle uk-text-center  md-color-light-green-400"> <%= mejaTerbaik.bobotmeja %> </h2>
+                      <h3 class="uk-text-middle uk-margin-remove uk-text-center md-color-light-green-400 "><%= mejaTerbaik.meja.pengguna.nama %>   </h3>
+                      <h3 class="uk-text-middle uk-margin-remove uk-text-center md-color-light-green-400 ">Level <%= mejaTerbaik.meja.pengguna.level %></h3>
+                    <!-- </div> -->
+                  </div>
+              </div>
+              <% }else { %>
+                <div class="md-bg-light-green-200">
+                  <br>
+                  <h3 class="uk-text-middle  uk-text-center  ">
+                      belum ada
+                  </h3>
+                  <br>
                 </div>
-            </div>
-          <% }) %>
-        <%} else { %>
-          <div>
-              <div class="md-card  md-bg-light-green-200">
-                  <div class="md-card-content">
-                      <h2  class="uk-margin-remove">  <span class="">Lantai 1</span></h2>
-                      <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
-                  </div>
-              </div>
-          </div>
-          <div>
-              <div class="md-card  md-bg-light-green-200">
-                  <div class="md-card-content">
-                      <h2 class="uk-margin-remove" > <span class="">Lantai 2</span></h2>
-                      <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
-                  </div>
-              </div>
-          </div>
+              <% } %>
+      </div>
 
-        <%} %>
+      <div class=" uk-section md-bg-grey-800 ">
+           <br>
+              <h1 class="uk-text-center uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400 ">Lantai Bulan Ter-SO GOOD Bulan <%= monthMinusOneName%></h1>
+              <br>
+              <% if (lantaiTerbaik !== 'undefined') {%>
+                        <div class="uk-grid">
+                            <div class="uk-width-1-1 md-bg-light-green-200">
+                              <!-- <div class="uk-panel"> -->
+                                  <!-- <i href="" class="uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i> -->
+                                    <h3 class="uk-text-middle  uk-text-center  ">
+                                  <% if (lantaiTerbaik[0] >= 1000 ) {%>
+                                    Consistent Star
+                                  <% }else if (lantaiTerbaik[0] >= 800){%>
+                                    Future Star
+                                  <% }else if (lantaiTerbaik[0] >= 600 ){%>
+                                    Utility Hi-Pro
+                                  <% }else if (lantaiTerbaik[0] >= 400){%>
+                                    Contributor
+                                  <% }else if (lantaiTerbaik[0] < 499){%>
+                                    Iceberg
+                                  <% }%>
+                                  </h3>
 
+                                  <h2 class="uk-text-middle uk-text-center"> <%= lantaiTerbaik[0] %> </h2>
+                                  <h3 class="uk-margin-remove uk-text-middle  uk-text-center">level <%= lantaiTerbaik[1] %> </h3>
+
+                            </div>
+                        </div>
+              <% } %>
+
+              <br>
+      </div>
+
+      <div class=" uk-section-default md-bg-grey-800">
+            <div class="uk-text-center">
+             <br>
+                <h1 class="uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400 " >Piket Hari Ini</h1>
+                <br>
+
+                <div class="uk-grid uk-grid-width-large-1-2 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler " data-uk-sortable data-uk-grid-margin>
+                  <% if(schedules.length != 0) { %>
+                    <% schedules.forEach((schedule) => { %>
+                    <div>
+                        <div class="md-card  md-bg-light-green-200">
+                            <div class="md-card-content">
+                                <h2  class="uk-margin-remove"><span class="">Lantai <%= schedule.nik_pic_piket.level %></span></h2>
+
+                                <h4 class="uk-margin-remove"><span>PIC Piket : <%= schedule.nik_pic_piket.nama %> </h4>
+                                <h4 class="uk-margin-remove"><span>Fasilitator : <%= schedule.nik_pic_fasil.nama %> </h4>
+                                <h4 class="uk-margin-remove" >  <span>Status piket :</span>
+                                <% if (schedule.status_piket === 0) { %>
+                                  <span class="uk-badge uk-badge-danger">Belum Piket</span>
+                                  <% } else if (schedule.status_piket === 1) { %>
+                                  <span class="uk-badge uk-badge-success">Sudah Piket</span>
+                                <% } else { %>
+                                  <span class="uk-badge uk-badge-info">Sudah Piket tapi Melewati Jadwal</span>
+                                <% } %>
+                                </h4>
+                                <h4 class="uk-margin-remove" >  <span>Status fasil :</span>
+                                  <% if (schedule.persetujuan_fasil === 0) {%>
+                                  <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Approved</span>
+                                  <% } else {%>
+                                  <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Approved</span>
+                                  <% } %>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                  <% }) %>
+                <%} else { %>
+                  <div>
+                      <div class="md-card  md-bg-light-green-200">
+                          <div class="md-card-content">
+                              <h2  class="uk-margin-remove">  <span class="">Lantai 1</span></h2>
+                              <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
+                          </div>
+                      </div>
+                  </div>
+                  <div>
+                      <div class="md-card  md-bg-light-green-200">
+                          <div class="md-card-content">
+                              <h2 class="uk-margin-remove" > <span class="">Lantai 2</span></h2>
+                              <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
+                          </div>
+                      </div>
+                  </div>
+
+                <%} %>
+                </div>
+
+        </div>
+        <br>
     </div>
 
+    <div class="">
+      <div class="uk-section">
+            <div>
+              <div class="uk-slidenav-position" data-uk-slideshow="{animation:'scale'}">
+                  <ul class="uk-slideshow">
+                    <% if(artikel && artikel !== 'undefined') { %>
+                          <% artikel.forEach((artike) => { %>
+                      <li>
+                        <div class="uk-grid" data-uk-grid-margin="">
+                          <div class="uk-card-media-top uk-width-medium-6-10">
+                            <!-- <img src="assets/img/gallery/Image02.jpg" alt=""> -->
+                            <img  src="/<%= artike.foto_Artikel %>" alt="">
+                          </div>
+                          <div class="uk-card-body uk-width-medium-4-10">
+                            <br>
+                              <h3 class="uk-card-title"><%= artike.judul %></h3>
+                              <p><%= artike.konten %></p>
+                          </div>
+                        </div>
+                    </li>
+                      <% }) %>
+                    <% } %>
+                  </ul>
+                  <a href="" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideshow-item="previous"></a>
+                  <a href="" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slideshow-item="next"></a>
+                  <ul class="uk-dotnav uk-dotnav-contrast uk-position-bottom uk-flex-center">
+                      <li data-uk-slideshow-item="0"><a href=""></a></li>
+                      <li data-uk-slideshow-item="1"><a href=""></a></li>
+                      <li data-uk-slideshow-item="2"><a href=""></a></li>
+                      <li data-uk-slideshow-item="3"><a href=""></a></li>
+                  </ul>
+              </div>
 
-
-
-
-
-</div>
-</div>
+          </div>
+      </div>
+    </div>
 
     <!-- google web fonts -->
     <script>

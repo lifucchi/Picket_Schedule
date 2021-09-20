@@ -13,22 +13,21 @@ exports.getAdminDashboard = (req,res) => {
   const nowTanggal = moment().format('YYYY-MM-DD');
   const nowTanggal2 = moment().locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
   var monthMinusOneName =  moment().locale('id').subtract(1, "month").startOf("month").format('MMMM');
-
-
-  JadwalPiket.findAll({
-    where: {tanggal: nowTanggal},
-    include: [{
-      model: Pengguna,
-      as: 'nik_pic_piket'
-    },
-    {
-      model: Pengguna,
-      as: 'nik_pic_fasil'
-    }
-  ]
-}).then(piket => {
   var prevMonth = moment(nowTanggal).subtract(1, 'months').endOf('month').format('MM');
   const tahun = moment(nowTanggal).format('YYYY');
+
+  const piket =   JadwalPiket.findAll({
+      where: {tanggal: nowTanggal},
+      include: [{
+        model: Pengguna,
+        as: 'nik_pic_piket'
+      },
+      {
+        model: Pengguna,
+        as: 'nik_pic_fasil'
+      }
+    ]
+  });
 
   const mejaTerbaik = Penilaian_meja.findAll(
     {
@@ -138,7 +137,7 @@ exports.getAdminDashboard = (req,res) => {
 );
 
   Promise
-      .all([mejaTerbaik,lantaiSatuTerbaik, lantaiDuaTerbaik])
+      .all([mejaTerbaik,lantaiSatuTerbaik, lantaiDuaTerbaik,piket])
       .then(count => {
           console.log('**********COMPLETE RESULTS****************');
 
@@ -182,7 +181,7 @@ exports.getAdminDashboard = (req,res) => {
           res.render('./admin/admin', {
             pageTitle: 'Dashboard',
             path: '/',
-            schedules: piket,
+            schedules: count[3],
             tanggal : nowTanggal2,
             mejaTerbaik : count[0][0],
             lantaiTerbaik: lantaiTerbaik,
@@ -193,13 +192,6 @@ exports.getAdminDashboard = (req,res) => {
       .catch(err => {
           console.log('**********ERROR RESULT****************');
           console.log(err);
-      });
-
-
-
-}).catch(err => {
-      console.log('**********ERROR RESULT****************');
-      console.log(err);
       });
 
 };

@@ -69,35 +69,45 @@
         <div class="md-card">
           <div class="md-card-content">
             <h2> <%= monday  %> sampai dengan <%= friday%> </h2>
-                <% if (rooms1.length > 0) {%>
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
+                      <% if (rooms1.length > 0) {%>
                         <h4 class="heading_c uk-margin-bottom">Level 1</h4>
                       <div style="overflow-x: scroll;">
                         <div style="width:400vh; height:500px;" id="chartist_ruang1_lines" class="chartist"></div>
                       </div>
+                      <% }else{ %>
+                        <h3 class="uk-text-middle  uk-text-center  ">
+                            belum ada
+                        </h3>
+                        <% } %>
+
 
                     </div>
                 </div>
             </div>
-            <% }%>
 
-            <% if (rooms2.length >0) {%>
 
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+                        <% if (rooms2.length >0) {%>
                       <div style="overflow-x: scroll;">
 
                         <div style="width:400vh; height:500px;" id="chartist_ruang2_lines" class="chartist"></div>
                       </div>
+                      <% }else{ %>
+                      <h3 class="uk-text-middle  uk-text-center  ">
+                          belum ada
+                      </h3>
+                      <% } %>
 
                     </div>
                 </div>
             </div>
-            <% }%>
+
 
 
           </div>
@@ -212,36 +222,44 @@
         <div class="md-card">
           <div class="md-card-content">
             <h2> <%= tahun %> </h2>
-          <%if (locals.rooms1 && rooms1 != 'undefined') {%>
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 1</h4>
+                        <%if (rooms1.length > 0) {%>
                       <div style="overflow-x: scroll;">
 
                         <div style="width:400vh; height:500px;" id="chartist_ruang1_lines_tahun" class="chartist"></div>
                       </div>
+                      <% }else{ %>
+                      <h3 class="uk-text-middle  uk-text-center  ">
+                          belum ada
+                      </h3>
+                      <% } %>
 
                     </div>
                 </div>
             </div>
 
-          <%}%>
 
-          <%if (locals.rooms2 && rooms1 != 'undefined') {%>
 
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
-                        <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+                      <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+                      <%if (rooms2.length > 0) {%>
                       <div style="overflow-x: scroll;">
                         <div style="width:400vh; height:500px;" id="chartist_ruang2_lines_tahun" class="chartist"></div>
                       </div>
+                      <% }else{ %>
+                      <h3 class="uk-text-middle  uk-text-center  ">
+                          belum ada
+                      </h3>
+                      <% } %>
 
                     </div>
                 </div>
             </div>
-            <%}%>
 
 
           </div>

@@ -42,7 +42,7 @@
                                 </tr>
                             </tfoot>
                             <tbody>
-                          <% if (schedules > 0) {%>
+                          <% if (schedules) {%>
                               <% schedules.forEach((schedule) => { %>
                                 <tr>
                                   <td> <a href="/anggota/checklistpiket/detail/<%= schedule.id%>"><%= schedule.tanggal%></a>  </td>

@@ -345,7 +345,10 @@ exports.getJadwalPiketAnggota = (req,res, next) => {
       model: Pengguna,
       as: 'nik_pic_fasil'
     }
-  ]
+  ],
+    order: [
+        ['tanggal', 'DESC']
+    ],
   })
   .then(jadwalpiket => {
     res.render('./anggota/jadwalpiket', {
@@ -376,10 +379,13 @@ exports.getChecklistPiket = (req,res, next) => {
   // ],
   // })
 
-  JadwalPiket.findByPk(req.session.user.nik, {
+  JadwalPiket.findAll({
+    where: {
+      nikpicpiket: req.session.user.nik,
+    },
     include: [{
       model: Pengguna,
-      as: 'nik_pic_piket'
+      as: 'nik_pic_piket',
     },
     {
       model: Pengguna,
@@ -391,6 +397,8 @@ exports.getChecklistPiket = (req,res, next) => {
   ],
   })
   .then(jadwalpiket => {
+
+    console.log(jadwalpiket);
     res.render('./anggota/checklistpiket', {
       schedules: jadwalpiket,
       pageTitle: 'Jadwal Piket',

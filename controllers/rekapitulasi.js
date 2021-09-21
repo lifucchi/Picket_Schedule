@@ -206,22 +206,22 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
 
               let lantaiSatu = 0;
               let lantaiDua = 0;
-              console.log(hasil[0]);
-              console.log(hasil[1]);
 
 
-              if (hasil[0] != 'undefined' && hasil[0] > 0){
+
+
+              if (hasil[0]){
                 for(i = 0; i < hasil[0].length; i++){
                   lantaiSatu = parseFloat(lantaiSatu) + parseFloat(hasil[0][i].bobotruang);
                 }
                 lantaiSatu = parseFloat(lantaiSatu) / parseFloat(hasil[0].length);
               }
 
-              if (hasil[1] != 'undefined' && hasil[1] > 0){
+              if (hasil[1]){
                 for(i = 0; i < hasil[1].length; i++){
                   lantaiDua = parseFloat(lantaiDua) + parseFloat(hasil[1][i].bobotruang);
                 }
-                lantaiDua = parseFloat(lantaiDua) / parseFloat(hasil[2].length);
+                lantaiDua = parseFloat(lantaiDua) / parseFloat(hasil[1].length);
               }
 
               let lantaiTerbaik = [];
@@ -235,6 +235,14 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                 lantaiTerbaik[0] = 0;
                 lantaiTerbaik[1] = 'belum ada';
               }
+
+              // console.log("lanta 1");
+              // console.log(lantaiSatu);
+              // console.log(lantaiTerbaik[0]);
+              // console.log("lanta 2");
+              // console.log(lantaiDua);
+              // console.log(lantaiTerbaik[1]);
+
               res.locals.lantaiTerbaik = lantaiTerbaik;
 
               if(req.session.user.peran === 'Anggota') {

@@ -136,9 +136,11 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
 };
 
 exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
-  const bulanTahun = req.body.tanggal;
+  let bulanTahun = req.body.tanggal;
   const tahun = moment(bulanTahun, "MMM-YYYY").format('YYYY');
   const bulan = moment(bulanTahun,  "MMM-YYYY").format('MM');
+
+  bulanTahun = moment(bulanTahun, "MMM-YYYY").locale('id').format('MMMM YYYY');
 
   const ruang1 = Penilaian_ruang.findAll(
     {
@@ -202,13 +204,47 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
           .all([ruang1, ruang2])
           .then(hasil => {
 
+              let lantaiSatu = 0;
+              let lantaiDua = 0;
+              console.log(hasil[0]);
+              console.log(hasil[1]);
+
+
+              if (hasil[0] != 'undefined' && hasil[0] > 0){
+                for(i = 0; i < hasil[0].length; i++){
+                  lantaiSatu = parseFloat(lantaiSatu) + parseFloat(hasil[0][i].bobotruang);
+                }
+                lantaiSatu = parseFloat(lantaiSatu) / parseFloat(hasil[0].length);
+              }
+
+              if (hasil[1] != 'undefined' && hasil[1] > 0){
+                for(i = 0; i < hasil[1].length; i++){
+                  lantaiDua = parseFloat(lantaiDua) + parseFloat(hasil[1][i].bobotruang);
+                }
+                lantaiDua = parseFloat(lantaiDua) / parseFloat(hasil[2].length);
+              }
+
+              let lantaiTerbaik = [];
+              if ( lantaiSatu > lantaiDua ){
+                lantaiTerbaik[0] = lantaiSatu.toFixed(2);
+                lantaiTerbaik[1] = 1;
+              } else if ( lantaiSatu < lantaiDua ){
+                lantaiTerbaik[0] = lantaiDua.toFixed(2);
+                lantaiTerbaik[1] = 2;
+              }else{
+                lantaiTerbaik[0] = 0;
+                lantaiTerbaik[1] = 'belum ada';
+              }
+              res.locals.lantaiTerbaik = lantaiTerbaik;
+
               if(req.session.user.peran === 'Anggota') {
                 res.render('./anggota/rekapitulasi-ruangfilter', {
                   pageTitle: 'Rekapitulasi',
                   path: '/bulanan',
                   rooms1: hasil[0],
                   rooms2: hasil[1],
-                  bulan: bulanTahun
+                  bulan: bulanTahun,
+                  lantaiTerbaik: lantaiTerbaik
                 });
 
               }else if(req.session.user.peran === 'Fasilitator'){
@@ -217,7 +253,8 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                   path: '/bulanan',
                   rooms1: hasil[0],
                   rooms2: hasil[1],
-                  bulan: bulanTahun
+                  bulan: bulanTahun,
+                  lantaiTerbaik: lantaiTerbaik
                 });
 
               }

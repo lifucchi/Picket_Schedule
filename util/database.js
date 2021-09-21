@@ -11,16 +11,16 @@
 
 const Sequelize = require('sequelize');
 
-// const sequelize = new Sequelize('u2964880_5Rsmart', 'u2964880_root', 'password', {
-//   dialect: 'mysql',
-//   host: '153.92.8.1',
-//   // pool: {
-//   //   max: 25,
-//   //   min: 0,
-//   //   acquire: 30000,
-//   //   idle: 10000
-//   // }
-// });
+const sequelize = new Sequelize('u2964880_5Rsmart', 'u2964880_root', 'password', {
+  dialect: 'mysql',
+  host: '153.92.8.1',
+  // pool: {
+  //   max: 25,
+  //   min: 0,
+  //   acquire: 30000,
+  //   idle: 10000
+  // }
+});
 // const sequelize = new Sequelize('lift3227_5Rsmart', 'lift3227_root', 'inipassword5rsmart', {
 //   dialect: 'mysql',
 //   // host: 'localhost',
@@ -34,18 +34,18 @@ const Sequelize = require('sequelize');
 //     }
 // });
 
-const sequelize = new Sequelize('u1542884_5Rsmart', 'u1542884_root', 'inipassword5rsmart', {
-  dialect: 'mysql',
-  // host: 'localhost',
-  host: '109.106.252.178',
-  port: 3306,
-      pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    }
-});
+// const sequelize = new Sequelize('u1542884_5Rsmart', 'u1542884_root', 'inipassword5rsmart', {
+//   dialect: 'mysql',
+//   // host: 'localhost',
+//   host: '109.106.252.178',
+//   port: 3306,
+//       pool: {
+//       max: 5,
+//       min: 0,
+//       acquire: 30000,
+//       idle: 10000
+//     }
+// });
 
 
 module.exports = sequelize;

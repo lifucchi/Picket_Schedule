@@ -56,7 +56,7 @@
                             <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
                                 <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button>
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                
+
                             <!-- </div> -->
                           </form>
                         </div>
@@ -131,7 +131,6 @@
                 <div class="md-card">
                   <div class="md-card-content uk-align-center">
                     <h2 class="uk-text-center uk-margin-bottom">Nilai Tertinggi</h2>
-                    <% if (lantaiTerbaik[0]) {%>
 
                           <div class="">
                             <div class="uk-panel">
@@ -153,10 +152,8 @@
 
                                 <h2 class=" uk-text-center uk-text-bold"> <%= lantaiTerbaik[0] %> </h2>
                             </div>
-
-
                       </div>
-                      <% } %>
+
                   </div>
                 </div>
               </div>
@@ -164,10 +161,8 @@
 
         <div class="md-card">
           <div class="md-card-content">
-            <h2> <%= bulan  %>  </h2>
-
-
-
+            <h2 class="uk-text-middle  uk-text-center"> <%= bulan  %>  </h2>
+            <% if (lantaiTerbaik[1] !== 'belum ada') {%>
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
@@ -192,6 +187,13 @@
                     </div>
                 </div>
             </div>
+
+            <% }else{ %>
+            <h3 class="uk-text-middle  uk-text-center  ">
+                belum ada
+            </h3>
+            <% } %>
+
           </div>
         </div>
 

@@ -475,7 +475,7 @@ exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
           console.log('**********COMPLETE RESULTS****************');
           res.render('./anggota/tindaklanjutmeja', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Meja'
+            pageTitle: 'Tindak Lanjut Meja'
           });
       })
       .catch(err => {
@@ -507,7 +507,7 @@ exports.getDataTindakLanjutMejaAnggotaDetail= (req,res, next) => {
   .then(bukti => {
     res.render('./anggota/tindaklanjutmejadetail', {
       rooms: bukti,
-      pageTitle: 'Bukti Temuan Meja',
+      pageTitle: 'Tindak Lanjut Meja',
       path: '/buktimeja'
     });
 
@@ -713,7 +713,7 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
           console.log('**********COMPLETE RESULTS****************');
           res.render('./anggota/tindaklanjutruang', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Ruang'
+            pageTitle: 'Tindak Lanjut Ruang'
           });
 
       })
@@ -749,7 +749,7 @@ exports.getDataTindakLanjutRuangAnggotaDetail= (req,res, next) => {
   .then(bukti => {
     res.render('./anggota/tindaklanjutruangdetail', {
       rooms: bukti,
-      pageTitle: 'Bukti Temuan Ruang',
+      pageTitle: 'Tindak Lanjut Ruang',
       path: '/buktiruang'
     });
 
@@ -799,7 +799,7 @@ exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
       .then(hasil => {
           res.render('./fasilitator/tindaklanjutmeja', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Meja'
+            pageTitle: 'Tindak Lanjut Meja'
           });
 
       })
@@ -833,7 +833,7 @@ exports.getDataTindakLanjutMejaFasilitatorDetail= (req,res, next) => {
   .then(bukti => {
     res.render('./fasilitator/tindaklanjutmejadetail', {
       rooms: bukti,
-      pageTitle: 'Bukti Temuan Meja',
+      pageTitle: 'Tindak Lanjut Meja',
       path: '/buktimeja'
     });
 
@@ -1083,7 +1083,7 @@ exports.getDataTindakLanjutRuangFasilitator= (req,res, next) => {
       .then(hasil => {
           res.render('./fasilitator/tindaklanjutruang', {
             rooms: hasil[0],
-            pageTitle: 'Bukti Temuan Ruang'
+            pageTitle: 'Tindak Lanjut Ruang'
           });
 
       })
@@ -1118,7 +1118,7 @@ exports.getDataTindakLanjutRuangFasilitatorDetail= (req,res, next) => {
   .then(bukti => {
     res.render('./fasilitator/tindaklanjutruangdetail', {
       rooms: bukti,
-      pageTitle: 'Bukti Temuan Ruang',
+      pageTitle: 'Tindak Lanjut Ruang',
       path: '/buktiruang'
     });
 

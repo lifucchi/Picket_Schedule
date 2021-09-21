@@ -72,8 +72,8 @@
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
+                      <h4 class="heading_c uk-margin-bottom">Level 1</h4>
                       <% if (rooms1.length > 0) {%>
-                        <h4 class="heading_c uk-margin-bottom">Level 1</h4>
                       <div style="overflow-x: scroll;">
                         <div style="width:400vh; height:500px;" id="chartist_ruang1_lines" class="chartist"></div>
                       </div>
@@ -348,6 +348,8 @@
             }]
           ];
           // simple lines
+          <%if (rooms1.length > 0) {%>
+
           new Chartist.Line('#chartist_ruang1_lines', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
 
@@ -362,6 +364,8 @@
                   right: 40
               }
           });
+          <% } %>
+          <%if (rooms2.length > 0) {%>
 
           new Chartist.Line('#chartist_ruang2_lines', {
             labels: [  <% rooms2.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
@@ -376,6 +380,7 @@
                   right: 40
               }
           });
+          <% } %>
 
           <%if (rooms1.length > 0) {%>
 
@@ -411,6 +416,7 @@
               }
           });
           <% } %>
+          <%if (rooms1.length > 0) {%>
 
           new Chartist.Line('#chartist_ruang1_lines_tahun', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.dataValues.bulan %>',<% }) %>],
@@ -422,6 +428,8 @@
                   [<% rooms1.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
               ]
           }, responsiveOptions);
+          <% } %>
+          <%if (rooms2.length > 0) {%>
 
           new Chartist.Line('#chartist_ruang2_lines_tahun', {
             labels: [  <% rooms2.forEach((room) => { %>'<%=  room.dataValues.bulan %>',<% }) %>],
@@ -431,6 +439,8 @@
                   [<% rooms2.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
               ]
           }, responsiveOptions);
+          <% } %>
+
       }
     };
 

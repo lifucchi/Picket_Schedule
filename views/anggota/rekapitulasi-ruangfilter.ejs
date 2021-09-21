@@ -69,7 +69,7 @@
         <div class="md-card">
           <div class="md-card-content">
             <h2> <%= monday  %> sampai dengan <%= friday%> </h2>
-
+                <% if (rooms1.length > 0) {%>
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
@@ -81,6 +81,9 @@
                     </div>
                 </div>
             </div>
+            <% }%>
+
+            <% if (rooms2.length >0) {%>
 
             <div class="uk-width-large-1">
                 <div class="md-card">
@@ -94,6 +97,9 @@
                     </div>
                 </div>
             </div>
+            <% }%>
+
+
           </div>
         </div>
         <% }%>

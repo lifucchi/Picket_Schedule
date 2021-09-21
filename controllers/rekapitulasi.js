@@ -472,10 +472,49 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
     }
   );
 
+  const mejaTerbaik = Penilaian_meja.findAll(
+    {
+        include: [
+        {
+          model: Meja,
+          include: [{
+            model: Pengguna
+          }],
+        },
+        {
+          model: JadwalPiket,
+          where: {
+            [Op.and]:
+            [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
+            {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
+            {persetujuan_fasil:2}]
+
+          }
+        }
+      ],
+      attributes: {
+        include: [
+          [sequelize.literal('SUM(bobotmeja) / COUNT(bobotmeja)'), 'bobotmeja']
+
+        ]},
+      group : ['penggunaNik'],
+      order: [
+          [[sequelize.literal('bobotmeja'), 'DESC']]
+      ],
+    }
+  );
+
       Promise
-          .all([meja1, meja2])
+          .all([meja1, meja2, mejaTerbaik])
           .then(hasil => {
               console.log('**********COMPLETE RESULTS****************');
+
+              if (hasil[0] > 0){
+                hasil[2][0].bobotmeja = parseFloat(hasil[2][0].bobotmeja).toFixed(2);
+              }
+
+              res.locals.mejaTerbaik = hasil[2][0];
+
 
             if(req.session.user.peran === 'Anggota') {
               res.render('./anggota/rekapitulasi-mejafilter', {
@@ -483,7 +522,8 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
                 path: '/bulanan',
                 rooms1: hasil[0],
                 rooms2: hasil[1],
-                bulan: bulanTahun
+                bulan: bulanTahun,
+                mejaTerbaik : hasil[2][0]
               });
 
             }else if(req.session.user.peran === 'Fasilitator'){
@@ -492,7 +532,9 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
                 path: '/bulanan',
                 rooms1: hasil[0],
                 rooms2: hasil[1],
-                bulan: bulanTahun
+                bulan: bulanTahun,
+                mejaTerbaik : hasil[2][0]
+                
               });
             }
           })

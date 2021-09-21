@@ -377,6 +377,8 @@
               }
           });
 
+          <%if (rooms1.length > 0) {%>
+
           new Chartist.Line('#chartist_ruang1_lines_bulanan', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
 
@@ -391,6 +393,10 @@
               }
           });
 
+          <% } %>
+
+          <%if (rooms2.length > 0) {%>
+
           new Chartist.Line('#chartist_ruang2_lines_bulanan', {
             labels: [  <% rooms2.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
 
@@ -404,6 +410,7 @@
                   right: 40
               }
           });
+          <% } %>
 
           new Chartist.Line('#chartist_ruang1_lines_tahun', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.dataValues.bulan %>',<% }) %>],
@@ -424,11 +431,7 @@
                   [<% rooms2.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
               ]
           }, responsiveOptions);
-
-
       }
-
-
     };
 
 

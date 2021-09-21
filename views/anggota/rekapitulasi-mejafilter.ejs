@@ -33,7 +33,7 @@
                             <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
                                 <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button>
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                
+
                             <!-- </div> -->
                           </form>
                         </div>
@@ -101,6 +101,10 @@
                             <h3 class="uk-text-center"><%= mejaTerbaik.meja.pengguna.nama %>   </h3>
                           </div>
                       </div>
+                      <% }else{ %>
+                      <h3 class="uk-text-middle  uk-text-center  ">
+                          belum ada
+                      </h3>
                       <% } %>
                   </div>
                 </div>
@@ -117,9 +121,17 @@
                 <div class="md-card"  >
                     <div class="md-card-content" >
                         <h4 class="heading_c uk-margin-bottom">Gabungan</h4>
+                        <%if (rooms2.length > 0 || rooms1.length > 0) {%>
+
                         <div style="overflow-x: scroll;">
                           <div style="width:400vh; height:500px;"  id="chartist_meja_lines_bulanan" class="chartist"></div>
                         </div>
+                        <% }else{ %>
+                          <h3 class="uk-text-middle  uk-text-center  ">
+                              belum ada
+                          </h3>
+                          <% } %>
+
                     </div>
                 </div>
             </div>
@@ -128,11 +140,15 @@
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 1</h4>
+                        <%if (rooms2.length > 0) {%>
                         <div style="overflow-x: scroll;">
-
-                        <div style="width:400vh; height:500px;"  id="chartist_meja1_lines_bulanan" class="chartist"></div>
-                      </div>
-
+                          <div style="width:400vh; height:500px;"  id="chartist_meja1_lines_bulanan" class="chartist"></div>
+                        </div>
+                        <% }else{ %>
+                          <h3 class="uk-text-middle  uk-text-center  ">
+                              belum ada
+                          </h3>
+                          <% } %>
                     </div>
                 </div>
             </div>
@@ -141,11 +157,17 @@
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+
+                        <%if (rooms2.length > 0) {%>
+
                         <div style="overflow-x: scroll;">
-
-                        <div style="width:400vh; height:500px;" id="chartist_meja2_lines_bulanan" class="chartist"></div>
-                      </div>
-
+                          <div style="width:400vh; height:500px;" id="chartist_meja2_lines_bulanan" class="chartist"></div>
+                        </div>
+                        <% }else{ %>
+                          <h3 class="uk-text-middle  uk-text-center  ">
+                              belum ada
+                          </h3>
+                          <% } %>
                     </div>
                 </div>
             </div>
@@ -203,12 +225,12 @@
     $(function() {
 
         // chartist
-        altair_charts.ruang_charts();
+        altair_charts.meja_charts();
     });
 
     altair_charts = {
 
-      ruang_charts: function() {
+      meja_charts: function() {
 
         var responsiveOptions = [
             ['screen and (min-width: 641px) and (max-width: 1024px)', {
@@ -241,6 +263,7 @@
             }]
           ];
           // simple lines
+          <%if (rooms1.length > 0 || rooms2.length > 0) {%>
 
           new Chartist.Line('#chartist_meja_lines_bulanan', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.meja.pengguna.nama %>',<% }) %>
@@ -252,7 +275,9 @@
                 <% rooms2.forEach((room) => { %>'<%=  room.bobotmeja %>',<% }) %>],
               ]
           }, responsiveOptions );
+          <% } %>
 
+          <%if (rooms1.length > 0) {%>
 
           new Chartist.Line('#chartist_meja1_lines_bulanan', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.meja.pengguna.nama %>',<% }) %>],
@@ -262,6 +287,8 @@
                   [<% rooms1.forEach((room) => { %>'<%=  room.bobotmeja %>',<% }) %>],
               ]
           }, responsiveOptions);
+          <% } %>
+          <%if (rooms2.length > 0) {%>
 
           new Chartist.Line('#chartist_meja2_lines_bulanan', {
             labels: [  <% rooms2.forEach((room) => { %>'<%=  room.meja.pengguna.nama %>',<% }) %>],
@@ -271,14 +298,15 @@
                   [<% rooms2.forEach((room) => { %>'<%=  room.bobotmeja %>',<% }) %>],
               ]
           }, responsiveOptions);
+          <% } %>
 
-          chart.on('draw', function(context) {
-          if(context.type === 'line') {
-            context.element.attr({
-              style: 'stroke: hsl(' + Math.floor(Chartist.getMultiValue(context.value) / max * 100) + ', 50%, 50%);'
-            });
-          }
-        });
+        //   chart.on('draw', function(context) {
+        //   if(context.type === 'line') {
+        //     context.element.attr({
+        //       style: 'stroke: hsl(' + Math.floor(Chartist.getMultiValue(context.value) / max * 100) + ', 50%, 50%);'
+        //     });
+        //   }
+        // });
 
       }
     };

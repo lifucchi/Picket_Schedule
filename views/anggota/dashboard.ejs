@@ -31,6 +31,7 @@
       <br>
           <h1 class="uk-text-center uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400" >Meja Ter-SO GOOD Bulan <%= monthMinusOneName%></h1>
           <% if (mejaTerbaik && mejaTerbaik.bobotmeja !== 'undefined' ) {%>
+            <br>
             <div class="uk-grid">
                 <div class="uk-width-1-1 md-bg-light-green-200">
                   <!-- <div class="uk-panel"> -->
@@ -53,6 +54,7 @@
                     <h2 class="uk-text-middle uk-text-center  "> <%= mejaTerbaik.bobotmeja %> </h2>
                     <h3 class="uk-text-middle uk-margin-remove uk-text-center  "><%= mejaTerbaik.meja.pengguna.nama %>   </h3>
                     <h3 class="uk-text-middle uk-margin-remove uk-text-center  ">Level <%= mejaTerbaik.meja.pengguna.level %></h3>
+                    <br>
                   <!-- </div> -->
                 </div>
             </div>
@@ -74,6 +76,9 @@
             <% if (lantaiTerbaik !== 'undefined') {%>
                       <div class="uk-grid">
                           <div class="uk-width-1-1 md-bg-light-green-200">
+                            <br>
+                            <hv>
+
                             <!-- <div class="uk-panel"> -->
                                 <!-- <i href="" class="uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i> -->
                                   <h3 class="uk-text-middle  uk-text-center  ">
@@ -92,12 +97,10 @@
 
                                 <h2 class="uk-text-middle uk-text-center"> <%= lantaiTerbaik[0] %> </h2>
                                 <h3 class="uk-margin-remove uk-text-middle  uk-text-center">level <%= lantaiTerbaik[1] %> </h3>
-
+                                <br>
                           </div>
                       </div>
             <% } %>
-
-            <br>
     </div>
 
     <div class=" uk-section-default md-bg-grey-800">

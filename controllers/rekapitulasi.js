@@ -206,22 +206,21 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
               let lantaiSatu = 0;
               let lantaiDua = 0;
 
-              if (hasil[0]){
+              if (hasil[0] && hasil[0] != 'undefined'){
                 for(i = 0; i < hasil[0].length; i++){
                   lantaiSatu = parseFloat(lantaiSatu) + parseFloat(hasil[0][i].bobotruang);
                 }
-                console.log("total");
-                console.log(lantaiSatu);
                 lantaiSatu = parseFloat(lantaiSatu) / parseFloat(hasil[0].length);
+                lantaiSatu = lantaiSatu || 0;
+
               }
 
-              if (hasil[1]){
+              if (hasil[1] && hasil[1] != 'undefined'){
                 for(i = 0; i < hasil[1].length; i++){
                   lantaiDua = parseFloat(lantaiDua) + parseFloat(hasil[1][i].bobotruang);
                 }
-                console.log("total");
-                console.log(lantaiDua);
                 lantaiDua = parseFloat(lantaiDua) / parseFloat(hasil[1].length);
+                lantaiDua = lantaiDua || 0;
               }
 
               let lantaiTerbaik = [];
@@ -236,14 +235,10 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                 lantaiTerbaik[1] = 'belum ada';
               }
 
-              // console.log("lanta 1");
-              // console.log(lantaiSatu);
-              // console.log(lantaiTerbaik[0]);
-              // console.log("lanta 2");
-              // console.log(lantaiDua);
-              // console.log(lantaiTerbaik[1]);
 
               res.locals.lantaiTerbaik = lantaiTerbaik;
+              console.log("tes");
+              console.log(hasil[1]);
 
               if(req.session.user.peran === 'Anggota') {
                 res.render('./anggota/rekapitulasi-ruangfilter', {
@@ -341,11 +336,6 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
       Promise
           .all([ruang1, ruang2])
           .then(hasil => {
-
-            console.log(hasil[0][0].bobotruang);
-            console.log(hasil[1][0].bobotruang);
-
-
 
               if(req.session.user.peran === 'Anggota') {
                 res.render('./anggota/rekapitulasi-ruangfilter', {

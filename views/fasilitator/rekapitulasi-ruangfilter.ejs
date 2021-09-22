@@ -31,6 +31,7 @@
                                 <p class="uk-text-muted">Pilih tanggal yang mewakili minggu tersebut</p>
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
+
                             <!-- </div> -->
                           </form>
                         </div>
@@ -41,16 +42,18 @@
                             <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
                                 <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button>
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                             <!-- </div> -->
                           </form>
                         </div>
                         <div class="uk-width-medium-3-10 ">
-                          <form class="uk-form-stacked" action="/anggota/rekapitulasi/ruang/filter-tahunan" method="POST">
+                          <form class="uk-form-stacked" action="/fasilitator/rekapitulasi/ruang/filter-tahunan" method="POST">
                             <label for="kUI_datepicker_c" class="uk-form-label">Tahunan</label>
                             <input name="tanggal" id="kUI_datepicker_c" value="" />
                             <!-- <div class="uk-width-medium-8-10 uk-text-center"> -->
                                 <button type="submit" class="md-btn md-btn-primary uk-margin-small-top">Filter</button>
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                             <!-- </div> -->
                           </form>
                         </div>
@@ -63,53 +66,162 @@
         <div class="md-card">
           <div class="md-card-content">
             <h2> <%= monday  %> sampai dengan <%= friday%> </h2>
-
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
-                        <h4 class="heading_c uk-margin-bottom">Level 1</h4>
-                        <div id="chartist_ruang1_lines" class="chartist"></div>
+                      <h4 class="heading_c uk-margin-bottom">Level 1</h4>
+                      <% if (rooms1.length > 0) {%>
+                      <div style="overflow-x: scroll;">
+                        <div style="width:400vh; height:500px;" id="chartist_ruang1_lines" class="chartist"></div>
+                      </div>
+                      <% }else{ %>
+                        <h3 class="uk-text-middle  uk-text-center  ">
+                            belum ada
+                        </h3>
+                        <% } %>
+
+
                     </div>
                 </div>
             </div>
+
 
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 2</h4>
-                        <div id="chartist_ruang2_lines" class="chartist"></div>
+                        <% if (rooms2.length >0) {%>
+                      <div style="overflow-x: scroll;">
+
+                        <div style="width:400vh; height:500px;" id="chartist_ruang2_lines" class="chartist"></div>
+                      </div>
+                      <% }else{ %>
+                      <h3 class="uk-text-middle  uk-text-center  ">
+                          belum ada
+                      </h3>
+                      <% } %>
+
                     </div>
                 </div>
             </div>
+
+
+
           </div>
         </div>
         <% }%>
 
         <% if (path === '/bulanan') {%>
 
+          <div class="uk-grid uk-grid-width-large-1 uk-grid-width-medium-1 uk-grid-medium"  data-uk-grid-margin >
+              <div class="">
+                <div class="md-card">
+                  <div class="md-card-content uk-align-center">
+                    <h2 class="uk-text-center uk-margin-bottom"> Keterangan Hasil Penilaian Ruang </h2>
+                    <hv>
+
+                      <h3 class="uk-text-center">
+                    	>= 1000 Consistent Star
+                      <br>
+                    	>= 800 Future Star
+                      <br>
+                    	>= 600 Utility Hi-Pro
+                      <br>
+                    	>= 400 Contributor
+                      <br>
+                    	< 400 Iceberg
+                      <br>
+
+                      </h3>
+                  </div>
+
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="md-card">
+                  <div class="md-card-content uk-align-center">
+                    <h2 class="uk-text-center uk-margin-bottom">Nilai Tertinggi</h2>
+
+                          <div class="">
+                            <div class="uk-panel">
+                              <h2 class="uk-text-center">Level <%= lantaiTerbaik[1] %></h2>
+                                <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                                <% if (lantaiTerbaik[0] >= 4.5 ) {%>
+                                  <h3 class="uk-text-center"> Consistent Star </h3>
+                                <% }else if (lantaiTerbaik[0] >= 4){%>
+                                  <h3 class="uk-text-center"> Future Star </h3>
+                                <% }else if (lantaiTerbaik[0] >= 3.5 ){%>
+                                  <h3 class="uk-text-center"> Utility Hi-Pro </h3>
+
+                                <% }else if (lantaiTerbaik[0] >= 3){%>
+                                  <h3 class="uk-text-center"> Contributor </h3>
+
+                                <% }else if (lantaiTerbaik[0] < 3){%>
+                                  <h3 class="uk-text-center"> Iceberg </h3>
+                                <% }%>
+
+                                <h2 class=" uk-text-center uk-text-bold"> <%= lantaiTerbaik[0] %> </h2>
+                            </div>
+                      </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
         <div class="md-card">
           <div class="md-card-content">
-            <h2> <%= bulan  %>  </h2>
-
+            <h2 class="uk-text-middle  uk-text-center"> <%= bulan  %>  </h2>
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 1</h4>
-                        <div id="chartist_ruang1_lines_bulanan" class="chartist"></div>
+                        <% if (lantaiTerbaik[1] !== 'belum ada' && rooms1.length > 0) {%>
+                      <div style="overflow-x: scroll;">
+                        <div style="width:400vh; height:500px;" id="chartist_ruang1_lines_bulanan" class="chartist"></div>
+                      </div>
+                      <% }else{ %>
+                      <h3 class="uk-text-middle  uk-text-center  ">
+                          belum ada
+                      </h3>
+                      <% } %>
+
+
                     </div>
                 </div>
             </div>
 
+
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
-                        <h4 class="heading_c uk-margin-bottom">Level 2</h4>
-                        <div id="chartist_ruang2_lines_bulanan" class="chartist"></div>
+                      <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+                      <% if (lantaiTerbaik[1] !== 'belum ada' && rooms2.length > 0) {%>
+                      <div style="overflow-x: scroll;">
+
+                        <div style="width:400vh; height:500px;" id="chartist_ruang2_lines_bulanan" class="chartist"></div>
+                      </div>
+                      <% }else{ %>
+                      <h3 class="uk-text-middle  uk-text-center  ">
+                          belum ada
+                      </h3>
+                      <% } %>
+
+
                     </div>
                 </div>
             </div>
+
+
+
           </div>
         </div>
+
+
+
         <% }%>
 
         <% if (path === '/tahunan') {%>
@@ -117,29 +229,44 @@
         <div class="md-card">
           <div class="md-card-content">
             <h2> <%= tahun %> </h2>
-          <%if (locals.rooms1 && rooms1 != 'undefined') {%>
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 1</h4>
-                        <div id="chartist_ruang1_lines_tahun" class="chartist"></div>
+                        <%if (rooms1.length > 0 ) {%>
+                      <div style="overflow-x: scroll;">
+
+                        <div style="width:400vh; height:500px;" id="chartist_ruang1_lines_tahun" class="chartist"></div>
+                      </div>
+                      <% }else{ %>
+                      <h3 class="uk-text-middle  uk-text-center  ">
+                          belum ada
+                      </h3>
+                      <% } %>
+
                     </div>
                 </div>
             </div>
 
-          <%}%>
 
-          <%if (locals.rooms2 && rooms1 != 'undefined') {%>
 
             <div class="uk-width-large-1">
                 <div class="md-card">
                     <div class="md-card-content">
-                        <h4 class="heading_c uk-margin-bottom">Level 2</h4>
-                        <div id="chartist_ruang2_lines_tahun" class="chartist"></div>
+                      <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+                      <%if (rooms2.length > 0) {%>
+                      <div style="overflow-x: scroll;">
+                        <div style="width:400vh; height:500px;" id="chartist_ruang2_lines_tahun" class="chartist"></div>
+                      </div>
+                      <% }else{ %>
+                      <h3 class="uk-text-middle  uk-text-center  ">
+                          belum ada
+                      </h3>
+                      <% } %>
+
                     </div>
                 </div>
             </div>
-            <%}%>
 
 
           </div>
@@ -228,6 +355,7 @@
             }]
           ];
           // simple lines
+          <%if (rooms1.length > 0 && path === '/mingguan') {%>
           new Chartist.Line('#chartist_ruang1_lines', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
 
@@ -242,7 +370,9 @@
                   right: 40
               }
           });
+          <% } %>
 
+          <%if (rooms2.length > 0 && path === '/mingguan') {%>
           new Chartist.Line('#chartist_ruang2_lines', {
             labels: [  <% rooms2.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
 
@@ -256,7 +386,9 @@
                   right: 40
               }
           });
+          <% } %>
 
+          <%if (rooms1.length > 0 && path === '/bulanan') {%>
           new Chartist.Line('#chartist_ruang1_lines_bulanan', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
 
@@ -270,10 +402,11 @@
                   right: 40
               }
           });
+          <% } %>
 
+          <%if (rooms2.length > 0 && path === '/bulanan') {%>
           new Chartist.Line('#chartist_ruang2_lines_bulanan', {
             labels: [  <% rooms2.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
-
               // labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
               series: [
                   [<% rooms2.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
@@ -284,7 +417,9 @@
                   right: 40
               }
           });
+          <% } %>
 
+          <%if (rooms1.length > 0 && path === '/tahunan') {%>
           new Chartist.Line('#chartist_ruang1_lines_tahun', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.dataValues.bulan %>',<% }) %>],
             // labels: [  'Januari', 'Februari'],
@@ -295,7 +430,9 @@
                   [<% rooms1.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
               ]
           }, responsiveOptions);
+          <% } %>
 
+          <%if (rooms2.length > 0 && path === '/tahunan') {%>
           new Chartist.Line('#chartist_ruang2_lines_tahun', {
             labels: [  <% rooms2.forEach((room) => { %>'<%=  room.dataValues.bulan %>',<% }) %>],
 
@@ -304,18 +441,11 @@
                   [<% rooms2.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
               ]
           }, responsiveOptions);
-
+          <% } %>
 
       }
-
-
     };
-
-
     </script>
-
-
-
 
     <script>
         $(function() {

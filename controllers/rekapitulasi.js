@@ -211,7 +211,7 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                   lantaiSatu = parseFloat(lantaiSatu) + parseFloat(hasil[0][i].bobotruang);
                 }
                 lantaiSatu = parseFloat(lantaiSatu) / parseFloat(hasil[0].length);
-                lantaiSatu = lantaiSatu || 0;
+                // lantaiSatu = lantaiSatu || 0;
 
               }
 
@@ -220,7 +220,7 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                   lantaiDua = parseFloat(lantaiDua) + parseFloat(hasil[1][i].bobotruang);
                 }
                 lantaiDua = parseFloat(lantaiDua) / parseFloat(hasil[1].length);
-                lantaiDua = lantaiDua || 0;
+                // lantaiDua = lantaiDua || 0;
               }
 
               let lantaiTerbaik = [];
@@ -237,8 +237,6 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
 
 
               res.locals.lantaiTerbaik = lantaiTerbaik;
-              console.log("tes");
-              console.log(hasil[1]);
 
               if(req.session.user.peran === 'Anggota') {
                 res.render('./anggota/rekapitulasi-ruangfilter', {

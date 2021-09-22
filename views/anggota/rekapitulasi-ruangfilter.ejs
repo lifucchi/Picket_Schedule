@@ -175,43 +175,54 @@
               </div>
             </div>
 
-        <div class="md-card">
-          <div class="md-card-content">
-            <h2 class="uk-text-middle  uk-text-center"> <%= bulan  %>  </h2>
-            <% if (lantaiTerbaik[1] !== 'belum ada') {%>
-            <div class="uk-width-large-1">
-                <div class="md-card">
-                    <div class="md-card-content">
-                        <h4 class="heading_c uk-margin-bottom">Level 1</h4>
-                      <div style="overflow-x: scroll;">
-                        <div style="width:400vh; height:500px;" id="chartist_ruang1_lines_bulanan" class="chartist"></div>
-                      </div>
+            <div class="md-card">
+              <div class="md-card-content">
+                <h2 class="uk-text-middle  uk-text-center"> <%= bulan  %>  </h2>
+                <div class="uk-width-large-1">
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <h4 class="heading_c uk-margin-bottom">Level 1</h4>
+                            <% if (lantaiTerbaik[1] !== 'belum ada' && rooms1.length > 0) {%>
+                          <div style="overflow-x: scroll;">
+                            <div style="width:400vh; height:500px;" id="chartist_ruang1_lines_bulanan" class="chartist"></div>
+                          </div>
+                          <% }else{ %>
+                          <h3 class="uk-text-middle  uk-text-center  ">
+                              belum ada
+                          </h3>
+                          <% } %>
 
+
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="uk-width-large-1">
-                <div class="md-card">
-                    <div class="md-card-content">
-                        <h4 class="heading_c uk-margin-bottom">Level 2</h4>
-                      <div style="overflow-x: scroll;">
 
-                        <div style="width:400vh; height:500px;" id="chartist_ruang2_lines_bulanan" class="chartist"></div>
-                      </div>
+                <div class="uk-width-large-1">
+                    <div class="md-card">
+                        <div class="md-card-content">
+                          <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+                          <% if (lantaiTerbaik[1] !== 'belum ada' && rooms2.length > 0) {%>
+                          <div style="overflow-x: scroll;">
 
+                            <div style="width:400vh; height:500px;" id="chartist_ruang2_lines_bulanan" class="chartist"></div>
+                          </div>
+                          <% }else{ %>
+                          <h3 class="uk-text-middle  uk-text-center  ">
+                              belum ada
+                          </h3>
+                          <% } %>
+
+
+                        </div>
                     </div>
                 </div>
+
+
+
+              </div>
             </div>
 
-            <% }else{ %>
-            <h3 class="uk-text-middle  uk-text-center  ">
-                belum ada
-            </h3>
-            <% } %>
-
-          </div>
-        </div>
 
 
 
@@ -348,7 +359,7 @@
             }]
           ];
           // simple lines
-          <%if (rooms1.length > 0) {%>
+          <%if (rooms1.length > 0 && path === '/mingguan') {%>
 
           new Chartist.Line('#chartist_ruang1_lines', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
@@ -365,7 +376,7 @@
               }
           });
           <% } %>
-          <%if (rooms2.length > 0) {%>
+          <%if (rooms2.length > 0 && path === '/mingguan') {%>
 
           new Chartist.Line('#chartist_ruang2_lines', {
             labels: [  <% rooms2.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
@@ -382,7 +393,7 @@
           });
           <% } %>
 
-          <%if (rooms1.length > 0) {%>
+          <%if (rooms1.length > 0 && path === '/bulanan') {%>
 
           new Chartist.Line('#chartist_ruang1_lines_bulanan', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
@@ -400,7 +411,7 @@
 
           <% } %>
 
-          <%if (rooms2.length > 0) {%>
+          <%if (rooms2.length > 0 && path === '/bulanan') {%>
 
           new Chartist.Line('#chartist_ruang2_lines_bulanan', {
             labels: [  <% rooms2.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
@@ -416,7 +427,7 @@
               }
           });
           <% } %>
-          <%if (rooms1.length > 0) {%>
+          <%if (rooms1.length > 0 && path === '/tahunan') {%>
 
           new Chartist.Line('#chartist_ruang1_lines_tahun', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.dataValues.bulan %>',<% }) %>],
@@ -429,7 +440,7 @@
               ]
           }, responsiveOptions);
           <% } %>
-          <%if (rooms2.length > 0) {%>
+          <%if (rooms2.length > 0 && path === '/tahunan') {%>
 
           new Chartist.Line('#chartist_ruang2_lines_tahun', {
             labels: [  <% rooms2.forEach((room) => { %>'<%=  room.dataValues.bulan %>',<% }) %>],

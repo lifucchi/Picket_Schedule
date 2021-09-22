@@ -497,7 +497,7 @@ exports.postCheckPic = (req,res, next) => {
 exports.getLaporan = (req,res) => {
 
   JadwalPiket.findAll({
-    where: {nikpicfasil: req.user.nik},
+    where: {nikpicfasil: req.session.user.nik},
     include: [{
       model: Pengguna,
       as: 'nik_pic_piket'

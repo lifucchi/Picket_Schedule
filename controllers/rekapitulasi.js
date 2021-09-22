@@ -203,17 +203,15 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
       Promise
           .all([ruang1, ruang2])
           .then(hasil => {
-
               let lantaiSatu = 0;
               let lantaiDua = 0;
-
-
-
 
               if (hasil[0]){
                 for(i = 0; i < hasil[0].length; i++){
                   lantaiSatu = parseFloat(lantaiSatu) + parseFloat(hasil[0][i].bobotruang);
                 }
+                console.log("total");
+                console.log(lantaiSatu);
                 lantaiSatu = parseFloat(lantaiSatu) / parseFloat(hasil[0].length);
               }
 
@@ -221,6 +219,8 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                 for(i = 0; i < hasil[1].length; i++){
                   lantaiDua = parseFloat(lantaiDua) + parseFloat(hasil[1][i].bobotruang);
                 }
+                console.log("total");
+                console.log(lantaiDua);
                 lantaiDua = parseFloat(lantaiDua) / parseFloat(hasil[1].length);
               }
 
@@ -303,7 +303,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
       attributes: {
       include: [
           [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan'],
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)/COUNT(DISTINCT(jadwalPiketId))'), 'bobotruang']
         ]},
         group: [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan']
     }
@@ -332,7 +332,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
       attributes: {
       include: [
           [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan'],
-          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
+          [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)/COUNT(DISTINCT(jadwalPiketId))'), 'bobotruang']
         ]},
         group: [sequelize.fn('MONTH', sequelize.col('tanggal')), 'bulan']
     }
@@ -341,6 +341,12 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
       Promise
           .all([ruang1, ruang2])
           .then(hasil => {
+
+            console.log(hasil[0][0].bobotruang);
+            console.log(hasil[1][0].bobotruang);
+
+
+
               if(req.session.user.peran === 'Anggota') {
                 res.render('./anggota/rekapitulasi-ruangfilter', {
                   pageTitle: 'Rekapitulasi',
@@ -534,7 +540,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
                 rooms2: hasil[1],
                 bulan: bulanTahun,
                 mejaTerbaik : hasil[2][0]
-                
+
               });
             }
           })

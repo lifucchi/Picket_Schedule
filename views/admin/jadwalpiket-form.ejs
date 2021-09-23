@@ -27,6 +27,12 @@
         <div class="md-card">
         <form action="/admin/jadwalpiket/add" method="post">
             <div class="md-card-content">
+              <% if (error_messages) { %>
+                  <div class="uk-alert uk-alert-danger" data-uk-alert>
+                      <a href="#" class="uk-alert-close uk-close"></a>
+                      <%= error_messages %>
+                  </div>
+              <% } %>
                 <!-- <h3 class="heading_a"><%= pageTitle%></h3> -->
                 <div class="uk-grid" data-uk-grid-margin>
                     <div class="uk-width-medium">

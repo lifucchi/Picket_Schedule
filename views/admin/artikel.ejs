@@ -31,6 +31,12 @@
         <% if (path === '/artikel') {%>
               <div class="md-card uk-margin-medium-bottom">
                   <div class="md-card-content">
+                    <% if (success_messages) { %>
+                        <div class="uk-alert uk-alert-success" data-uk-alert>
+                            <a href="#" class="uk-alert-close uk-close"></a>
+                            <%= success_messages %>
+                        </div>
+                    <% } %>
                       <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
                           <thead>
                               <tr>
@@ -39,7 +45,7 @@
                               </tr>
                               <tr>
                                   <th>Judul</th>
-                                  <th>Konten</th>
+                                  <th >Konten</th>
                                   <th>Pembuat</th>
                                   <th style="width: 30%;" >Foto Artikel</th>
                                   <th>Aksi</th>
@@ -50,7 +56,9 @@
                           <tr>
                             <td><%= article.id%></td>
                               <td><%= article.judul%></td>
-                              <td><%= article.konten%></td>
+                              <td> <div class="uk-text-break">
+                                <%= article.konten%></td>
+                              </div>
                               <td><%= article.pembuat%></td>
                               <td> <img src="/<%= article.foto_Artikel%>" alt=""> </td>
                               <td>

@@ -364,7 +364,6 @@
           new Chartist.Line('#chartist_ruang1_lines', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
 
-
               // labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
               series: [
                   [<% rooms1.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
@@ -432,8 +431,6 @@
           new Chartist.Line('#chartist_ruang1_lines_tahun', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.dataValues.bulan %>',<% }) %>],
             // labels: [  'Januari', 'Februari'],
-
-
               // labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
               series: [
                   [<% rooms1.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],

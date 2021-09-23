@@ -57,7 +57,7 @@
               <div class="md-card  md-bg-light-green-200">
                   <div class="md-card-content">
                       <h2  class="uk-text-center">  <span class="">Lantai 1</span></h2>
-                      <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
+                      <h4 class="uk-margin-remove"><span>Tidak ada piket </h4>
                   </div>
               </div>
           </div>
@@ -65,7 +65,7 @@
               <div class="md-card  md-bg-light-green-200">
                   <div class="md-card-content">
                       <h2 class="uk-text-center" > <span class="">Lantai 2</span></h2>
-                      <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
+                      <h4 class="uk-margin-remove"><span>Tidak ada piket   </h4>
                   </div>
               </div>
           </div>
@@ -79,7 +79,7 @@
                   <div class="md-card-content">
                     <h2 class="uk-text-center" >  <span>Meja Ter-SO GOOD Bulan <%= monthMinusOneName%></span>
                       <hv>
-
+                        <br>
                       <% if (mejaTerbaik && mejaTerbaik.bobotmeja !== 'undefined' ) {%>
                         <div class="uk-grid">
                             <div class="uk-width-1-2">
@@ -107,7 +107,10 @@
                               <h2 class=""><%= mejaTerbaik.meja.pengguna.nama %>   </h2>
                             </div>
                         </div>
-                        <% } %>
+                        <% }else{%>
+                            <br>
+                          <h4 class="uk-margin-remove"><span> belum ada </h4>
+                          <%}%>
                   </div>
               </div>
           </div>
@@ -119,7 +122,7 @@
                 <div class="md-card  md-bg-light-green-200">
                     <div class="md-card-content">
                       <h2 class="uk-margin-remove uk-text-center" >  <span>Lantai Ter-SO GOOD Bulan <%= monthMinusOneName%></span>
-                        <% if (locals.lantaiTerbaik !== 'undefined') {%>
+                        <% if (lantaiTerbaik !== 'undefined') {%>
                                   <div class="uk-grid">
                                       <div class="uk-width-1-2">
                                         <!-- <div class="uk-panel"> -->
@@ -130,10 +133,8 @@
                                               <h2> Future Star </h2>
                                             <% }else if (lantaiTerbaik[0] >= 600 ){%>
                                               <h2> Utility Hi-Pro </h2>
-
                                             <% }else if (lantaiTerbaik[0] >= 400){%>
                                               <h2> Contributor </h2>
-
                                             <% }else if (lantaiTerbaik[0] < 499){%>
                                               <h2> Iceberg </h2>
                                             <% }%>
@@ -142,12 +143,9 @@
                                       </div>
                                       <div class="uk-width-1-2">
                                         <br>
-                                          <h1 class="uk-margin-remove"><span> level <%= lantaiTerbaik[1] %> </h1>
+                                          <h2 class="uk-margin-remove"><span> level <%= lantaiTerbaik[1] %> </h2>
                                       </div>
-
                                   </div>
-
-
                         <% } %>
 
                     </div>

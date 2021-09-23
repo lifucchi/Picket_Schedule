@@ -11,76 +11,78 @@ const mejaController = require('../controllers/meja');
 const penilaianRuangController = require('../controllers/penilaianRuang');
 const penilaianMejaController = require('../controllers/penilaianMeja');
 const buktiTemuanController = require('../controllers/buktitemuan');
+const isAuth = require('../middleware/is-auth');
+const isRole = require('../middleware/is-role');
 
 const router = express.Router();
 
 
 // dashboard
-router.get('/' , adminController.getAdminDashboard );
+router.get('/', isAuth, isRole('Admin') , adminController.getAdminDashboard );
 
 // pengguna
-router.get('/pengguna' , penggunaController.getDataPengguna );
-router.post('/pengguna' , penggunaController.postAddDataPengguna );
-router.post('/pengguna/edit' , penggunaController.postEditPengguna );
-router.post('/pengguna/delete-pengguna' , penggunaController.postDeletePengguna );
-router.post('/pengguna/reset-password' , penggunaController.postResetPassword );
+router.get('/pengguna' , isAuth, isRole('Admin'), penggunaController.getDataPengguna );
+router.post('/pengguna' , isAuth, isRole('Admin'), penggunaController.postAddDataPengguna );
+router.post('/pengguna/edit' , isAuth, isRole('Admin'), penggunaController.postEditPengguna );
+router.post('/pengguna/delete-pengguna' , isAuth, isRole('Admin'), penggunaController.postDeletePengguna );
+router.post('/pengguna/reset-password', isAuth, isRole('Admin') , penggunaController.postResetPassword );
 // Jadwal piket
-router.get('/jadwalpiket' , jadwalPiketController.getDataJadwalPiket );
-router.get('/jadwalpiket/add' , jadwalPiketController.getFormJadwalPiket );
-router.post('/jadwalpiket/add' , jadwalPiketController.postAddDataJadwalPiket );
-router.post('/jadwalpiket/delete-jadwalpiket' , jadwalPiketController.postDeleteJadwalPiket );
-router.post('/jadwalpiket/edit' , jadwalPiketController.postEditJadwal );
-router.post('/jadwalpiket/import' , jadwalPiketController.postImportJadwal );
-router.get('/jadwalpiket/contohinput' , jadwalPiketController.getContohInput );
+router.get('/jadwalpiket', isAuth, isRole('Admin') , jadwalPiketController.getDataJadwalPiket );
+router.get('/jadwalpiket/add' , isAuth, isRole('Admin'), jadwalPiketController.getFormJadwalPiket );
+router.post('/jadwalpiket/add' , isAuth, isRole('Admin'), jadwalPiketController.postAddDataJadwalPiket );
+router.post('/jadwalpiket/delete-jadwalpiket' , isAuth, isRole('Admin'), jadwalPiketController.postDeleteJadwalPiket );
+router.post('/jadwalpiket/edit' , isAuth, isRole('Admin'), jadwalPiketController.postEditJadwal );
+router.post('/jadwalpiket/import' , isAuth, isRole('Admin'), jadwalPiketController.postImportJadwal );
+router.get('/jadwalpiket/contohinput' , isAuth, isRole('Admin'), jadwalPiketController.getContohInput );
 
 
 
 // artikel
-router.get('/artikel' , artikelController.getDataArtikel );
-router.get('/artikel/add' , artikelController.getFormArtikel );
-router.post('/artikel/add' , artikelController.postAddDataArtikel );
-router.post('/artikel/delete-artikel', artikelController.postDeleteArtikel);
-router.get('/artikel/edit' , artikelController.getFormUpdateArtikel );
-router.post('/artikel/update' , artikelController.postUpdateDataArtikel );
+router.get('/artikel' , isAuth, isRole('Admin'), artikelController.getDataArtikel );
+router.get('/artikel/add' , isAuth, isRole('Admin'), artikelController.getFormArtikel );
+router.post('/artikel/add' , isAuth, isRole('Admin'), artikelController.postAddDataArtikel );
+router.post('/artikel/delete-artikel', isAuth, isRole('Admin'), artikelController.postDeleteArtikel);
+router.get('/artikel/edit', isAuth, isRole('Admin') , artikelController.getFormUpdateArtikel );
+router.post('/artikel/update', isAuth, isRole('Admin') , artikelController.postUpdateDataArtikel );
 
 // checklistruang
-router.get('/checklistruang',ruangController.getDataRuangAdmin);
-router.post('/checklistruang',ruangController.postAddDataRuang);
-router.post('/checklistruang/edit',ruangController.postEditRuang);
-router.post('/checklistruang/delete-checklistruang', ruangController.postDeleteRuang );
+router.get('/checklistruang', isAuth, isRole('Admin'),ruangController.getDataRuangAdmin);
+router.post('/checklistruang', isAuth, isRole('Admin'),ruangController.postAddDataRuang);
+router.post('/checklistruang/edit', isAuth, isRole('Admin'),ruangController.postEditRuang);
+router.post('/checklistruang/delete-checklistruang' , isAuth, isRole('Admin'), ruangController.postDeleteRuang );
 
 // checklistmeja
-router.get('/checklistmeja',mejaController.getDataMejaAdmin);
-router.post('/checklistmeja',mejaController.postAddDataMeja);
-router.post('/checklistmejastandar',mejaController.postAddDataAllMeja );
+router.get('/checklistmeja', isAuth, isRole('Admin'),mejaController.getDataMejaAdmin);
+router.post('/checklistmeja', isAuth, isRole('Admin'),mejaController.postAddDataMeja);
+router.post('/checklistmejastandar', isAuth, isRole('Admin'),mejaController.postAddDataAllMeja );
 
-router.post('/checklistmeja/edit',mejaController.postEditMeja);
-router.post('/checklistmeja/delete-checklistmeja',mejaController.postDeleteMeja );
+router.post('/checklistmeja/edit', isAuth, isRole('Admin'),mejaController.postEditMeja);
+router.post('/checklistmeja/delete-checklistmeja', isAuth, isRole('Admin'),mejaController.postDeleteMeja );
 
 // rekapitulasi ruang
-router.get('/skorruang' , penilaianRuangController.getDataPenilaianRuang );
-router.post('/skorruang/delete-skorruang' , penilaianRuangController.postDeletePenialaianRuang );
-router.post('/skorruang/filter' , penilaianRuangController.getDataFilterPenilaianRuang );
+router.get('/skorruang' , isAuth, isRole('Admin'), penilaianRuangController.getDataPenilaianRuang );
+router.post('/skorruang/delete-skorruang' , isAuth, isRole('Admin'), penilaianRuangController.postDeletePenialaianRuang );
+router.post('/skorruang/filter' , isAuth, isRole('Admin'), penilaianRuangController.getDataFilterPenilaianRuang );
 
 // rekapitulasi meja
-router.get('/skormeja' , penilaianMejaController.getDataPenilaianMeja );
-router.post('/skormeja/filter' , penilaianMejaController.getDataFilterPenilaianMeja );
-router.post('/skorruang/delete-skormeja' , penilaianMejaController.postDeletePenialaianMeja );
+router.get('/skormeja' , isAuth, isRole('Admin'), penilaianMejaController.getDataPenilaianMeja );
+router.post('/skormeja/filter' , isAuth, isRole('Admin'), penilaianMejaController.getDataFilterPenilaianMeja );
+router.post('/skorruang/delete-skormeja' , isAuth, isRole('Admin'), penilaianMejaController.postDeletePenialaianMeja );
 
 // buktiTemuan
-router.get('/buktitemuanruang' , buktiTemuanController.getDataBuktiTemuanAdmin);
-router.post('/buktitemuan/delete' , buktiTemuanController.postDeleteBuktiTemuanRuang);
-router.post('/buktitemuanruang/filter' , buktiTemuanController.getDataBuktiTemuanAdminFilter);
-router.get('/buktitemuanruang/detail/:buktiId', buktiTemuanController.getDataBuktiTemuanRuangDetail);
-router.post('/tindaklanjutruang/delete' , buktiTemuanController.postDeleteTindakLanjutRuang);
+router.get('/buktitemuanruang' , isAuth, isRole('Admin'), buktiTemuanController.getDataBuktiTemuanAdmin);
+router.post('/buktitemuan/delete' , isAuth, isRole('Admin'), buktiTemuanController.postDeleteBuktiTemuanRuang);
+router.post('/buktitemuanruang/filter' , isAuth, isRole('Admin'), buktiTemuanController.getDataBuktiTemuanAdminFilter);
+router.get('/buktitemuanruang/detail/:buktiId', isAuth, isRole('Admin'), buktiTemuanController.getDataBuktiTemuanRuangDetail);
+router.post('/tindaklanjutruang/delete' , isAuth, isRole('Admin'), buktiTemuanController.postDeleteTindakLanjutRuang);
 
 
-router.get('/buktitemuanmeja' , buktiTemuanController.getDataBuktiTemuanMeja);
-router.post('/buktitemuanmeja/delete' , buktiTemuanController.postDeleteBuktiTemuanMeja);
-router.post('/tindaklanjutmeja/delete' , buktiTemuanController.postDeleteTindakLanjutMeja);
+router.get('/buktitemuanmeja' , isAuth, isRole('Admin'), buktiTemuanController.getDataBuktiTemuanMeja);
+router.post('/buktitemuanmeja/delete' , isAuth, isRole('Admin'), buktiTemuanController.postDeleteBuktiTemuanMeja);
+router.post('/tindaklanjutmeja/delete' , isAuth, isRole('Admin'), buktiTemuanController.postDeleteTindakLanjutMeja);
 
-router.post('/buktitemuanmeja/filter' , buktiTemuanController.getDataBuktiTemuanMejaFilter);
-router.get('/buktitemuanmeja/detail/:buktiId', buktiTemuanController.getDataBuktiTemuanMejaDetail);
+router.post('/buktitemuanmeja/filter' , isAuth, isRole('Admin'), buktiTemuanController.getDataBuktiTemuanMejaFilter);
+router.get('/buktitemuanmeja/detail/:buktiId', isAuth, isRole('Admin'), buktiTemuanController.getDataBuktiTemuanMejaDetail);
 
 // exports.routes = router;
 module.exports = router;

@@ -11,7 +11,7 @@
 
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('u2964880_5Rsmart', 'u2964880_root', 'password', {
+const sequelize = new Sequelize('u2964880_5Rsmart2', 'u2964880_root', 'password', {
   dialect: 'mysql',
   host: '153.92.8.1',
   // pool: {

@@ -2,6 +2,17 @@ const Pengguna = require('../models/pengguna');
 const bcrypt = require('bcryptjs');
 
 exports.getDataPengguna = (req,res, next) => {
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
   Pengguna.findAll()
   .then(pengguna => {
     res.render('./admin/pengguna', {
@@ -21,10 +32,11 @@ exports.postAddDataPengguna = ( req,res, next) => {
   const password = req.body.password;
   const level = req.body.level;
 
+
   Pengguna.findByPk(nik)
   .then( pengguna =>{
     if (pengguna) {
-      console.log("pengguna ada");
+      req.flash('error_messages', 'Pengguna sudah ada');
       return res.redirect('/admin/pengguna');
     }
     return bcrypt.hash(password,12)
@@ -39,6 +51,7 @@ exports.postAddDataPengguna = ( req,res, next) => {
       );
       })
       .then(result => {
+        req.flash('success_messages', 'Pengguna sudah ditambahkan');
         res.redirect('/admin/pengguna');
       });
   })
@@ -47,13 +60,19 @@ exports.postAddDataPengguna = ( req,res, next) => {
 
 
 exports.postDeletePengguna = ( req,res, next) => {
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
   const nik = req.body.penggunaId;
   Pengguna.findByPk(nik)
     .then(pengguna => {
       return pengguna.destroy();
     })
     .then(result => {
-      console.log('DESTROYED PRODUCT');
+      req.flash('success_messages', 'Pengguna sudah dihapus');
       res.redirect('/admin/pengguna');
     })
     .catch(err => console.log(err));
@@ -66,6 +85,7 @@ exports.postEditPengguna = ( req,res, next) => {
   const namaUp = req.body.nama_edit;
   const peranUp = req.body.peran_edit;
   const levelUp = req.body.level_edit;
+
   Pengguna.findByPk(nikUp)
     .then(pengguna => {
       pengguna.username = usernameUp;
@@ -75,7 +95,7 @@ exports.postEditPengguna = ( req,res, next) => {
       return pengguna.save();
     })
     .then(result => {
-      console.log('UPDATED PENGGUNA!');
+      req.flash('success_messages', 'Pengguna sudah diubah');
       res.redirect('/admin/pengguna');
     })
     .catch(err => console.log(err));
@@ -91,7 +111,7 @@ const nikUp = req.body.penggunaId;
           return pengguna.save();
       });
     }).then(result => {
-      console.log('UPDATED PASSWORD!');
+      req.flash('success_messages', 'Password Pengguna sudah diubah');
       res.redirect('/admin/pengguna');
     })
     .catch(err => console.log(err));

@@ -3,16 +3,15 @@ const Pengguna = require('../models/pengguna');
 
 exports.getLogin = (req, res, next) => {
   if (!req.session.isLoggedIn) {
-  let message = req.flash('error');
-  if (message.length > 0) {
-    message = message[0];
+  // let message = req.flash('error_messages');
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
   } else {
-    message = null;
+    res.locals.error_messages = null;
   }
   res.render('login/login', {
     path: '/',
-    pageTitle: 'Login',
-    errorMessage: message
+    pageTitle: 'Login'
   });
   }
     else{
@@ -34,8 +33,7 @@ exports.postLogin = (req, res, next) => {
   Pengguna.findOne({ where: { nik: nik } })
     .then(user => {
       if (!user) {
-        req.flash('error', 'User Tidak Ditemukan');
-        console.log("masuk sini2");
+        req.flash('error_messages', 'User Tidak Ditemukan');
         return res.redirect('/');
       }
       bcrypt
@@ -62,7 +60,7 @@ exports.postLogin = (req, res, next) => {
 
             });
           }
-          req.flash('error', 'Password salah');
+          req.flash('error_messages', 'Password salah');
           res.redirect('/');
         })
         .catch(err => {
@@ -82,27 +80,26 @@ exports.getLogout = (req, res, next) => {
 
 
 exports.changePassword = (req, res, next) => {
-  let message = req.flash('error');
 
   res.render('login/changePassword', {
     path: '/',
-    pageTitle: 'Ganti Password',
-    errorMessage: message
+    pageTitle: 'Ganti Password'
   });
 };
 
 exports.changePasswordPengguna = (req, res, next) => {
-  let message = req.flash('error');
   const nik = req.session.user.nik;
   const passwordnew = req.body.changePassword;
   const passwordnow = req.body.Password;
-  console.log(nik);
-  console.log(passwordnew);
-  console.log(passwordnow);
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
   Pengguna.findOne({ where: { nik: nik } })
     .then(user => {
       if (!user) {
-        req.flash('error', 'User Tidak Ditemukan');
+        req.flash('error_messages', 'User Tidak Ditemukan');
         return res.redirect('/');
       }
       bcrypt
@@ -126,7 +123,7 @@ exports.changePasswordPengguna = (req, res, next) => {
 
           }
 
-          req.flash('error', 'Password saat ini salah');
+          req.flash('error_messages', 'Password saat ini salah');
           res.redirect('/changePassword');
         })
         .catch(err => {

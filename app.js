@@ -190,6 +190,8 @@ app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
   res.locals.session = req.session;
   res.locals.csrfToken = req.csrfToken();
+  res.locals.success_messages = req.flash('success_messages');
+  res.locals.error_messages = req.flash('error_messages');
   next();
 });
 // routes

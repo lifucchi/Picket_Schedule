@@ -44,10 +44,10 @@
                 <div class="login_heading">
                     <div class="user_avatar"></div>
                 </div>
-                <% if (errorMessage) { %>
+                <% if (error_messages) { %>
                     <div class="uk-alert uk-alert-danger" data-uk-alert>
                         <a href="#" class=""></a>
-                        <%= errorMessage %>
+                        <%= error_messages %>
                     </div>
                 <% } %>
                 <form method="post" action="/login">

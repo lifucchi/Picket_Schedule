@@ -46,7 +46,7 @@ exports.getDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:1}]
 
           }
         }
@@ -75,7 +75,7 @@ exports.getDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:1}]
           },
           include: [{
             model: Pengguna,
@@ -112,7 +112,7 @@ exports.getDashboard = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), prevMonth)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:1}]
           },
           include: [{
             model: Pengguna,

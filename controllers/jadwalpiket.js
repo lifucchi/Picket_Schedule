@@ -674,7 +674,7 @@ exports.postCheckFasil = (req,res, next) => {
     if ( nowTanggal === penilaian.tanggal ){
       penilaian.persetujuan_fasil = 1;
     }else {
-      penilaian.persetujuan_fasil = 2;
+      penilaian.persetujuan_fasil = 1;
     }
     return penilaian.save();
   })

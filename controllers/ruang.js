@@ -11,6 +11,17 @@ var Op = Sequelize.Op;
 exports.getDataRuangAdmin= (req,res, next) => {
   const pengguna = Pengguna.findAll();
   const ruang = Ruang.findAll( {include: Pengguna});
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
   Promise
       .all([pengguna, ruang])
       .then(hasil => {
@@ -38,6 +49,7 @@ exports.postAddDataRuang = (req,res,next) => {
     poin_ruang: poin_ruang,
     penggunaNik: pic_ruang
   }).then( result =>{
+    req.flash('success_messages', 'Ruang sudah ditambah');
     res.redirect('/admin/checklistruang');
     }
   ).catch(err => console.log(err));
@@ -59,6 +71,7 @@ exports.postEditRuang = ( req,res, next) => {
       return ruang.save();
     })
     .then(result => {
+      req.flash('success_messages', 'Ruang sudah diupdate');
       res.redirect('/admin/checklistruang');
     })
     .catch(err => console.log(err));
@@ -72,6 +85,7 @@ exports.postDeleteRuang = ( req,res, next) => {
       return ruang.destroy();
     })
     .then(result => {
+      req.flash('success_messages', 'Ruang sudah dihapus');
       res.redirect('/admin/checklistruang');
     })
     .catch(err => console.log(err));

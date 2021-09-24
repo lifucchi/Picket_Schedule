@@ -32,7 +32,7 @@
                             <ul class="uk-nav uk-nav-dropdown">
                                 <li><a href="#" data-uk-modal="{target:'#modal_header_footer'}">Tambah 1 meja</a></li>
                                 <li class="uk-nav-divider"></li>
-                                <li><a href="#" data-uk-modal="{target:'#modal_header_footerstandar'}">Tambah 1 standar ke seluruh meja</a></li>
+                                <!-- <li><a href="#" data-uk-modal="{target:'#modal_header_footerstandar'}">Tambah 1 standar ke seluruh meja</a></li> -->
                             </ul>
                         </div>
                     </div>
@@ -41,6 +41,19 @@
         <% if (path === '/checklistmeja') {%>
               <div class="md-card uk-margin-medium-bottom">
                   <div class="md-card-content">
+                    <% if (error_messages) { %>
+                        <div class="uk-alert uk-alert-danger" data-uk-alert>
+                            <a href="#" class="uk-alert-close uk-close"></a>
+                            <%= error_messages %>
+                        </div>
+                    <% } %>
+                    <% if (success_messages) { %>
+                        <div class="uk-alert uk-alert-success" data-uk-alert>
+                            <a href="#" class="uk-alert-close uk-close"></a>
+                            <%= success_messages %>
+                        </div>
+                    <% } %>
+
                       <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
                           <thead>
                               <!-- <tr> -->
@@ -168,7 +181,6 @@
 
                           <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
                           <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save</button>
-                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                       </div>
                   </form>

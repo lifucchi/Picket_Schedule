@@ -131,7 +131,9 @@ exports.postUpdateDataArtikel = (req,res,next) =>{
     })
   .then(artikel => {
     req.flash('success_messages', 'Artikel berhasil diupdate');
-    res.redirect('/admin/artikel');
+    setTimeout(() => { return res.redirect('/admin/artikel');}, 2000);
+
+
 
   })
   .catch(err => {
@@ -177,7 +179,8 @@ exports.postAddDataArtikel = (req,res,next) => {
       })
       .then( () => {
         req.flash('success_messages', 'Artikel berhasil ditambahkan');
-        res.redirect('/admin/artikel')
+        setTimeout(() => { return res.redirect('/admin/artikel');}, 2000);
+
           }
         )
         .catch(err => {

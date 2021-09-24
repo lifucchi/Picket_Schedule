@@ -8,6 +8,17 @@ const { Op } = require("sequelize");
 
 // ADMIN
 exports.getDataMejaAdmin = (req,res, next) => {
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
   Pengguna.findAll()
   .then(pengguna => {
     Meja.findAll( {include: Pengguna} )
@@ -27,12 +38,27 @@ exports.postAddDataMeja = (req,res,next) => {
   const pemilik_meja = req.body.pemilik_meja;
   const standar = req.body.standar;
 
-  Meja.create({
-    penggunaNik: pemilik_meja,
-    standar:standar
-  }).then(
-    res.redirect('/admin/checklistmeja')
-  ).catch(err => console.log(err));
+  Meja.findAll(
+        {where: {penggunaNik: pemilik_meja}},
+  )
+  .then( hasil => {
+    if (hasil.length > 0){
+      req.flash('error_messages', 'Meja sudah ada');
+      res.redirect('/admin/checklistmeja');
+    }else{
+      Meja.create({
+        penggunaNik: pemilik_meja,
+        standar:standar
+      })
+      .then(result => {
+        req.flash('success_messages', 'Meja sudah ditambah');
+        res.redirect('/admin/checklistmeja');
+      }
+      ).catch(err => console.log(err));
+    }
+  })
+.catch(err => console.log(err));
+
 };
 
 exports.postAddDataAllMeja = (req,res,next) => {
@@ -52,7 +78,10 @@ exports.postAddDataAllMeja = (req,res,next) => {
     }
     Meja
     .bulkCreate(pemilikmeja)
-    .then( res.redirect('/admin/checklistmeja') );
+    .then(result => {
+      req.flash('success_messages', 'Meja sudah ditambah');
+      res.redirect('/admin/checklistmeja');
+    })
   })
   .catch(err => console.log(err));
 };
@@ -70,7 +99,7 @@ exports.postEditMeja = ( req,res, next) => {
       return meja.save();
     })
     .then(result => {
-      console.log('UPDATED MEJA!');
+      req.flash('success_messages', 'Meja sudah diupdate');
       res.redirect('/admin/checklistmeja');
     })
     .catch(err => console.log(err));
@@ -84,7 +113,8 @@ exports.postDeleteMeja = ( req,res, next) => {
       return meja.destroy();
     })
     .then(result => {
-      console.log('DESTROYED Meja');
+      req.flash('success_messages', 'Meja sudah dihapus');
+
       res.redirect('/admin/checklistmeja');
     })
     .catch(err => console.log(err));

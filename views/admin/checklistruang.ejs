@@ -28,6 +28,18 @@
         <% if (path === '/checklistruang') {%>
               <div class="md-card uk-margin-medium-bottom">
                   <div class="md-card-content">
+                    <% if (error_messages) { %>
+                        <div class="uk-alert uk-alert-danger" data-uk-alert>
+                            <a href="#" class="uk-alert-close uk-close"></a>
+                            <%= error_messages %>
+                        </div>
+                    <% } %>
+                    <% if (success_messages) { %>
+                        <div class="uk-alert uk-alert-success" data-uk-alert>
+                            <a href="#" class="uk-alert-close uk-close"></a>
+                            <%= success_messages %>
+                        </div>
+                    <% } %>
                       <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
                           <thead>
                               <!-- <tr> -->

@@ -14,7 +14,7 @@ const Meja = require('../models/meja');
 exports.getDataPenilaianMeja= (req,res, next) => {
 
   const meja = JadwalPiket.findAll(
-    { where:{persetujuan_fasil: 2},
+    { where:{persetujuan_fasil: 1},
       include: [
     {
       model: Penilaian_meja,
@@ -38,7 +38,7 @@ exports.getDataPenilaianMeja= (req,res, next) => {
       include:[
         {
           model: JadwalPiket,
-          where: {persetujuan_fasil: 2},
+          where: {persetujuan_fasil: 1},
           include : {
             model: Pengguna,
             as: 'nik_pic_piket',
@@ -55,7 +55,7 @@ exports.getDataPenilaianMeja= (req,res, next) => {
   );
 
   const meja3 = JadwalPiket.findAll(
-    {where:{persetujuan_fasil: 2},
+    {where:{persetujuan_fasil: 1},
       include: [
         {
           model: Penilaian_meja,
@@ -119,7 +119,7 @@ exports.getDataFilterPenilaianMeja= (req,res, next) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:1}],
           },
           include : {
             model: Pengguna,

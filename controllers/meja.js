@@ -125,7 +125,7 @@ exports.getDataMejaAnggota = (req,res, next) => {
   })
   .then( result => {
     if (result.length === 0){
-         res.render('./anggota/checklistmeja', {
+         res.render('./anggota/checklistMeja', {
           pageTitle: 'Checklist Meja',
           path: '/checklistmeja'
         });
@@ -149,7 +149,7 @@ exports.getDataMejaAnggota = (req,res, next) => {
       ],
     })
     .then( penilaianmeja => {
-       res.render('./anggota/checklistmeja', {
+       res.render('./anggota/checklistMeja', {
         tables: penilaianmeja,
         pageTitle: 'Checklist Meja',
         path: '/checklistmejaada'
@@ -196,7 +196,7 @@ const id = req.params.mejaId;
         .then(bukti => {
             console.log('**********COMPLETE RESULTS****************');
 
-            res.render('./anggota/checklistmejadetail', {
+            res.render('./anggota/checklistMejadetail', {
               tables: table,
               pageTitle: 'Checklist Meja',
               path: '/checklistmejaada',
@@ -306,7 +306,7 @@ exports.getDataMeja = (req,res, next) => {
       ]
     })
     .then( penilaianmeja => {
-      res.render('./anggota/checklistmeja', {
+      res.render('./anggota/checklistMeja', {
         tables: penilaianmeja,
         pageTitle: 'Checklist Meja',
         path: '/checklistmejaada',

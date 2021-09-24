@@ -143,12 +143,13 @@ app.use((req, res, next) => {
                   console.log(err);
               });
         }else if(req.session.user.peran === "Fasilitator"){
+
           const belumlaporan =
           Jadwal_piket.count(
             {
               where: {
+                status_piket: { [Op.not] : 0},
                 nikpicfasil: req.session.user.nik,
-                status_piket: 2,
                 persetujuan_fasil: 0
             },
           });

@@ -21,7 +21,7 @@ exports.getDataRekapitulasiRuang = (req,res) => {
 
   if(req.session.user.peran === 'Anggota') {
     res.render('./anggota/rekapitulasi-ruang', {
-      pageTitle: 'Rekapitulasi',
+      pageTitle: 'Rekapitulasi Ruang',
       monday: monday,
       friday: friday,
       path: '/'
@@ -50,7 +50,7 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
         {
           model: JadwalPiket,
           where: {
-            persetujuan_fasil:2,
+            persetujuan_fasil:1,
             tanggal: {
               [Op.between]: [monday, friday]
             }
@@ -79,7 +79,7 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
         {
           model: JadwalPiket,
           where: {
-            persetujuan_fasil:2,
+            persetujuan_fasil:1,
             tanggal: {
               [Op.between]: [monday, friday]
             }
@@ -107,7 +107,7 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
           .then(hasil => {
             if(req.session.user.peran === 'Anggota') {
               res.render('./anggota/rekapitulasi-ruangfilter', {
-                pageTitle: 'Rekapitulasi',
+                pageTitle: 'Rekapitulasi Ruang',
                 path: '/mingguan',
                 rooms1: hasil[0],
                 rooms2: hasil[1],
@@ -117,7 +117,7 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
 
             }else if(req.session.user.peran === 'Fasilitator'){
               res.render('./fasilitator/rekapitulasi-ruangfilter', {
-                pageTitle: 'Rekapitulasi',
+                pageTitle: 'Rekapitulasi Ruang',
                 path: '/mingguan',
                 rooms1: hasil[0],
                 rooms2: hasil[1],
@@ -151,7 +151,7 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-            {persetujuan_fasil:2}],
+            {persetujuan_fasil:1}],
           },
           include : [{
             model: Pengguna,
@@ -180,7 +180,7 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:1}]
           },
           include : [{
             model: Pengguna,
@@ -240,7 +240,7 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
 
               if(req.session.user.peran === 'Anggota') {
                 res.render('./anggota/rekapitulasi-ruangfilter', {
-                  pageTitle: 'Rekapitulasi',
+                  pageTitle: 'Rekapitulasi Ruang',
                   path: '/bulanan',
                   rooms1: hasil[0],
                   rooms2: hasil[1],
@@ -250,7 +250,7 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
 
               }else if(req.session.user.peran === 'Fasilitator'){
                 res.render('./fasilitator/rekapitulasi-ruangfilter', {
-                  pageTitle: 'Rekapitulasi',
+                  pageTitle: 'Rekapitulasi Ruang',
                   path: '/bulanan',
                   rooms1: hasil[0],
                   rooms2: hasil[1],
@@ -281,7 +281,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
           where: {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:1}]
           },
           include : [{
             model: Pengguna,
@@ -310,12 +310,12 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
           where: {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:1}]
           },
           include : [{
             model: Pengguna,
             as: 'nik_pic_piket',
-            where: { level: 2}
+            where: { level: 1}
           }]
         },
         {
@@ -337,7 +337,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
 
               if(req.session.user.peran === 'Anggota') {
                 res.render('./anggota/rekapitulasi-ruangfilter', {
-                  pageTitle: 'Rekapitulasi',
+                  pageTitle: 'Rekapitulasi Ruang',
                   path: '/tahunan',
                   rooms1: hasil[0],
                   rooms2: hasil[1],
@@ -346,7 +346,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
 
               }else if(req.session.user.peran === 'Fasilitator'){
                 res.render('./fasilitator/rekapitulasi-ruangfilter', {
-                  pageTitle: 'Rekapitulasi',
+                  pageTitle: 'Rekapitulasi Ruang',
                   path: '/tahunan',
                   rooms1: hasil[0],
                   rooms2: hasil[1],
@@ -373,7 +373,7 @@ exports.getDataRekapitulasiMeja = (req,res) => {
 
   if(req.session.user.peran === 'Anggota') {
     res.render('./anggota/rekapitulasi-meja', {
-      pageTitle: 'Rekapitulasi',
+      pageTitle: 'Rekapitulasi Meja',
       monday: monday,
       friday: friday,
       path: '/'
@@ -381,7 +381,7 @@ exports.getDataRekapitulasiMeja = (req,res) => {
 
   }else if(req.session.user.peran === 'Fasilitator'){
     res.render('./fasilitator/rekapitulasi-meja', {
-      pageTitle: 'Rekapitulasi',
+      pageTitle: 'Rekapitulasi Meja',
       monday: monday,
       friday: friday,
       path: '/'
@@ -405,7 +405,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:1}]
           },
           include : {
             model: Pengguna,
@@ -481,7 +481,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:1}]
 
           }
         }
@@ -512,7 +512,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
 
             if(req.session.user.peran === 'Anggota') {
               res.render('./anggota/rekapitulasi-mejafilter', {
-                pageTitle: 'Rekapitulasi',
+                pageTitle: 'Rekapitulasi Meja',
                 path: '/bulanan',
                 rooms1: hasil[0],
                 rooms2: hasil[1],
@@ -522,7 +522,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
 
             }else if(req.session.user.peran === 'Fasilitator'){
               res.render('./fasilitator/rekapitulasi-mejafilter', {
-                pageTitle: 'Rekapitulasi',
+                pageTitle: 'Rekapitulasi Meja',
                 path: '/bulanan',
                 rooms1: hasil[0],
                 rooms2: hasil[1],

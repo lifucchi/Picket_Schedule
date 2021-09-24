@@ -173,7 +173,7 @@ const id = req.params.ruangId;
     Promise
         .all([buktiTemuan,users])
         .then(bukti => {
-            res.render('./anggota/checklistruangdetail', {
+            res.render('./anggota/checklistRuangdetail', {
               room: room,
               pageTitle: 'Checklist Ruang',
               path: '/checklistruangada',

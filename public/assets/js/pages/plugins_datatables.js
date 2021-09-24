@@ -17,6 +17,8 @@ altair_datatables = {
 
           dt_table.DataTable(
               {
+                  "scrollY": 200,
+                  "scrollX": true,
                   dom: 'Bfrtip',
                   buttons: [
                       'copyHtml5',

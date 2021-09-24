@@ -44,7 +44,6 @@
           <div class="md-card">
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
-                  <% if (rooms != 'undefined' && rooms) {%>
                     <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -58,6 +57,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <% if (rooms != 'undefined' && rooms) {%>
                           <% rooms.forEach((room) => { %>
                         <tr>
                           <td class="uk-text-large uk-text-nowrap"><a href="/admin/buktitemuanruang/detail/<%= room.id %>"><%= room.penilaian_ruang.jadwal_piket.tanggal %></a></td>

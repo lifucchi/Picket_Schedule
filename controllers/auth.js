@@ -80,6 +80,17 @@ exports.getLogout = (req, res, next) => {
 
 
 exports.changePassword = (req, res, next) => {
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
 
   res.render('login/changePassword', {
     path: '/',

@@ -469,7 +469,7 @@ exports.getChecklistPiket = (req,res, next) => {
     console.log(jadwalpiket);
     res.render('./anggota/checklistpiket', {
       schedules: jadwalpiket,
-      pageTitle: 'Jadwal Piket',
+      pageTitle: 'Checklist Piket',
       path: '/checklistpiket'
     });
   })

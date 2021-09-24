@@ -38,14 +38,7 @@ exports.postAddDataMeja = (req,res,next) => {
   const pemilik_meja = req.body.pemilik_meja;
   const standar = req.body.standar;
 
-  Meja.findAll(
-        {where: {penggunaNik: pemilik_meja}},
-  )
-  .then( hasil => {
-    if (hasil.length > 0){
-      req.flash('error_messages', 'Meja sudah ada');
-      res.redirect('/admin/checklistmeja');
-    }else{
+
       Meja.create({
         penggunaNik: pemilik_meja,
         standar:standar
@@ -55,9 +48,6 @@ exports.postAddDataMeja = (req,res,next) => {
         res.redirect('/admin/checklistmeja');
       }
       ).catch(err => console.log(err));
-    }
-  })
-.catch(err => console.log(err));
 
 };
 

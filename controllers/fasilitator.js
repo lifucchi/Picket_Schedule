@@ -188,7 +188,7 @@ const artikel = Artikel.findAll({
 
           console.log(count[4]);
 
-          res.render('./fasilitator/Dashboard', {
+          res.render('./fasilitator/dashboard', {
             pageTitle: 'Dashboard',
             path: '/',
             schedules: count[3],

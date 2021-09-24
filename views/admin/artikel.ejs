@@ -62,19 +62,21 @@
                               <td><%= article.pembuat%></td>
                               <td> <img src="/<%= article.foto_Artikel%>" alt=""> </td>
                               <td>
+                                <div class="uk-grid uk-grid-collapse uk-margin-remove">
+
                                 <form class="" action="/admin/artikel/edit %>" method="get">
                                   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-
                                   <input type="hidden" value="<%= article.id %>" name="update">
-                                  <button id="edit" type="submit" class="md-btn edit" ><i class="material-icons md-24"></i></button>
+                                  <button id="edit" type="submit" class="md-btn md-btn-small edit" ><i class="md-24 uk-icon-medium uk-icon-edit"></i></button>
                                 </form>
 
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/artikel/delete-artikel" method="POST">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-
+                                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                       <input type="hidden" value="<%= article.id %>" name="artikelId">
-                                      <button id="delete" type="submit" class="md-btn delete" ><i class="material-icons md-24"></i></button>
+                                      <button id="delete" type="submit" class="md-btn md-btn-small  delete" ><i class="material-icons md-24"></i></button>
                                   </form>
+                                </div>
+
                               </td>
                           </tr>
                             <% }) %>

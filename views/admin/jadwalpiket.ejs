@@ -91,7 +91,7 @@
                                       <th>Status Piket</th>
                                       <th>Rekam check</th>
 
-                                      <th>Aksi</th>
+                                      <th >Aksi</th>
                                   </tr>
                               </thead>
 
@@ -117,19 +117,23 @@
                                   <td><%= schedule.rekam_check%> </td>
 
                                 <% } else { %>
-                                  <td>Sudah Piket tapi Melewati Jadwal</td>
+                                  <td><span class="uk-badge uk-badge-default">Sudah Piket tapi Melewati Jadwal</span></td>
                                   <td ><%= schedule.rekam_check%> </td>
                                 <% } %>
 
-
-                                  <td>
-                                      <button  href="javascript:void(0);" class="md-btn edit" data-id="<%= schedule.id %>" data-tanggal="<%=  schedule.tanggal %>" data-pic="<%=  schedule.nik_pic_piket.nik%>" data-fasil="<%= schedule.nik_pic_fasil.nik%>" data-level="<%= schedule.nik_pic_piket.level %>" data-persetujuan="<%= schedule.persetujuan_fasil %>" ><i class="material-icons md-24"></i></button>
-                                      <form onsubmit="return confirm('Are you sure?');" action="/admin/jadwalpiket/delete-jadwalpiket" method="POST">
-                                          <input type="hidden" value="<%= schedule.id %>" name="penggunaId">
-                                          <button id="delete" type="submit" class="md-btn delete" ><i class="material-icons md-24"></i></button>
-                                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-
-                                      </form>
+                                  <td class="">
+                                    <div class="uk-grid uk-grid-collapse" data-uk-grid-margin="">
+                                        <div class="uk-width-medium-1-2 ">
+                                          <button  href="javascript:void(0);" class="md-btn md-btn-small edit" data-id="<%= schedule.id %>" data-tanggal="<%=  schedule.tanggal %>" data-pic="<%=  schedule.nik_pic_piket.nik%>" data-fasil="<%= schedule.nik_pic_fasil.nik%>" data-level="<%= schedule.nik_pic_piket.level %>" data-persetujuan="<%= schedule.persetujuan_fasil %>" ><i class="md-24 uk-icon-medium uk-icon-edit"></i></button>
+                                        </div>
+                                        <div class="uk-width-medium-1-2 ">
+                                          <form onsubmit="return confirm('Are you sure?');" action="/admin/jadwalpiket/delete-jadwalpiket" method="POST">
+                                              <button id="delete" type="submit" class="md-btn md-btn-small delete" ><i class="material-icons md-24"></i></button>
+                                              <input type="hidden" value="<%= schedule.id %>" name="penggunaId">
+                                              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                          </form>
+                                        </div>
+                                      </div>
                                   </td>
                               </tr>
                                 <% }) %>

@@ -77,13 +77,17 @@
                               <td><%= table.standar%></td>
 
                               <td>
-                                  <button  href="javascript:void(0);" class="md-btn edit" data-id="<%= table.id %>" data-nama="<%= table.pengguna.nik %>" data-standar="<%= table.standar%>"  ><i class="material-icons md-24"></i></button>
+                                <div class="uk-grid uk-grid-collapse uk-margin-remove">
+
+                                  <button  href="javascript:void(0);" class="md-btn md-btn-small edit" data-id="<%= table.id %>" data-nama="<%= table.pengguna.nik %>" data-standar="<%= table.standar%>"  ><i class="md-24 uk-icon-medium uk-icon-edit"></i></button>
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/checklistmeja/delete-checklistmeja" method="POST">
                                       <input type="hidden" value="<%= table.id %>" name="mejaId">
                                       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-                                      <button id="delete" type="submit" class="md-btn delete" ><i class="material-icons md-24"></i></button>
+                                      <button id="delete" type="submit" class="md-btn md-btn-small delete" ><i class="material-icons md-24"></i></button>
                                   </form>
+                                </div>
+
                               </td>
                           </tr>
                             <% }) %>

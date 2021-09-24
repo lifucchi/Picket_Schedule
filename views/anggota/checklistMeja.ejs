@@ -77,17 +77,26 @@
                                                 <% } else { %>
                                                 <i href="#" class="uk-icon-large uk-icon-times-circle uk-text-danger"></i>
                                                 <% } %>
-
                                               </h3>
                                           </div>
                                       </li>
                                       <li>
                                         <div class="md-list-content">
-                                          <span class="md-list-heading">Lakukan Check</span>
-                                          <div class="uk-text-center">
-                                            <br>
-                                              <a class="md-btn md-btn-success md-btn-wave-light waves-effect waves-button waves-light" href="/anggota/checklistmeja/detail/<%= table.id%>">CHECK</a>
+                                          <% if (table.persetujuanpicpiket === '1') { %>
+                                            <span class="md-list-heading">Lihat Check</span>
+                                            <div class="uk-text-center">
+                                                <br>
+                                            <a class="md-btn md-btn-success md-btn-wave-light waves-effect waves-button waves-light" href="/anggota/checklistmeja/detail/<%= table.id%>"><i style="color:white;" class="material-icons md-24">&#xE8F4;</i></a>
                                           </div>
+
+                                          <% } else { %>
+                                            <span class="md-list-heading">Lakukan Check</span>
+                                            <div class="uk-text-center">
+                                              <br>
+                                            <a class="md-btn md-btn-success md-btn-wave-light waves-effect waves-button waves-light" href="/anggota/checklistmeja/detail/<%= table.id%>"><i style="color:white;" class="uk-icon-medium uk-icon-list-alt"></i></a>
+                                          </div>
+
+                                          <% } %>
                                         </div>
                                       </li>
                                   </ul>

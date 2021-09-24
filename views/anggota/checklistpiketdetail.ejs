@@ -56,8 +56,8 @@
                                         <div class="pricing_table_plan md-bg-light-green-200 ">Checklist Meja</div>
 
                                         <ul class="pricing_table_features">
-                                            <li><strong>Sudah dicheck </strong> <%= count[0]%></li>
-                                            <li><strong>Belum diceheck</strong> <%= count[2]%></li>
+                                            <li><strong>Sudah check </strong> <%= count[0]%></li>
+                                            <li><strong>Belum check</strong> <%= count[2]%></li>
 
                                         </ul>
                                         <div class="pricing_table_select">
@@ -78,8 +78,8 @@
                                         <div class="pricing_table_plan md-bg-light-green-200 ">Checklist Ruang</div>
 
                                         <ul class="pricing_table_features">
-                                            <li><strong>Sudah dicheck</strong> <%= count[1]%></li>
-                                            <li><strong>Belum dicheck</strong> <%= count[3]%></li>
+                                            <li><strong>Sudah check</strong> <%= count[1]%></li>
+                                            <li><strong>Belum check</strong> <%= count[3]%></li>
 
                                         </ul>
                                         <div class="pricing_table_select">
@@ -100,7 +100,7 @@
                               <div class="md-btn-group">
                                 <input type="hidden" name="check" value="<%= piket.id %>">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                
+
                                 <button class="md-btn md-btn-warning" type="submit" name="button">Check !!</button>
                               </div>
                             </form>

@@ -77,12 +77,12 @@
                               <td><%= table.standar%></td>
 
                               <td>
-                                  <button  href="javascript:void(0);" class="btn edit" data-id="<%= table.id %>" data-nama="<%= table.pengguna.nik %>" data-standar="<%= table.standar%>"  ><i class="material-icons md-24"></i></button>
+                                  <button  href="javascript:void(0);" class="md-btn edit" data-id="<%= table.id %>" data-nama="<%= table.pengguna.nik %>" data-standar="<%= table.standar%>"  ><i class="material-icons md-24"></i></button>
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/checklistmeja/delete-checklistmeja" method="POST">
                                       <input type="hidden" value="<%= table.id %>" name="mejaId">
                                       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-                                      <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                      <button id="delete" type="submit" class="md-btn delete" ><i class="material-icons md-24"></i></button>
                                   </form>
                               </td>
                           </tr>

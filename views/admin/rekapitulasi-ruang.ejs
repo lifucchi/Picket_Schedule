@@ -70,7 +70,7 @@
                                 <!-- <button  href="javascript:void(0);" class="btn edit"><i class="material-icons md-24"></i></button> -->
                                 <form onsubmit="return confirm('Are you sure?');" action="/admin/skorruang/delete-skorruang" method="POST">
                                     <input type="hidden" value="<%= room.id %>" name="penilaianRuangId">
-                                    <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                    <button id="delete" type="submit" class="md-btn delete" ><i class="material-icons md-24"></i></button>
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                                 </form>

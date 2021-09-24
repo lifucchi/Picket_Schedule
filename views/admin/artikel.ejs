@@ -66,14 +66,14 @@
                                   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                                   <input type="hidden" value="<%= article.id %>" name="update">
-                                  <button id="edit" type="submit" class="btn edit" ><i class="material-icons md-24"></i></button>
+                                  <button id="edit" type="submit" class="md-btn edit" ><i class="material-icons md-24"></i></button>
                                 </form>
 
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/artikel/delete-artikel" method="POST">
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                                       <input type="hidden" value="<%= article.id %>" name="artikelId">
-                                      <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                      <button id="delete" type="submit" class="md-btn delete" ><i class="material-icons md-24"></i></button>
                                   </form>
                               </td>
                           </tr>

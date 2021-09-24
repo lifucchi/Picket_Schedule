@@ -64,12 +64,12 @@
                               <td><%= user.level%></td>
                               <td>
                                   <!-- <a href="javascript:void(0);" class="btn " data-id="<%= user.NIK %>" >Edit</a> -->
-                                  <button  href="javascript:void(0);" class="btn edit" data-nik="<%= user.nik %>"  data-nama="<%= user.nama%>" data-peran="<%= user.peran%>" data-password="<%= user.password%>" data-level="<%= user.level%>"><i class="material-icons md-24"></i></button>
+                                  <button  href="javascript:void(0);" class="md-btn edit" data-nik="<%= user.nik %>"  data-nama="<%= user.nama%>" data-peran="<%= user.peran%>" data-password="<%= user.password%>" data-level="<%= user.level%>"><i class="material-icons md-24"></i></button>
                                   <!-- <a  href="javascript:void(0);" class="btn delete" data-nik="<%= user.nik %>"> <i class="material-icons md-24"></i>  </a> -->
                                   <!-- <a class="md-btn md-btn-primary md-btn-wave-light waves-effect waves-button waves-light" href="#">Reset Password</a> -->
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/delete-pengguna" method="POST">
                                       <input type="hidden" value="<%= user.nik %>" name="penggunaId">
-                                      <button  type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                      <button  type="submit" class="md-btn delete" ><i class="material-icons md-24"></i></button>
                                       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                                   </form>
@@ -77,7 +77,7 @@
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                                     <input type="hidden" value="<%= user.nik %>" name="penggunaId">
-                                    <button type="submit" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Password:NIK" class=" md-bg-light-green-600 md-btn md-btn-primary md-btn-small md-btn-wave-light waves-effect waves-button waves-light" >Reset Password</button>
+                                    <button type="submit" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Password:NIK" class="md-btn"> <i class=" md-24 uk-icon-medium uk-icon-lock"></i></button>
                                   </form>
                               </td>
                           </tr>

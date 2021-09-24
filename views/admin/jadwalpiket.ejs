@@ -123,10 +123,10 @@
 
 
                                   <td>
-                                      <button  href="javascript:void(0);" class="btn edit" data-id="<%= schedule.id %>" data-tanggal="<%=  schedule.tanggal %>" data-pic="<%=  schedule.nik_pic_piket.nik%>" data-fasil="<%= schedule.nik_pic_fasil.nik%>" data-level="<%= schedule.nik_pic_piket.level %>" data-persetujuan="<%= schedule.persetujuan_fasil %>" ><i class="material-icons md-24"></i></button>
+                                      <button  href="javascript:void(0);" class="md-btn edit" data-id="<%= schedule.id %>" data-tanggal="<%=  schedule.tanggal %>" data-pic="<%=  schedule.nik_pic_piket.nik%>" data-fasil="<%= schedule.nik_pic_fasil.nik%>" data-level="<%= schedule.nik_pic_piket.level %>" data-persetujuan="<%= schedule.persetujuan_fasil %>" ><i class="material-icons md-24"></i></button>
                                       <form onsubmit="return confirm('Are you sure?');" action="/admin/jadwalpiket/delete-jadwalpiket" method="POST">
                                           <input type="hidden" value="<%= schedule.id %>" name="penggunaId">
-                                          <button id="delete" type="submit" class="btn delete" ><i class="material-icons md-24"></i></button>
+                                          <button id="delete" type="submit" class="md-btn delete" ><i class="material-icons md-24"></i></button>
                                           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                                       </form>

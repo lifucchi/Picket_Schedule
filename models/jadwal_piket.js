@@ -1,4 +1,6 @@
 const Sequelize = require('sequelize');
+const moment = require('moment');
+
 
 const sequelize = require('../util/database');
 
@@ -12,6 +14,8 @@ const Jadwal_Piket = sequelize.define('jadwal_piket', {
   tanggal: {
     type: Sequelize.DATEONLY,
     allowNull: false,
+    get: function() {
+       return moment(this.getDataValue('tanggal')).format('DD-MM-YYYY')}
   },
   persetujuan_fasil: {
     type: Sequelize.INTEGER,
@@ -24,7 +28,7 @@ const Jadwal_Piket = sequelize.define('jadwal_piket', {
     defaultValue: 0
   },
   rekam_check: {
-    type: Sequelize.DATE    
+    type: Sequelize.DATE
   }
 });
 

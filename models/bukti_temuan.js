@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 
 const sequelize = require('../util/database');
+const moment = require('moment');
 
 const Bukti_temuan = sequelize.define('bukti_temuan', {
   id: {
@@ -20,7 +21,9 @@ const Bukti_temuan = sequelize.define('bukti_temuan', {
   },
   deadline: {
     type: Sequelize.DATEONLY,
-    allowNull: false
+    allowNull: false,
+    get: function() {
+       return moment(this.getDataValue('deadline')).format('DD-MM-YYYY')}
   },
   tinjak_lanjut: {
     type: Sequelize.INTEGER,

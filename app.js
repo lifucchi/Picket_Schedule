@@ -43,7 +43,11 @@ const imageFilter = (req, file, cb) => {
       ) {
       cb(null, true);
     } else {
-      cb("Please upload only images.", false);
+      // cb("Please upload only images.", false);
+      req.fileValidationError = 'goes wrong on the mimetype';
+      return cb(null, false, new Error('goes wrong on the mimetype'));
+
+
     }
   }else if(file.fieldname === "excel"){
       if (
@@ -52,9 +56,10 @@ const imageFilter = (req, file, cb) => {
       ) {
         cb(null, true);
       } else {
-        cb("Please upload only excel file.", false);
+        // cb("Please upload only excel file.", false);
+        req.fileValidationError = 'goes wrong on the mimetype';
+        return cb(null, false, new Error('goes wrong on the mimetype'));
       }
-
   }
 };
 var fileStorage = multer.diskStorage({

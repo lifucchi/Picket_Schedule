@@ -20,10 +20,22 @@
     <div id="page_content">
 
         <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
-
             <h1> <%=pageTitle%> </h1>
             <span class="uk-text-upper uk-text-small"><a href="/anggota/checklistpiket/detail/<%=piketId %>">Checklist Piket</a> </span>
         </div>
+
+        <% if (error_messages) { %>
+            <div class="uk-alert uk-alert-danger" data-uk-alert>
+                <a href="#" class="uk-alert-close uk-close"></a>
+                <%= error_messages %>
+            </div>
+        <% } %>
+        <% if (success_messages) { %>
+            <div class="uk-alert uk-alert-success" data-uk-alert>
+                <a href="#" class="uk-alert-close uk-close"></a>
+                <%= success_messages %>
+            </div>
+        <% } %>
 
         <% if (path === '/checklistmejaada') {%>
         <div id="page_content_inner">
@@ -103,14 +115,7 @@
                               </div>
                           </div>
                       </div>
-
                       <% }) %>
-
-
-
-
-
-
               </div>
 
             </div>

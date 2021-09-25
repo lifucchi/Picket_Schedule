@@ -31,6 +31,12 @@
         <div id="page_content_inner">
 
             <div class="md-card">
+              <% if (error_messages) { %>
+                  <div class="uk-alert uk-alert-danger" data-uk-alert>
+                      <a href="#" class="uk-alert-close uk-close"></a>
+                      <%= error_messages %>
+                  </div>
+              <% } %>
                 <div class="md-card-content">
                     <div class="uk-grid uk-grid-divider" data-uk-grid-margin>
                         <div class="uk-width-medium-1-2">

@@ -112,55 +112,80 @@ exports.postDeleteMeja = ( req,res, next) => {
 
 
 // ANGGOTA
-exports.getDataMejaAnggota = (req,res, next) => {
-  const nowTanggal = moment().format('YYYY-MM-DD');
-  console.log(nowTanggal);
-
-  req.user
-  .getPemilikJadwal({
-    where: {tanggal: nowTanggal},
-    order: [
-        ['persetujuanpicpiket', 'ASC'],
-    ]
-  })
-  .then( result => {
-    if (result.length === 0){
-         res.render('./anggota/checklistMeja', {
-          pageTitle: 'Checklist Meja',
-          path: '/checklistmeja'
-        });
-      }
-    Penilaian_meja
-    .findAll({
-      where: {jadwalPiketId: result[0].dataValues.id},
-        include: [
-          {
-          model: JadwalPiket
-        },
-        {
-          model: Meja,
-          include : {
-            model: Pengguna
-          }
-        }
-      ],
-      order: [
-          ['bobotmeja', 'ASC']
-      ],
-    })
-    .then( penilaianmeja => {
-       res.render('./anggota/checklistMeja', {
-        tables: penilaianmeja,
-        pageTitle: 'Checklist Meja',
-        path: '/checklistmejaada'
-      });
-    });
-  })
-    .catch(err => console.log(err));
-
-};
+// exports.getDataMejaAnggota = (req,res, next) => {
+//   if (res.locals.error_messages.length > 0) {
+//     res.locals.error_messages = res.locals.error_messages[0];
+//   } else {
+//     res.locals.error_messages = null;
+//   }
+//
+//   if (res.locals.success_messages.length > 0) {
+//     res.locals.success_messages = res.locals.success_messages[0];
+//   } else {
+//     res.locals.success_messages = null;
+//   }
+//
+//   const nowTanggal = moment().format('YYYY-MM-DD');
+//   console.log(nowTanggal);
+//
+//   req.user
+//   .getPemilikJadwal({
+//     where: {tanggal: nowTanggal},
+//     order: [
+//         ['persetujuanpicpiket', 'ASC'],
+//     ]
+//   })
+//   .then( result => {
+//     if (result.length === 0){
+//          res.render('./anggota/checklistMeja', {
+//           pageTitle: 'Checklist Meja',
+//           path: '/checklistmeja'
+//         });
+//       }
+//     Penilaian_meja
+//     .findAll({
+//       where: {jadwalPiketId: result[0].dataValues.id},
+//         include: [
+//           {
+//           model: JadwalPiket
+//         },
+//         {
+//           model: Meja,
+//           include : {
+//             model: Pengguna
+//           }
+//         }
+//       ],
+//       order: [
+//           ['bobotmeja', 'ASC']
+//       ],
+//     })
+//     .then( penilaianmeja => {
+//        res.render('./anggota/checklistMeja', {
+//         tables: penilaianmeja,
+//         pageTitle: 'Checklist Meja',
+//         path: '/checklistmejaada'
+//       });
+//     });
+//   })
+//     .catch(err => console.log(err));
+//
+// };
 
 exports.getDataMejaDetail = (req,res, next) => {
+
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
+
 const id = req.params.mejaId;
   Penilaian_meja.findByPk(id, {
     include: [
@@ -216,68 +241,81 @@ const id = req.params.mejaId;
 exports.postNilaiMeja = (req,res, next) => {
   const id = req.body.mejaId;
   const piketId = req.body.piketId;
-
   const nilai = req.body.nilai;
   let tanggal = req.body.tanggal;
   tanggal = moment(tanggal, "DD-MM-YYYY").format('YYYY-MM-DD');
   const deskripsi = req.body.deskripsi;
   const tindaklanjut = req.body.tindaklanjut;
   const image = req.files.image;
+  console.log("ini");
+  console.log(req.fileValidationError);
 
-  // console.log("halo");
-  // console.log(id);
-  // console.log(nilai);
-  // console.log(deskripsi);
-  // console.log(tindaklanjut);
-  // console.log(image);
+  if (req.fileValidationError) {
+     //I want to jumpt to another page
+     req.flash('error_messages', 'Mohon menggunakan sesuai ekstensi');
+     res.redirect('/anggota/checklistmeja/detail/'+id);
+ } else {
 
-  Penilaian_meja
-  .findByPk(id)
-  .then(penilaian => {
-    penilaian.bobotmeja = nilai;
-    penilaian.persetujuanpicpiket = 1;
-    return penilaian.save();
-  })
-  .then(result => {
 
-    if(nilai == 4 || nilai == 3) {
-      Bukti_temuan.create(
-        {
-          deskripsi_sebelum:deskripsi,
-          deadline:tanggal,
-          penilaianMejaId: id,
-          penggunaNik: tindaklanjut
+   // console.log("halo");
+   // console.log(id);
+   // console.log(nilai);
+   // console.log(deskripsi);
+   // console.log(tindaklanjut);
+   // console.log(image);
 
-      }
-    )
-      .catch(err => console.log(err));
+   Penilaian_meja
+   .findByPk(id)
+   .then(penilaian => {
+     penilaian.bobotmeja = nilai;
+     penilaian.persetujuanpicpiket = 1;
+     return penilaian.save();
+   })
+   .then(result => {
 
-    }else if (nilai == 2 || nilai == 1){
-      if (image !== 'undefined'  ){
-        const imgUrl = image[0].path;
-        Bukti_temuan.create(
-          { fotosebelum:imgUrl,
-            deskripsi_sebelum:deskripsi,
-            deadline:tanggal,
-            penilaianMejaId: id,
-            penggunaNik: tindaklanjut
-          }
-        )
-        .catch(err => console.log(err));
-      }
-    }
-  })
-  .then( () => {
-    res.redirect('/anggota/checklistmeja/'+piketId);
+     if(nilai == 4 || nilai == 3) {
+       Bukti_temuan.create(
+         {
+           deskripsi_sebelum:deskripsi,
+           deadline:tanggal,
+           penilaianMejaId: id,
+           penggunaNik: tindaklanjut
 
-  })
-  .catch(err => console.log(err));
+       }
+     )
+       .catch(err => console.log(err));
+
+     }else if (nilai == 2 || nilai == 1){
+       if (image !== 'undefined'  ){
+         const imgUrl = image[0].path;
+         Bukti_temuan.create(
+           { fotosebelum:imgUrl,
+             deskripsi_sebelum:deskripsi,
+             deadline:tanggal,
+             penilaianMejaId: id,
+             penggunaNik: tindaklanjut
+           }
+         )
+         .catch(err => console.log(err));
+       }
+     }
+   })
+   .then( () => {
+     req.flash('success_messages', 'Check piket berhasil diperbarui');
+     res.redirect('/anggota/checklistmeja/'+piketId);
+
+   })
+   .catch(err => console.log(err));
+
+ }
+
 
 
 
 };
 
 exports.postBuktiTemuan = (req,res, next) => {
+
   const id = req.body.mejaId;
   const tanggal = req.body.tanggal;
   const deskripsi = req.body.deskripsi;
@@ -334,6 +372,18 @@ exports.postCheckPic = (req,res, next) => {
 };
 
 exports.getDataMeja = (req,res, next) => {
+
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
   const id = req.params.mejaId;
     Penilaian_meja
     .findAll({

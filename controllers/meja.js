@@ -240,19 +240,7 @@ exports.postNilaiMeja = (req,res, next) => {
   })
   .then(result => {
 
-    if (image !== 'undefined'  ){
-      console.log(image);
-      const imgUrl = image[0].path;
-      Bukti_temuan.create(
-        { fotosebelum:imgUrl,
-          deskripsi_sebelum:deskripsi,
-          deadline:tanggal,
-          penilaianMejaId: id,
-          penggunaNik: tindaklanjut
-        }
-      )
-      .catch(err => console.log(err));
-    }else{
+    if(nilai == 4 || nilai == 3) {
       Bukti_temuan.create(
         {
           deskripsi_sebelum:deskripsi,
@@ -263,7 +251,21 @@ exports.postNilaiMeja = (req,res, next) => {
       }
     )
       .catch(err => console.log(err));
-  }
+
+    }else if (nilai == 2 || nilai == 1){
+      if (image !== 'undefined'  ){
+        const imgUrl = image[0].path;
+        Bukti_temuan.create(
+          { fotosebelum:imgUrl,
+            deskripsi_sebelum:deskripsi,
+            deadline:tanggal,
+            penilaianMejaId: id,
+            penggunaNik: tindaklanjut
+          }
+        )
+        .catch(err => console.log(err));
+      }
+    }
   })
   .then( () => {
     res.redirect('/anggota/checklistmeja/'+piketId);

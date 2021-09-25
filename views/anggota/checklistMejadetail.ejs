@@ -126,13 +126,13 @@
                                                             <div class="uk-input-group">
                                                                 <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
                                                                 <label for="uk_dp_1">Tanggal Deadline Bukti Temuan</label>
-                                                                <input  required name="tanggal" class="md-input label-fixed" type="text" id="uk_dp_1" data-uk-datepicker="{format:'DD-MM-YYYY'}">
+                                                                <input   name="tanggal" class="md-input label-fixed" type="text" id="uk_dp_1" data-uk-datepicker="{format:'DD-MM-YYYY'}">
                                                             </div>
                                                             <br>
                                                             <div class="uk-input-group" >
                                                               <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-pencil"></i></span>
                                                                 <label>Deskripsi Bukti temuan</label>
-                                                                <input required id='deskripsi' name='deskripsi' type="text" class="md-input label-fixed" required />
+                                                                <input  id='deskripsi' name='deskripsi' type="text" class="md-input label-fixed" required />
                                                             </div>
                                                           </div>
 
@@ -140,7 +140,7 @@
                                                               <div class="md-card">
                                                                   <div class="md-card-content">
                                                                     <span class="uk-text-small uk-text-muted"> Hanya bisa upload file berekstensi .jpg/.jpeg/.png dan nama file 30 huruf </span>
-                                                                    <input required type="file" name="image" id="input-file-a" class="dropify" />
+                                                                    <input  type="file" name="image" id="input-file-a" class="dropify" />
 
                                                                   </div>
                                                               </div>
@@ -286,16 +286,29 @@
               if ( value == 4 || value == 3){
                 // $("#nilaiBC").show();
                   $("#nilaiBC").show();
+                  $("#tanggal").prop('required',true);
+                  $("#deskripsi").prop('required',true);
+
                   $("#nilaiDE").hide();
+                  $("#image").prop('required',false);
+
 
               }
               else if (value == 2 || value == 1){
                 $("#nilaiBC").show();
+                $("#tanggal").prop('required',true);
+                $("#deskripsi").prop('required',true);
                 $("#nilaiDE").show();
+                $("#image").prop('required',true);
+
 
               }else if(value == 5){
                 $("#nilaiBC").hide();
+                $("#tanggal").prop('required',false);
+                $("#deskripsi").prop('required',false);
                 $("#nilaiDE").hide();
+                $("#image").prop('required',false);
+
               }
 
             });

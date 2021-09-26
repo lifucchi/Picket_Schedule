@@ -136,6 +136,17 @@ exports.getDataRuangAnggota = (req,res, next) => {
 };
 
 exports.getDataRuangDetail = (req,res, next) => {
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
 const id = req.params.ruangId;
   Penilaian_ruang.findByPk(id, {
     include: [
@@ -193,18 +204,67 @@ const id = req.params.ruangId;
 
 exports.postNilaiRuang = (req,res, next) => {
   const id = req.body.ruangId;
+  const piketId = req.body.piketId;
   const nilai = req.body.nilai;
+  let tanggal = req.body.tanggal;
+  tanggal = moment(tanggal, "DD-MM-YYYY").format('YYYY-MM-DD');
+  const deskripsi = req.body.deskripsi;
+  const tindaklanjut = req.body.tindaklanjut;
+  const image = req.files.image;
+  console.log("ini");
+  console.log(req.fileValidationError);
 
-  Penilaian_ruang
-  .findByPk(id)
-  .then(penilaian => {
-    penilaian.bobotruang = nilai;
-    return penilaian.save();
-  })
-  .then(result => {
-    res.redirect('/anggota/checklistruang/detail/'+id);
-  })
-  .catch(err => console.log(err));
+  if (req.fileValidationError) {
+     //I want to jumpt to another page
+     req.flash('error_messages', 'Mohon menggunakan sesuai ekstensi');
+     res.redirect('/anggota/checklistruang/detail/'+id);
+ } else{
+
+   Penilaian_ruang
+   .findByPk(id)
+   .then(penilaian => {
+     penilaian.bobotruang = nilai;
+     penilaian.persetujuanpicpiket = 1;
+     return penilaian.save();
+   })
+   .then(result => {
+
+     if(nilai == 4 || nilai == 3) {
+       Bukti_temuan.create(
+         {
+           deskripsi_sebelum:deskripsi,
+           deadline:tanggal,
+           penilaianRuangId: id,
+           penggunaNik: tindaklanjut
+
+       }
+     )
+       .catch(err => console.log(err));
+
+     }else if (nilai == 2 || nilai == 1){
+       if (image !== 'undefined'  ){
+         const imgUrl = image[0].path;
+         Bukti_temuan.create(
+           { fotosebelum:imgUrl,
+             deskripsi_sebelum:deskripsi,
+             deadline:tanggal,
+             penilaianRuangId: id,
+             penggunaNik: tindaklanjut
+           }
+         )
+         .catch(err => console.log(err));
+       }
+     }
+   })
+   .then(() => {
+     req.flash('success_messages', 'Check piket berhasil diperbarui');
+     res.redirect('/anggota/checklistruang/'+piketId);
+   })
+   .catch(err => console.log(err));
+
+ }
+
+
 };
 
 exports.postBuktiTemuan = (req,res, next) => {
@@ -263,6 +323,17 @@ exports.postCheckPic = (req,res, next) => {
 };
 
 exports.getDataRuang = (req,res, next) => {
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
   const id = req.params.ruangId;
       Penilaian_ruang
       .findAll({

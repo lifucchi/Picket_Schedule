@@ -24,8 +24,19 @@
 
       <% if (path === '/checklistpiketada') {%>
         <div id="page_content_inner">
-
             <div class="md-card">
+              <% if (error_messages) { %>
+                  <div class="uk-alert uk-alert-danger" data-uk-alert>
+                      <a href="#" class="uk-alert-close uk-close"></a>
+                      <%= error_messages %>
+                  </div>
+              <% } %>
+              <% if (success_messages) { %>
+                  <div class="uk-alert uk-alert-success" data-uk-alert>
+                      <a href="#" class="uk-alert-close uk-close"></a>
+                      <%= success_messages %>
+                  </div>
+              <% } %>
                 <div class="md-card-content">
                     <div class="uk-margin-bottom" data-uk-margin>
                             <div class="uk-width-medium-1">
@@ -91,24 +102,20 @@
                           </div>
 
                         </div>
-                        <div class="uk-width-medium-1-3">
-                        </div>
+
                         <%if  (piket.status_piket === 0 && count[3] === 0 && count[2] === 0 ) { %>
 
-                        <div class="uk-width-medium-1-3">
+                        <div class="uk-width-medium-1  ">
                             <form class="" action="/anggota/checklistPiket/postCheckPic" method="post">
-                              <div class="md-btn-group">
+                              <div class="uk-input-group uk-align-center">
                                 <input type="hidden" name="check" value="<%= piket.id %>">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-
                                 <button class="md-btn md-btn-warning" type="submit" name="button">Check !!</button>
                               </div>
                             </form>
-
-                          <br>
-                          <span class="uk-text-small uk-text-muted">Mohon klik check jika sudah menilai Ruang dan Meja </span>
                         </div>
                         <% } %>
+                        <span class="uk-text-small uk-text-muted uk-align-center">Mohon klik check jika sudah menilai Ruang dan Meja </span>
 
                     </div>
                 </div>

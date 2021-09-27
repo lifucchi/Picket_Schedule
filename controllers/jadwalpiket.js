@@ -479,6 +479,18 @@ exports.getChecklistPiket = (req,res, next) => {
 
 
 exports.getDataChecklistPiketDetail = (req,res, next) => {
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
+  
 const id = req.params.piketId;
   JadwalPiket.findByPk(id)
   .then( piket => {
@@ -543,7 +555,6 @@ exports.postCheckPic = (req,res, next) => {
   .findByPk(id)
   .then( penilaian => {
     const nowTanggal = moment().format('YYYY-MM-DD');
-
     if ( nowTanggal === penilaian.tanggal ){
       penilaian.status_piket = 1;
     }else {
@@ -553,6 +564,7 @@ exports.postCheckPic = (req,res, next) => {
     return penilaian.save();
   })
   .then(result => {
+    req.flash('success_messages', 'Checklist Piket berhasil');
     res.redirect('/anggota/checklistpiket/detail/'+id);
   })
   .catch(err => console.log(err));

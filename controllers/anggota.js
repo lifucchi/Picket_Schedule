@@ -12,6 +12,17 @@ const { Op } = require("sequelize");
 
 exports.getDashboard = (req,res) => {
   // res.send('<h1>hello admin</h1>')
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
   const nowTanggal = moment().format('YYYY-MM-DD');
   const nowTanggal2 = moment().locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
   var monthMinusOneName =  moment().locale('id').subtract(1, "month").startOf("month").format('MMMM');

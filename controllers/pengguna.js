@@ -52,7 +52,7 @@ exports.postAddDataPengguna = ( req,res, next) => {
       })
       .then(result => {
         req.flash('success_messages', 'Pengguna sudah ditambahkan');
-        res.redirect('/admin/pengguna');
+        setTimeout(() => { return res.redirect('/admin/pengguna');}, 1000);
       });
   })
   .catch(err => console.log(err));

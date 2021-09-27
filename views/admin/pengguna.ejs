@@ -66,13 +66,19 @@
                                 <div class="uk-grid uk-grid-collapse uk-margin-remove">
 
                                   <div class="">
-                                    <button  href="javascript:void(0);" class="md-btn md-btn-small edit" data-nik="<%= user.nik %>"  data-nama="<%= user.nama%>" data-peran="<%= user.peran%>" data-password="<%= user.password%>" data-level="<%= user.level%>"><i class="md-24 uk-icon-medium uk-icon-edit"></i></button>
+                                    <button  href="javascript:void(0);" class="md-btn md-btn-small edit " data-nik="<%= user.nik %>"  data-nama="<%= user.nama%>" data-peran="<%= user.peran%>" data-password="<%= user.password%>" data-level="<%= user.level%>">
+                                      <i class="material-icons md-24">mode_edit</i>
+                                      <!-- <i class="uk-icon-edit-icon-medium"></i> -->
+
+                                    </button>
                                   </div>
 
                                   <div class="">
                                     <form onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/delete-pengguna" method="POST">
                                         <input type="hidden" value="<%= user.nik %>" name="penggunaId">
-                                        <button  type="submit" class="md-btn md-btn-small delete" ><i class="material-icons md-24"></i></button>
+                                        <button  type="submit" class="md-btn md-btn-small delete" >
+                                          <i class="material-icons md-24">delete</i>
+                                        </button>
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                     </form>
                                   </div>
@@ -80,9 +86,12 @@
                                   <div class="">
                                     <form  onsubmit="return confirm('Are you sure?');" action="/admin/pengguna/reset-password" method="POST">
                                       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-
                                       <input type="hidden" value="<%= user.nik %>" name="penggunaId">
-                                      <button type="submit" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Password:NIK" class="md-btn md-btn-small"> <i class=" md-24 uk-icon-medium uk-icon-lock"></i></button>
+                                      <button type="submit" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Password:NIK" class="md-btn md-btn-small">
+                                        <!-- <i class="uk-icon-lock uk-icon-medium  md-24"></i> -->
+                                        <i class="material-icons md-24">lock_open</i>
+
+                                      </button>
                                     </form>
                                   </div>
                                 </div>
@@ -120,7 +129,7 @@
                                       </div>
                                       <div class="uk-form-row">
                                         <div class="uk-grid">
-                                            <div class="uk-width-medium-1-2">
+                                            <div class="uk-width-medium-1">
                                                 <label>Password</label>
                                                 <input id='password' name= 'password' type="password" class="md-input" required />
                                             </div>
@@ -130,8 +139,10 @@
                                       <div class="uk-form-row">
                                         <div class="uk-grid">
                                           <div class="uk-width-medium-1-2">
-                                              <!-- <label>Peran</label> -->
-                                              <!-- <input id='peran' name='peran' type="text" class="md-input" class="data-md-selectize"  /> -->
+                                              <label>Level</label>
+                                              <input id='level' name='level' type="number" class="md-input" required />
+                                          </div>
+                                          <div class="uk-width-medium-1-2">
                                               <div class="" style="index-z:10;">
                                                 <select name='peran' id='peran' class="md-input" required data-md-selectize-inline >
                                                     <option value="">Peran... </option>
@@ -142,10 +153,6 @@
                                               </div>
                                           </div>
 
-                                          <div class="uk-width-medium-1-2">
-                                              <label>Level</label>
-                                              <input id='level' name='level' type="number" class="md-input" required />
-                                          </div>
                                         </div>
                                       </div>
                                   </div>

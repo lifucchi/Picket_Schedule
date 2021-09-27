@@ -102,11 +102,7 @@ exports.changePasswordPengguna = (req, res, next) => {
   const nik = req.session.user.nik;
   const passwordnew = req.body.changePassword;
   const passwordnow = req.body.Password;
-  if (res.locals.error_messages.length > 0) {
-    res.locals.error_messages = res.locals.error_messages[0];
-  } else {
-    res.locals.error_messages = null;
-  }
+
   Pengguna.findOne({ where: { nik: nik } })
     .then(user => {
       if (!user) {
@@ -125,17 +121,17 @@ exports.changePasswordPengguna = (req, res, next) => {
                     pengguna.password = hashedPassword;
                     return pengguna.save();
                 }).then(result => {
+                  req.flash('success_messages', 'Password berhasil diperbarui');
                   console.log('UPDATED PASSWORD!');
-              }).catch(err => console.log(err));
+                  return res.redirect('/');
+                }).catch(err => console.log(err));
               })
               .catch(err => console.log(err));
 
-              res.redirect('/');
-
+          }else {
+            req.flash('error_messages', 'Password lama salah');
+            return res.redirect('/changePassword');
           }
-
-          req.flash('error_messages', 'Password saat ini salah');
-          res.redirect('/changePassword');
         })
         .catch(err => {
           console.log(err);

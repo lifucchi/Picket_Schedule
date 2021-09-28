@@ -76,7 +76,8 @@ exports.getFormJadwalPiket = (req,res,next) => {
 };
 
 exports.postAddDataJadwalPiket = (req,res,next) => {
-  const tanggal = req.body.tanggal;
+  let tanggal = req.body.tanggal;
+  tanggal = moment(tanggal, "DD-MM-YYYY").format('YYYY-MM-DD');
   const pic_piket_1 = req.body.pic_piket_1;
   const pic_fasil_1 = req.body.pic_fasil_1;
   const pic_piket_2 = req.body.pic_piket_2;
@@ -173,197 +174,210 @@ exports.postAddDataJadwalPiket = (req,res,next) => {
 
 
 exports.postImportJadwal = ( req,res, next) => {
-  const excelFile = req.files.excel[0].path;
-  const oldPath = path.join(__dirname, "..", excelFile);
 
-  readXlsxFile(oldPath)
-  .then((rows) => {
+  if (req.fileValidationError) {
+     //I want to jumpt to another page
+     req.flash('error_messages', 'Mohon menggunakan sesuai ekstensi');
+     res.redirect('/admin/jadwalpiket/');
+ } else {
+   const excelFile = req.files.excel[0].path;
+   const oldPath = path.join(__dirname, "..", excelFile);
+   readXlsxFile(oldPath)
+   .then((rows) => {
 
-     rows.shift();
-     let jadwals1 = [];
-     let jadwals2 = [];
-     let tanggal = [];
+      rows.shift();
+      let jadwals1 = [];
+      let jadwals2 = [];
+      let tanggal = [];
+      var count = 0;
 
-     rows.forEach((row) => {
-      let jadwalSatu = {
-        tanggal: moment(row[0]).format('YYYY-MM-DD'),
-        nikpicpiket: row[1],
-        nikpicfasil: row[2],
-      };
-      let jadwalDua = {
-        tanggal: moment(row[0]).format('YYYY-MM-DD'),
-        nikpicpiket: row[3],
-        nikpicfasil: row[4],
-      };
-      tanggal.push(moment(row[0]).format('YYYY-MM-DD'))
-      jadwals1.push(jadwalSatu);
-      jadwals2.push(jadwalDua);
+      rows.forEach((row) => {
+        if (row[0] != null && row[1] != null && row[2] != null && row[3] != null && row[4] != null ){
 
-    });
-
-    console.log(tanggal);
-
-    JadwalPiket.findAll({
-        where: {
-          tanggal: tanggal
+          let jadwalSatu = {
+            tanggal: moment(row[0]).format('YYYY-MM-DD'),
+            nikpicpiket: row[1],
+            nikpicfasil: row[2],
+          };
+          let jadwalDua = {
+            tanggal: moment(row[0]).format('YYYY-MM-DD'),
+            nikpicpiket: row[3],
+            nikpicfasil: row[4],
+          };
+          tanggal.push(moment(row[0]).format('YYYY-MM-DD'))
+          jadwals1.push(jadwalSatu);
+          jadwals2.push(jadwalDua);
+        }else {
+          count = count + 1;
         }
-    }).
-    then( hasil => {
-      if (hasil.length > 0) {
-          req.flash('error_messages', 'Terdapat data sama saat menggugah');
+     });
 
-        }else{
-          // Level 1
-          JadwalPiket.bulkCreate(jadwals1)
-          .then( results => {
-            var penilaian = [];
+     if ( count != 0){
+       req.flash('error_messages', 'Terdapat data yang kosong sebanyak '+ count +' saat menggugah');
 
-            Meja
-            .findAll({
-              include: [{
-                    model: Pengguna,
-                    where: {level: 1},
-                }]
-              })
-            .then(meja => {
+     }else {
+       JadwalPiket.findAll({
+           where: {
+             tanggal: tanggal
+           }
+       }).
+       then( hasil => {
+         if (hasil.length > 0) {
+             req.flash('error_messages', 'Terdapat data sama saat menggugah');
 
-              results.forEach((result) => {
-                for (var j = 0; j < meja.length; j++){
-                    var penObj = {
-                      bobotmeja: 0,
-                      persetujuanpicpiket: 2,
-                      mejaId: meja[j].dataValues.id,
-                      jadwalPiketId: result.dataValues.id
-                    };
-                    penilaian.push(penObj);
-                }
-              });
-                Penilaian_meja
-                .bulkCreate(penilaian);
+           }else{
+             // Level 1
+             JadwalPiket.bulkCreate(jadwals1)
+             .then( results => {
+               var penilaian = [];
 
-            });
-            Ruang.findAll({
-              include: [{
-                    model: Pengguna,
-                    where: {level: 1},
+               Meja
+               .findAll({
+                 include: [{
+                       model: Pengguna,
+                       where: {level: 1},
+                   }]
+                 })
+               .then(meja => {
 
-                }]
-              })
-              .then( ruang => {
-              var penilaianruang = [];
-              var penObj = {};
-              results.forEach((result) => {
-              for (var j = 0; j < ruang.length; j++){
-                  penObj = {
-                    bobotruang: 0,
-                    persetujuanpicpiket: 2,
-                    ruangId: ruang[j].dataValues.id,
-                    jadwalPiketId: result.dataValues.id
-                  };
-                  penilaianruang.push(penObj);
-              }
-            });
+                 results.forEach((result) => {
+                   for (var j = 0; j < meja.length; j++){
+                       var penObj = {
+                         bobotmeja: 0,
+                         persetujuanpicpiket: 2,
+                         mejaId: meja[j].dataValues.id,
+                         jadwalPiketId: result.dataValues.id
+                       };
+                       penilaian.push(penObj);
+                   }
+                 });
+                   Penilaian_meja
+                   .bulkCreate(penilaian);
 
-              Penilaian_ruang
-              .bulkCreate(penilaianruang);
+               });
+               Ruang.findAll({
+                 include: [{
+                       model: Pengguna,
+                       where: {level: 1},
 
-            }).catch(err => console.log(err));
-          })
-          .catch(err =>
-            {
-              req.flash('error_messages', 'Terdapat kesalahan saat menggunggah');
+                   }]
+                 })
+                 .then( ruang => {
+                 var penilaianruang = [];
+                 var penObj = {};
+                 results.forEach((result) => {
+                 for (var j = 0; j < ruang.length; j++){
+                     penObj = {
+                       bobotruang: 0,
+                       persetujuanpicpiket: 2,
+                       ruangId: ruang[j].dataValues.id,
+                       jadwalPiketId: result.dataValues.id
+                     };
+                     penilaianruang.push(penObj);
+                 }
+               });
 
-              console.log(err)
-            });
-          // LEVEL 2
-          JadwalPiket.bulkCreate(jadwals2)
-          .then( results => {
-            var penilaian = [];
+                 Penilaian_ruang
+                 .bulkCreate(penilaianruang);
 
-            Meja
-            .findAll({
-              include: [{
-                    model: Pengguna,
-                    where: {level: 2},
-                }]
-              })
-            .then(meja => {
-              var penObj = {};
-              results.forEach((result) => {
-                for (var j = 0; j < meja.length; j++){
-                    var penObj = {
-                      bobotmeja: 0,
-                      persetujuanpicpiket: 2,
-                      mejaId: meja[j].dataValues.id,
-                      jadwalPiketId: result.dataValues.id
-                    };
-                    penilaian.push(penObj);
-                }
-                console.log(penilaian.length);
-              });
+               }).catch(err => console.log(err));
+             })
+             .catch(err =>
+               {
+                 req.flash('error_messages', 'Terdapat kesalahan saat menggunggah');
+
+                 console.log(err)
+               });
+             // LEVEL 2
+             JadwalPiket.bulkCreate(jadwals2)
+             .then( results => {
+               var penilaian = [];
+
+               Meja
+               .findAll({
+                 include: [{
+                       model: Pengguna,
+                       where: {level: 2},
+                   }]
+                 })
+               .then(meja => {
+                 var penObj = {};
+                 results.forEach((result) => {
+                   for (var j = 0; j < meja.length; j++){
+                       var penObj = {
+                         bobotmeja: 0,
+                         persetujuanpicpiket: 2,
+                         mejaId: meja[j].dataValues.id,
+                         jadwalPiketId: result.dataValues.id
+                       };
+                       penilaian.push(penObj);
+                   }
+                   console.log(penilaian.length);
+                 });
 
 
-              Penilaian_meja
-              .bulkCreate(penilaian);
-            });
+                 Penilaian_meja
+                 .bulkCreate(penilaian);
+               });
 
-            Ruang.findAll({
-              include: [{
-                    model: Pengguna,
-                    where: {level: 2}
-                }]
-              }).then( ruang => {
-              var penilaianruang = [];
-              var penObj = {};
-              results.forEach((result) => {
-                for (var j = 0; j < ruang.length; j++){
-                  penObj = {
-                    bobotruang: 0,
-                    persetujuanpicpiket: 2,
-                    ruangId: ruang[j].dataValues.id,
-                    jadwalPiketId: result.dataValues.id
-                  };
-                  penilaianruang.push(penObj);
-              }
-            });
-              Penilaian_ruang
-              .bulkCreate(penilaianruang);
-              req.flash('success_messages', 'Berhasil ditambahkan');
+               Ruang.findAll({
+                 include: [{
+                       model: Pengguna,
+                       where: {level: 2}
+                   }]
+                 }).then( ruang => {
+                 var penilaianruang = [];
+                 var penObj = {};
+                 results.forEach((result) => {
+                   for (var j = 0; j < ruang.length; j++){
+                     penObj = {
+                       bobotruang: 0,
+                       persetujuanpicpiket: 2,
+                       ruangId: ruang[j].dataValues.id,
+                       jadwalPiketId: result.dataValues.id
+                     };
+                     penilaianruang.push(penObj);
+                 }
+               });
+                 Penilaian_ruang
+                 .bulkCreate(penilaianruang);
+                 req.flash('success_messages', 'Berhasil ditambahkan');
 
-            })
-            .catch(err =>
-              {
-                req.flash('error_messages', 'Terdapat kesalahan saat menggunggah');
-                console.log(err)
-              });
-          })
-          .catch(err => {
-            req.flash('error_messages', 'Terdapat kesalahan saat menggunggah');
-            console.log(err)});
-        }
+               })
+               .catch(err =>
+                 {
+                   req.flash('error_messages', 'Terdapat kesalahan saat menggunggah');
+                   console.log(err)
+                 });
+             })
+             .catch(err => {
+               req.flash('error_messages', 'Terdapat kesalahan saat menggunggah');
+               console.log(err)});
+           }
 
-      }
-    )
-    .catch(err => {
-      req.flash('error_messages', 'Terdapat kesalahan saat menggunggah');
-      console.log(err)});
+         }
+       )
+       .catch(err => {
+         req.flash('error_messages', 'Terdapat kesalahan saat menggunggah');
+         console.log(err)});
+     }
+   })
+   .then( () => {
+       if (fs.existsSync(oldPath)) {
+         fs.unlink(oldPath, (err) => {
+           if (err) {
+             console.error(err);
+             return;
+           }
+         });
+       }
+     setTimeout(() => { return res.redirect('/admin/jadwalpiket'); }, 2000);
 
-  })
-  .then( () => {
-      if (fs.existsSync(oldPath)) {
-        fs.unlink(oldPath, (err) => {
-          if (err) {
-            console.error(err);
-            return;
-          }
-        });
-      }
-    setTimeout(() => { return res.redirect('/admin/jadwalpiket'); }, 2000);
-
-    }
-  ).catch(err => {
-    req.flash('error_messages', 'Terdapat kesalahan saat menggunggah');
-    console.log(err)});
+     }
+   ).catch(err => {
+     req.flash('error_messages', 'Terdapat kesalahan saat menggunggah');
+     console.log(err)});
+ }
 };
 
 exports.postDeleteJadwalPiket = ( req,res, next) => {
@@ -384,7 +398,8 @@ exports.postEditJadwal = ( req,res, next) => {
   const id = req.body.id;
   const fasil_edit = req.body.fasil_edit;
   const pic_edit = req.body.pic_edit;
-  const tanggal_edit = req.body.tanggal_edit;
+  let tanggal_edit = req.body.tanggal_edit;
+  tanggal_edit = moment(tanggal_edit, "DD-MM-YYYY").format('YYYY-MM-DD');
 
   JadwalPiket.findByPk(id)
     .then(jadwal => {
@@ -490,7 +505,7 @@ exports.getDataChecklistPiketDetail = (req,res, next) => {
   } else {
     res.locals.success_messages = null;
   }
-  
+
 const id = req.params.piketId;
   JadwalPiket.findByPk(id)
   .then( piket => {

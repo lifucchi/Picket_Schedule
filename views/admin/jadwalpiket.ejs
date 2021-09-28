@@ -122,18 +122,21 @@
                                 <% } %>
 
                                   <td class="">
-                                    <div class="uk-grid uk-grid-collapse" data-uk-grid-margin="">
-                                        <div class="uk-width-medium-1-2 ">
-                                          <button  href="javascript:void(0);" class="md-btn md-btn-small edit" data-id="<%= schedule.id %>" data-tanggal="<%=  schedule.tanggal %>" data-pic="<%=  schedule.nik_pic_piket.nik%>" data-fasil="<%= schedule.nik_pic_fasil.nik%>" data-level="<%= schedule.nik_pic_piket.level %>" data-persetujuan="<%= schedule.persetujuan_fasil %>" ><i class="md-24 uk-icon-medium uk-icon-edit"></i></button>
+
+                                    <div class="uk-grid uk-grid-collapse uk-margin-remove" >
+                                        <div class="">
+                                          <button  href="javascript:void(0);" class="md-btn md-btn-small edit" data-id="<%= schedule.id %>" data-tanggal="<%=  schedule.tanggal %>" data-pic="<%=  schedule.nik_pic_piket.nik%>" data-fasil="<%= schedule.nik_pic_fasil.nik%>" data-level="<%= schedule.nik_pic_piket.level %>" data-persetujuan="<%= schedule.persetujuan_fasil %>" >
+                                            <i class="material-icons md-24">mode_edit</i></button>
                                         </div>
-                                        <div class="uk-width-medium-1-2 ">
+                                        <div class="">
                                           <form onsubmit="return confirm('Are you sure?');" action="/admin/jadwalpiket/delete-jadwalpiket" method="POST">
-                                              <button id="delete" type="submit" class="md-btn md-btn-small delete" ><i class="material-icons md-24"></i></button>
+                                              <button id="delete" type="submit" class="md-btn md-btn-small delete" ><i class="material-icons md-24">delete</i></button>
                                               <input type="hidden" value="<%= schedule.id %>" name="penggunaId">
                                               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                           </form>
                                         </div>
                                       </div>
+
                                   </td>
                               </tr>
                                 <% }) %>
@@ -227,7 +230,9 @@
                                                       <input name="tanggal_edit" class="md-input tanggal_edit label-fixed " type="text" id="uk_dp_1" data-uk-datepicker="{format:'YYYY-MM-DD'}"> -->
                                                       <div class="uk-width-medium-1-2">
                                                           <!-- <label for="masked_date">Date</label> -->
-                                                          <input name="tanggal_edit" class="md-input masked_input" id="masked_date" type="text" data-inputmask="'alias': 'YYYY-MM-DD'" data-inputmask-showmaskonhover="false" />
+                                                          <!-- <input required name="tanggal_edit" class="md-input masked_input" id="masked_date" type="text" data-inputmask="'alias': 'DD-MM-YYYY'" data-inputmask-showmaskonhover="false" /> -->
+                                                          <input required name="tanggal_edit" class="md-input" type="text" id="masked_date" data-uk-datepicker="{format:'DD-MM-YYYY', addClass: 'dropdown-modal' }">
+
                                                       </div>
                                                   </div>
                                               </div>
@@ -237,17 +242,7 @@
 
                                           <div class="uk-grid">
 
-                                              <div class="uk-width-medium-1-2">
-                                                  <label>Fasilitator</label>
-                                                  <select name='fasil_edit' id='fasil_edit' class="md-input label-fixed" required >
-                                                      <option value="">Fasilitator... </option>
-                                                      <% users.forEach((user) => { %>
-                                                        <% if (  user.peran == 'Fasilitator') { %>
-                                                         <option value="<%= user.nik %>"><%= user.nik %> - <%= user.nama %> - level <%= user.level %></option>
-                                                         <% } %>
-                                                          <% }) %>
-                                                  </select>
-                                              </div>
+
                                               <div class="uk-width-medium-1-2">
                                                   <label>PIC Piket</label>
                                                   <select name='pic_edit' id='pic_edit' class="md-input label-fixed" required >
@@ -257,6 +252,18 @@
                                                          <option value="<%= user.nik %>"><%= user.nik %> - <%= user.nama %> - level <%= user.level %></option>
                                                          <% } %>
 
+                                                          <% }) %>
+                                                  </select>
+                                              </div>
+
+                                              <div class="uk-width-medium-1-2">
+                                                  <label>Fasilitator</label>
+                                                  <select name='fasil_edit' id='fasil_edit' class="md-input label-fixed" required >
+                                                      <option value="">Fasilitator... </option>
+                                                      <% users.forEach((user) => { %>
+                                                        <% if (  user.peran == 'Fasilitator') { %>
+                                                         <option value="<%= user.nik %>"><%= user.nik %> - <%= user.nama %> - level <%= user.level %></option>
+                                                         <% } %>
                                                           <% }) %>
                                                   </select>
                                               </div>

@@ -28,7 +28,9 @@ const Jadwal_Piket = sequelize.define('jadwal_piket', {
     defaultValue: 0
   },
   rekam_check: {
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
+    get: function() {
+       return moment(this.getDataValue('rekam_check')).format('DD-MM-YYYY HH:mm:ss')}
   }
 });
 

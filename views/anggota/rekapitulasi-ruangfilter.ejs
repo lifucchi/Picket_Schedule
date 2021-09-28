@@ -77,9 +77,9 @@
                     <div class="md-card-content">
                       <h4 class="heading_c uk-margin-bottom">Level 1</h4>
                       <% if (rooms1.length > 0) {%>
-                      <div style="overflow-x: scroll;">
-                        <div style="width:400vh; height:500px;" id="chartist_ruang1_lines" class="chartist"></div>
-                      </div>
+                      <!-- <div style="overflow-x: scroll;"> -->
+                        <div  id="chartist_ruang1_lines" class="chartist"></div>
+                      <!-- </div> -->
                       <% }else{ %>
                         <h3 class="uk-text-middle  uk-text-center  ">
                             belum ada
@@ -97,10 +97,10 @@
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 2</h4>
                         <% if (rooms2.length >0) {%>
-                      <div style="overflow-x: scroll;">
+                      <!-- <div style="overflow-x: scroll;"> -->
 
-                        <div style="width:400vh; height:500px;" id="chartist_ruang2_lines" class="chartist"></div>
-                      </div>
+                        <div  id="chartist_ruang2_lines" class="chartist"></div>
+                      <!-- </div> -->
                       <% }else{ %>
                       <h3 class="uk-text-middle  uk-text-center  ">
                           belum ada
@@ -332,35 +332,60 @@
 
       ruang_charts: function() {
 
-        var responsiveOptions = [
-            ['screen and (min-width: 641px) and (max-width: 1024px)', {
-              showPoint: false,
-              fullWidth: true,
-              chartPadding: {
-                  right: 40
-              },
-              axisX: {
-                labelInterpolationFnc: function(value) {
-                  // Will return Mon, Tue, Wed etc. on medium screens
-                  return value.slice(0, 3);
-                }
-              }
-            }],
+        // var responsiveOptions = [
+        //     ['screen and (min-width: 641px) and (max-width: 1024px)', {
+        //       showPoint: false,
+        //       fullWidth: true,
+        //       chartPadding: {
+        //           right: 40
+        //       },
+        //       axisX: {
+        //         labelInterpolationFnc: function(value) {
+        //           // Will return Mon, Tue, Wed etc. on medium screens
+        //           return value.slice(0, 3);
+        //         }
+        //       }
+        //     }],
+        //
+        //     ['screen and (max-width: 640px)', {
+        //       showLine: false,
+        //       fullWidth: true,
+        //       chartPadding: {
+        //           right: 40
+        //       },
+        //       axisX: {
+        //         labelInterpolationFnc: function(value) {
+        //           // Will return M, T, W etc. on small screens
+        //           return value[0];
+        //         }
+        //       }
+        //     }]
+        //   ];
 
-            ['screen and (max-width: 640px)', {
-              showLine: false,
-              fullWidth: true,
-              chartPadding: {
-                  right: 40
-              },
-              axisX: {
-                labelInterpolationFnc: function(value) {
-                  // Will return M, T, W etc. on small screens
-                  return value[0];
-                }
-              }
-            }]
-          ];
+          var responsiveOptions = {
+          // Don't draw the line chart points
+          showPoint: false,
+          // Disable line smoothing
+          lineSmooth: false,
+          // X-Axis specific configuration
+          axisX: {
+            // We can disable the grid for this axis
+            showGrid: false,
+            // and also don't show the label
+            showLabel: false
+          },
+          // Y-Axis specific configuration
+          axisY: {
+            // Lets offset the chart a bit from the labels
+            offset: 60,
+            // The label interpolation function enables you to modify the values
+            // used for the labels on each axis. Here we are converting the
+            // values into million pound.
+            labelInterpolationFnc: function(value) {
+              return  value;
+            }
+          }
+        };
           // simple lines
           <%if (rooms1.length > 0 && path === '/mingguan') {%>
 

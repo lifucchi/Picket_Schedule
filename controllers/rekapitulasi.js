@@ -206,22 +206,26 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
               let lantaiSatu = 0;
               let lantaiDua = 0;
 
-              if (hasil[0] && hasil[0] != 'undefined'){
+              if (hasil[0].length > 0 && hasil[0] != 'undefined'){
                 for(i = 0; i < hasil[0].length; i++){
                   lantaiSatu = parseFloat(lantaiSatu) + parseFloat(hasil[0][i].bobotruang);
                 }
                 lantaiSatu = parseFloat(lantaiSatu) / parseFloat(hasil[0].length);
                 // lantaiSatu = lantaiSatu || 0;
-
               }
 
-              if (hasil[1] && hasil[1] != 'undefined'){
+
+              if (hasil[1].length > 0 && hasil[1] != 'undefined'){
                 for(i = 0; i < hasil[1].length; i++){
                   lantaiDua = parseFloat(lantaiDua) + parseFloat(hasil[1][i].bobotruang);
                 }
                 lantaiDua = parseFloat(lantaiDua) / parseFloat(hasil[1].length);
                 // lantaiDua = lantaiDua || 0;
+                console.log("masuk sini?");
               }
+
+
+
 
               let lantaiTerbaik = [];
               if ( lantaiSatu > lantaiDua ){
@@ -234,6 +238,17 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                 lantaiTerbaik[0] = 0;
                 lantaiTerbaik[1] = 'belum ada';
               }
+
+              console.log("lantai satu");
+              // console.log(hasil[0]);
+              console.log(lantaiSatu);
+              console.log("lantai dua");
+              console.log(hasil[1]);
+              console.log(lantaiDua);
+              console.log("lantai terbaik");
+              console.log(lantaiTerbaik[0]);
+              console.log(lantaiTerbaik[1]);
+
 
 
               res.locals.lantaiTerbaik = lantaiTerbaik;
@@ -315,7 +330,7 @@ exports.getDataRekapitulasiRuangFilterTahunan = (req,res) => {
           include : [{
             model: Pengguna,
             as: 'nik_pic_piket',
-            where: { level: 1}
+            where: { level: 2}
           }]
         },
         {

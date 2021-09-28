@@ -16,6 +16,18 @@
 
 
     <div id="page_content">
+      <% if (error_messages) { %>
+          <div class="uk-alert uk-alert-danger" data-uk-alert>
+              <a href="#" class="uk-alert-close uk-close"></a>
+              <%= error_messages %>
+          </div>
+      <% } %>
+      <% if (success_messages) { %>
+          <div class="uk-alert uk-alert-success" data-uk-alert>
+              <a href="#" class="uk-alert-close uk-close"></a>
+              <%= success_messages %>
+          </div>
+      <% } %>
 
         <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
             <h1> <%=pageTitle%> </h1>
@@ -135,22 +147,19 @@
                           </div>
 
                         </div>
-                        <div class="uk-width-medium-1-3">
-                        </div>
 
                         <% if(piket[0].persetujuan_fasil === 0) {%>
+                          
 
-                        <div class="uk-width-medium-1-3">
+                        <div class="uk-width-medium-1">
                             <form class="" action="/fasilitator/laporan/postCheckFasil" method="post">
-                              <div class="md-btn-group">
+                              <div class="uk-input-group uk-align-center">
                                 <input type="hidden" name="check" value="<%= piket[0].id %>">
                                 <button class="md-btn md-btn-warning" type="submit" name="button">approved </button>
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                               </div>
                             </form>
-
                           <br>
-                          <!-- <span class="uk-text-small uk-text-muted"> </span> -->
                         </div>
                         <% } %>
                     </div>

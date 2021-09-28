@@ -69,47 +69,47 @@
         <div class="md-card">
           <div class="md-card-content">
             <h2> <%= monday  %> sampai dengan <%= friday%> </h2>
-            <div class="uk-width-large-1">
-                <div class="md-card">
-                    <div class="md-card-content">
-                      <h4 class="heading_c uk-margin-bottom">Level 1</h4>
-                      <% if (rooms1.length > 0) {%>
-                      <div style="overflow-x: scroll;">
-                        <div style="width:400vh; height:500px;" id="chartist_ruang1_lines" class="chartist"></div>
+
+            <div class="uk-grid" data-uk-grid-margin>
+              <div class="uk-width-large-1-2">
+                  <div class="md-card">
+                      <div class="md-card-content">
+                        <h4 class="heading_c uk-margin-bottom">Level 1</h4>
+                        <% if (rooms1.length > 0) {%>
+                        <!-- <div style="overflow-x: scroll;"> -->
+                          <div id="chartist_ruang1_lines" class="chartist"></div>
+
+
+                        <!-- </div> -->
+                        <% }else{ %>
+                          <h3 class="uk-text-middle  uk-text-center  ">
+                              belum ada
+                          </h3>
+                          <% } %>
                       </div>
-                      <% }else{ %>
+                  </div>
+              </div>
+              <div class="uk-width-large-1-2">
+                  <div class="md-card">
+                      <div class="md-card-content">
+                          <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+                          <% if (rooms2.length >0) {%>
+                        <!-- <div style="overflow-x: scroll;"> -->
+
+                          <div  id="chartist_ruang2_lines" class="chartist"></div>
+                          <!-- <div id="chartist_simple_lines" class="chartist"></div> -->
+
+                        <!-- </div> -->
+                        <% }else{ %>
                         <h3 class="uk-text-middle  uk-text-center  ">
                             belum ada
                         </h3>
                         <% } %>
 
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="uk-width-large-1">
-                <div class="md-card">
-                    <div class="md-card-content">
-                        <h4 class="heading_c uk-margin-bottom">Level 2</h4>
-                        <% if (rooms2.length >0) {%>
-                      <div style="overflow-x: scroll;">
-
-                        <div style="width:400vh; height:500px;" id="chartist_ruang2_lines" class="chartist"></div>
                       </div>
-                      <% }else{ %>
-                      <h3 class="uk-text-middle  uk-text-center  ">
-                          belum ada
-                      </h3>
-                      <% } %>
-
-                    </div>
-                </div>
+                  </div>
+              </div>
             </div>
-
-
-
           </div>
         </div>
         <% }%>
@@ -183,9 +183,9 @@
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 1</h4>
                         <% if (lantaiTerbaik[1] !== 'belum ada' && rooms1.length > 0) {%>
-                      <div style="overflow-x: scroll;">
-                        <div style="width:400vh; height:500px;" id="chartist_ruang1_lines_bulanan" class="chartist"></div>
-                      </div>
+                      <!-- <div style="overflow-x: scroll;"> -->
+                        <div id="chartist_ruang1_lines_bulanan" class="chartist"></div>
+                      <!-- </div> -->
                       <% }else{ %>
                       <h3 class="uk-text-middle  uk-text-center  ">
                           belum ada
@@ -203,10 +203,10 @@
                     <div class="md-card-content">
                       <h4 class="heading_c uk-margin-bottom">Level 2</h4>
                       <% if (lantaiTerbaik[1] !== 'belum ada' && rooms2.length > 0) {%>
-                      <div style="overflow-x: scroll;">
+                      <!-- <div style="overflow-x: scroll;"> -->
 
-                        <div style="width:400vh; height:500px;" id="chartist_ruang2_lines_bulanan" class="chartist"></div>
-                      </div>
+                        <div id="chartist_ruang2_lines_bulanan" class="chartist"></div>
+                      <!-- </div> -->
                       <% }else{ %>
                       <h3 class="uk-text-middle  uk-text-center  ">
                           belum ada
@@ -232,44 +232,48 @@
         <div class="md-card">
           <div class="md-card-content">
             <h2> <%= tahun %> </h2>
-            <div class="uk-width-large-1">
-                <div class="md-card">
-                    <div class="md-card-content">
-                        <h4 class="heading_c uk-margin-bottom">Level 1</h4>
-                        <%if (rooms1.length > 0 ) {%>
-                      <div style="overflow-x: scroll;">
 
-                        <div style="width:400vh; height:500px;" id="chartist_ruang1_lines_tahun" class="chartist"></div>
+            <div class="uk-grid" data-uk-grid-margin>
+              <div class="uk-width-large-1-2">
+                  <div class="md-card">
+                      <div class="md-card-content">
+                          <h4 class="heading_c uk-margin-bottom">Level 1</h4>
+                          <%if (rooms1.length > 0 ) {%>
+                        <!-- <div style="overflow-x: scroll;"> -->
+                          <div id="chartist_ruang1_lines_tahun" class="chartist"></div>
+                        <!-- </div> -->
+                        <% }else{ %>
+                        <h3 class="uk-text-middle  uk-text-center  ">
+                            belum ada
+                        </h3>
+                        <% } %>
+
                       </div>
-                      <% }else{ %>
-                      <h3 class="uk-text-middle  uk-text-center  ">
-                          belum ada
-                      </h3>
-                      <% } %>
+                  </div>
+              </div>
+              <div class="uk-width-large-1-2">
+                  <div class="md-card">
+                      <div class="md-card-content">
+                        <h4 class="heading_c uk-margin-bottom">Level 2</h4>
+                        <%if (rooms2.length > 0) {%>
+                        <!-- <div style="overflow-x: scroll;"> -->
+                          <div  id="chartist_ruang2_lines_tahun" class="chartist"></div>
+                        <!-- </div> -->
+                        <% }else{ %>
+                        <h3 class="uk-text-middle  uk-text-center  ">
+                            belum ada
+                        </h3>
+                        <% } %>
 
-                    </div>
-                </div>
+                      </div>
+                  </div>
+              </div>
             </div>
 
 
 
-            <div class="uk-width-large-1">
-                <div class="md-card">
-                    <div class="md-card-content">
-                      <h4 class="heading_c uk-margin-bottom">Level 2</h4>
-                      <%if (rooms2.length > 0) {%>
-                      <div style="overflow-x: scroll;">
-                        <div style="width:400vh; height:500px;" id="chartist_ruang2_lines_tahun" class="chartist"></div>
-                      </div>
-                      <% }else{ %>
-                      <h3 class="uk-text-middle  uk-text-center  ">
-                          belum ada
-                      </h3>
-                      <% } %>
 
-                    </div>
-                </div>
-            </div>
+
 
 
           </div>
@@ -333,7 +337,7 @@
               showPoint: false,
               fullWidth: true,
               chartPadding: {
-                  right: 40
+                  bottom: 40
               },
               axisX: {
                 labelInterpolationFnc: function(value) {
@@ -347,7 +351,7 @@
               showLine: false,
               fullWidth: true,
               chartPadding: {
-                  right: 40
+                  bottom: 40
               },
               axisX: {
                 labelInterpolationFnc: function(value) {
@@ -357,20 +361,18 @@
               }
             }]
           ];
+
           // simple lines
           <%if (rooms1.length > 0 && path === '/mingguan') {%>
           new Chartist.Line('#chartist_ruang1_lines', {
             labels: [  <% rooms1.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>],
-
-
-              // labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
               series: [
                   [<% rooms1.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
               ]
           }, {
               fullWidth: true,
               chartPadding: {
-                  right: 40
+                  bottom: 20
               }
           });
           <% } %>
@@ -386,7 +388,7 @@
           }, {
               fullWidth: true,
               chartPadding: {
-                  right: 40
+                  bottom: 20
               }
           });
           <% } %>
@@ -402,7 +404,7 @@
           }, {
               fullWidth: true,
               chartPadding: {
-                  right: 40
+                  bottom: 40
               }
           });
           <% } %>
@@ -417,7 +419,7 @@
           }, {
               fullWidth: true,
               chartPadding: {
-                  right: 40
+                  bottom: 40
               }
           });
           <% } %>

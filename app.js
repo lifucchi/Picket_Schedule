@@ -109,13 +109,18 @@ app.use((req, res, next) => {
           req.user = user;
         })
         .catch(err => console.log(err));
+        const nowTanggal = moment().format('YYYY-MM-DD');
+
         if (req.session.user.peran === "Anggota" ){
             const belumchecklist =
             Jadwal_piket.count(
               {
                 where: {
                   nikpicpiket: req.session.user.nik,
-                  status_piket: 0
+                  status_piket: 0,
+                  tanggal: {
+                    [Op.lte]: nowTanggal
+                  }
               }
             });
             const tindaklanjutmeja = Bukti_temuan.count({

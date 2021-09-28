@@ -67,12 +67,14 @@
                               <td>
                                 <div class="uk-grid uk-grid-collapse uk-margin-remove">
 
-                                  <button  href="javascript:void(0);" class="md-btn md-btn-small edit" data-id="<%= room.id %>" data-namaruang="<%= room.nama_ruang%>" data-standar="<%= room.standar%>" data-poinruang="<%= room.poin_ruang%>" data-picruang="<%= room.pengguna.nik%>" ><i class="md-24 uk-icon-medium uk-icon-edit"></i></button>
+                                  <button  href="javascript:void(0);" class="md-btn md-btn-small edit" data-id="<%= room.id %>" data-namaruang="<%= room.nama_ruang%>" data-standar="<%= room.standar%>" data-poinruang="<%= room.poin_ruang%>" data-picruang="<%= room.pengguna.nik%>" >
+                                    <i class="material-icons md-24">mode_edit</i>
+                                  </button>
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin//checklistruang/delete-checklistruang" method="POST">
                                       <input type="hidden" value="<%= room.id %>" name="ruangId">
                                       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-                                      <button id="delete" type="submit" class="md-btn md-btn-small delete" ><i class="material-icons md-24"></i></button>
+                                      <button id="delete" type="submit" class="md-btn md-btn-small delete" ><i class="material-icons md-24">delete</i></button>
                                   </form>
                                 </div>
 

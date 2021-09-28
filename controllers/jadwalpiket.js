@@ -462,9 +462,14 @@ exports.getChecklistPiket = (req,res, next) => {
   // ],
   // })
 
+  const nowTanggal = moment().format('YYYY-MM-DD');
+
   JadwalPiket.findAll({
     where: {
       nikpicpiket: req.session.user.nik,
+      tanggal: {
+        [Op.lte]: nowTanggal
+      }
     },
     include: [{
       model: Pengguna,
@@ -481,7 +486,7 @@ exports.getChecklistPiket = (req,res, next) => {
   })
   .then(jadwalpiket => {
 
-    console.log(jadwalpiket);
+
     res.render('./anggota/checklistpiket', {
       schedules: jadwalpiket,
       pageTitle: 'Checklist Piket',
@@ -569,7 +574,7 @@ exports.postCheckPic = (req,res, next) => {
   JadwalPiket
   .findByPk(id)
   .then( penilaian => {
-    const nowTanggal = moment().format('YYYY-MM-DD');
+    const nowTanggal = moment().format('DD-MM-YYYY');
     if ( nowTanggal === penilaian.tanggal ){
       penilaian.status_piket = 1;
     }else {
@@ -617,6 +622,18 @@ exports.getLaporan = (req,res) => {
 };
 
 exports.getDataLaporanDetail = (req,res, next) => {
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
+
 const id = req.params.piketId;
 
   const jadwalPiket = JadwalPiket.findByPk(id, {
@@ -697,16 +714,11 @@ exports.postCheckFasil = (req,res, next) => {
   JadwalPiket
   .findByPk(id)
   .then( penilaian => {
-    const nowTanggal = moment().format('YYYY-MM-DD');
-    if ( nowTanggal === penilaian.tanggal ){
-      penilaian.persetujuan_fasil = 1;
-    }else {
-      penilaian.persetujuan_fasil = 1;
-    }
+    penilaian.persetujuan_fasil = 1;
     return penilaian.save();
   })
   .then(result => {
-    console.log('UPDATED NILAI!');
+    req.flash('success_messages', 'Laporan berhasil approved');
     res.redirect('/fasilitator/laporan/'+id);
   })
   .catch(err => console.log(err));
@@ -714,6 +726,6 @@ exports.postCheckFasil = (req,res, next) => {
 
 exports.getContohInput = ( req,res, next) => {
     res.render('./admin/contohinput', {
-      pageTitle: 'COntoh Input'
+      pageTitle: 'Contoh Input'
     });
 };

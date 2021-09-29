@@ -12,6 +12,18 @@ var Op = Sequelize.Op;
 
 // Admin Ruang
 exports.getDataBuktiTemuanAdmin= (req,res, next) => {
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
+
   let buktiTemuan = Bukti_temuan
                       .findAll(
                         {
@@ -52,6 +64,18 @@ exports.getDataBuktiTemuanAdmin= (req,res, next) => {
 };
 
 exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
+
   const bulanTahun = req.body.bulanTahun;
   const kategori = req.body.kategori;
   const tahun = moment(bulanTahun, "MMM-YYYY").format('YYYY');
@@ -180,6 +204,17 @@ exports.postDeleteTindakLanjutRuang = ( req,res, next) => {
 
 // Admin Meja
 exports.getDataBuktiTemuanMeja= (req,res, next) => {
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
   let buktiTemuan = Bukti_temuan
                       .findAll(
                         {
@@ -330,6 +365,8 @@ exports.postDeleteBuktiTemuanMeja = ( req,res, next) => {
       return hasil.destroy();
     })
     .then(result => {
+      req.flash('success_messages', 'Bukti Temuan berhasil dihapus');
+
       res.redirect('/admin/buktiTemuanmeja');
     })
     .catch(err => console.log(err));
@@ -346,6 +383,8 @@ exports.postDeleteTindakLanjutMeja = ( req,res, next) => {
       return bukti.save();
     })
     .then(result => {
+      req.flash('success_messages', 'Tindak Lanjut berhasil dihapus');
+
       res.redirect('/admin/buktitemuanmeja/detail/'+id);
     })
     .catch(err => console.log(err));

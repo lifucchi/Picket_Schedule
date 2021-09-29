@@ -19,6 +19,18 @@
 
           <div class="md-card">
               <div class="md-card-content">
+                <% if (error_messages) { %>
+                    <div class="uk-alert uk-alert-danger" data-uk-alert>
+                        <a href="#" class="uk-alert-close uk-close"></a>
+                        <%= error_messages %>
+                    </div>
+                <% } %>
+                <% if (success_messages) { %>
+                    <div class="uk-alert uk-alert-success" data-uk-alert>
+                        <a href="#" class="uk-alert-close uk-close"></a>
+                        <%= success_messages %>
+                    </div>
+                <% } %>
                 <form  action="/admin/buktitemuanruang/filter" method="POST">
                   <div class="uk-grid" data-uk-grid-margin="">
                       <div class="uk-width-medium-3-10">

@@ -110,7 +110,7 @@
                         <% rooms.forEach((room) => { %>
                       <tr>
 
-                          <td class="uk-text-large uk-text-nowrap"><a href="#"><%= room.tanggal%></a></td>
+                          <td class="uk-text-large uk-text-nowrap"><%= room.tanggal%></td>
                           <%  room.penilaian_ruangs.forEach(function(nama) { %>
                               <td class="uk-text-large uk-text-nowrap"><%= nama.bobotruang%></td>
                           <%  })%>
@@ -156,7 +156,7 @@
                         <% rooms3.forEach((room) => { %>
                       <tr>
 
-                          <td class="uk-text-large uk-text-nowrap"><a href="#"><%= room.tanggal%></a></td>
+                          <td class="uk-text-large uk-text-nowrap"><%= room.tanggal%></td>
                           <%  room.penilaian_ruangs.forEach(function(nama) { %>
                               <td class="uk-text-large uk-text-nowrap"><%= nama.bobotruang%></td>
                           <%  })%>

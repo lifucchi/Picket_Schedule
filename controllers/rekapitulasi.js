@@ -14,8 +14,8 @@ exports.getDataRekapitulasiRuang = (req,res) => {
 
   var tanggal = moment();
   const tanggal2 = moment(tanggal, "DD-MM-YYYY");
-  var monday = tanggal2.clone().weekday(1).format("YYYY-MM-DD");
-  var friday = tanggal2.clone().weekday(5).format("YYYY-MM-DD");
+  var monday = tanggal2.clone().weekday(1).format("DD-MM-YYYY");
+  var friday = tanggal2.clone().weekday(5).format("DD-MM-YYYY");
 
   console.log('**********COMPLETE RESULTS****************');
 
@@ -53,13 +53,14 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
             persetujuan_fasil:1,
             tanggal: {
               [Op.between]: [monday, friday]
-            }
+            },
           },
           include : [{
             model: Pengguna,
             as: 'nik_pic_piket',
             where: { level: 1}
-          }]
+          }],
+
         },
         {
           model: Ruang
@@ -67,9 +68,14 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
       ],
       attributes: {
       include: [
+          [sequelize.fn('DAY', sequelize.col('tanggal')), 'hari'],
           [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
-      group : ['jadwalPiketId']
+      group : ['jadwalPiketId'],
+      order: [
+          [{model: JadwalPiket},'tanggal', 'ASC']
+      ],
+
     }
   );
 
@@ -88,7 +94,8 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
             model: Pengguna,
             as: 'nik_pic_piket',
             where: { level: 2}
-          }]
+          }],
+
         },
         {
           model: Ruang
@@ -96,15 +103,25 @@ exports.getDataRekapitulasiRuangFilterMingguan = (req,res) => {
       ],
       attributes: {
       include: [
+          [sequelize.fn('DAY', sequelize.col('tanggal')), 'hari'],
           [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
-      group : ['jadwalPiketId']
+      group : ['jadwalPiketId'],
+      order: [
+        [{model: JadwalPiket},'tanggal', 'ASC']
+      ],
+
     }
   );
 
       Promise
           .all([ruang1, ruang2])
           .then(hasil => {
+
+            var monday = tanggal2.clone().weekday(1).format("DD-MM-YYYY");
+            var friday = tanggal2.clone().weekday(5).format("DD-MM-YYYY");
+
+
             if(req.session.user.peran === 'Anggota') {
               res.render('./anggota/rekapitulasi-ruangfilter', {
                 pageTitle: 'Rekapitulasi Ruang',
@@ -165,9 +182,13 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
       ],
       attributes: {
       include: [
+          [sequelize.fn('DAY', sequelize.col('tanggal')), 'hari'],
           [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
-      group : ['jadwalPiketId']
+      group : ['jadwalPiketId'],
+      order: [
+        [{model: JadwalPiket},'tanggal', 'ASC']
+      ],
     }
   );
 
@@ -194,17 +215,61 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
       ],
       attributes: {
       include: [
+          [sequelize.fn('DAY', sequelize.col('tanggal')), 'hari'],
           [sequelize.literal('SUM(bobotruang * ruang.poin_ruang)'), 'bobotruang']
         ]},
-      group : ['jadwalPiketId']
+      group : ['jadwalPiketId'],
+      order: [
+        [{model: JadwalPiket},'tanggal', 'ASC']
+      ],
     }
   );
 
       Promise
           .all([ruang1, ruang2])
           .then(hasil => {
+              // let lantaiSatu = 0;
+              // let lantaiDua = 0;
+              //
+              // if (hasil[0].length > 0 && hasil[0] != 'undefined'){
+              //   for(i = 0; i < hasil[0].length; i++){
+              //     lantaiSatu = parseFloat(lantaiSatu) + parseFloat(hasil[0][i].bobotruang);
+              //   }
+              //   lantaiSatu = parseFloat(lantaiSatu) / parseFloat(hasil[0].length);
+              //   // lantaiSatu = lantaiSatu || 0;
+              // }
+              //
+              //
+              // if (hasil[1].length > 0 && hasil[1] != 'undefined'){
+              //   for(i = 0; i < hasil[1].length; i++){
+              //     lantaiDua = parseFloat(lantaiDua) + parseFloat(hasil[1][i].bobotruang);
+              //   }
+              //   lantaiDua = parseFloat(lantaiDua) / parseFloat(hasil[1].length);
+              //   // lantaiDua = lantaiDua || 0;
+              //   console.log("masuk sini?");
+              // }
+              //
+              // let lantaiTerbaik = [];
+              // if ( lantaiSatu > lantaiDua ){
+              //   lantaiTerbaik[0] = lantaiSatu.toFixed(2);
+              //   lantaiTerbaik[1] = 1;
+              // } else if ( lantaiSatu < lantaiDua ){
+              //   lantaiTerbaik[0] = lantaiDua.toFixed(2);
+              //   lantaiTerbaik[1] = 2;
+              // }else{
+              //   lantaiTerbaik[0] = 0;
+              //   lantaiTerbaik[1] = 'belum ada';
+              // }
+
               let lantaiSatu = 0;
               let lantaiDua = 0;
+              let lantai1 = [];
+              let lantai2 = [];
+              lantai1[0] = 0;
+              lantai1[1] = 'belum ada';
+              lantai2[0] = 0;
+              lantai2[1] = 'belum ada';
+
 
               if (hasil[0].length > 0 && hasil[0] != 'undefined'){
                 for(i = 0; i < hasil[0].length; i++){
@@ -212,6 +277,8 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                 }
                 lantaiSatu = parseFloat(lantaiSatu) / parseFloat(hasil[0].length);
                 // lantaiSatu = lantaiSatu || 0;
+                lantai1[0] = lantaiSatu.toFixed(2);
+                lantai1[1] = 1;
               }
 
 
@@ -222,36 +289,11 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                 lantaiDua = parseFloat(lantaiDua) / parseFloat(hasil[1].length);
                 // lantaiDua = lantaiDua || 0;
                 console.log("masuk sini?");
+                lantai2[0] = lantaiDua.toFixed(2);
+                lantai2[1] = 2;
               }
 
 
-
-
-              let lantaiTerbaik = [];
-              if ( lantaiSatu > lantaiDua ){
-                lantaiTerbaik[0] = lantaiSatu.toFixed(2);
-                lantaiTerbaik[1] = 1;
-              } else if ( lantaiSatu < lantaiDua ){
-                lantaiTerbaik[0] = lantaiDua.toFixed(2);
-                lantaiTerbaik[1] = 2;
-              }else{
-                lantaiTerbaik[0] = 0;
-                lantaiTerbaik[1] = 'belum ada';
-              }
-
-              console.log("lantai satu");
-              // console.log(hasil[0]);
-              console.log(lantaiSatu);
-              console.log("lantai dua");
-              console.log(hasil[1]);
-              console.log(lantaiDua);
-              console.log("lantai terbaik");
-              console.log(lantaiTerbaik[0]);
-              console.log(lantaiTerbaik[1]);
-
-
-
-              res.locals.lantaiTerbaik = lantaiTerbaik;
 
               if(req.session.user.peran === 'Anggota') {
                 res.render('./anggota/rekapitulasi-ruangfilter', {
@@ -260,7 +302,8 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                   rooms1: hasil[0],
                   rooms2: hasil[1],
                   bulan: bulanTahun,
-                  lantaiTerbaik: lantaiTerbaik
+                  lantai1: lantai1,
+                  lantai2:lantai2
                 });
 
               }else if(req.session.user.peran === 'Fasilitator'){
@@ -270,7 +313,8 @@ exports.getDataRekapitulasiRuangFilterBulanan = (req,res) => {
                   rooms1: hasil[0],
                   rooms2: hasil[1],
                   bulan: bulanTahun,
-                  lantaiTerbaik: lantaiTerbaik
+                  lantai1: lantai1,
+                  lantai2:lantai2
                 });
 
               }
@@ -455,7 +499,7 @@ exports.getDataRekapitulasiMejaFilterBulanan = (req,res) => {
             [Op.and]:
             [{tanggal:sequelize.where(sequelize.fn('year', sequelize.col('tanggal')), tahun)},
             {tanggal:sequelize.where(sequelize.fn('MONTH', sequelize.col('tanggal')), bulan)},
-            {persetujuan_fasil:2}]
+            {persetujuan_fasil:1}]
           },
           include : {
             model: Pengguna,

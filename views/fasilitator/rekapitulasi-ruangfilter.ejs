@@ -2,12 +2,26 @@
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 <head>
+
+  <link rel="stylesheet" href="/bower_components/chartist/dist/chartist.min.css">
+  <link rel="stylesheet" href="/bower_components/c3js-chart/c3.min.css">
   <%- include('head'); %>
 
+  <link rel="stylesheet" href="/bower_components/metrics-graphics/dist/metricsgraphics.css">
+  <!-- c3.js (charts) -->
+  <link rel="stylesheet" href="/bower_components/c3js-chart/c3.min.css">
+  <!-- chartist -->
+  <link rel="stylesheet" href="/bower_components/chartist/dist/chartist.min.css">
+
+  <!-- uikit -->
+  <link rel="stylesheet" href="/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+
+  <!-- flag icons -->
+  <link rel="stylesheet" href="/assets/icons/flags/flags.min.css" media="all">
+
+  <!-- altair admin -->
+  <link rel="stylesheet" href="/assets/css/main.min.css" media="all">
     <!-- chartist -->
-    <link rel="stylesheet" href="/bower_components/chartist/dist/chartist.min.css">
-
-
 </head>
 <body class="top_menu md-bg-grey-200">
     <!-- main header -->
@@ -77,9 +91,10 @@
                         <h4 class="heading_c uk-margin-bottom">Level 1</h4>
                         <% if (rooms1.length > 0) {%>
                         <!-- <div style="overflow-x: scroll;"> -->
-                          <div id="chartist_ruang1_lines" class="chartist"></div>
-
-
+                          <!-- <div id="chartist_ruang1_lines" class="chartist"></div> -->
+                          <!-- <div id="c3_chart_spline" class="c3chart"></div> -->
+                          <div id="ruang_mingguan1" class="c3chart"></div>
+                          <!-- <div id="c3_chart_spline" class="c3chart"></div> -->
                         <!-- </div> -->
                         <% }else{ %>
                           <h3 class="uk-text-middle  uk-text-center  ">
@@ -96,8 +111,10 @@
                           <% if (rooms2.length >0) {%>
                         <!-- <div style="overflow-x: scroll;"> -->
 
-                          <div  id="chartist_ruang2_lines" class="chartist"></div>
+                          <!-- <div  id="chartist_ruang2_lines" class="chartist"></div> -->
                           <!-- <div id="chartist_simple_lines" class="chartist"></div> -->
+                          <div id="ruang_mingguan2" class="c3chart"></div>
+
 
                         <!-- </div> -->
                         <% }else{ %>
@@ -119,10 +136,9 @@
           <div class="uk-grid uk-grid-width-large-1 uk-grid-width-medium-1 uk-grid-medium"  data-uk-grid-margin >
               <div class="">
                 <div class="md-card">
+
                   <div class="md-card-content uk-align-center">
                     <h2 class="uk-text-center uk-margin-bottom"> Keterangan Hasil Penilaian Ruang </h2>
-                    <hv>
-
                       <h3 class="uk-text-center">
                     	>= 1000 Consistent Star
                       <br>
@@ -134,57 +150,84 @@
                       <br>
                     	< 400 Iceberg
                       <br>
-
                       </h3>
                   </div>
-
                 </div>
               </div>
 
-
-
               <div>
-                <div class="md-card">
-                  <div class="md-card-content uk-align-center">
-                    <h2 class="uk-text-center uk-margin-bottom">Nilai Tertinggi</h2>
+                <div class="uk-grid" data-uk-grid-margin>
+                  <div class="uk-width-large-1-2">
+                    <div class="md-card">
+                      <div class="md-card-content uk-align-center">
+                        <h2 class="uk-text-center uk-margin-bottom">Nilai Lantai 1</h2>
+                              <div class="">
+                                <div class="uk-panel">
+                                  <h2 class="uk-text-center">Level <%= lantai1[1] %></h2>
+                                    <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                                    <% if (lantai1[0] >= 4.5 ) {%>
+                                      <h3 class="uk-text-center"> Consistent Star </h3>
+                                    <% }else if (lantai1[0] >= 4){%>
+                                      <h3 class="uk-text-center"> Future Star </h3>
+                                    <% }else if (lantai1[0] >= 3.5 ){%>
+                                      <h3 class="uk-text-center"> Utility Hi-Pro </h3>
+                                    <% }else if (lantai1[0] >= 3){%>
+                                      <h3 class="uk-text-center"> Contributor </h3>
 
-                          <div class="">
-                            <div class="uk-panel">
-                              <h2 class="uk-text-center">Level <%= lantaiTerbaik[1] %></h2>
-                                <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
-                                <% if (lantaiTerbaik[0] >= 4.5 ) {%>
-                                  <h3 class="uk-text-center"> Consistent Star </h3>
-                                <% }else if (lantaiTerbaik[0] >= 4){%>
-                                  <h3 class="uk-text-center"> Future Star </h3>
-                                <% }else if (lantaiTerbaik[0] >= 3.5 ){%>
-                                  <h3 class="uk-text-center"> Utility Hi-Pro </h3>
-
-                                <% }else if (lantaiTerbaik[0] >= 3){%>
-                                  <h3 class="uk-text-center"> Contributor </h3>
-
-                                <% }else if (lantaiTerbaik[0] < 3){%>
-                                  <h3 class="uk-text-center"> Iceberg </h3>
-                                <% }%>
-
-                                <h2 class=" uk-text-center uk-text-bold"> <%= lantaiTerbaik[0] %> </h2>
-                            </div>
+                                    <% }else if (lantai1[0] < 3){%>
+                                      <h3 class="uk-text-center"> Iceberg </h3>
+                                    <% }%>
+                                    <h2 class=" uk-text-center uk-text-bold"> <%= lantai1[0] %> </h2>
+                                </div>
+                          </div>
                       </div>
-
+                    </div>
+                  </div>
+                  <div class="uk-width-large-1-2">
+                    <div class="md-card">
+                      <div class="md-card-content uk-align-center">
+                        <h2 class="uk-text-center uk-margin-bottom">Nilai Lantai 2</h2>
+                              <div class="">
+                                <div class="uk-panel">
+                                  <h2 class="uk-text-center">Level <%= lantai2[1] %></h2>
+                                    <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                                    <% if (lantai2[0] >= 4.5 ) {%>
+                                      <h3 class="uk-text-center"> Consistent Star </h3>
+                                    <% }else if (lantai2[0] >= 4){%>
+                                      <h3 class="uk-text-center"> Future Star </h3>
+                                    <% }else if (lantai2[0] >= 3.5 ){%>
+                                      <h3 class="uk-text-center"> Utility Hi-Pro </h3>
+                                    <% }else if (lantai2[0] >= 3){%>
+                                      <h3 class="uk-text-center"> Contributor </h3>
+                                    <% }else if (lantai2[0] < 3){%>
+                                      <h3 class="uk-text-center"> Iceberg </h3>
+                                    <% }%>
+                                    <h2 class=" uk-text-center uk-text-bold"> <%= lantai2[0] %> </h2>
+                                </div>
+                          </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <hv>
               </div>
             </div>
 
         <div class="md-card">
           <div class="md-card-content">
             <h2 class="uk-text-middle  uk-text-center"> <%= bulan  %>  </h2>
-            <div class="uk-width-large-1">
+
+            <div class="uk-grid" data-uk-grid-margin>
+
+            <div class="uk-width-large-1-2">
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 1</h4>
-                        <% if (lantaiTerbaik[1] !== 'belum ada' && rooms1.length > 0) {%>
+                        <% if (lantai1[1] !== 'belum ada' && rooms1.length > 0) {%>
                       <!-- <div style="overflow-x: scroll;"> -->
-                        <div id="chartist_ruang1_lines_bulanan" class="chartist"></div>
+                        <!-- <div id="chartist_ruang1_lines_bulanan" class="chartist"></div> -->
+                        <div id="ruang_bulanan1" class="c3chart"></div>
+
                       <!-- </div> -->
                       <% }else{ %>
                       <h3 class="uk-text-middle  uk-text-center  ">
@@ -198,30 +241,28 @@
             </div>
 
 
-            <div class="uk-width-large-1">
+            <div class="uk-width-large-1-2">
                 <div class="md-card">
                     <div class="md-card-content">
                       <h4 class="heading_c uk-margin-bottom">Level 2</h4>
-                      <% if (lantaiTerbaik[1] !== 'belum ada' && rooms2.length > 0) {%>
+                      <% if (lantai2[1] !== 'belum ada' && rooms2.length > 0) {%>
                       <!-- <div style="overflow-x: scroll;"> -->
+                        <!-- <div id="chartist_ruang2_lines_bulanan" class="chartist"></div> -->
+                        <div id="ruang_bulanan2" class="c3chart"></div>
 
-                        <div id="chartist_ruang2_lines_bulanan" class="chartist"></div>
                       <!-- </div> -->
                       <% }else{ %>
                       <h3 class="uk-text-middle  uk-text-center  ">
                           belum ada
                       </h3>
                       <% } %>
-
-
                     </div>
                 </div>
             </div>
-
-
-
           </div>
         </div>
+      </div>
+
 
 
 
@@ -264,18 +305,10 @@
                             belum ada
                         </h3>
                         <% } %>
-
                       </div>
                   </div>
               </div>
             </div>
-
-
-
-
-
-
-
           </div>
         </div>
         <% }%>
@@ -315,10 +348,16 @@
     <!--  kendoui functions -->
     <script src="/assets/js/pages/kendoui.min.js"></script>
 
-    <!-- d3 -->
+    <script src="/bower_components/d3/d3.min.js"></script>
     <!-- metrics graphics (charts) -->
+    <script src="/bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script>
+    <!-- c3.js (charts) -->
+    <script src="/bower_components/c3js-chart/c3.min.js"></script>
     <!-- chartist -->
     <script src="/bower_components/chartist/dist/chartist.min.js"></script>
+
+    <!--  charts functions -->
+    <!-- <script src="/assets/js/pages/plugins_charts.js"></script> -->
 
     <script type="text/javascript">
 
@@ -326,6 +365,8 @@
 
         // chartist
         altair_charts.ruang_charts();
+        altair_charts.c3js();
+
     });
 
     altair_charts = {
@@ -448,8 +489,209 @@
           }, responsiveOptions);
           <% } %>
 
-      }
+      },
+
+      c3js: function() {
+
+          // spline chart
+          var c3chart_spline_id = '#c3_chart_spline';
+
+          if ( $(c3chart_spline_id).length ) {
+
+              var c3chart_spline = c3.generate({
+                  bindto: c3chart_spline_id,
+                  data: {
+                      columns: [
+                          ['tes1', 30, 200, 100, 400, 150, 250],
+                          ['tes2', 130, 100, 140, 200, 150, 50]
+                      ],
+                      type: 'spline'
+                  },
+                  color: {
+                      pattern: ['#5E35B1', '#FB8C00']
+                  }
+              });
+
+              $window.on('debouncedresize', function () {
+                  c3chart_spline.resize();
+              });
+
+          }
+
+          var ruang_mingguan = '#ruang_mingguan';
+
+          if ( $(ruang_mingguan).length ) {
+
+              var c3chart_ruangmingguan = c3.generate({
+                  bindto: ruang_mingguan,
+                  data: {
+                      columns: [
+                          ['Level 1', 30, 200, 100, 400, 150, 250],
+                          ['Level 2', 130, 100, 140, 200, 150, 50]
+                      ],
+                      type: 'spline'
+                  },
+                  color: {
+                      pattern: ['#5E35B1', '#FB8C00']
+                  }
+              });
+
+              $window.on('debouncedresize', function () {
+                  c3chart_ruangmingguan.resize();
+              });
+
+          }
+
+          var ruang_mingguan1 = '#ruang_mingguan1';
+
+          if ( $(ruang_mingguan1).length ) {
+
+              var c3chart_ruangmingguan = c3.generate({
+                  bindto: ruang_mingguan1,
+                  data: {
+                      x : 'x',
+                      columns: [
+                          ['Level 1', <% rooms1.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
+                          ['x', <% rooms1.forEach((room) => { %>'<%=  room.dataValues.hari %>',<% }) %>],
+                      ]
+                  },
+                  axis: {
+                      x: {
+                          label: 'tanggal',
+                          type: 'category',
+                          position: 'outer-center',
+                      },
+                      y:{
+                        label: 'Akumulasi nilai',
+                        position: 'outer-center'
+                      }
+                  },
+                  color: {
+                      pattern: ['#5E35B1', '#FB8C00']
+                  }
+              });
+
+              $window.on('debouncedresize', function () {
+                  c3chart_ruangmingguan.resize();
+              });
+
+          }
+
+          var ruang_mingguan2 = '#ruang_mingguan2';
+
+          if ( $(ruang_mingguan2).length ) {
+
+              var c3chart_ruangmingguan2 = c3.generate({
+                  bindto: ruang_mingguan2,
+                  data: {
+                      x : 'x',
+                      columns: [
+                          ['Level 2', <% rooms2.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
+                          ['x', <% rooms2.forEach((room) => { %>'<%=  room.dataValues.hari %>',<% }) %>],
+
+                          // ['data1', 30, 200, 100, 400, 150, 250, 50, 100, 250]
+                      ]
+                  },
+                  axis: {
+                      x: {
+                          label: 'tanggal',
+                          type: 'category',
+                          position: 'outer-center'
+                          // categories: ['cat1', 'cat2', 'cat3', 'cat4', 'cat5', 'cat6', 'cat7', 'cat8', 'cat9']
+                          // categories: [<% rooms1.forEach((room) => { %>'<%=  room.jadwal_piket.tanggal %>',<% }) %>]
+                      },
+                      y:{
+                        label: 'Akumulasi nilai',
+                        position: 'outer-center'
+                      }
+                  },
+                  color: {
+                      pattern: ['#FB8C00', '#FB8C00']
+                  }
+              });
+
+              $window.on('debouncedresize', function () {
+                  c3chart_ruangmingguan2.resize();
+              });
+
+          }
+
+          var ruang_bulanan1 = '#ruang_bulanan1';
+
+          if ( $(ruang_bulanan1).length ) {
+
+              var c3chart_ruangbulanan = c3.generate({
+                  bindto: ruang_bulanan1,
+                  data: {
+                      x : 'x',
+                      columns: [
+                          ['Level 1', <% rooms1.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
+                          ['x', <% rooms1.forEach((room) => { %>'<%=  room.dataValues.hari %>',<% }) %>],
+                      ]
+                  },
+                  axis: {
+                      x: {
+                          label: 'tanggal',
+                          type: 'category',
+                          position: 'outer-center',
+                      },
+                      y:{
+                        label: 'Akumulasi nilai',
+                        position: 'outer-center'
+                      }
+                  },
+                  color: {
+                      pattern: ['#5E35B1', '#FB8C00']
+                  }
+              });
+
+              $window.on('debouncedresize', function () {
+                  c3chart_ruangbulanan.resize();
+              });
+
+          }
+
+          var ruang_bulanan2 = '#ruang_bulanan2';
+
+          if ( $(ruang_bulanan2).length ) {
+
+              var c3chart_ruangbulanan2 = c3.generate({
+                  bindto: ruang_bulanan2,
+                  data: {
+                      x : 'x',
+                      columns: [
+                          ['Level 2', <% rooms2.forEach((room) => { %>'<%=  room.bobotruang %>',<% }) %>],
+                          ['x', <% rooms2.forEach((room) => { %>'<%=  room.dataValues.hari %>',<% }) %>],
+                      ]
+                  },
+                  axis: {
+                      x: {
+                          label: 'tanggal',
+                          type: 'category',
+                          position: 'outer-center',
+                      },
+                      y:{
+                        label: 'Akumulasi nilai',
+                        position: 'outer-center'
+                      }
+                  },
+                  color: {
+                      pattern: ['#FB8C00', '#FB8C00']
+                  }
+              });
+
+              $window.on('debouncedresize', function () {
+                  c3chart_ruangbulanan2.resize();
+              });
+
+          }
+
+
+
+      },
     };
+
+
     </script>
 
     <script>

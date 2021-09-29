@@ -127,6 +127,7 @@ altair_charts = {
         }
 
     },
+
     c3js: function() {
 
         var c3chart_bar_stacked_id = '#c3_chart_bar_stacked';
@@ -258,8 +259,8 @@ altair_charts = {
                 bindto: c3chart_spline_id,
                 data: {
                     columns: [
-                        ['data1', 30, 200, 100, 400, 150, 250],
-                        ['data2', 130, 100, 140, 200, 150, 50]
+                        ['tes', 30, 200, 100, 400, 150, 250],
+                        ['tes2', 130, 100, 140, 200, 150, 50]
                     ],
                     type: 'spline'
                 },
@@ -424,6 +425,7 @@ altair_charts = {
         }
 
     },
+
     chartist_charts: function() {
       new Chartist.Line('#chartist_ruang_lines', {
           labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],

@@ -207,7 +207,7 @@ exports.getDataBuktiTemuanMeja= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }]
+                        }],
                       }
                     );
 
@@ -383,7 +383,10 @@ exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }]
+                        }],
+                        order: [
+                            [{model:Penilaian_meja},{model: JadwalPiket},'tanggal', 'DESC']
+                        ],
                       }
                     );
 
@@ -466,7 +469,10 @@ exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }]
+                        }],
+                        order: [
+                            [{model:Penilaian_meja},{model: JadwalPiket},'tanggal', 'DESC']
+                        ],
                       }
                     );
   Promise
@@ -579,7 +585,10 @@ exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }]
+                        }],
+                        order: [
+                            [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
+                        ],
                       }
                     );
 
@@ -703,7 +712,10 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
                           model: Pengguna,
                           where: {nik: req.session.user.nik}
                         }
-                      ]
+                      ],
+                      order: [
+                          [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
+                      ],
                       }
                     );
 
@@ -790,7 +802,10 @@ exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }]
+                        }],
+                        order: [
+                            [{model:Penilaian_meja},{model: JadwalPiket},'tanggal', 'DESC']
+                        ],
                       }
                     );
 
@@ -904,7 +919,10 @@ exports.getDataBuktiTemuanMejaFasilitator= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }]
+                        }],
+                        order: [
+                            [{model:Penilaian_meja},{model: JadwalPiket},'tanggal', 'DESC']
+                        ],
                       }
                     );
 
@@ -987,7 +1005,10 @@ exports.getDataBuktiTemuanRuangFasilitator= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }]
+                        }],
+                        order: [
+                            [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
+                        ],
                       }
                     );
 
@@ -1073,7 +1094,10 @@ exports.getDataTindakLanjutRuangFasilitator= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }]
+                        }],
+                        order: [
+                            [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
+                        ],
                       }
                     );
 

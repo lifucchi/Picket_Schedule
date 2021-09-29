@@ -5,7 +5,22 @@
     <%- include('head'); %>
 
     <!-- chartist -->
-    <link rel="stylesheet" href="/bower_components/chartist/dist/chartist.min.css">
+
+      <link rel="stylesheet" href="/bower_components/metrics-graphics/dist/metricsgraphics.css">
+      <!-- c3.js (charts) -->
+      <link rel="stylesheet" href="/bower_components/c3js-chart/c3.min.css">
+      <!-- chartist -->
+      <link rel="stylesheet" href="/bower_components/chartist/dist/chartist.min.css">
+
+      <!-- uikit -->
+      <link rel="stylesheet" href="/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+
+      <!-- flag icons -->
+      <link rel="stylesheet" href="/assets/icons/flags/flags.min.css" media="all">
+
+      <!-- altair admin -->
+      <link rel="stylesheet" href="/assets/css/main.min.css" media="all">
+        <!-- chartist -->
 
 
 </head>
@@ -25,7 +40,6 @@
             <div class="md-card">
                 <div class="md-card-content">
                     <div class="uk-grid" data-uk-grid-margin="">
-
                         <div class="uk-width-medium-3-10">
                           <form class="uk-form-stacked" action="/fasilitator/rekapitulasi/meja/filter-bulanan" method="POST">
                             <label for="kUI_datepicker_b" class="uk-form-label">Bulanan</label>
@@ -34,7 +48,6 @@
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                           </form>
                         </div>
-
                 </div>
             </div>
         </div>
@@ -44,38 +57,66 @@
         <div class="md-card">
           <div class="md-card-content">
             <h2> <%= bulan  %>  </h2>
-
             <div class="uk-width-large-1" >
                 <div class="md-card"  >
                     <div class="md-card-content" >
                         <h4 class="heading_c uk-margin-bottom">Gabungan</h4>
-                        <div style="overflow-x: scroll;">
-                          <div style="width:400vh; height:500px;"  id="chartist_meja_lines_bulanan" class="chartist"></div>
-                        </div>
+                        <!-- <div style="overflow-x: scroll;"> -->
+                          <!-- <div style="width:400vh; height:500px;"  id="chartist_meja_lines_bulanan" class="chartist"></div> -->
+                          <%if (rooms1.length > 0 ) {%>
+
+                          <div id="meja_bulanan" class="c3chart"></div>
+                          <% }else{ %>
+                            <h3 class="uk-text-middle  uk-text-center  ">
+                                belum ada
+                            </h3>
+                            <% } %>
+
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
-
-            <div class="uk-width-large-1">
+            <br>
+            <div class="uk-grid" data-uk-grid-margin>
+            <div class="uk-width-large-1-2">
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 1</h4>
-                        <div id="chartist_meja1_lines_bulanan" class="chartist"></div>
+                        <!-- <div id="chartist_meja1_lines_bulanan" class="chartist"></div> -->
+                        <%if (rooms1.length > 0 ) {%>
+
+                        <div id="meja_bulanan1" class="c3chart"></div>
+                        <% }else{ %>
+                          <h3 class="uk-text-middle  uk-text-center  ">
+                              belum ada
+                          </h3>
+                          <% } %>
                     </div>
                 </div>
             </div>
 
-            <div class="uk-width-large-1">
+            <div class="uk-width-large-1-2">
                 <div class="md-card">
                     <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">Level 2</h4>
-                        <div id="chartist_meja2_lines_bulanan" class="chartist"></div>
+                        <%if (rooms1.length > 0 ) {%>
+
+                        <!-- <div id="chartist_meja2_lines_bulanan" class="chartist"></div> -->
+                        <div id="meja_bulanan2" class="c3chart"></div>
+                        <% }else{ %>
+                          <h3 class="uk-text-middle  uk-text-center  ">
+                              belum ada
+                          </h3>
+                          <% } %>
+
+
                     </div>
                 </div>
             </div>
           </div>
         </div>
 
+        </div>
         <% }%>
 
 
@@ -115,8 +156,11 @@
     <!--  kendoui functions -->
     <script src="/assets/js/pages/kendoui.min.js"></script>
 
-    <!-- d3 -->
+    <script src="/bower_components/d3/d3.min.js"></script>
     <!-- metrics graphics (charts) -->
+    <script src="/bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script>
+    <!-- c3.js (charts) -->
+    <script src="/bower_components/c3js-chart/c3.min.js"></script>
     <!-- chartist -->
     <script src="/bower_components/chartist/dist/chartist.min.js"></script>
 
@@ -125,7 +169,9 @@
     $(function() {
 
         // chartist
-        altair_charts.ruang_charts();
+        // altair_charts.ruang_charts();
+        altair_charts.c3js();
+
     });
 
     altair_charts = {
@@ -162,6 +208,7 @@
               }
             }]
           ];
+
           // simple lines
 
           new Chartist.Line('#chartist_meja_lines_bulanan', {
@@ -202,7 +249,135 @@
           }
         });
 
-      }
+      },
+
+      c3js: function() {
+
+        var meja_bulanan = '#meja_bulanan';
+
+        if ( $(meja_bulanan).length ) {
+
+            var c3chart_mejabulana = c3.generate({
+                bindto: meja_bulanan,
+                padding: {
+                    top: 40,
+                    bottom: 40,
+                },
+                data: {
+                    x : 'x',
+                    columns: [
+                        ['Pengguna', <% rooms1.forEach((room) => { %>'<%=  room.bobotmeja %>',<% }) %> <% rooms2.forEach((room) => { %>'<%=  room.bobotmeja %>',<% }) %>],
+                        ['x', <% rooms1.forEach((room) => { %>'<%=  room.meja.pengguna.nama %>',<% }) %> <% rooms2.forEach((room) => { %>'<%=  room.meja.pengguna.nama %>',<% }) %>],
+                    ]
+                },
+                axis: {
+                    x: {
+                        label: 'Meja',
+                        type: 'category',
+                        position: 'outer-center',
+                    },
+                    y:{
+                      label: 'Akumulasi nilai',
+                      position: 'outer-center',
+                      max:5,
+                      min:1
+                    }
+                },
+                zoom: {
+                    enabled: true
+                },
+                color: {
+                    pattern: ['#5E35B1', '#FB8C00']
+                }
+            });
+
+            $window.on('debouncedresize', function () {
+                c3chart_mejabulana.resize();
+            });
+
+        }
+
+          var meja_bulanan1 = '#meja_bulanan1';
+
+          if ( $(meja_bulanan1).length ) {
+
+              var c3chart_mejabulanan = c3.generate({
+                  bindto: meja_bulanan1,
+                  padding: {
+                      top: 40,
+                      bottom: 40,
+                  },
+                  data: {
+                      x : 'x',
+                      columns: [
+                          ['Level 1', <% rooms1.forEach((room) => { %>'<%=  room.bobotmeja %>',<% }) %>],
+                          ['x', <% rooms1.forEach((room) => { %>'<%=  room.meja.pengguna.nama %>',<% }) %>],
+                      ]
+                  },
+                  axis: {
+                      x: {
+                          label: 'tanggal',
+                          type: 'category',
+                          position: 'outer-center',
+                      },
+                      y:{
+                        label: 'Akumulasi nilai',
+                        position: 'outer-center',
+                        max:5,
+                        min:1
+                      }
+                  },
+                  color: {
+                      pattern: ['#5E35B1', '#FB8C00']
+                  }
+              });
+
+              $window.on('debouncedresize', function () {
+                  c3chart_mejabulanan.resize();
+              });
+
+          }
+
+          var meja_bulanan2 = '#meja_bulanan2';
+
+          if ( $(meja_bulanan2).length ) {
+
+              var c3chart_mejabulanan2 = c3.generate({
+                  bindto: meja_bulanan2,
+                  padding: {
+                      top: 40,
+                      bottom: 40,
+                  },
+                  data: {
+                      x : 'x',
+                      columns: [
+                          ['Level 2', <% rooms2.forEach((room) => { %>'<%=  room.bobotmeja %>',<% }) %>],
+                          ['x', <% rooms2.forEach((room) => { %>'<%=  room.meja.pengguna.nama %>',<% }) %>],
+                      ]
+                  },
+                  axis: {
+                      x: {
+                          label: 'tanggal',
+                          type: 'category',
+                          position: 'outer-center',
+                      },
+                      y:{
+                        label: 'Akumulasi nilai',
+                        position: 'outer-center',
+                        max:5,
+                        min:1
+                      }
+                  },
+                  color: {
+                      pattern: ['#FB8C00', '#FB8C00']
+                  }
+              });
+
+              $window.on('debouncedresize', function () {
+                  c3chart_mejabulanan2.resize();
+              });
+          }
+      },
     };
 
 

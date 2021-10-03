@@ -5,7 +5,6 @@ const Meja = require('../models/meja');
 const Penilaian_meja = require('../models/penilaian_meja');
 const Penilaian_ruang = require('../models/penilaian_ruang');
 const Artikel = require('../models/artikel');
-
 const Ruang = require('../models/ruang');
 const sequelize = require('../util/database');
 const { Op } = require("sequelize");
@@ -328,7 +327,4 @@ exports.getArtikelList = (req,res) => {
         console.log('**********ERROR RESULT****************');
         console.log(err);
     });
-
-
-
 };

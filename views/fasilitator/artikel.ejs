@@ -45,9 +45,16 @@
                         <div class="md-list-content">
                             <span class="md-list-heading uk-text-truncate"><a href="/fasilitator/artikel/<%= artikel.id %>"><%= artikel.judul %>.</a></span>
                             <!-- <span class="uk-text-small uk-text-muted">April 16, 2016</span> -->
+                            <span class="uk-text-small uk-text-muted"><%= artikel.createdAt %></span>
+
                         </div>
                     </li>
                     <%                     }) %>
+                    <li>
+                      <div class="md-list-content">
+                            <span class="md-list-heading uk-float-right "><a href="/fasilitator/artikel/?page=1">lihat galeri lama</a></span>
+                      </div>
+                    </li>
 
                 </ul>
             </div>

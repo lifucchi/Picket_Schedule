@@ -74,57 +74,34 @@
               <br>
               <div class="">
                 <div class="uk-grid" data-uk-grid-margin>
-                  <div class="uk-width-large-1-2">
+                  <div class="uk-width-large-1">
                     <div class="md-card md-bg-light-green-200">
                       <div class="md-card-content uk-align-center">
-                        <h2 class="uk-text-center uk-margin-bottom">Nilai Lantai 1</h2>
+                        <!-- <h2 class="uk-text-center uk-margin-bottom">Nilai Lantai 1</h2> -->
                               <div class="">
-                                <div class="uk-panel">
-                                  <!-- <h2 class="uk-text-center">Level <%= lantai1[1] %></h2> -->
-                                    <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
-                                    <% if (lantai1[0] >= 4.5 ) {%>
-                                      <h3 class="uk-text-center"> Consistent Star </h3>
-                                    <% }else if (lantai1[0] >= 4){%>
-                                      <h3 class="uk-text-center"> Future Star </h3>
-                                    <% }else if (lantai1[0] >= 3.5 ){%>
-                                      <h3 class="uk-text-center"> Utility Hi-Pro </h3>
-                                    <% }else if (lantai1[0] >= 3){%>
-                                      <h3 class="uk-text-center"> Contributor </h3>
+                                <div class="uk-panel uk-text-center">
+                                  <!-- <h2 class="uk-text-center">Level  %></h2> -->
+                                    <!-- <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i> -->
+                                    <% if (lantaiTerbaik[0] >= 900 ) {%>
+                                        <h2> Consistent Star </h2>
+                                    <% }else if (lantaiTerbaik[0] >= 800){%>
+                                      <h2> Future Star </h2>
+                                    <% }else if (lantaiTerbaik[0] >= 600 ){%>
+                                      <h2> Utility Hi-Pro </h2>
+                                    <% }else if (lantaiTerbaik[0] >= 400){%>
+                                      <h2> Contributor </h2>
+                                    <% }else if (lantaiTerbaik[0] < 400){%>
+                                      <h2> Iceberg </h2>
+                                    <% }%>
+                                    <h2 class="uk-margin-remove"><span> <%= lantaiTerbaik[0] %> </h2>
+                                    <h2 class="uk-margin-remove"><span> level <%= lantaiTerbaik[1] %> </h2>
 
-                                    <% }else if (lantai1[0] < 3){%>
-                                      <h3 class="uk-text-center"> Iceberg </h3>
-                                    <% }%>
-                                    <h2 class=" uk-text-center uk-text-bold"> <%= lantai1[0] %> </h2>
                                 </div>
                           </div>
                       </div>
                     </div>
                   </div>
-                  <div class="uk-width-large-1-2">
-                    <div class="md-card md-bg-light-green-200">
-                      <div class="md-card-content uk-align-center">
-                        <h2 class="uk-text-center uk-margin-bottom">Nilai Lantai 2</h2>
-                              <div class="">
-                                <div class="uk-panel">
-                                  <!-- <h2 class="uk-text-center">Level <%= lantai2[1] %></h2> -->
-                                    <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
-                                    <% if (lantai2[0] >= 4.5 ) {%>
-                                      <h3 class="uk-text-center"> Consistent Star </h3>
-                                    <% }else if (lantai2[0] >= 4){%>
-                                      <h3 class="uk-text-center"> Future Star </h3>
-                                    <% }else if (lantai2[0] >= 3.5 ){%>
-                                      <h3 class="uk-text-center"> Utility Hi-Pro </h3>
-                                    <% }else if (lantai2[0] >= 3){%>
-                                      <h3 class="uk-text-center"> Contributor </h3>
-                                    <% }else if (lantai2[0] < 3){%>
-                                      <h3 class="uk-text-center"> Iceberg </h3>
-                                    <% }%>
-                                    <h2 class=" uk-text-center uk-text-bold"> <%= lantai2[0] %> </h2>
-                                </div>
-                          </div>
-                      </div>
-                    </div>
-                  </div>
+
                 </div>
 
               </div>
@@ -188,170 +165,31 @@
               </div>
               <br>
           </div>
+
           <div class=" ">
             <br>
                 <h1 class="uk-text-center uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400" >Galeri</h1>
+                <br>
 
           </div>
 
-          <!-- <div class="uk-grid" data-uk-grid-margin="">
-              <div class="uk-width-medium-1">
-                  <div class="md-card">
-                      <div class="md-card-content">
-                          <div class="uk-overflow-container">
-                              <table class="uk-table uk-table-hover uk-table-nowrap">
-                                  <thead>
-                                      <tr>
-                                          <th class="uk-width-1-10 uk-text-center uk-text-upper">Clients</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr>
-                                          <td>
-                                              <div class="uk-grid" data-uk-grid-margin>
-                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
-                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_01.png" alt=""/>
-                                                  </div>
-                                                  <div class="uk-width-3-5 uk-width-small-4-5">
-                                                      <h4 class="heading_a uk-margin-small-bottom">Vincenzo Luettgen</h4>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 1-871-550-9634x91599</p>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> connelly.priscilla@kuvalis.com</p>
-                                                  </div>
-                                              </div>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <div class="uk-grid" data-uk-grid-margin>
-                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
-                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_02.png" alt=""/>
-                                                  </div>
-                                                  <div class="uk-width-3-5 uk-width-small-4-5">
-                                                      <h4 class="heading_a uk-margin-small-bottom">Ned Conn</h4>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 736.374.6426</p>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> flangworth@gmail.com</p>
-                                                  </div>
-                                              </div>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <div class="uk-grid" data-uk-grid-margin>
-                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
-                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_03.png" alt=""/>
-                                                  </div>
-                                                  <div class="uk-width-3-5 uk-width-small-4-5">
-                                                      <h4 class="heading_a uk-margin-small-bottom">Isom Halvorson</h4>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 788-240-4146</p>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> collin.brekke@yahoo.com</p>
-                                                  </div>
-                                              </div>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <div class="uk-grid" data-uk-grid-margin>
-                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
-                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_04.png" alt=""/>
-                                                  </div>
-                                                  <div class="uk-width-3-5 uk-width-small-4-5">
-                                                      <h4 class="heading_a uk-margin-small-bottom">Ransom Barrows</h4>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 488.309.8993</p>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> lehner.emmanuel@ledner.com</p>
-                                                  </div>
-                                              </div>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <div class="uk-grid" data-uk-grid-margin>
-                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
-                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_05.png" alt=""/>
-                                                  </div>
-                                                  <div class="uk-width-3-5 uk-width-small-4-5">
-                                                      <h4 class="heading_a uk-margin-small-bottom">Edward Paucek</h4>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 228-971-9133x723</p>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> iliana.kreiger@wunsch.org</p>
-                                                  </div>
-                                              </div>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <div class="uk-grid" data-uk-grid-margin>
-                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
-                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_06.png" alt=""/>
-                                                  </div>
-                                                  <div class="uk-width-3-5 uk-width-small-4-5">
-                                                      <h4 class="heading_a uk-margin-small-bottom">Frederik Nitzsche</h4>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> +72(5)9060825039</p>
-                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> kaitlyn50@walter.net</p>
-                                                  </div>
-                                              </div>
-                                          </td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                          </div>
-                          <ul class="uk-pagination uk-margin-medium-top">
-                              <li class="uk-disabled"><span><i class="uk-icon-angle-double-left"></i></span></li>
-                              <li><span>&hellip;</span></li>
-                              <li><a href="#">4</a></li>
-                              <li class="uk-active"><span>5</span></li>
-                              <li><a href="#">6</a></li>
-                              <li><span>&hellip;</span></li>
-                              <li><a href="#">20</a></li>
-                              <li><a href="#"><i class="uk-icon-angle-double-right"></i></a></li>
-                          </ul>
-                      </div>
-                  </div>
-              </div>
 
-          </div> -->
-
-          <!-- <div class="md-card">
-            <div class="md-card-content">
-              <div class="uk-overflow-auto">
-                <table id="dt_default" class="uk-table uk-table-hover uk-table-nowrap" style="width:100%">
-                    <thead>
-                      <tr>
-                          <th class="uk-width-1-10 uk-text-center uk-text-upper">Artikel</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% articles.forEach((article) => { %>
-                    <tr>
-                        <td>
-                            <div class="uk-grid" data-uk-grid-margin>
-                                <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
-                                    <img class="md-user-image-large" src="/<%= article.foto_Artikel%>" alt=""/>
-                                </div>
-                                <div class="uk-width-3-5 uk-width-small-4-5">
-                                    <h4 class="heading_a uk-margin-small-bottom"><%= article.pembuat%></h4>
-                                    <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 1-871-550-9634x91599</p>
-                                    <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> connelly.priscilla@kuvalis.com</p>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                      <% }) %>
-                    </tbody>
-              </div>
-            </div>
-          </div> -->
-
-          <div class="md-card  md-bg-light-green-200">
+          <div class=" md-bg-grey-800">
             <div class="md-card-content">
               <div class="gallery_grid uk-grid-width-medium-1-4 uk-grid-width-large-1-5" data-uk-grid="{gutter: 16}">
                 <% articles.forEach((article) => { %>
                       <div>
                           <div class="md-card md-card-hover">
-                              <div class="gallery_grid_item md-card-content">
+                              <div class="gallery_grid_item md-card-content" >
+                                <div class="" style="  height: 200px;width: 100%;overflow:hidden">
                                   <a href="/<%= article.foto_Artikel%>" data-uk-lightbox="{group:'gallery'}">
-                                      <img src="/<%= article.foto_Artikel%>" alt="">
+                                      <img style="background-size: 300px 100px;" src="/<%= article.foto_Artikel%>" alt="">
                                   </a>
-                                  <div class="gallery_grid_image_caption">
-                                      <span class="gallery_image_title "><%= article.judul%></span>
+
+                                </div>
+
+                                  <div class="gallery_grid_image_caption" style="  height: 90px;">
+                                      <span class="gallery_image_title"><%= article.judul%></span>
                                       <br>
                                       <span class="uk-text-muted uk-text-truncate uk-text-small uk-float-right"><%= article.pembuat%></span>
                                   </div>
@@ -371,7 +209,7 @@
                               </div>
                           </div>
                       </div>
-<%                     }) %>
+          <%                     }) %>
                     </div>
             </div>
           </div>

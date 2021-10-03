@@ -8,7 +8,7 @@
 </head>
 
 
-<body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-500">
+<body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-200">
     <!-- main header -->
     <%- include('header'); %>
     <!-- main header end -->
@@ -72,14 +72,25 @@
                             <% tables.forEach((table) => { %>
                           <tr>
                               <!-- <td><%= table.id%></td> -->
-                              <td><%= table.pengguna.nama%></td>
-                              <td><%= table.pengguna.level%></td>
+                              <% if (table.penggunaNik !== 'undefined' && table.pengguna.Nik !== null ) { %>
+                                <td><%= table.pengguna.nama%></td>
+                                <td><%= table.pengguna.level%></td>
+                              <% }else { %>
+                                <td> - </td>
+                                <td> - </td>
+                                <%  }%>
+
+
                               <td><%= table.standar%></td>
 
                               <td>
                                 <div class="uk-grid uk-grid-collapse uk-margin-remove">
 
-                                  <button  href="javascript:void(0);" class="md-btn md-btn-small edit" data-id="<%= table.id %>" data-nama="<%= table.pengguna.nik %>" data-standar="<%= table.standar%>"  >
+                                  <button  href="javascript:void(0);" class="md-btn md-btn-small edit" data-id="<%= table.id %>"
+                                    <% if (table.pengguna !== 'undefined' && table.pengguna !== null ) { %>
+                                    data-nama="<%= table.pengguna.nik %>"
+                                    <%  }%>
+                                    data-standar="<%= table.standar%>"  >
                                     <i class="material-icons md-24">mode_edit</i>
                                   </button>
                                   <form onsubmit="return confirm('Are you sure?');" action="/admin/checklistmeja/delete-checklistmeja" method="POST">

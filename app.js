@@ -219,12 +219,12 @@ Jadwal_piket.belongsTo(Pengguna, {constraints:true, onDelete:'CASCADE', foreignK
 Pengguna.hasMany(Jadwal_piket, {foreignKey: 'nikpicpiket', as: 'PemilikJadwal'});
 
 // pengguna punya banyak standar Meja
-Pengguna.hasOne(Meja , {  foreignKey: 'penggunaNik', as: 'PemilikMeja' });
+Pengguna.hasOne(Meja , {  foreignKey: 'penggunaNik', as: 'PemilikMeja' , onDelete:'CASCADE'});
 Meja.belongsTo(Pengguna, { foreignKey: 'penggunaNik', constraints:true, onDelete:'CASCADE'});
 
 // ruang punya PIC ruang
 Pengguna.hasMany(Ruang,  {  foreignKey: 'penggunaNik', as: 'PicRuang' });
-Ruang.belongsTo(Pengguna, {foreignKey: 'penggunaNik', constraints:true, onDelete:'CASCADE'});
+Ruang.belongsTo(Pengguna, {foreignKey: 'penggunaNik', constraints:true});
 
 // ruang --> penilaian ruang <-- jadwal piket
 Ruang.belongsToMany(Jadwal_piket, {

@@ -1,5 +1,7 @@
 const Pengguna = require('../models/pengguna');
 const bcrypt = require('bcryptjs');
+const Ruang = require('../models/ruang');
+
 
 exports.getDataPengguna = (req,res, next) => {
   if (res.locals.error_messages.length > 0) {
@@ -61,21 +63,41 @@ exports.postAddDataPengguna = ( req,res, next) => {
 
 exports.postDeletePengguna = ( req,res, next) => {
 
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+
   if (res.locals.success_messages.length > 0) {
     res.locals.success_messages = res.locals.success_messages[0];
   } else {
     res.locals.success_messages = null;
   }
   const nik = req.body.penggunaId;
-  Pengguna.findByPk(nik)
-    .then(pengguna => {
-      return pengguna.destroy();
-    })
-    .then(result => {
-      req.flash('success_messages', 'Pengguna sudah dihapus');
+
+  Ruang.findAll(
+    {where: {penggunaNik:nik}}
+  )
+  .then( ada => {
+    if (ada.length > 0){
+      req.flash('error_messages', 'Pengguna merupakan PIC Ruang sehingga ubah PIC Ruang sebelum menghapus pengguna ini');
       res.redirect('/admin/pengguna');
-    })
-    .catch(err => console.log(err));
+
+    } else{
+      Pengguna.findByPk(nik)
+        .then(pengguna => {
+          return pengguna.destroy();
+        })
+        .then(result => {
+          req.flash('success_messages', 'Pengguna sudah dihapus');
+          res.redirect('/admin/pengguna');
+        })
+        .catch(err => console.log(err));
+    }
+  })
+
 
 };
 
@@ -85,6 +107,8 @@ exports.postEditPengguna = ( req,res, next) => {
   const namaUp = req.body.nama_edit;
   const peranUp = req.body.peran_edit;
   const levelUp = req.body.level_edit;
+
+
 
   Pengguna.findByPk(nikUp)
     .then(pengguna => {

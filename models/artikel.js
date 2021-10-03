@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 
 const sequelize = require('../util/database');
+const moment = require('moment');
+
 
 const Artikel = sequelize.define('artikel', {
   id: {
@@ -24,7 +26,14 @@ const Artikel = sequelize.define('artikel', {
   foto_Artikel: {
     type: Sequelize.STRING(50),
     // allowNull: false
-  }
+  },
+  createdAt: {
+    type: Sequelize.DATE,
+//note here this is the guy that you are looking for
+  get() {
+        return moment(this.getDataValue('createdAt')).format('DD MMMM YYYY');
+    }
+},
 });
 
 module.exports = Artikel;

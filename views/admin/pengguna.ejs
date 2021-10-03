@@ -7,7 +7,7 @@
 </head>
 
 
-<body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-500">
+<body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-200">
     <!-- main header -->
     <%- include('header'); %>
     <!-- main header end -->
@@ -139,10 +139,16 @@
                                       <div class="uk-form-row">
                                         <div class="uk-grid">
                                           <div class="uk-width-medium-1-2">
-                                              <label>Level</label>
-                                              <input id='level' name='level' type="number" class="md-input" required />
+                                              <!-- <label>Level</label> -->
+                                              <select id='level'  name='level' class="md-input" required data-md-selectize-inline >
+                                                  <option value="">Level... </option>
+                                                  <option value="1">1</option>
+                                                  <option value="2">2</option>
+                                              </select>
                                           </div>
                                           <div class="uk-width-medium-1-2">
+                                            <!-- <label>Peran</label> -->
+
                                               <div class="" style="index-z:10;">
                                                 <select name='peran' id='peran' class="md-input" required data-md-selectize-inline >
                                                     <option value="">Peran... </option>
@@ -188,7 +194,7 @@
                                           <div class="uk-grid">
                                               <div class="uk-width-medium-1-2">
                                                   <label>NIK</label>
-                                                  <input name='nik_edit2' id='nik_edit2' readonly class="md-input label-fixed nik_edit"/>
+                                                  <input name='nik_edit2' id='nik_edit2' style="color: #787878;" readonly class="md-input label-fixed nik_edit"/>
 
                                               </div>
 
@@ -209,6 +215,8 @@
                                               <!-- <label>Peran</label> -->
                                               <!-- <input id='peran' name='peran' type="text" class="md-input" class="data-md-selectize"  /> -->
                                               <div class="" style="index-z:10;">
+                                                <label>Peran</label>
+
                                                 <select id='peran_edit'  name='peran_edit' class="md-input label-fixed peran_edit" required >
                                                     <option value="">Peran... </option>
                                                     <option value="Admin">Admin</option>
@@ -220,7 +228,12 @@
 
                                           <div class="uk-width-medium-1-2">
                                               <label>Level</label>
-                                              <input name='level_edit' id='level_edit' type="number" class="md-input label-fixed level_edit" required />
+                                              <!-- <input name='level_edit' id='level_edit' type="number" class="md-input label-fixed level_edit" required /> -->
+                                              <select id='level_edit'  name='level_edit' class="md-input label-fixed level_edit" required >
+                                                  <option value="">Level... </option>
+                                                  <option value="1">1</option>
+                                                  <option value="2">2</option>
+                                              </select>
                                           </div>
                                         </div>
                                       </div>

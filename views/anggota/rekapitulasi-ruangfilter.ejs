@@ -553,7 +553,8 @@
                       },
                       y:{
                         label: 'Akumulasi nilai',
-                        position: 'outer-center'
+                        position: 'outer-center',
+                        min:0
                       }
                   },
                   color: {
@@ -592,7 +593,8 @@
                       },
                       y:{
                         label: 'Akumulasi nilai',
-                        position: 'outer-center'
+                        position: 'outer-center',
+                        min:0
                       }
                   },
                   color: {
@@ -624,10 +626,12 @@
                           label: 'tanggal',
                           type: 'category',
                           position: 'outer-center',
+
                       },
                       y:{
                         label: 'Akumulasi nilai',
-                        position: 'outer-center'
+                        position: 'outer-center',
+                        min:0
                       }
                   },
                   color: {
@@ -662,7 +666,8 @@
                       },
                       y:{
                         label: 'Akumulasi nilai',
-                        position: 'outer-center'
+                        position: 'outer-center',
+                        min:0
                       }
                   },
                   color: {
@@ -697,7 +702,8 @@
                       },
                       y:{
                         label: 'Akumulasi nilai',
-                        position: 'outer-center'
+                        position: 'outer-center',
+                        min:0
                       }
                   },
                   color: {
@@ -732,22 +738,18 @@
                       },
                       y:{
                         label: 'Akumulasi nilai',
-                        position: 'outer-center'
+                        position: 'outer-center',
+                        min:0
                       }
                   },
                   color: {
                       pattern: ['#FB8C00', '#FB8C00']
                   }
               });
-
               $window.on('debouncedresize', function () {
                   c3chart_ruangtahunan2.resize();
               });
-
           }
-
-
-
       },
     };
 

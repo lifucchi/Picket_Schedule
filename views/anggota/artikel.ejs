@@ -1,0 +1,100 @@
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <%- include('head'); %>
+
+
+</head>
+<body class="top_menu">
+    <!-- main header -->
+    <%- include('header'); %>
+<!-- main header end -->
+    <%- include('top_bar'); %>
+
+<div id="page_content">
+    <div id="page_content_inner">
+
+        <div class="uk-grid blog_article" data-uk-grid-margin>
+            <div class="uk-width-medium-3-4">
+                <div class="md-card">
+                    <div class="md-card-content large-padding">
+                        <div class="uk-article">
+                            <h1 class="uk-article-title"> <%= articles.judul %> </h1>
+                            <p class="uk-article-meta">
+                                Dibuat oleh <%= articles.pembuat %> pada <%= tanggal %>
+                                <br>
+                            </p>
+                            <!-- <p class="uk-article-lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> -->
+                            <hr class="uk-article-divider">
+                            <p>
+                                <figure class="uk-thumbnail uk-thumbnail-large thumbnail_left">
+                                    <img src="/<%= articles.foto_Artikel %>" alt="">
+                                    <!-- <figcaption class="uk-thumbnail-caption">Some caption</figcaption> -->
+                                </figure>
+                              <%= articles.konten %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-medium-1-4">
+                <h5 class="uk-margin-small-bottom uk-text-upper">Recent Posts</h5>
+                <ul class="md-list uk-margin-remove">
+                  <% artikels.forEach((artikel) => { %>
+                    <li>
+                        <div class="md-list-content">
+                            <span class="md-list-heading uk-text-truncate"><a href="/anggota/artikel/<%= artikel.id %>"><%= artikel.judul %>.</a></span>
+                            <span class="uk-text-small uk-text-muted"><%= artikel.createdAt %></span>
+                        </div>
+                    </li>
+                    <%                     }) %>
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <!-- common functions -->
+    <script src="/assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="/assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="/assets/js/altair_admin_common.min.js"></script>
+
+
+    <script>
+        $(function() {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if(Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+        });
+    </script>
+
+
+</body>
+</html>

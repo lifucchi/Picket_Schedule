@@ -159,7 +159,7 @@
                                 <div class="md-card">
                                     <div class="md-card-content">
                                       <span class="uk-text-small uk-text-muted"> Hanya bisa upload file berekstensi .jpg/.jpeg/.png </span>
-                                        <input type="file" name="image" id="input-file-a" class="dropify" />
+                                        <input type="file" name="image" id="input-file-a" class="dropify" required />
                                     </div>
                                 </div>
                             </div>
@@ -175,10 +175,8 @@
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                   </form>
               </div>
             </div>

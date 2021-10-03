@@ -296,35 +296,32 @@
               if ( value == 4 || value == 3){
                 // $("#nilaiBC").show();
                   $("#nilaiBC").show();
-                  $("#tanggal").prop('required',true);
+                  $("#uk_dp_1").prop('required',true);
                   $("#deskripsi").prop('required',true);
                   $("#tindaklanjut").prop('required',true);
-
-
-
                   $("#nilaiDE").hide();
-                  $("#image").prop('required',false);
+                  $("#input-file-a").prop('required',false);
 
 
               }
               else if (value == 2 || value == 1){
                 $("#nilaiBC").show();
-                $("#tanggal").prop('required',true);
+                $("#uk_dp_1").prop('required',true);
                 $("#deskripsi").prop('required',true);
                 $("#tindaklanjut").prop('required',true);
 
                 $("#nilaiDE").show();
-                $("#image").prop('required',true);
+                $("#input-file-a").prop('required',true);
 
 
               }else if(value == 5){
                 $("#nilaiBC").hide();
-                $("#tanggal").prop('required',false);
+                $("#uk_dp_1").prop('required',false);
                 $("#deskripsi").prop('required',false);
                 $("#tindaklanjut").prop('required',false);
 
                 $("#nilaiDE").hide();
-                $("#image").prop('required',false);
+                $("input-file-a").prop('required',false);
               }
             });
         });

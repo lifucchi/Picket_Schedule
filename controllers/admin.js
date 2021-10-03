@@ -152,7 +152,7 @@ exports.getAdminDashboard = (req,res) => {
       .then(count => {
           console.log('**********COMPLETE RESULTS****************');
 
-          if (count[0] > 0){
+          if (count[0].length > 0){
             count[0][0].bobotmeja = parseFloat(count[0][0].bobotmeja).toFixed(2);
           }
 
@@ -160,7 +160,7 @@ exports.getAdminDashboard = (req,res) => {
           let lantaiDua = 0;
 
 
-          if (count[1]){
+          if (count[1].length){
             for(i = 0; i < count[1].length; i++){
               lantaiSatu = parseFloat(lantaiSatu) + parseFloat(count[1][i].bobotruang);
             }
@@ -168,7 +168,7 @@ exports.getAdminDashboard = (req,res) => {
 
           }
 
-          if (count[2]){
+          if (count[2].length){
             for(i = 0; i < count[2].length; i++){
               lantaiDua = parseFloat(lantaiDua) + parseFloat(count[2][i].bobotruang);
             }

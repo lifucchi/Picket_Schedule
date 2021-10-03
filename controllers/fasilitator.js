@@ -141,7 +141,7 @@ const artikel = Artikel.findAll({
   order: [
       ['createdAt', 'DESC']
   ],
-  limit: 2
+  limit: 5
 })
 
   Promise
@@ -149,44 +149,43 @@ const artikel = Artikel.findAll({
       .then(count => {
           console.log('**********COMPLETE RESULTS****************');
 
-          if (count[0] > 0){
+          if (count[0].length > 0){
             count[0][0].bobotmeja = parseFloat(count[0][0].bobotmeja).toFixed(2);
           }
 
           let lantaiSatu = 0;
           let lantaiDua = 0;
+          let lantai1 = [];
+          let lantai2 = [];
+          lantai1[0] = 0;
+          lantai1[1] = 'belum ada';
+          lantai2[0] = 0;
+          lantai2[1] = 'belum ada';
 
 
-          if (count[1]){
+          if (count[1].length > 0 && count[1] != 'undefined'){
             for(i = 0; i < count[1].length; i++){
               lantaiSatu = parseFloat(lantaiSatu) + parseFloat(count[1][i].bobotruang);
             }
             lantaiSatu = parseFloat(lantaiSatu) / parseFloat(count[1].length);
-
+            // lantaiSatu = lantaiSatu || 0;
+            lantai1[0] = lantaiSatu.toFixed(2);
+            lantai1[1] = 1;
           }
 
-          if (count[2]){
+
+          if (count[2].length > 0 && count[2] != 'undefined'){
             for(i = 0; i < count[2].length; i++){
               lantaiDua = parseFloat(lantaiDua) + parseFloat(count[2][i].bobotruang);
             }
             lantaiDua = parseFloat(lantaiDua) / parseFloat(count[2].length);
+            // lantaiDua = lantaiDua || 0;
+            console.log("masuk sini?");
+            lantai2[0] = lantaiDua.toFixed(2);
+            lantai2[1] = 2;
           }
 
-          let lantaiTerbaik = [];
-          if ( lantaiSatu > lantaiDua ){
-            lantaiTerbaik[0] = lantaiSatu.toFixed(2);
-            lantaiTerbaik[1] = 1;
-          } else if ( lantaiSatu < lantaiDua ){
-            lantaiTerbaik[0] = lantaiDua.toFixed(2);
-            lantaiTerbaik[1] = 2;
-          }else{
-            lantaiTerbaik[0] = 0;
-            lantaiTerbaik[1] = 'belum ada';
-          }
-          res.locals.mejaTerbaik = count[0][0];
-          res.locals.lantaiTerbaik = lantaiTerbaik;
 
-          console.log(count[4]);
 
           res.render('./fasilitator/dashboard', {
             pageTitle: 'Dashboard',
@@ -194,9 +193,10 @@ const artikel = Artikel.findAll({
             schedules: count[3],
             tanggal : nowTanggal2,
             mejaTerbaik : count[0][0],
-            lantaiTerbaik: lantaiTerbaik,
+            lantai1: lantai1,
+            lantai2:lantai2,
             monthMinusOneName:monthMinusOneName,
-            artikel:count[4]
+            articles:count[4]
           });
 
       })
@@ -204,5 +204,40 @@ const artikel = Artikel.findAll({
           console.log('**********ERROR RESULT****************');
           console.log(err);
       });
+
+};
+
+
+exports.getArtikelDetail = (req,res) => {
+
+  const id = req.params.artikelId;
+
+  const artikel =   Artikel.findByPk(id);
+  const banyakartikel = Artikel.findAll({
+    order: [
+        ['createdAt', 'DESC']
+    ],
+    limit:5
+  })
+
+  Promise
+      .all([artikel,banyakartikel])
+      .then(hasil => {
+        hasil[0].createdAt = moment(hasil[0].createdAt).locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
+        console.log(hasil[0]);
+        res.render('./fasilitator/artikel', {
+          articles: hasil[0],
+          artikels: hasil[1],
+          pageTitle: 'Artikel',
+          path: '/artikel',
+        });
+
+      })
+      .catch(err => {
+          console.log('**********ERROR RESULT****************');
+          console.log(err);
+      });
+
+
 
 };

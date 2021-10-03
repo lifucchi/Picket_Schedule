@@ -1,0 +1,449 @@
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+
+  <%- include('head'); %>
+
+  <style>
+    html, body {
+        height: 100%;
+    }
+    .half {
+        height: 50%;
+    }
+
+    .full {
+        height: 100%;
+    }
+</style>
+</head>
+
+<body class="top_menu">
+    <!-- main header -->
+    <%- include('header'); %>
+<!-- main header end -->
+    <%- include('top_bar'); %>
+
+    <div class="uk-section md-bg-grey-800">
+      <div id="page_content">
+          <div id="page_content_inner">
+
+            <div class=" ">
+              <br>
+                  <h1 class="uk-text-center uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400" >Meja Ter-SO GOOD Bulan <%= monthMinusOneName%></h1>
+                  <% if (mejaTerbaik && mejaTerbaik.bobotmeja !== 'undefined' ) {%>
+                    <br>
+                    <!-- <div class="uk-grid"> -->
+                        <div class="md-bg-light-green-200">
+                          <br>
+                            <h3 class="uk-text-middle uk-text-center  ">
+                              <% if (mejaTerbaik.bobotmeja >= 4.5 ) {%>
+                               Consistent Star
+                              <% }else if (mejaTerbaik.bobotmeja >= 4){%>
+                               Future Star
+                              <% }else if (mejaTerbaik.bobotmeja >= 3.5 ){%>
+                               Utility Hi-Pro
+                              <% }else if (mejaTerbaik.bobotmeja >= 3){%>
+                               Contributor
+                              <% }else if (mejaTerbaik.bobotmeja < 3){%>
+                               Iceberg
+                              <% }%>
+                            </h3>
+
+                            <h2 class="uk-text-middle uk-margin-remove uk-text-center  "> <%= mejaTerbaik.bobotmeja %> </h2>
+                            <h3 class="uk-text-middle uk-margin-remove uk-text-center  "><%= mejaTerbaik.meja.pengguna.nama %>   </h3>
+                            <h3 class="uk-text-middle uk-margin-remove uk-text-center  ">Level <%= mejaTerbaik.meja.pengguna.level %></h3>
+                            <br>
+                          <!-- </div> -->
+                        <!-- </div> -->
+                    </div>
+                    <% }else { %>
+                      <div class="md-bg-light-green-200">
+                        <br>
+                        <h3 class="uk-text-middle uk-margin-remove uk-text-center  ">
+                            belum ada
+                        </h3>
+                        <br>
+                      </div>
+                    <% } %>
+            </div>
+            <div class=" ">
+              <br>
+              <h1 class="uk-text-center uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400 ">Lantai Ter-SO GOOD Bulan <%= monthMinusOneName%></h1>
+              <br>
+              <div class="">
+                <div class="uk-grid" data-uk-grid-margin>
+                  <div class="uk-width-large-1-2">
+                    <div class="md-card md-bg-light-green-200">
+                      <div class="md-card-content uk-align-center">
+                        <h2 class="uk-text-center uk-margin-bottom">Nilai Lantai 1</h2>
+                              <div class="">
+                                <div class="uk-panel">
+                                  <!-- <h2 class="uk-text-center">Level <%= lantai1[1] %></h2> -->
+                                    <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                                    <% if (lantai1[0] >= 4.5 ) {%>
+                                      <h3 class="uk-text-center"> Consistent Star </h3>
+                                    <% }else if (lantai1[0] >= 4){%>
+                                      <h3 class="uk-text-center"> Future Star </h3>
+                                    <% }else if (lantai1[0] >= 3.5 ){%>
+                                      <h3 class="uk-text-center"> Utility Hi-Pro </h3>
+                                    <% }else if (lantai1[0] >= 3){%>
+                                      <h3 class="uk-text-center"> Contributor </h3>
+
+                                    <% }else if (lantai1[0] < 3){%>
+                                      <h3 class="uk-text-center"> Iceberg </h3>
+                                    <% }%>
+                                    <h2 class=" uk-text-center uk-text-bold"> <%= lantai1[0] %> </h2>
+                                </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="uk-width-large-1-2">
+                    <div class="md-card md-bg-light-green-200">
+                      <div class="md-card-content uk-align-center">
+                        <h2 class="uk-text-center uk-margin-bottom">Nilai Lantai 2</h2>
+                              <div class="">
+                                <div class="uk-panel">
+                                  <!-- <h2 class="uk-text-center">Level <%= lantai2[1] %></h2> -->
+                                    <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                                    <% if (lantai2[0] >= 4.5 ) {%>
+                                      <h3 class="uk-text-center"> Consistent Star </h3>
+                                    <% }else if (lantai2[0] >= 4){%>
+                                      <h3 class="uk-text-center"> Future Star </h3>
+                                    <% }else if (lantai2[0] >= 3.5 ){%>
+                                      <h3 class="uk-text-center"> Utility Hi-Pro </h3>
+                                    <% }else if (lantai2[0] >= 3){%>
+                                      <h3 class="uk-text-center"> Contributor </h3>
+                                    <% }else if (lantai2[0] < 3){%>
+                                      <h3 class="uk-text-center"> Iceberg </h3>
+                                    <% }%>
+                                    <h2 class=" uk-text-center uk-text-bold"> <%= lantai2[0] %> </h2>
+                                </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class=" uk-section-default ">
+                  <div class="uk-text-center">
+                   <br>
+                      <h1 class="uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400 " >Piket Hari Ini</h1>
+                      <br>
+
+                      <div class="uk-grid uk-grid-width-large-1-2 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler " data-uk-sortable data-uk-grid-margin>
+                        <% if(schedules.length != 0) { %>
+                          <% schedules.forEach((schedule) => { %>
+                          <div>
+                              <div class="md-card  md-bg-light-green-200">
+                                  <div class="md-card-content">
+                                      <h2  class="uk-margin-remove"><span class="">Lantai <%= schedule.nik_pic_piket.level %></span></h2>
+
+                                      <h4 class="uk-margin-remove"><span>PIC Piket : <%= schedule.nik_pic_piket.nama %> </h4>
+                                      <h4 class="uk-margin-remove"><span>Fasilitator : <%= schedule.nik_pic_fasil.nama %> </h4>
+                                      <h4 class="uk-margin-remove" >  <span>Status piket :</span>
+                                      <% if (schedule.status_piket === 0) { %>
+                                        <span class="uk-badge uk-badge-danger">Belum Piket</span>
+                                        <% } else if (schedule.status_piket === 1) { %>
+                                        <span class="uk-badge uk-badge-success">Sudah Piket</span>
+                                      <% } else { %>
+                                        <span class="uk-badge uk-badge-info">Sudah Piket tapi Melewati Jadwal</span>
+                                      <% } %>
+                                      </h4>
+                                      <h4 class="uk-margin-remove" >  <span>Status fasil :</span>
+                                        <% if (schedule.persetujuan_fasil === 0) {%>
+                                        <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Approved</span>
+                                        <% } else {%>
+                                        <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Approved</span>
+                                        <% } %>
+                                      </h4>
+                                  </div>
+                              </div>
+                          </div>
+                        <% }) %>
+                      <%} else { %>
+                        <div>
+                            <div class="md-card  md-bg-light-green-200">
+                                <div class="md-card-content">
+                                    <h2  class="uk-margin-remove">  <span class="">Lantai 1</span></h2>
+                                    <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="md-card  md-bg-light-green-200">
+                                <div class="md-card-content">
+                                    <h2 class="uk-margin-remove" > <span class="">Lantai 2</span></h2>
+                                    <h4 class="uk-margin-remove"><span>Tidak ada piket%> </h4>
+                                </div>
+                            </div>
+                        </div>
+
+                      <%} %>
+                      </div>
+              </div>
+              <br>
+          </div>
+          <div class=" ">
+            <br>
+                <h1 class="uk-text-center uk-margin-remove uk-text-lead uk-text-bolder md-color-light-green-400" >Artikel</h1>
+
+          </div>
+
+          <!-- <div class="uk-grid" data-uk-grid-margin="">
+              <div class="uk-width-medium-1">
+                  <div class="md-card">
+                      <div class="md-card-content">
+                          <div class="uk-overflow-container">
+                              <table class="uk-table uk-table-hover uk-table-nowrap">
+                                  <thead>
+                                      <tr>
+                                          <th class="uk-width-1-10 uk-text-center uk-text-upper">Clients</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                          <td>
+                                              <div class="uk-grid" data-uk-grid-margin>
+                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
+                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_01.png" alt=""/>
+                                                  </div>
+                                                  <div class="uk-width-3-5 uk-width-small-4-5">
+                                                      <h4 class="heading_a uk-margin-small-bottom">Vincenzo Luettgen</h4>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 1-871-550-9634x91599</p>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> connelly.priscilla@kuvalis.com</p>
+                                                  </div>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              <div class="uk-grid" data-uk-grid-margin>
+                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
+                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_02.png" alt=""/>
+                                                  </div>
+                                                  <div class="uk-width-3-5 uk-width-small-4-5">
+                                                      <h4 class="heading_a uk-margin-small-bottom">Ned Conn</h4>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 736.374.6426</p>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> flangworth@gmail.com</p>
+                                                  </div>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              <div class="uk-grid" data-uk-grid-margin>
+                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
+                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_03.png" alt=""/>
+                                                  </div>
+                                                  <div class="uk-width-3-5 uk-width-small-4-5">
+                                                      <h4 class="heading_a uk-margin-small-bottom">Isom Halvorson</h4>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 788-240-4146</p>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> collin.brekke@yahoo.com</p>
+                                                  </div>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              <div class="uk-grid" data-uk-grid-margin>
+                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
+                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_04.png" alt=""/>
+                                                  </div>
+                                                  <div class="uk-width-3-5 uk-width-small-4-5">
+                                                      <h4 class="heading_a uk-margin-small-bottom">Ransom Barrows</h4>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 488.309.8993</p>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> lehner.emmanuel@ledner.com</p>
+                                                  </div>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              <div class="uk-grid" data-uk-grid-margin>
+                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
+                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_05.png" alt=""/>
+                                                  </div>
+                                                  <div class="uk-width-3-5 uk-width-small-4-5">
+                                                      <h4 class="heading_a uk-margin-small-bottom">Edward Paucek</h4>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 228-971-9133x723</p>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> iliana.kreiger@wunsch.org</p>
+                                                  </div>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              <div class="uk-grid" data-uk-grid-margin>
+                                                  <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
+                                                      <img class="md-user-image-large" src="assets/img/avatars/avatar_06.png" alt=""/>
+                                                  </div>
+                                                  <div class="uk-width-3-5 uk-width-small-4-5">
+                                                      <h4 class="heading_a uk-margin-small-bottom">Frederik Nitzsche</h4>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> +72(5)9060825039</p>
+                                                      <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> kaitlyn50@walter.net</p>
+                                                  </div>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <ul class="uk-pagination uk-margin-medium-top">
+                              <li class="uk-disabled"><span><i class="uk-icon-angle-double-left"></i></span></li>
+                              <li><span>&hellip;</span></li>
+                              <li><a href="#">4</a></li>
+                              <li class="uk-active"><span>5</span></li>
+                              <li><a href="#">6</a></li>
+                              <li><span>&hellip;</span></li>
+                              <li><a href="#">20</a></li>
+                              <li><a href="#"><i class="uk-icon-angle-double-right"></i></a></li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+
+          </div> -->
+
+          <!-- <div class="md-card">
+            <div class="md-card-content">
+              <div class="uk-overflow-auto">
+                <table id="dt_default" class="uk-table uk-table-hover uk-table-nowrap" style="width:100%">
+                    <thead>
+                      <tr>
+                          <th class="uk-width-1-10 uk-text-center uk-text-upper">Artikel</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% articles.forEach((article) => { %>
+                    <tr>
+                        <td>
+                            <div class="uk-grid" data-uk-grid-margin>
+                                <div class="uk-width-2-5 uk-width-small-1-5 uk-text-center">
+                                    <img class="md-user-image-large" src="/<%= article.foto_Artikel%>" alt=""/>
+                                </div>
+                                <div class="uk-width-3-5 uk-width-small-4-5">
+                                    <h4 class="heading_a uk-margin-small-bottom"><%= article.pembuat%></h4>
+                                    <p class="uk-margin-remove"><span class="uk-text-muted">Phone:</span> 1-871-550-9634x91599</p>
+                                    <p class="uk-margin-remove"><span class="uk-text-muted">Email:</span> connelly.priscilla@kuvalis.com</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                      <% }) %>
+                    </tbody>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="md-card  md-bg-light-green-200">
+            <div class="md-card-content">
+              <div class="gallery_grid uk-grid-width-medium-1-4 uk-grid-width-large-1-5" data-uk-grid="{gutter: 16}">
+                <% articles.forEach((article) => { %>
+                      <div>
+                          <div class="md-card md-card-hover">
+                              <div class="gallery_grid_item md-card-content">
+                                  <a href="/<%= article.foto_Artikel%>" data-uk-lightbox="{group:'gallery'}">
+                                      <img src="/<%= article.foto_Artikel%>" alt="">
+                                  </a>
+                                  <div class="gallery_grid_image_caption">
+                                      <span class="gallery_image_title "><%= article.judul%></span>
+                                      <br>
+                                      <span class="uk-text-muted uk-text-truncate uk-text-small uk-float-right"><%= article.pembuat%></span>
+                                  </div>
+                              </div>
+                              <div class="blog_list_footer">
+                                  <a id="read" href="/fasilitator/artikel/<%= article.id%>" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary uk-float-right">Read more</a>
+                                  <div class="uk-modal" id="modal_artikel">
+                                      <div class="uk-modal-dialog ">
+                                          <button type="button" class="uk-modal-close uk-close uk-close-alt"></button>
+                                          <div class="uk-overflow-container">
+                                          <h2 id="judul" class="heading_b"><%= article.judul%></h2>
+                                          <img id="gambar" src="/<%= article.foto_Artikel%>" alt=""/>
+                                          <p id="konten"><%= article.konten%></p>
+                                        </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+<%                     }) %>
+                    </div>
+            </div>
+          </div>
+
+
+
+
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+
+
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <!-- common functions -->
+    <script src="/assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="/assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="/assets/js/altair_admin_common.min.js"></script>
+
+    <%- include('../include_admin/datatables'); %>
+
+
+
+    <script>
+        $(function() {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if(Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+
+            $('#read').on( 'click', function () {
+                $('#read').attr('data-uk-modal', "{target:'#modal_artikel'}");
+                $('.nik_edit').val(pengguna_nik);
+                $('.nik_edit2').val(pengguna_nik);
+
+                $('.nama_edit').val(pengguna_nama);
+                // $('#password_edit').val(pengguna_password);
+                $('.peran_edit').val(pengguna_peran);
+                $('.level_edit').val(pengguna_level);
+            } );
+        });
+        });
+    </script>
+
+
+
+</body>
+</html>

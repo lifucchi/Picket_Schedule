@@ -8,7 +8,7 @@
 </head>
 
 
-<body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-500">
+<body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-200">
     <!-- main header -->
     <%- include('header'); %>
     <!-- main header end -->
@@ -68,7 +68,7 @@
                                   <select name='pic_fasil_1' id='pic_fasil_1' class="md-input label-fixed" required >
                                       <option value="">PIC Fasilitator Level 1</option>
                                       <% users.forEach((user) => { %>
-                                        <% if (  user.level  == 1 && user.peran == 'Fasilitator') { %>
+                                        <% if (   user.peran == 'Fasilitator') { %>
                                          <option value="<%= user.nik %>"><%= user.nik %> - <%= user.nama %></option>
                                          <% } %>
                                       <% }); %>
@@ -96,7 +96,7 @@
                                 <select name='pic_fasil_2' id='pic_fasil_2' class="md-input label-fixed" required >
                                     <option value="">PIC Fasilitator Level 2</option>
                                     <% users.forEach((user) => { %>
-                                      <% if (  user.level  == 2 && user.peran == 'Fasilitator') { %>
+                                      <% if (   user.peran == 'Fasilitator') { %>
                                        <option value="<%= user.nik %>"><%= user.nik %> - <%= user.nama %></option>
                                        <% } %>
                                     <% }); %>

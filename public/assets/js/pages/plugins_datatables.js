@@ -38,7 +38,13 @@ altair_datatables = {
     dt_default: function() {
         var $dt_default = $('#dt_default');
         if($dt_default.length) {
-            $dt_default.DataTable();
+            $dt_default.DataTable({
+              columnDefs: [
+                { width: '20%', targets: 1 },
+                { width: '20%', targets: 2 }
+
+              ]
+            });
         }
     },
     dt_scroll: function() {

@@ -262,6 +262,17 @@ exports.getDataBuktiTemuanMeja= (req,res, next) => {
 };
 
 exports.getDataBuktiTemuanMejaFilter= (req,res, next) => {
+  if (res.locals.error_messages.length > 0) {
+    res.locals.error_messages = res.locals.error_messages[0];
+  } else {
+    res.locals.error_messages = null;
+  }
+
+  if (res.locals.success_messages.length > 0) {
+    res.locals.success_messages = res.locals.success_messages[0];
+  } else {
+    res.locals.success_messages = null;
+  }
 
   const bulanTahun = req.body.bulanTahun;
   const kategori = req.body.kategori;
@@ -475,7 +486,6 @@ exports.getDataBuktiTemuanMejaAnggotaDetail= (req,res, next) => {
       console.log('**********ERROR RESULT****************');
       console.log(err);
   });
-
 };
 
 exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {

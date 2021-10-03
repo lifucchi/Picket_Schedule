@@ -20,7 +20,7 @@ exports.getDataArtikel = (req,res,next) => {
   .then(artikel => {
     res.render('./admin/artikel', {
       articles: artikel,
-      pageTitle: 'Artikel',
+      pageTitle: 'Galeri',
       path: '/artikel',
 
     });
@@ -43,7 +43,7 @@ exports.getFormArtikel = (req,res,next) =>{
 
   res.render("./admin/artikel-form", {
     // articles: artikel,
-    pageTitle: 'Artikel',
+    pageTitle: 'Galeri',
     jenis: 'Tambah',
     editing: 'no',
     // path: '/artikel'
@@ -72,7 +72,7 @@ exports.getFormUpdateArtikel = (req,res,next) =>{
   .then(artikel => {
     res.render("./admin/artikel-form", {
       // articles: artikel,
-      pageTitle: 'Artikel',
+      pageTitle: 'Galeri',
       article: artikel,
       jenis: 'Update',
       path: '/artikel',
@@ -130,7 +130,7 @@ exports.postUpdateDataArtikel = (req,res,next) =>{
           }
     })
   .then(artikel => {
-    req.flash('success_messages', 'Artikel berhasil diupdate');
+    req.flash('success_messages', 'Galeri berhasil diupdate');
     setTimeout(() => { return res.redirect('/admin/artikel');}, 2000);
 
 
@@ -162,7 +162,7 @@ exports.postAddDataArtikel = (req,res,next) => {
     foto_Artikel:imgUrl,
   })
   .then( () => {
-    req.flash('success_messages', 'Artikel berhasil ditambahkan');
+    req.flash('success_messages', 'Galeri berhasil ditambahkan');
     res.redirect('/admin/artikel')
       }
     )
@@ -178,7 +178,7 @@ exports.postAddDataArtikel = (req,res,next) => {
       pembuat: pembuat,
       })
       .then( () => {
-        req.flash('success_messages', 'Artikel berhasil ditambahkan');
+        req.flash('success_messages', 'Galeri berhasil ditambahkan');
         setTimeout(() => { return res.redirect('/admin/artikel');}, 2000);
 
           }
@@ -214,7 +214,7 @@ exports.postDeleteArtikel = ( req,res, next) => {
       return artikel.destroy();
     })
     .then(result => {
-      req.flash('success_messages', 'Artikel berhasil dihapus');
+      req.flash('success_messages', 'Galeri berhasil dihapus');
 
       res.redirect('/admin/artikel');
     })

@@ -6,7 +6,7 @@
 </head>
 
 
-<body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-500">
+<body class=" sidebar_main_open sidebar_main_swipe md-bg-grey-200">
     <!-- main header -->
     <%- include('header'); %>
     <!-- main header end -->
@@ -24,10 +24,8 @@
                       <a class="md-btn" href="/admin/artikel/add">
                           Tambah <%= pageTitle%>
                       </a>
-
-
                 </div>
-            </div>
+        </div>
         <% if (path === '/artikel') {%>
               <div class="md-card uk-margin-medium-bottom">
                   <div class="md-card-content">
@@ -37,51 +35,69 @@
                             <%= success_messages %>
                         </div>
                     <% } %>
-                      <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
+
+                    <div class="uk-overflow-auto">
+                      <table id="dt_default" class="uk-table uk-table-small uk-table-divider" style="word-wrap: break-word;width:100%">
+
+                        <!-- <colgroup>
+                             <col span="1" style="width: 5%;">
+                             <col span="1" style="width: 5%;">
+                             <col span="1" style="width: 15%;">
+                             <col span="1" style="width: 15%;">
+                             <col span="1" style="width: 5%;">
+                          </colgroup> -->
                           <thead>
                               <tr>
                                   <th rowspan="2">ID</th>
                                   <!-- <th colspan="5">HR Information</th> -->
                               </tr>
                               <tr>
-                                  <th>Judul</th>
-                                  <th >Konten</th>
+                                  <th width="10%">Judul</th>
+                                  <th>Konten</th>
                                   <th>Pembuat</th>
-                                  <th style="width: 30%;" >Foto Artikel</th>
+                                  <th>Foto</th>
                                   <th>Aksi</th>
                               </tr>
                           </thead>
                           <tbody>
                             <% articles.forEach((article) => { %>
                           <tr>
-                            <td><%= article.id%></td>
-                              <td><%= article.judul%></td>
-                              <td> <div class="uk-text-break">
-                                <%= article.konten%></td>
-                              </div>
+                              <td><%= article.id%></td>
+                              <td class="" > <span style="overflow-warp:break-word"><%= article.judul%></span></td>
+                              <td class="">
+                                <div style='width:200px' class="uk-text-truncate" >
+                                  <%= article.konten%>
+                                </div>
+                              </td>
                               <td><%= article.pembuat%></td>
-                              <td> <img src="/<%= article.foto_Artikel%>" alt=""> </td>
+                              <td> <img class="img_thumb" src="/<%= article.foto_Artikel%>" alt=""> </td>
                               <td>
                                 <div class="uk-grid uk-grid-collapse uk-margin-remove">
 
-                                <form class="" action="/admin/artikel/edit %>" method="get">
-                                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                  <input type="hidden" value="<%= article.id %>" name="update">
-                                  <button id="edit" type="submit" class="md-btn md-btn-small edit" ><i class="md-24 uk-icon-medium uk-icon-edit"></i></button>
-                                </form>
-
-                                  <form onsubmit="return confirm('Are you sure?');" action="/admin/artikel/delete-artikel" method="POST">
+                                  <div class="">
+                                    <form class="" action="/admin/artikel/edit %>" method="get">
                                       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                      <input type="hidden" value="<%= article.id %>" name="artikelId">
-                                      <button id="delete" type="submit" class="md-btn md-btn-small  delete" ><i class="material-icons md-24"></i></button>
-                                  </form>
-                                </div>
+                                      <input type="hidden" value="<%= article.id %>" name="update">
+                                      <button id="edit" type="submit" class="md-btn md-btn-small edit" ><i class="material-icons md-24">mode_edit</button>
+                                    </form>
 
+                                  </div>
+
+                                  <div class="">
+                                    <form onsubmit="return confirm('Are you sure?');" action="/admin/artikel/delete-artikel" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" value="<%= article.id %>" name="artikelId">
+                                        <button id="delete" type="submit" class="md-btn md-btn-small delete" ><i class="material-icons md-24">delete</i></button>
+                                    </form>
+                                  </div>
+                                </div>
                               </td>
                           </tr>
                             <% }) %>
                           </tbody>
-                      </table>
+
+                    </div>
+
                   </div>
               </div>
                       <% } %>

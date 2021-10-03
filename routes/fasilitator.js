@@ -44,6 +44,9 @@ router.get('/buktitemuan/meja/detail/:buktiId' , isAuth,isRole('Fasilitator'), b
 
 router.get('/buktitemuan/ruang' , isAuth,isRole('Fasilitator'),buktiTemuanController.getDataBuktiTemuanRuangFasilitator);
 router.get('/buktitemuan/ruang/detail/:buktiId' , isAuth,isRole('Fasilitator'), buktiTemuanController.getDataBuktiTemuanRuangFasilitatorDetail);
+
+router.get('/artikel/:artikelId' , isAuth,isRole('Fasilitator'),fasilitatorController.getArtikelDetail);
+
 // router.get('/signup', authController.getSignup);
 // router.post('/login', authController.postLogin);
 // router.post('/signup', authController.postSignup);

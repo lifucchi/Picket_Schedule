@@ -123,6 +123,7 @@ app.use((req, res, next) => {
                   }
               }
             });
+
             const tindaklanjutmeja = Bukti_temuan.count({
               where:{
                 penggunaNik: req.session.user.nik,
@@ -130,7 +131,18 @@ app.use((req, res, next) => {
                 [Op.is]: null
                 },
                 tinjak_lanjut: 2
-              }
+              },
+              include: [
+              {
+                model: Penilaian_meja,
+                where: {
+                  [Op.or]:
+                  [
+                    {bobotmeja:1},
+                    {bobotmeja:2}
+                  ]
+                },
+              }]
             });
             const tindaklanjutruang = Bukti_temuan.count({
               where:{
@@ -139,7 +151,18 @@ app.use((req, res, next) => {
                 [Op.is]: null
                 },
                 tinjak_lanjut: 2
-              }
+              },
+              include: [
+              {
+                model: Penilaian_ruang,
+                where: {
+                  [Op.or]:
+                  [
+                    {bobotruang:1},
+                    {bobotruang:2}
+                  ]
+                },
+              }]
             });
           Promise
               .all([belumchecklist,tindaklanjutmeja,tindaklanjutruang])
@@ -170,8 +193,20 @@ app.use((req, res, next) => {
               [Op.is]: null
               },
               tinjak_lanjut: 2
-              }
-            });
+            },
+            include: [
+            {
+              model: Penilaian_meja,
+              where: {
+                [Op.or]:
+                [
+                  {bobotmeja:1},
+                  {bobotmeja:2}
+                ]
+              },
+            }]
+            }
+          );
           const tindaklanjutruang = Bukti_temuan.count({
             where:{
               penggunaNik: req.session.user.nik,
@@ -179,7 +214,18 @@ app.use((req, res, next) => {
               [Op.is]: null
             },
               tinjak_lanjut: 2
-            }
+            },
+            include: [
+            {
+              model: Penilaian_ruang,
+              where: {
+                [Op.or]:
+                [
+                  {bobotruang:1},
+                  {bobotruang:2}
+                ]
+              },
+            }]
           });
         Promise
             .all([belumlaporan, tindaklanjutmeja, tindaklanjutruang])

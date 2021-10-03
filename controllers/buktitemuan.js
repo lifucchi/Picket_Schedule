@@ -404,7 +404,7 @@ exports.postDeleteTindakLanjutMeja = ( req,res, next) => {
 
 // ANGGOTA MEJA
 exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
-  console.log(req.session.user.nik);
+
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
@@ -447,11 +447,54 @@ exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
                       }
                     );
 
+  const buktiTemuanMajor = Bukti_temuan
+                      .findAll(
+                        {
+                          where: {
+                                    penilaianRuangId: {
+                                    [Op.is]: null
+                                  }
+                                },
+                          include: [
+                        {
+                          model: Penilaian_meja,
+                          where: {
+                            [Op.or]:
+                            [
+                              {bobotmeja:2},
+                              {bobotmeja:1}
+                            ]
+                          },
+                          include : [
+                            {
+                              model: Meja,
+                              include : {
+                                model: Pengguna
+                              }
+                            },
+                            {
+                              model: JadwalPiket,
+
+                              include : {
+                                model: Pengguna,
+                                as: 'nik_pic_piket'
+                              }
+                            }
+                          ],
+                          required: true
+                        }],
+                        order: [
+                            [{model:Penilaian_meja},{model: JadwalPiket},'tanggal', 'DESC']
+                        ],
+                      }
+                    );
+
   Promise
-      .all([buktiTemuan])
+      .all([buktiTemuan, buktiTemuanMajor])
       .then(hasil => {
           res.render('./anggota/buktitemuanmeja', {
             rooms: hasil[0],
+            rooms2: hasil[1],
             pageTitle: 'Bukti Temuan Meja'
           });
 
@@ -507,6 +550,13 @@ exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
                           include: [
                         {
                           model: Penilaian_meja,
+                          where: {
+                            [Op.or]:
+                            [
+                              {bobotmeja:2},
+                              {bobotmeja:1}
+                            ]
+                          },
                           include : [
                             {
                               model: Meja,
@@ -613,7 +663,7 @@ exports.postTindakLanut= (req,res, next) => {
 
 // ANggota ruang
 exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
-  console.log(req.session.user.nik);
+
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
@@ -655,13 +705,54 @@ exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
                       }
                     );
 
+    const buktiTemuanMajor = Bukti_temuan
+                        .findAll(
+                          {
+                            where: {
+                                      penilaianMejaId: {
+                                      [Op.is]: null
+                                    }
+                                  },
+                            include: [
+                          {
+                            model: Penilaian_ruang,
+                            where: {
+                              [Op.or]:
+                              [
+                                {bobotruang:2},
+                                {bobotruang:1}
+                              ]
+                            },
+                            include : [
+                              {
+                                model: Ruang,
+                                include : {
+                                  model: Pengguna
+                                }
+                              },
+                              {
+                                model: JadwalPiket,
+                                include : {
+                                  model: Pengguna,
+                                  as: 'nik_pic_piket'
+                                }
+                              }
+                            ],
+                            required: true
+                          }],
+                          order: [
+                              [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
+                          ],
+                        }
+                      );
 
   Promise
-      .all([buktiTemuan])
+      .all([buktiTemuan, buktiTemuanMajor])
       .then(hasil => {
           console.log('**********COMPLETE RESULTS****************');
           res.render('./anggota/buktitemuanruang', {
             rooms: hasil[0],
+            rooms2: hasil[1],
             pageTitle: 'Bukti Temuan Ruang'
           });
 
@@ -754,6 +845,13 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
                           include: [
                         {
                           model: Penilaian_ruang,
+                          where: {
+                            [Op.or]:
+                            [
+                              {bobotruang:2},
+                              {bobotruang:1}
+                            ]
+                          },
                           include : [
                             {
                               model: Ruang,
@@ -848,6 +946,13 @@ exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
                           include: [
                         {
                           model: Penilaian_meja,
+                          where: {
+                            [Op.or]:
+                            [
+                              {bobotmeja:2},
+                              {bobotmeja:1}
+                            ]
+                          },
                           include : [
                             {
                               model: Meja,
@@ -887,7 +992,6 @@ exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
 };
 
 exports.getDataTindakLanjutMejaFasilitatorDetail= (req,res, next) => {
-  console.log(req.session.user.nik);
   const id = req.params.buktiId;
 
   Bukti_temuan.findByPk(id, {
@@ -966,6 +1070,13 @@ exports.getDataBuktiTemuanMejaFasilitator= (req,res, next) => {
                           include: [
                         {
                           model: Penilaian_meja,
+                          where: {
+                            [Op.or]:
+                            [
+                              {bobotmeja:3},
+                              {bobotmeja:4}
+                            ]
+                          },
                           include : [
                             {
                               model: Meja,
@@ -989,12 +1100,55 @@ exports.getDataBuktiTemuanMejaFasilitator= (req,res, next) => {
                       }
                     );
 
+      const buktiTemuanMajor = Bukti_temuan
+                          .findAll(
+                            {
+                              where: {
+                                        penilaianRuangId: {
+                                        [Op.is]: null
+                                      }
+                                    },
+                              include: [
+                            {
+                              model: Penilaian_meja,
+                              where: {
+                                [Op.or]:
+                                [
+                                  {bobotmeja:1},
+                                  {bobotmeja:2}
+                                ]
+                              },
+                              include : [
+                                {
+                                  model: Meja,
+                                  where: {penggunaNik: req.session.user.nik},
+                                  include : {
+                                    model: Pengguna
+                                  }
+                                },
+                                {
+                                  model: JadwalPiket,
+                                  include : {
+                                    model: Pengguna,
+                                    as: 'nik_pic_piket'
+                                  }
+                                }
+                              ],
+                              required: true
+                            }],
+                            order: [
+                                [{model:Penilaian_meja},{model: JadwalPiket},'tanggal', 'DESC']
+                            ],
+                          }
+                        );
+
 
   Promise
-      .all([buktiTemuan])
+      .all([buktiTemuan, buktiTemuanMajor])
       .then(hasil => {
           res.render('./fasilitator/buktitemuanmeja', {
             rooms: hasil[0],
+            rooms2: hasil[1],
             pageTitle: 'Bukti Temuan Meja'
           });
 
@@ -1190,6 +1344,13 @@ exports.getDataTindakLanjutRuangFasilitator= (req,res, next) => {
                           include: [
                         {
                           model: Penilaian_ruang,
+                          where: {
+                            [Op.or]:
+                            [
+                              {bobotruang:1},
+                              {bobotruang:2}
+                            ]
+                          },
                           include : [
                             {
                               model: Ruang,

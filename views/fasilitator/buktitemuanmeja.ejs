@@ -28,39 +28,83 @@
             <div class="md-card">
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
-                    <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Tanggal Piket</th>
-                                <th >Foto</th>
-                                <th>Penemu</th>
-                                <th>Deskripsi</th>
-                                <th>Deadline</th>
-                                <th>Tinjak Lanjut</th>
+                  <div class="uk-grid" data-uk-grid-margin>
+                      <div class="uk-width-1-1">
+                          <ul class="uk-tab" data-uk-tab="{connect:'#tabs_1'}">
+                              <li class="uk-active"><a href="#">Major</a></li>
+                              <li><a href="#">Minor</a></li>
+                          </ul>
+                          <ul id="tabs_1" class="uk-switcher uk-margin">
+                              <li>
+                                <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal Piket</th>
+                                            <th >Foto</th>
+                                            <th>Penemu</th>
+                                            <th>Deskripsi</th>
+                                            <th>Deadline</th>
+                                            <th>Tinjak Lanjut</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <% if (rooms.length != 0) {%>
-                          <% rooms.forEach((room) => { %>
-                        <tr>
-                          <td class="uk-text-large uk-text-nowrap"><a href="/fasilitator/buktitemuan/meja/detail/<%= room.id %>"><%= room.penilaian_meja.jadwal_piket.tanggal %></a></td>
-                          <td class="uk-text-large uk-text-nowrap"> <img class="img_thumb" src="/<%= room.fotosebelum%>" alt=""> </td>
-                          <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.jadwal_piket.nik_pic_piket.nama %></td>
-                          <td class="uk-text-large uk-text-nowrap"><%= room.deskripsi_sebelum%> </td>
-                          <td class="uk-text-large uk-text-nowrap"><%= room.deadline %> </td>
-                          <% if (room.tinjak_lanjut == 2) {%>
-                          <td> <span class="uk-badge uk-badge-danger">Belum Tindak Lanjut</span> </td>
-                          <% } else {%>
-                            <td> <span class="uk-badge uk-badge-success">Sudah Tindak Lanjut</span> </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% if (rooms2.length != 0) {%>
+                                      <% rooms2.forEach((room) => { %>
+                                    <tr>
+                                      <td class="uk-text-large uk-text-nowrap"><a href="/fasilitator/buktitemuan/meja/detail/<%= room.id %>"><%= room.penilaian_meja.jadwal_piket.tanggal %></a></td>
+                                      <td class="uk-text-large uk-text-nowrap"> <img class="img_thumb" src="/<%= room.fotosebelum%>" alt=""> </td>
+                                      <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.jadwal_piket.nik_pic_piket.nama %></td>
+                                      <td class="uk-text-large uk-text-nowrap"><%= room.deskripsi_sebelum%> </td>
+                                      <td class="uk-text-large uk-text-nowrap"><%= room.deadline %> </td>
+                                      <% if (room.tinjak_lanjut == 2) {%>
+                                      <td> <span class="uk-badge uk-badge-danger">Belum Tindak Lanjut</span> </td>
+                                      <% } else {%>
+                                        <td> <span class="uk-badge uk-badge-success">Sudah Tindak Lanjut</span> </td>
+                                        <% } %>
+                                    </tr>
+                                      <% }) %>
+                                      <%}%>
+                                    </tbody>
+                                </table>
+                              </li>
+                              <li>
+                                <table id="dt_individual_search" class="uk-table" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal Piket</th>
+                                            <th>Penemu</th>
+                                            <th>Deskripsi</th>
+                                            <th>Deadline</th>
+                                            <th>Tinjak Lanjut</th>
 
-                            <% } %>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% if (rooms.length != 0) {%>
+                                      <% rooms.forEach((room) => { %>
+                                    <tr>
+                                      <td class="uk-text-large uk-text-nowrap"><a href="/fasilitator/buktitemuan/meja/detail/<%= room.id %>"><%= room.penilaian_meja.jadwal_piket.tanggal %></a></td>
+                                      <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.jadwal_piket.nik_pic_piket.nama %></td>
+                                      <td class="uk-text-large uk-text-nowrap"><%= room.deskripsi_sebelum%> </td>
+                                      <td class="uk-text-large uk-text-nowrap"><%= room.deadline %> </td>
+                                      <% if (room.tinjak_lanjut == 2) {%>
+                                      <td> <span class="uk-badge uk-badge-danger">Belum Tindak Lanjut</span> </td>
+                                      <% } else {%>
+                                        <td> <span class="uk-badge uk-badge-success">Sudah Tindak Lanjut</span> </td>
 
-                        </tr>
-                          <% }) %>
-                        </tbody>
-                    </table>
-                    <%}%>
+                                        <% } %>
+
+                                    </tr>
+                                      <% }) %>
+                                      <%}%>
+                                    </tbody>
+                                </table>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+
                 </div>
             </div>
         </div>

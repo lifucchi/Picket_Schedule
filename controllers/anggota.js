@@ -290,3 +290,30 @@ exports.getArtikelDetail = (req,res) => {
       });
 
 };
+
+exports.getArtikelList = (req,res) => {
+  const page = req.query.page;
+
+  const banyakartikel = Artikel.findAll({
+    order: [
+        ['createdAt', 'DESC']
+    ]
+  })
+
+  Promise
+      .all([banyakartikel])
+      .then(hasil => {
+
+        res.render('./anggota/artikellist', {
+          articles: hasil[0],
+          pageTitle: 'Artikel',
+          path: '/artikel',
+        });
+
+      })
+      .catch(err => {
+          console.log('**********ERROR RESULT****************');
+          console.log(err);
+      });
+
+};

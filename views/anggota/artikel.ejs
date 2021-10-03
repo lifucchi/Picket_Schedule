@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="uk-width-medium-1-4">
-                <h5 class="uk-margin-small-bottom uk-text-upper">Recent Posts</h5>
+                <h5 class="uk-margin-small-bottom uk-text-upper">Galeri terbaru</h5>
                 <ul class="md-list uk-margin-remove">
                   <% artikels.forEach((artikel) => { %>
                     <li>
@@ -47,7 +47,14 @@
                             <span class="uk-text-small uk-text-muted"><%= artikel.createdAt %></span>
                         </div>
                     </li>
-                    <%                     }) %>
+                    <% }) %>
+                    <li>
+                      <div class="md-list-content">
+                            <span class="md-list-heading uk-float-right "><a href="/anggota/artikel/">lihat galeri lama</a></span>
+                      </div>
+                    </li>
+                </ul>
+                <ul class="md-list uk-margin-remove">
 
                 </ul>
             </div>

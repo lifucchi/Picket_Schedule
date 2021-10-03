@@ -101,7 +101,7 @@
                             <div class="uk-panel uk-text-center">
                               <!-- <h2 class="uk-text-center">Level  %></h2> -->
                                 <!-- <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i> -->
-                                <% if (lantaiTerbaik[0] >= 1000 ) {%>
+                                <% if (lantaiTerbaik[0] >= 900 ) {%>
                                     <h2> Consistent Star </h2>
                                 <% }else if (lantaiTerbaik[0] >= 800){%>
                                   <h2> Future Star </h2>
@@ -109,7 +109,7 @@
                                   <h2> Utility Hi-Pro </h2>
                                 <% }else if (lantaiTerbaik[0] >= 400){%>
                                   <h2> Contributor </h2>
-                                <% }else if (lantaiTerbaik[0] < 499){%>
+                                <% }else if (lantaiTerbaik[0] < 400){%>
                                   <h2> Iceberg </h2>
                                 <% }%>
                                 <h2 class="uk-margin-remove"><span> <%= lantaiTerbaik[0] %> </h2>
@@ -205,8 +205,8 @@
 
                             </div>
 
-                              <div class="gallery_grid_image_caption" style="  height: 90px;>
-                                  <span class="gallery_image_title "><%= article.judul%></span>
+                              <div class="gallery_grid_image_caption" style="  height: 90px;">
+                                  <span class="gallery_image_title"><%= article.judul%></span>
                                   <br>
                                   <span class="uk-text-muted uk-text-truncate uk-text-small uk-float-right"><%= article.pembuat%></span>
                               </div>

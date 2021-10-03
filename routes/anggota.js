@@ -64,5 +64,7 @@ router.get('/tindaklanjut/ruang/detail/:buktiId' , isAuth,isRole('Anggota') ,buk
 router.post('/tindaklanjut/buktiruang' , isAuth,isRole('Anggota') ,buktiTemuanController.postTindakLanutRuang);
 
 router.get('/artikel/:artikelId' , isAuth,isRole('Anggota'),anggotaController.getArtikelDetail);
+router.get('/artikel/' , isAuth,isRole('Anggota'),anggotaController.getArtikelList);
+
 
 module.exports = router;

@@ -10,6 +10,8 @@ const Ruang = require('../models/ruang');
 const sequelize = require('../util/database');
 const { Op } = require("sequelize");
 
+const ITEMS_PER_PAGE = 5;
+
 exports.getDashboard = (req,res) => {
   // res.send('<h1>hello admin</h1>')
   if (res.locals.error_messages.length > 0) {
@@ -292,28 +294,41 @@ exports.getArtikelDetail = (req,res) => {
 };
 
 exports.getArtikelList = (req,res) => {
-  const page = req.query.page;
+  const page = +req.query.page;
+  let totalArtikel;
 
-  const banyakartikel = Artikel.findAll({
-    order: [
-        ['createdAt', 'DESC']
-    ]
+  // ITEMS_PER_PAGE
+
+  Artikel.count()
+  .then(jumlahArtikel => {
+    totalArtikel = jumlahArtikel;
+    return Artikel.findAll({
+      order: [
+          ['createdAt', 'DESC']
+      ],
+      offset: (page - 1) * ITEMS_PER_PAGE,
+      limit: ITEMS_PER_PAGE
+    });
   })
+  .then( hasil => {
+    res.render('./anggota/artikellist', {
+      articles: hasil,
+      pageTitle: 'Artikel',
+      path: '/artikel',
+      currentPage: page,
+      hasNextPage: ITEMS_PER_PAGE* page < totalArtikel,
+      hasPreviousPage: page > 1,
+      nextPage: page + 1,
+      previousPage: page - 1,
+      lastPage: Math.ceil(totalArtikel/ITEMS_PER_PAGE)
+    });
 
-  Promise
-      .all([banyakartikel])
-      .then(hasil => {
+  })
+  .catch(err => {
+        console.log('**********ERROR RESULT****************');
+        console.log(err);
+    });
 
-        res.render('./anggota/artikellist', {
-          articles: hasil[0],
-          pageTitle: 'Artikel',
-          path: '/artikel',
-        });
 
-      })
-      .catch(err => {
-          console.log('**********ERROR RESULT****************');
-          console.log(err);
-      });
 
 };

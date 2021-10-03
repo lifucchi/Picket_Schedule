@@ -416,6 +416,13 @@ exports.getDataBuktiTemuanMejaAnggota= (req,res, next) => {
                           include: [
                         {
                           model: Penilaian_meja,
+                          where: {
+                            [Op.or]:
+                            [
+                              {bobotmeja:4},
+                              {bobotmeja:3}
+                            ]
+                          },
                           include : [
                             {
                               model: Meja,
@@ -618,6 +625,13 @@ exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
                           include: [
                         {
                           model: Penilaian_ruang,
+                          where: {
+                            [Op.or]:
+                            [
+                              {bobotruang:4},
+                              {bobotruang:3}
+                            ]
+                          },
                           include : [
                             {
                               model: Ruang,
@@ -1038,6 +1052,13 @@ exports.getDataBuktiTemuanRuangFasilitator= (req,res, next) => {
                           include: [
                         {
                           model: Penilaian_ruang,
+                          where: {
+                            [Op.or]:
+                            [
+                              {bobotruang:4},
+                              {bobotruang:3}
+                            ]
+                          },
                           include : [
                             {
                               model: Ruang,
@@ -1061,12 +1082,54 @@ exports.getDataBuktiTemuanRuangFasilitator= (req,res, next) => {
                       }
                     );
 
+    const buktiTemuanMajor = Bukti_temuan
+                        .findAll(
+                          {
+                            where: {
+                                      penilaianMejaId: {
+                                      [Op.is]: null
+                                    }
+                                  },
+                            include: [
+                          {
+                            model: Penilaian_ruang,
+                            where: {
+                              [Op.or]:
+                              [
+                                {bobotruang:2},
+                                {bobotruang:1}
+                              ]
+                            },
+                            include : [
+                              {
+                                model: Ruang,
+                                include : {
+                                  model: Pengguna
+                                }
+                              },
+                              {
+                                model: JadwalPiket,
+                                include : {
+                                  model: Pengguna,
+                                  as: 'nik_pic_piket'
+                                }
+                              }
+                            ],
+                            required: true
+                          }],
+                          order: [
+                              [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
+                          ],
+                        }
+                      );
+
 
   Promise
-      .all([buktiTemuan])
+      .all([buktiTemuan,buktiTemuanMajor])
       .then(hasil => {
           res.render('./fasilitator/buktitemuanruang', {
             rooms: hasil[0],
+            rooms2:hasil[1],
             pageTitle: 'Bukti Temuan Ruang'
           });
 

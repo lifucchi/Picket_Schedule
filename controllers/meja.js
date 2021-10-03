@@ -76,7 +76,6 @@ exports.postAddDataAllMeja = (req,res,next) => {
   .catch(err => console.log(err));
 };
 
-
 exports.postEditMeja = ( req,res, next) => {
   const id = req.body.id;
   const pemilik = req.body.pemilik_meja_edit;
@@ -95,7 +94,6 @@ exports.postEditMeja = ( req,res, next) => {
     .catch(err => console.log(err));
 };
 
-
 exports.postDeleteMeja = ( req,res, next) => {
   const id = req.body.mejaId;
   Meja.findByPk(id)
@@ -109,7 +107,6 @@ exports.postDeleteMeja = ( req,res, next) => {
     })
     .catch(err => console.log(err));
 };
-
 
 // ANGGOTA
 // exports.getDataMejaAnggota = (req,res, next) => {
@@ -279,7 +276,8 @@ exports.postNilaiMeja = (req,res, next) => {
            deskripsi_sebelum:deskripsi,
            deadline:tanggal,
            penilaianMejaId: id,
-           penggunaNik: tindaklanjut
+           penggunaNik: tindaklanjut,
+           tinjak_lanjut: 1
 
        }
      )
@@ -308,10 +306,6 @@ exports.postNilaiMeja = (req,res, next) => {
    .catch(err => console.log(err));
 
  }
-
-
-
-
 };
 
 exports.postBuktiTemuan = (req,res, next) => {

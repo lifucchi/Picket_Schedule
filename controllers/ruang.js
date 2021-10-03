@@ -235,7 +235,8 @@ exports.postNilaiRuang = (req,res, next) => {
            deskripsi_sebelum:deskripsi,
            deadline:tanggal,
            penilaianRuangId: id,
-           penggunaNik: tindaklanjut
+           penggunaNik: tindaklanjut,
+           tinjak_lanjut: 1
 
        }
      )

@@ -159,12 +159,10 @@ exports.getDataBuktiTemuanRuangDetail= (req,res, next) => {
   .then(bukti => {
     console.log('**********COMPLETE RESULTS****************');
     let status;
-    console.log(bukti);
-    console.log(bukti.Penilaian_ruang.bobotruang);
 
-    if (bukti.Penilaian_ruang.bobotruang == 1 || bukti.Penilaian_ruang.bobotruang == 2){
+    if (bukti.penilaian_ruang.bobotruang == 1 || bukti.penilaian_ruang.bobotruang == 2){
       status = "Major";
-    }else if (bukti.Penilaian_ruang.bobotruang == 3 || bukti.Penilaian_ruang.bobotruang == 4  ){
+    }else if (bukti.penilaian_ruang.bobotruang == 3 || bukti.penilaian_ruang.bobotruang == 4  ){
       status = "Minor";
     }
 
@@ -367,10 +365,18 @@ exports.getDataBuktiTemuanMejaDetail= (req,res, next) => {
     ]
   })
   .then(bukti => {
+    let status;
+
+    if (bukti.penilaian_meja.bobotmeja == 1 || bukti.penilaian_meja.bobotmeja == 2){
+      status = "Major";
+    }else if (bukti.penilaian_meja.bobotmeja == 3 || bukti.penilaian_meja.bobotmeja == 4  ){
+      status = "Minor";
+    }
     res.render('./admin/buktitemuanmejadetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Meja',
-      path: '/buktimeja'
+      path: '/buktimeja',
+      status: status
     });
 
   })

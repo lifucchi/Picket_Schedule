@@ -75,7 +75,6 @@
                                 <th>Pemilik Meja</th>
                                 <th>Penemu</th>
                                 <th>Deskripsi</th>
-                                <th>Deadline</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -88,7 +87,6 @@
                           <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.meja.pengguna.nama %> </td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.jadwal_piket.nik_pic_piket.nama %></td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.deskripsi_sebelum%> </td>
-                          <td class="uk-text-large uk-text-nowrap"><%= room.deadline %> </td>
                             <td class="uk-text-nowrap">
                                 <!-- <button  href="javascript:void(0);" class="btn edit"><i class="material-icons md-24"></i></button> -->
                                 <form onsubmit="return confirm('Are you sure?');" action="/admin/buktitemuanmeja/delete" method="POST">

@@ -25,6 +25,7 @@
 
         <div id="page_content_inner">
 
+          <% if(status === "Major"){ %>
             <div class="md-card">
                 <div class="md-card-content">
                     <div class="uk-grid uk-grid-divider" data-uk-grid-margin>
@@ -123,6 +124,83 @@
                     </div>
                 </div>
             </div>
+
+          <% }else if (status === "Minor" ){ %>
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-grid uk-grid-divider" data-uk-grid-margin>
+                        <div class="uk-width-medium-1-2">
+                          <h2>BUKTI TEMUAN</h2>
+                          <br>
+                            <div class="uk-margin-large-bottom">
+                                <h2 class="heading_c uk-margin-small-bottom">Deskripsi Penemu </h2>
+                                <%= rooms.deskripsi_sebelum %>
+                            </div>
+                            <% if (rooms.fotosebelum !== null) {%>
+
+                            <div class="uk-margin-large-bottom">
+                                <h2 class="heading_c uk-margin-small-bottom">Foto </h2>
+                                <a href="/<%= rooms.fotosebelum%>" data-uk-lightbox="{group:'gallery'}">
+                                    <img class="img_thumb" src="/<%= rooms.fotosebelum %>" alt="">
+                                </a>
+
+                            </div>
+                            <% } %>
+
+                        </div>
+
+                        <div class="uk-width-medium-1-2">
+                            <div class="uk-margin-medium-bottom">
+
+                                <p>
+                                    Status:
+                                    <% if ( rooms.tinjak_lanjut === 2 ) {%>
+                                    <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Tinjak Lanjut</span>
+                                    <% } else {  %>
+                                    <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Tinjak Lanjut</span>
+                                    <% }  %>
+                                </p>
+                            </div>
+                            <h2 class="heading_c uk-margin-small-bottom">Details</h2>
+                            <ul class="md-list md-list-addon">
+                                <li>
+                                    <div class="md-list-addon-element">
+                                        <img class="md-user-image md-list-addon-avatar" src="/assets/img/avatars/avatar_02_tn.png" alt=""/>
+                                    </div>
+                                    <div class="md-list-content">
+                                        <span class="md-list-heading"><%= rooms.penilaian_meja.meja.pengguna.nama%> </span>
+                                        <span class="uk-text-small uk-text-muted">Nama Pemilik Meja</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="md-list-addon-element">
+                                        <img class="md-user-image md-list-addon-avatar" src="/assets/img/avatars/avatar_02_tn.png" alt=""/>
+                                    </div>
+                                    <div class="md-list-content">
+                                        <span class="md-list-heading"><%= rooms.penilaian_meja.jadwal_piket.nik_pic_piket.nama %></span>
+                                        <span class="uk-text-small uk-text-muted">Penemu</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="md-list-addon-element">
+                                        <i class="md-list-addon-icon material-icons">&#xE8DF;</i>
+                                    </div>
+                                    <div class="md-list-content">
+                                        <span class="md-list-heading"><%= rooms.penilaian_meja.jadwal_piket.tanggal%></span>
+                                        <span class="uk-text-small uk-text-muted">Jadwal Piket</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          <% } %>
+
+
+
+
 
 
 

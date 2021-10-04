@@ -536,10 +536,19 @@ exports.getDataBuktiTemuanMejaAnggotaDetail= (req,res, next) => {
     ]
   })
   .then(bukti => {
+
+    let status;
+
+    if (bukti.penilaian_meja.bobotmeja == 1 || bukti.penilaian_meja.bobotmeja == 2){
+      status = "Major";
+    }else if (bukti.penilaian_meja.bobotmeja == 3 || bukti.penilaian_meja.bobotmeja == 4  ){
+      status = "Minor";
+    }
     res.render('./anggota/buktitemuanmejadetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Meja',
-      path: '/buktimeja'
+      path: '/buktimeja',
+      status: status
     });
 
   })
@@ -806,8 +815,6 @@ exports.getDataBuktiTemuanRuangAnggotaDetail= (req,res, next) => {
   })
   .then(bukti => {
     let status;
-    // console.log(bukti);
-    // console.log(bukti.penilaian_ruang.bobotruang);
 
     if (bukti.penilaian_ruang.bobotruang == 1 || bukti.penilaian_ruang.bobotruang == 2){
       status = "Major";

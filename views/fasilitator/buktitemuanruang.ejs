@@ -76,9 +76,9 @@
                                         <tr>
                                             <th>Tanggal Piket</th>
                                             <th>Penemu</th>
+                                            <th>Tembusan</th>
                                             <th>Deskripsi</th>
-                                            <th>Deadline</th>
-                                            <th>Tinjak Lanjut</th>
+
 
                                         </tr>
                                     </thead>
@@ -88,14 +88,9 @@
                                     <tr>
                                       <td class="uk-text-large uk-text-nowrap"><a href="/fasilitator/buktitemuan/ruang/detail/<%= room.id %>"><%= room.penilaian_ruang.jadwal_piket.tanggal %></a></td>
                                       <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_ruang.jadwal_piket.nik_pic_piket.nama %></td>
+                                      <td class="uk-text-large uk-text-nowrap"><%= room.pengguna.nama %></td>
                                       <td class="uk-text-large uk-text-nowrap"><%= room.deskripsi_sebelum%> </td>
-                                      <td class="uk-text-large uk-text-nowrap"><%= room.deadline %> </td>
-                                      <% if (room.tinjak_lanjut == 2) {%>
-                                      <td> <span class="uk-badge uk-badge-danger">Belum Tindak Lanjut</span> </td>
-                                      <% } else {%>
-                                        <td> <span class="uk-badge uk-badge-success">Sudah Tindak Lanjut</span> </td>
 
-                                        <% } %>
 
                                     </tr>
                                       <% }) %>

@@ -9,7 +9,7 @@ const Ruang = require('../models/ruang');
 const sequelize = require('../util/database');
 const { Op } = require("sequelize");
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 10;
 
 exports.getDashboard = (req,res) => {
   // res.send('<h1>hello admin</h1>')

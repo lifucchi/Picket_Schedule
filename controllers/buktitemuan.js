@@ -1218,10 +1218,19 @@ exports.getDataBuktiTemuanMejaFasilitatorDetail= (req,res, next) => {
     ]
   })
   .then(bukti => {
+
+    let status;
+
+    if (bukti.penilaian_meja.bobotmeja == 1 || bukti.penilaian_meja.bobotmeja == 2){
+      status = "Major";
+    }else if (bukti.penilaian_meja.bobotmeja == 3 || bukti.penilaian_meja.bobotmeja == 4  ){
+      status = "Minor";
+    }
     res.render('./fasilitator/buktitemuanmejadetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Meja',
-      path: '/buktimeja'
+      path: '/buktimeja',
+      status: status
     });
 
   })
@@ -1267,7 +1276,11 @@ exports.getDataBuktiTemuanRuangFasilitator= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }],
+                        },
+                        {
+                          model: Pengguna
+                        }
+                      ],
                         order: [
                             [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
                         ],
@@ -1355,10 +1368,19 @@ exports.getDataBuktiTemuanRuangFasilitatorDetail= (req,res, next) => {
     ]
   })
   .then(bukti => {
+
+    let status;
+
+    if (bukti.penilaian_ruang.bobotruang == 1 || bukti.penilaian_ruang.bobotruang == 2){
+      status = "Major";
+    }else if (bukti.penilaian_ruang.bobotruang == 3 || bukti.penilaian_ruang.bobotruang == 4  ){
+      status = "Minor";
+    }
     res.render('./fasilitator/buktitemuanruangdetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Ruang',
-      path: '/buktiruang'
+      path: '/buktiruang',
+      status: status
     });
 
   })

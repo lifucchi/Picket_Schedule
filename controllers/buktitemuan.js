@@ -158,10 +158,21 @@ exports.getDataBuktiTemuanRuangDetail= (req,res, next) => {
   })
   .then(bukti => {
     console.log('**********COMPLETE RESULTS****************');
+    let status;
+    console.log(bukti);
+    console.log(bukti.Penilaian_ruang.bobotruang);
+
+    if (bukti.Penilaian_ruang.bobotruang == 1 || bukti.Penilaian_ruang.bobotruang == 2){
+      status = "Major";
+    }else if (bukti.Penilaian_ruang.bobotruang == 3 || bukti.Penilaian_ruang.bobotruang == 4  ){
+      status = "Minor";
+    }
+
     res.render('./admin/buktitemuanruangdetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Ruang',
-      path: '/buktiruang'
+      path: '/buktiruang',
+      status: status
     });
 
   })
@@ -698,7 +709,11 @@ exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }],
+                        },
+                        {
+                          model: Pengguna
+                        }
+                      ],
                         order: [
                             [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
                         ],
@@ -749,6 +764,8 @@ exports.getDataBuktiTemuanRuangAnggota= (req,res, next) => {
   Promise
       .all([buktiTemuan, buktiTemuanMajor])
       .then(hasil => {
+
+
           console.log('**********COMPLETE RESULTS****************');
           res.render('./anggota/buktitemuanruang', {
             rooms: hasil[0],
@@ -788,10 +805,20 @@ exports.getDataBuktiTemuanRuangAnggotaDetail= (req,res, next) => {
     ]
   })
   .then(bukti => {
+    let status;
+    // console.log(bukti);
+    // console.log(bukti.penilaian_ruang.bobotruang);
+
+    if (bukti.penilaian_ruang.bobotruang == 1 || bukti.penilaian_ruang.bobotruang == 2){
+      status = "Major";
+    }else if (bukti.penilaian_ruang.bobotruang == 3 || bukti.penilaian_ruang.bobotruang == 4  ){
+      status = "Minor";
+    }
     res.render('./anggota/buktitemuanruangdetail', {
       rooms: bukti,
       pageTitle: 'Bukti Temuan Ruang',
-      path: '/buktiruang'
+      path: '/buktiruang',
+      status: status
     });
 
   })
@@ -1135,7 +1162,11 @@ exports.getDataBuktiTemuanMejaFasilitator= (req,res, next) => {
                                 }
                               ],
                               required: true
-                            }],
+                            },
+                            {
+                              model: Pengguna
+                            }
+                          ],
                             order: [
                                 [{model:Penilaian_meja},{model: JadwalPiket},'tanggal', 'DESC']
                             ],

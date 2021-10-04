@@ -53,27 +53,33 @@
                       <div class="md-card-content uk-align-center">
 
                       <div class="uk-panel uk-text-center">
+                        <div class="uk-grid">
+                          <div class="uk-width-1-2">
+                            <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                            <h2 class="uk-text-middle  ">
+                              <% if (mejaTerbaik.bobotmeja >= 4.5 ) {%>
+                               Consistent Star
+                              <% }else if (mejaTerbaik.bobotmeja >= 4){%>
+                               Future Star
+                              <% }else if (mejaTerbaik.bobotmeja >= 3.5 ){%>
+                               Utility Hi-Pro
+                              <% }else if (mejaTerbaik.bobotmeja >= 3){%>
+                               Contributor
+                              <% }else if (mejaTerbaik.bobotmeja < 3){%>
+                               Iceberg
+                              <% }%>
+                            </h2>
 
-                        <h2 class="uk-text-middle  ">
-                          <% if (mejaTerbaik.bobotmeja >= 4.5 ) {%>
-                           Consistent Star
-                          <% }else if (mejaTerbaik.bobotmeja >= 4){%>
-                           Future Star
-                          <% }else if (mejaTerbaik.bobotmeja >= 3.5 ){%>
-                           Utility Hi-Pro
-                          <% }else if (mejaTerbaik.bobotmeja >= 3){%>
-                           Contributor
-                          <% }else if (mejaTerbaik.bobotmeja < 3){%>
-                           Iceberg
-                          <% }%>
-                        </h2>
+                            <h2 class="uk-text-middle uk-margin-remove uk-text-center  "> <%= mejaTerbaik.bobotmeja %> </h2>
 
-                        <h2 class="uk-text-middle uk-margin-remove uk-text-center  "> <%= mejaTerbaik.bobotmeja %> </h2>
-                        <h3 class="uk-text-middle uk-margin-remove uk-text-center  "><%= mejaTerbaik.meja.pengguna.nama %>   </h3>
-                        <h3 class="uk-text-middle uk-margin-remove uk-text-center  ">Level <%= mejaTerbaik.meja.pengguna.level %></h3>
+                          </div>
+                          <div class="uk-width-1-2">
+                            <h1 class="uk-text-middle  uk-text-center  ">Level <%= mejaTerbaik.meja.pengguna.level %></h1>
+                            <h2 class="uk-text-middle  uk-text-center  "><%= mejaTerbaik.meja.pengguna.nama %>   </h2>
+                          </div>
+                        </div>
                       </div>
                     </div>
-
                       <!-- </div> -->
                     <!-- </div> -->
                 </div>
@@ -100,21 +106,27 @@
                           <div class="">
                             <div class="uk-panel uk-text-center">
                               <!-- <h2 class="uk-text-center">Level  %></h2> -->
-                                <!-- <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i> -->
-                                <% if (lantaiTerbaik[0] >= 900 ) {%>
-                                    <h2> Consistent Star </h2>
-                                <% }else if (lantaiTerbaik[0] >= 800){%>
-                                  <h2> Future Star </h2>
-                                <% }else if (lantaiTerbaik[0] >= 600 ){%>
-                                  <h2> Utility Hi-Pro </h2>
-                                <% }else if (lantaiTerbaik[0] >= 400){%>
-                                  <h2> Contributor </h2>
-                                <% }else if (lantaiTerbaik[0] < 400){%>
-                                  <h2> Iceberg </h2>
-                                <% }%>
-                                <h2 class="uk-margin-remove"><span> <%= lantaiTerbaik[0] %> </h2>
-                                <h2 class="uk-margin-remove"><span> level <%= lantaiTerbaik[1] %> </h2>
+                              <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                  <i href="" class="uk-align-center uk-icon-large uk-icon-button uk-icon-star md-bg-lime-A200"></i>
+                                  <% if (lantaiTerbaik[0] >= 900 ) {%>
+                                      <h2> Consistent Star </h2>
+                                  <% }else if (lantaiTerbaik[0] >= 800){%>
+                                    <h2> Future Star </h2>
+                                  <% }else if (lantaiTerbaik[0] >= 600 ){%>
+                                    <h2> Utility Hi-Pro </h2>
+                                  <% }else if (lantaiTerbaik[0] >= 400){%>
+                                    <h2> Contributor </h2>
+                                  <% }else if (lantaiTerbaik[0] < 400){%>
+                                    <h2> Iceberg </h2>
+                                  <% }%>
 
+                                  <h2 class="uk-margin-remove"><span> <%= lantaiTerbaik[0] %> </h2>
+                                </div>
+                                <div class="uk-width-1-2">
+                                  <h1 class="uk-margin-remove"><span> Level <%= lantaiTerbaik[1] %> </h1>
+                                </div>
+                              </div>
                             </div>
                       </div>
                   </div>
@@ -138,7 +150,6 @@
                           <div class="md-card  md-bg-light-green-200">
                               <div class="md-card-content">
                                   <h2  class="uk-margin-remove"><span class="">Lantai <%= schedule.nik_pic_piket.level %></span></h2>
-
                                   <h4 class="uk-margin-remove"><span>PIC Piket : <%= schedule.nik_pic_piket.nama %> </h4>
                                   <h4 class="uk-margin-remove"><span>Fasilitator : <%= schedule.nik_pic_fasil.nama %> </h4>
                                   <h4 class="uk-margin-remove" >  <span>Status piket :</span>
@@ -202,9 +213,7 @@
                               <a href="/<%= article.foto_Artikel%>" data-uk-lightbox="{group:'gallery'}">
                                   <img style="background-size: 300px 100px;" src="/<%= article.foto_Artikel%>" alt="">
                               </a>
-
                             </div>
-
                               <div class="gallery_grid_image_caption" style="  height: 90px;">
                                   <span class="gallery_image_title"><%= article.judul%></span>
                                   <br>
@@ -226,8 +235,13 @@
                           </div>
                       </div>
                   </div>
-      <%                     }) %>
+                  <%  }) %>
                 </div>
+                <li>
+                  <div class="md-list-content">
+                        <span class="md-list-heading uk-float-right  "><a class="md-color-light-green-400" href="/anggota/artikel/?page=1">lihat galeri lama</a></span>
+                  </div>
+                </li>
         </div>
       </div>
 

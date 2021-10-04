@@ -123,11 +123,7 @@
                                                           </div>
                                                           <div hidden id="nilaiBC" class="uk-width-medium-1-3">
                                                               <br>
-                                                                      <div class="uk-input-group">
-                                                                          <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
-                                                                          <label for="uk_dp_1">Tanggal Deadline</label>
-                                                                          <input name="tanggal" class="md-input label-fixed" type="text" id="uk_dp_1" data-uk-datepicker="{format:'DD-MM-YYYY'}">
-                                                                      </div>
+
 
                                                                       <br>
                                                                       <div class="uk-input-group" >
@@ -150,7 +146,12 @@
                                                           </div>
                                                           <div hidden id="nilaiDE" class="uk-width-medium-1-3">
                                                         <br>
-
+                                                        <div class="uk-input-group">
+                                                            <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                                            <label for="uk_dp_1">Tanggal Deadline</label>
+                                                            <input name="tanggal" class="md-input label-fixed" type="text" id="uk_dp_1" data-uk-datepicker="{format:'DD-MM-YYYY'}">
+                                                        </div>
+                                                        <br>
                                                           <div class="md-card">
                                                               <div class="md-card-content">
                                                                 <label>Foto Bukti Temuan</label> <br>
@@ -296,11 +297,11 @@
               if ( value == 4 || value == 3){
                 // $("#nilaiBC").show();
                   $("#nilaiBC").show();
-                  $("#uk_dp_1").prop('required',true);
                   $("#deskripsi").prop('required',true);
                   $("#tindaklanjut").prop('required',true);
                   $("#nilaiDE").hide();
                   $("#input-file-a").prop('required',false);
+                  $("#uk_dp_1").prop('required',false);
 
 
               }

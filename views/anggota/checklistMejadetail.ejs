@@ -128,11 +128,11 @@
                                                   <div class="uk-form-row">
                                                       <div class="uk-grid">
                                                           <div hidden id="nilaiBC" class="uk-width-medium-1-2">
-                                                            <div class="uk-input-group">
+                                                            <!-- <div class="uk-input-group">
                                                                 <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
                                                                 <label for="uk_dp_1">Tanggal Deadline Bukti Temuan</label>
                                                                 <input   name="tanggal" class="md-input label-fixed" type="text" id="uk_dp_1" data-uk-datepicker="{format:'DD-MM-YYYY'}">
-                                                            </div>
+                                                            </div> -->
                                                             <br>
                                                             <div class="uk-input-group" >
                                                               <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-pencil"></i></span>
@@ -142,12 +142,16 @@
                                                           </div>
 
                                                           <div hidden id="nilaiDE" class="uk-width-medium-1-2">
+                                                            <div class="uk-input-group">
+                                                                <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                                                <label for="uk_dp_1">Tanggal Deadline Bukti Temuan</label>
+                                                                <input   name="tanggal" class="md-input label-fixed" type="text" id="uk_dp_1" data-uk-datepicker="{format:'DD-MM-YYYY'}">
+                                                            </div>
                                                               <div class="md-card">
                                                                   <div class="md-card-content">
                                                                     <label>Foto Bukti Temuan</label> <br>
                                                                     <span class="uk-text-small uk-text-muted"> Hanya bisa upload file berekstensi .jpg/.jpeg/.png dan nama file 30 huruf </span>
                                                                     <input  type="file" name="image" id="input-file-a" class="dropify" />
-
                                                                   </div>
                                                               </div>
                                                           </div>
@@ -290,10 +294,11 @@
               if ( value == 4 || value == 3){
                 // $("#nilaiBC").show();
                   $("#nilaiBC").show();
-                  $("#uk_dp_1").prop('required',true);
+                  // $("#uk_dp_1").prop('required',true);
                   $("#deskripsi").prop('required',true);
 
                   $("#nilaiDE").hide();
+                  $("#uk_dp_1").prop('required',false);
                   $("#input-file-a").prop('required',false);
 
 

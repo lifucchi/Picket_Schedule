@@ -135,7 +135,7 @@
                                                                       <br>
                                                                       <div class="uk-input-group" >
                                                                         <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-user"></i></span>
-                                                                          <label>Penindaklanjut</label>
+                                                                          <label id="namalabel">Penindaklanjut</label>
                                                                           <select name='tindaklanjut' id='tindaklanjut' class="md-input label-fixed" required data-md-selectize-inline >
                                                                               <option value="">Pengguna</option>
                                                                               <% users.forEach((user) => { %>
@@ -212,7 +212,11 @@
                                             </ul>
                                         </div>
                                     </div> -->
+                                    <% if (bukti.deadline != 'Invalid date' ) { %>
+
                                     <span class="gallery_image_title uk-text-truncate">Deadline tanggal <%= bukti.deadline %></span>
+                                    <% } %>
+
                                     <span class="uk-text-muted uk-text-small">Deskripsi : <%= bukti.deskripsi_sebelum %>%></span>
 
                                 </div>
@@ -302,6 +306,7 @@
                   $("#nilaiDE").hide();
                   $("#input-file-a").prop('required',false);
                   $("#uk_dp_1").prop('required',false);
+                  $("#namalabel").text("Tembusan");
 
 
               }
@@ -313,6 +318,8 @@
 
                 $("#nilaiDE").show();
                 $("#input-file-a").prop('required',true);
+                $("#namalabel").text("Penindaklanjut");
+
 
 
               }else if(value == 5){

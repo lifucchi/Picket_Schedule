@@ -51,7 +51,7 @@
                         <div class="uk-width-medium-2-5">
                           <h2>TINDAK LANJUT</h2>
 
-                          <% if (rooms.tinjak_lanjut === 1) {%>
+                          <% if (rooms.tinjak_lanjut !== 2) {%>
 
                             <div class="uk-margin-large-bottom">
                                 <h2 class="heading_c uk-margin-small-bottom">Deskripsi PIC Ruang </h2>
@@ -92,7 +92,7 @@
                                     </div>
                                     <div class="md-list-content">
                                         <span class="md-list-heading"><%= rooms.penilaian_ruang.ruang.pengguna.nama%> </span>
-                                        <span class="uk-text-small uk-text-muted">Nama PIC Ruang</span>
+                                        <span class="uk-text-small uk-text-muted">PIC Ruang</span>
                                     </div>
                                 </li>
                                 <li>
@@ -160,9 +160,13 @@
                                   <p>
                                       Status:
                                       <% if ( rooms.tinjak_lanjut === 2 ) {%>
+
                                       <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Tinjak Lanjut</span>
-                                      <% } else {  %>
+                                      <% } else if ( rooms.tinjak_lanjut === 1 ) {  %>
                                         <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Tinjak Lanjut</span>
+
+                                      <% } else if ( rooms.tinjak_lanjut === 3 ) {%>
+                                      <td><span class="uk-badge uk-badge-default uk-text-upper uk-margin-small-left">Ditindaklanjuti Melewati Deadline</span></td>
                                       <% }  %>
                                   </p>
                               </div>
@@ -174,7 +178,7 @@
                                       </div>
                                       <div class="md-list-content">
                                           <span class="md-list-heading"><%= rooms.penilaian_ruang.ruang.pengguna.nama%> </span>
-                                          <span class="uk-text-small uk-text-muted">Nama PIC Ruang</span>
+                                          <span class="uk-text-small uk-text-muted">PIC Ruang</span>
                                       </div>
                                   </li>
                                   <li>

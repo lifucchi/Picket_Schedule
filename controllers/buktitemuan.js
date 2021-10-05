@@ -77,14 +77,16 @@ exports.getDataBuktiTemuanAdminFilter= (req,res, next) => {
   }
 
   const bulanTahun = req.body.bulanTahun;
-  const kategori = req.body.kategori;
+  const kategori = +req.body.kategori;
   const tahun = moment(bulanTahun, "MMM-YYYY").format('YYYY');
   const bulan = moment(bulanTahun,  "MMM-YYYY").format('MM');
   let setuju = 0;
-  if (kategori === 'on'){
+  if (kategori === 1 ){
     setuju = 1;
-  }else{
+  }else if (kategori === 2){
     setuju = 2;
+  }else if (kategori === 3){
+    setuju = 3;
   }
 
   let buktiTemuan = Bukti_temuan
@@ -284,15 +286,18 @@ exports.getDataBuktiTemuanMejaFilter= (req,res, next) => {
   }
 
   const bulanTahun = req.body.bulanTahun;
-  const kategori = req.body.kategori;
+  const kategori = +req.body.kategori;
   const tahun = moment(bulanTahun, "MMM-YYYY").format('YYYY');
   const bulan = moment(bulanTahun,  "MMM-YYYY").format('MM');
   let setuju = 0;
-  if (kategori === 'on'){
+  if (kategori === 1 ){
     setuju = 1;
-  }else{
+  }else if (kategori === 2){
     setuju = 2;
+  }else if (kategori === 3){
+    setuju = 3;
   }
+
 
   let buktiTemuan = Bukti_temuan
                       .findAll(
@@ -571,6 +576,9 @@ exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
                           where: {
                                     penilaianRuangId: {
                                     [Op.is]: null
+                                  },
+                                  tinjak_lanjut:{
+                                    [Op.is]: 2
                                   }
                                 },
                           include: [
@@ -664,18 +672,52 @@ exports.postTindakLanut= (req,res, next) => {
   Bukti_temuan.findByPk(id)
   .then(bukti => {
     console.log('**********COMPLETE RESULTS****************');
-    if (image != null ){
-        const imgUrl = image[0].path;
-        bukti.deskripsi_sesudah=deskripsi;
-        bukti.fotosesudah = imgUrl;
-        bukti.tinjak_lanjut = 1;
-        return bukti.save();
 
-        }else {
-          bukti.deskripsi_sesudah = deskripsi;
+    const nowTanggal = moment().format('DD-MM-YYYY');
+
+    if( bukti.deadline !== 'Invalid date'){
+      if ( nowTanggal <= bukti.deadline ){
+        if (image != null ){
+            const imgUrl = image[0].path;
+            bukti.deskripsi_sesudah=deskripsi;
+            bukti.fotosesudah = imgUrl;
+            bukti.tinjak_lanjut = 1;
+            return bukti.save();
+
+            }else {
+              bukti.deskripsi_sesudah = deskripsi;
+              bukti.tinjak_lanjut = 1;
+              return bukti.save();
+            }
+      }else {
+        if (image != null ){
+            const imgUrl = image[0].path;
+            bukti.deskripsi_sesudah=deskripsi;
+            bukti.fotosesudah = imgUrl;
+            bukti.tinjak_lanjut = 3;
+            return bukti.save();
+
+            }else {
+              bukti.deskripsi_sesudah = deskripsi;
+              bukti.tinjak_lanjut = 3;
+              return bukti.save();
+            }
+      }
+    }else{
+      if (image != null ){
+          const imgUrl = image[0].path;
+          bukti.deskripsi_sesudah=deskripsi;
+          bukti.fotosesudah = imgUrl;
           bukti.tinjak_lanjut = 1;
           return bukti.save();
-        }
+
+          }else {
+            bukti.deskripsi_sesudah = deskripsi;
+            bukti.tinjak_lanjut = 1;
+            return bukti.save();
+          }
+    }
+
   })
   .then( () => {
       res.redirect('/anggota/tindaklanjut/meja/detail/'+id);
@@ -848,18 +890,53 @@ exports.postTindakLanutRuang= (req,res, next) => {
 
   Bukti_temuan.findByPk(id)
   .then(bukti => {
-    if (image !== undefined ){
-        const imgUrl = image[0].path;
-        bukti.deskripsi_sesudah=deskripsi;
-        bukti.fotosesudah = imgUrl;
-        bukti.tinjak_lanjut = 1;
-        return bukti.save();
 
-        }else {
-          bukti.deskripsi_sesudah = deskripsi;
+    const nowTanggal = moment().format('DD-MM-YYYY');
+
+    if( bukti.deadline !== 'Invalid date'){
+      if ( nowTanggal <= bukti.deadline ){
+        if (image != null ){
+            const imgUrl = image[0].path;
+            bukti.deskripsi_sesudah=deskripsi;
+            bukti.fotosesudah = imgUrl;
+            bukti.tinjak_lanjut = 1;
+            return bukti.save();
+
+            }else {
+              bukti.deskripsi_sesudah = deskripsi;
+              bukti.tinjak_lanjut = 1;
+              return bukti.save();
+            }
+      }else {
+        if (image != null ){
+            const imgUrl = image[0].path;
+            bukti.deskripsi_sesudah=deskripsi;
+            bukti.fotosesudah = imgUrl;
+            bukti.tinjak_lanjut = 3;
+            return bukti.save();
+
+            }else {
+              bukti.deskripsi_sesudah = deskripsi;
+              bukti.tinjak_lanjut = 3;
+              return bukti.save();
+            }
+      }
+    }else{
+      if (image != null ){
+          const imgUrl = image[0].path;
+          bukti.deskripsi_sesudah=deskripsi;
+          bukti.fotosesudah = imgUrl;
           bukti.tinjak_lanjut = 1;
           return bukti.save();
-        }
+
+          }else {
+            bukti.deskripsi_sesudah = deskripsi;
+            bukti.tinjak_lanjut = 1;
+            return bukti.save();
+          }
+    }
+
+
   })
   .then( () => {
       res.redirect('/anggota/tindaklanjut/ruang/detail/'+id);
@@ -880,6 +957,9 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
                           where: {
                                     penilaianMejaId: {
                                     [Op.is]: null
+                                  },
+                                  tinjak_lanjut:{
+                                    [Op.is]: 2
                                   }
                                 },
                           include: [
@@ -981,6 +1061,9 @@ exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
                           where: {
                                     penilaianRuangId: {
                                     [Op.is]: null
+                                  },
+                                  tinjak_lanjut:{
+                                    [Op.is]: 2
                                   }
                                 },
                           include: [
@@ -1073,18 +1156,53 @@ exports.postTindakLanutFasilitator= (req,res, next) => {
 
   Bukti_temuan.findByPk(id)
   .then(bukti => {
-    if (image !== undefined ){
-        const imgUrl = image[0].path;
-        bukti.deskripsi_sesudah=deskripsi;
-        bukti.fotosesudah = imgUrl;
-        bukti.tinjak_lanjut = 1;
-        return bukti.save();
 
-        }else {
-          bukti.deskripsi_sesudah = deskripsi;
+    const nowTanggal = moment().format('DD-MM-YYYY');
+
+    if( bukti.deadline !== 'Invalid date'){
+      if ( nowTanggal <= bukti.deadline ){
+        if (image != null ){
+            const imgUrl = image[0].path;
+            bukti.deskripsi_sesudah=deskripsi;
+            bukti.fotosesudah = imgUrl;
+            bukti.tinjak_lanjut = 1;
+            return bukti.save();
+
+            }else {
+              bukti.deskripsi_sesudah = deskripsi;
+              bukti.tinjak_lanjut = 1;
+              return bukti.save();
+            }
+      }else {
+        if (image != null ){
+            const imgUrl = image[0].path;
+            bukti.deskripsi_sesudah=deskripsi;
+            bukti.fotosesudah = imgUrl;
+            bukti.tinjak_lanjut = 3;
+            return bukti.save();
+
+            }else {
+              bukti.deskripsi_sesudah = deskripsi;
+              bukti.tinjak_lanjut = 3;
+              return bukti.save();
+            }
+      }
+    }else{
+      if (image != null ){
+          const imgUrl = image[0].path;
+          bukti.deskripsi_sesudah=deskripsi;
+          bukti.fotosesudah = imgUrl;
           bukti.tinjak_lanjut = 1;
           return bukti.save();
-        }
+
+          }else {
+            bukti.deskripsi_sesudah = deskripsi;
+            bukti.tinjak_lanjut = 1;
+            return bukti.save();
+          }
+    }
+
+
   })
   .then( () => {
       res.redirect('/fasilitator/tindaklanjut/meja/detail/'+id);
@@ -1405,7 +1523,10 @@ exports.getDataTindakLanjutRuangFasilitator= (req,res, next) => {
                                     penilaianMejaId: {
                                     [Op.is]: null,
                                   },
-                                  penggunaNik: req.session.user.nik
+                                  penggunaNik: req.session.user.nik,
+                                  tinjak_lanjut:{
+                                    [Op.is]: 2
+                                  }
                                 },
                           include: [
                         {
@@ -1500,18 +1621,51 @@ exports.postTindakLanutRuangFasilitator= (req,res, next) => {
 
   Bukti_temuan.findByPk(id)
   .then(bukti => {
-    if (image !== undefined ){
-        const imgUrl = image[0].path;
-        bukti.deskripsi_sesudah=deskripsi;
-        bukti.fotosesudah = imgUrl;
-        bukti.tinjak_lanjut = 1;
-        return bukti.save();
+    const nowTanggal = moment().format('DD-MM-YYYY');
 
-        }else {
-          bukti.deskripsi_sesudah = deskripsi;
+    if( bukti.deadline !== 'Invalid date'){
+      if ( nowTanggal <= bukti.deadline ){
+        if (image != null ){
+            const imgUrl = image[0].path;
+            bukti.deskripsi_sesudah=deskripsi;
+            bukti.fotosesudah = imgUrl;
+            bukti.tinjak_lanjut = 1;
+            return bukti.save();
+
+            }else {
+              bukti.deskripsi_sesudah = deskripsi;
+              bukti.tinjak_lanjut = 1;
+              return bukti.save();
+            }
+      }else {
+        if (image != null ){
+            const imgUrl = image[0].path;
+            bukti.deskripsi_sesudah=deskripsi;
+            bukti.fotosesudah = imgUrl;
+            bukti.tinjak_lanjut = 3;
+            return bukti.save();
+
+            }else {
+              bukti.deskripsi_sesudah = deskripsi;
+              bukti.tinjak_lanjut = 3;
+              return bukti.save();
+            }
+      }
+    }else{
+      if (image != null ){
+          const imgUrl = image[0].path;
+          bukti.deskripsi_sesudah=deskripsi;
+          bukti.fotosesudah = imgUrl;
           bukti.tinjak_lanjut = 1;
           return bukti.save();
-        }
+
+          }else {
+            bukti.deskripsi_sesudah = deskripsi;
+            bukti.tinjak_lanjut = 1;
+            return bukti.save();
+          }
+    }
+
   })
   .then( () => {
       res.redirect('/fasilitator/tindaklanjut/ruang/detail/'+id);

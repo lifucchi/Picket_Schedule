@@ -11,21 +11,13 @@
 
       <%- include('header'); %>
 <!-- main header end -->
-
     <!-- main sidebar -->
-
-
         <%- include('top_bar'); %>
-
     <div id="page_content">
-
         <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
             <h1> <%=pageTitle%> </h1>
             <span class="uk-text-upper uk-text-small"><a href="/anggota/checklistmeja/<%= tables.jadwalPiketId%>">Checklist Meja</a> / <a href="#"> <%= tables.meja.pengguna.nama %></a></span>
         </div>
-
-
-
 
       <% if (path === '/checklistmejaada') {%>
         <div id="page_content_inner">
@@ -197,18 +189,10 @@
 
                                     </a>
                                     <div class="gallery_grid_image_caption">
-                                        <!-- <div class="gallery_grid_image_menu" data-uk-dropdown="{pos:'top-right'}">
-                                            <i class="md-icon material-icons">&#xE5D4;</i>
-                                            <div class="uk-dropdown uk-dropdown-small">
-                                                <ul class="uk-nav">
-                                                    <li><a href="#"><i class="material-icons uk-margin-small-right">&#xE150;</i> Edit</a></li>
-                                                    <li><a href="#"><i class="material-icons uk-margin-small-right">&#xE872;</i> Remove</a></li>
-                                                </ul>
-                                            </div>
-                                        </div> -->
+                                      <% if (bukti.deadline != 'Invalid date' ) { %>
                                         <span class="gallery_image_title uk-text-truncate">Deadline tanggal <%= bukti.deadline %></span>
+                                        <% } %>
                                         <span class="uk-text-muted uk-text-small">Deskripsi : <%= bukti.deskripsi_sebelum %>%></span>
-
                                     </div>
                                 </div>
                             </div>

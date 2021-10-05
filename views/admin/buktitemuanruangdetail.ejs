@@ -87,7 +87,7 @@
 
                             <% } %>
 
-                            <% if (rooms.tinjak_lanjut === 1) {%>
+                            <% if (rooms.tinjak_lanjut !== 2) {%>
                             <form onsubmit="return confirm('Are you sure?');" action="/admin/tindaklanjutruang/delete" method="POST">
                               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
@@ -109,11 +109,12 @@
                                     <% if ( rooms.tinjak_lanjut === 2 ) {%>
 
                                     <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Tinjak Lanjut</span>
-                                    <% } else {  %>
+                                    <% } else if ( rooms.tinjak_lanjut === 1 ) {  %>
                                       <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Tinjak Lanjut</span>
 
+                                    <% } else if ( rooms.tinjak_lanjut === 3 ) {%>
+                                    <td><span class="uk-badge uk-badge-default uk-text-upper uk-margin-small-left">Ditindaklanjuti Melewati Deadline</span></td>
                                     <% }  %>
-
                                 </p>
                             </div>
                             <h2 class="heading_c uk-margin-small-bottom">Details</h2>

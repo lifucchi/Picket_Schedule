@@ -469,7 +469,9 @@ exports.getChecklistPiket = (req,res, next) => {
       nikpicpiket: req.session.user.nik,
       tanggal: {
         [Op.lte]: nowTanggal
-      }
+      },
+      status_piket: 0
+
     },
     include: [{
       model: Pengguna,
@@ -596,8 +598,16 @@ exports.postCheckPic = (req,res, next) => {
 
 exports.getLaporan = (req,res) => {
 
+  const nowTanggal = moment().format('YYYY-MM-DD');
+
   JadwalPiket.findAll({
-    where: {nikpicfasil: req.session.user.nik},
+    where: {
+      nikpicfasil: req.session.user.nik,
+      tanggal: {
+        [Op.lte]: nowTanggal
+      },
+      persetujuan_fasil: 0
+    },
     include: [{
       model: Pengguna,
       as: 'nik_pic_piket'
@@ -608,7 +618,8 @@ exports.getLaporan = (req,res) => {
     }
   ],
   order: [
-      ['tanggal', 'DESC']
+      ['status_piket' ,'DESC'],
+      ['tanggal' ,'DESC']
   ]
 })
 .then( fasilitator => {

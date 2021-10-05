@@ -45,12 +45,17 @@
                           <td class="uk-text-large uk-text-nowrap"><%= room.penilaian_meja.jadwal_piket.nik_pic_piket.nama %></td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.deskripsi_sebelum%> </td>
                           <td class="uk-text-large uk-text-nowrap"><%= room.deadline %> </td>
-                          <% if (room.tinjak_lanjut == 2) {%>
-                          <td> <span class="uk-badge uk-badge-danger">Belum Tindak Lanjut</span> </td>
-                          <% } else {%>
-                            <td> <span class="uk-badge uk-badge-success">Sudah Tindak Lanjut</span> </td>
-
-                            <% } %>
+                          <% if ( room.tinjak_lanjut === 2 ) {%>
+                            <td>
+                              <span class="uk-badge uk-badge-warning uk-text-upper uk-margin-small-left">Belum Tinjak Lanjut</span>
+                            </td>
+                          <% } else if ( room.tinjak_lanjut === 1 ) {  %>
+                            <td>
+                              <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">Sudah Tinjak Lanjut</span>
+                            </td>
+                          <% } else if ( room.tinjak_lanjut === 3 ) {%>
+                          <td><span class="uk-badge uk-badge-default uk-text-upper uk-margin-small-left">Ditindaklanjuti Melewati Deadline</span></td>
+                          <% }  %>
 
                         </tr>
                           <% }) %>

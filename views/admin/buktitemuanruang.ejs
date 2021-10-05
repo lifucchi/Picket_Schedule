@@ -42,11 +42,18 @@
                         <label for="kUI_datepicker_b" class="uk-form-label">Datepicker (months)</label>
                         <input required name="bulanTahun" id="kUI_datepicker_b" value="" />
                       </div>
-                      <div class="uk-width-medium-1-10">
-                          <div class="uk-margin-top uk-text-nowrap">
+                      <div class="uk-width-medium-2-10">
+                          <!-- <div class="uk-margin-top uk-text-nowrap">
                               <input type="checkbox" name="kategori" id="product_search_active" data-md-icheck/>
                               <label for="product_search_active" class="inline-label">Sudah Tinjak Lanjut</label>
-                          </div>
+                          </div> -->
+                          <select required id='kategori'  name='kategori' class="md-input" required data-md-selectize-inline >
+                              <option value="">Status</option>
+
+                              <option value="1">Sudah Tindak Lanjut</option>
+                              <option value="2">Belum Tindak Lanjut</option>
+                              <option value="3">Melewati Jadwal</option>
+                          </select>
                       </div>
                       <div class="uk-width-medium-2-10 uk-text-center">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">

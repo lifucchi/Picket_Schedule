@@ -577,9 +577,7 @@ exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
                                     penilaianRuangId: {
                                     [Op.is]: null
                                   },
-                                  tinjak_lanjut:{
-                                    [Op.is]: 2
-                                  }
+                                    tinjak_lanjut: 2
                                 },
                           include: [
                         {
@@ -596,12 +594,11 @@ exports.getDataTindakLanjutMejaAnggota= (req,res, next) => {
                               model: Meja,
                               where: {penggunaNik: req.session.user.nik},
                               include : {
-                                model: Pengguna
+                                model: Pengguna,
                               }
                             },
                             {
                               model: JadwalPiket,
-
                               include : {
                                 model: Pengguna,
                                 as: 'nik_pic_piket'
@@ -950,7 +947,7 @@ exports.postTindakLanutRuang= (req,res, next) => {
 };
 
 exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
-  console.log(req.session.user.nik);
+
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
@@ -958,9 +955,8 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
                                     penilaianMejaId: {
                                     [Op.is]: null
                                   },
-                                  tinjak_lanjut:{
-                                    [Op.is]: 2
-                                  }
+                                    penggunaNik: req.session.user.nik,
+                                    tinjak_lanjut: 2
                                 },
                           include: [
                         {
@@ -968,8 +964,8 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
                           where: {
                             [Op.or]:
                             [
-                              {bobotruang:2},
-                              {bobotruang:1}
+                              {bobotruang:1},
+                              {bobotruang:2}
                             ]
                           },
                           include : [
@@ -990,13 +986,12 @@ exports.getDataTindakLanjutRuangAnggota= (req,res, next) => {
                           required: true
                         },
                         {
-                          model: Pengguna,
-                          where: {nik: req.session.user.nik}
+                          model: Pengguna
                         }
                       ],
-                      order: [
-                          [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
-                      ],
+                        order: [
+                            [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
+                        ],
                       }
                     );
 
@@ -1055,6 +1050,7 @@ exports.getDataTindakLanjutRuangAnggotaDetail= (req,res, next) => {
 // fasilitator
 
 exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
+
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
@@ -1062,9 +1058,7 @@ exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
                                     penilaianRuangId: {
                                     [Op.is]: null
                                   },
-                                  tinjak_lanjut:{
-                                    [Op.is]: 2
-                                  }
+                                    tinjak_lanjut: 2
                                 },
                           include: [
                         {
@@ -1081,7 +1075,7 @@ exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
                               model: Meja,
                               where: {penggunaNik: req.session.user.nik},
                               include : {
-                                model: Pengguna
+                                model: Pengguna,
                               }
                             },
                             {
@@ -1099,6 +1093,52 @@ exports.getDataTindakLanjutMejaFasilitator= (req,res, next) => {
                         ],
                       }
                     );
+
+  // const buktiTemuan = Bukti_temuan
+  //                     .findAll(
+  //                       {
+  //                         where: {
+  //                                   penilaianRuangId: {
+  //                                   [Op.is]: null
+  //                                 },
+  //                                 tinjak_lanjut:{
+  //                                   [Op.is]: 2
+  //                                 }
+  //                               },
+  //                         include: [
+  //                       {
+  //                         model: Penilaian_meja,
+  //                         where: {
+  //                           [Op.or]:
+  //                           [
+  //                             {bobotmeja:2},
+  //                             {bobotmeja:1}
+  //                           ]
+  //                         },
+  //                         include : [
+  //                           {
+  //                             model: Meja,
+  //                             include : {
+  //                               model: Pengguna,
+  //                               where: {nik: req.session.user.nik},
+  //                             }
+  //                           },
+  //                           {
+  //                             model: JadwalPiket,
+  //                             include : {
+  //                               model: Pengguna,
+  //                               as: 'nik_pic_piket'
+  //                             }
+  //                           }
+  //                         ],
+  //                         required: true
+  //                       }],
+  //                       order: [
+  //                           [{model:Penilaian_meja},{model: JadwalPiket},'tanggal', 'DESC']
+  //                       ],
+  //                     }
+  //                   );
+
 
   Promise
       .all([buktiTemuan])
@@ -1216,7 +1256,6 @@ exports.postTindakLanutFasilitator= (req,res, next) => {
 };
 
 exports.getDataBuktiTemuanMejaFasilitator= (req,res, next) => {
-  console.log(req.session.user.nik);
   const buktiTemuan = Bukti_temuan
                       .findAll(
                         {
@@ -1521,12 +1560,10 @@ exports.getDataTindakLanjutRuangFasilitator= (req,res, next) => {
                         {
                           where: {
                                     penilaianMejaId: {
-                                    [Op.is]: null,
+                                    [Op.is]: null
                                   },
-                                  penggunaNik: req.session.user.nik,
-                                  tinjak_lanjut:{
-                                    [Op.is]: 2
-                                  }
+                                    penggunaNik: req.session.user.nik,
+                                    tinjak_lanjut: 2
                                 },
                           include: [
                         {
@@ -1554,12 +1591,62 @@ exports.getDataTindakLanjutRuangFasilitator= (req,res, next) => {
                             }
                           ],
                           required: true
-                        }],
+                        },
+                        {
+                          model: Pengguna
+                        }
+                      ],
                         order: [
                             [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
                         ],
                       }
                     );
+
+
+  // const buktiTemuan = Bukti_temuan
+  //                     .findAll(
+  //                       {
+  //                         where: {
+  //                                   penilaianMejaId: {
+  //                                   [Op.is]: null,
+  //                                 },
+  //                                 penggunaNik: req.session.user.nik,
+  //                                 tinjak_lanjut:{
+  //                                   [Op.is]: 2
+  //                                 }
+  //                               },
+  //                         include: [
+  //                       {
+  //                         model: Penilaian_ruang,
+  //                         where: {
+  //                           [Op.or]:
+  //                           [
+  //                             {bobotruang:1},
+  //                             {bobotruang:2}
+  //                           ]
+  //                         },
+  //                         include : [
+  //                           {
+  //                             model: Ruang,
+  //                             include : {
+  //                               model: Pengguna
+  //                             }
+  //                           },
+  //                           {
+  //                             model: JadwalPiket,
+  //                             include : {
+  //                               model: Pengguna,
+  //                               as: 'nik_pic_piket'
+  //                             }
+  //                           }
+  //                         ],
+  //                         required: true
+  //                       }],
+  //                       order: [
+  //                           [{model:Penilaian_ruang},{model: JadwalPiket},'tanggal', 'DESC']
+  //                       ],
+  //                     }
+  //                   );
 
 
   Promise

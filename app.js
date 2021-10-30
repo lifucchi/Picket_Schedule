@@ -16,6 +16,7 @@ const authRoutes = require('./routes/auth');
 const anggotaRoutes = require('./routes/anggota');
 const fasilitatorRoutes = require('./routes/fasilitator');
 const sequelize = require('./util/database');
+const cron = require('node-cron');
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
 const Pengguna = require('./models/pengguna');
@@ -322,6 +323,17 @@ sequelize
   .then(result => {
     app.listen(8080);
   })
+  .then(() => {
+      process.on('SIGTERM', () => {
+      app.close(() => {
+        console.log('Process terminated')
+      })
+    });
+
+    // setTimeout(() => { return process.kill(process.pid, 'SIGTERM');}, 20000);
+
+  })
   .catch( err => {
     console.log(err);
+    process.exit(1);
   });

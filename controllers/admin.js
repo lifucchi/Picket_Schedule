@@ -27,6 +27,8 @@ exports.getAdminDashboard = (req,res) => {
   var prevMonth = moment(nowTanggal).subtract(1, 'months').endOf('month').format('MM');
   const tahun = moment(nowTanggal).format('YYYY');
 
+
+
   const piket =   JadwalPiket.findAll({
       where: {tanggal: nowTanggal},
       include: [{
@@ -188,6 +190,19 @@ exports.getAdminDashboard = (req,res) => {
           }
           res.locals.mejaTerbaik = count[0][0];
           res.locals.lantaiTerbaik = lantaiTerbaik;
+
+          var URL = require('url').URL;
+          const myURL = new URL('http://example.org:8888');
+          console.log(myURL.port);
+          myURL.port ='443';
+          console.log(myURL.port);
+          console.log(myURL.href);
+          myURL.port = '567abcd';
+          console.log(myURL.port);
+          myURL.port = 1234.5678;
+          console.log(myURL.port);
+
+
 
           res.render('./admin/admin', {
             pageTitle: 'Dashboard',
